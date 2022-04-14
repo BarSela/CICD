@@ -1,41 +1,42 @@
 <header>
-    <video id="myVideo" autoplay muted loop playsinline>
-        <source src="/assets/backgroundVideo.mp4" type="video/mp4" style="background-color: hsla(50, 33%, 25%, .75)">
-        
-    </video>
-            
-            <div class="video-overlay"></div>
-            
-            <div class="navbar">
-                
-                <ul>
-                <li><a id="home"  class="active" href="/" >Home</a></li>
-                <li><a id="about" href=#>About</a></li>
-                <li><a id="login" href="/login" style="display: block;" >Login</a></li>
-                
-                
-                
-            </ul>
-                <ul ><li ><a className = logoutItem id="logout" href="/logout" style="display: none;" >logout</a></li></ul>
-            </div>
-            
-            
+  <video id="myVideo" autoplay muted loop playsinline>
+    <source
+      src="/assets/homePageBackground.mp4"
+      type="video/mp4"
+      style="background-color: rgba(0, 0, 0, 0.75)"
+    />
+  </video>
+
+  <div class="video-overlay"></div>
+
+  <div class="navbar">
+    <ul>
+      <li><a id="home" class="active" href="/">Home</a></li>
+      <li><a id="cal" href="/calendar">About</a></li>
+      <li><a id="home" href="/newTraining">new</a></li>
+
+      <li><a id="login" href="/login" style="display: block">Login</a></li>
+    </ul>
+    <ul>
+      <li>
+        <a
+          className="logoutItem"
+          id="logout"
+          href="/logout"
+          style="display: none"
+          >logout</a
+        >
+      </li>
+    </ul>
+  </div>
 </header>
-    <script>
-        
-        
-        console.log("<%= connected %>");
-        if("<%= connected %>" == 'true'){
-            document.getElementById("login").style.display = 'none';
-            document.getElementById("logout").style.display = 'block';
-            
-        }
-        else{
-            document.getElementById("login").style.display = 'block';
-            document.getElementById("logout").style.display = 'none';
-        }
-        
-                
-                
-                
-    </script>
+<script>
+  console.log("<%= connected %>");
+  if ("<%= connected %>" == "true") {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("logout").style.display = "block";
+  } else {
+    document.getElementById("login").style.display = "block";
+    document.getElementById("logout").style.display = "none";
+  }
+</script>
