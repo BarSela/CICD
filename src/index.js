@@ -61,9 +61,9 @@ app.get("/createBusinessProfile", (req, res) => {
   connected = "true";
   res.render("pages/createBusinessProfile", { connected: connected });
 });
-app.get("/BusinessProfile", (req, res) => {
+app.get("/businessProfile", (req, res) => {
   connected = "true";
-  res.render("pages/BusinessProfile", { connected: connected });
+  res.render("pages/businessProfile", { connected: connected });
 });
 app.get("/editBusinessProfile", (req, res) => {
   connected = "true";

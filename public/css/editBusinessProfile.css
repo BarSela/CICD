@@ -1,0 +1,153 @@
+#businassName-Input {
+  width: 400px;
+}
+#fullName-Input {
+  width: 400px;
+}
+#specialty-Input {
+  width: 400px;
+  margin-bottom: 8px;
+}
+#city-Input {
+  width: 400px;
+  margin-bottom: 10px;
+}
+#phone-Input {
+  width: 400px;
+  margin-bottom: 8px;
+}
+#email-Input {
+  width: 450px;
+  margin-bottom: 8px;
+}
+#about-Input {
+  height: 150px;
+}
+#schoolName-Input {
+  width: 450px;
+}
+#cert-date-Input {
+  width: 250px;
+}
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Roboto", sans-serif;
+}
+#name {
+  font-family: "Roboto", sans-serif;
+  color: darkcyan;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+#schedule-bt {
+  font-family: "Roboto", sans-serif;
+  width: 5cm;
+  margin-left: 100px;
+}
+#delete-acc-bt {
+  font-family: "Roboto", sans-serif;
+  width: 3.5cm;
+}
+#edit-profile-bt {
+  font-family: "Roboto", sans-serif;
+  width: 3.5cm;
+}
+#edit-training-bt {
+  font-family: "Roboto", sans-serif;
+  width: 3.8cm;
+}
+#spanish {
+  display: none;
+}
+#spanish-w {
+  height: 24px;
+  width: 25%;
+}
+#hebrew-w {
+  height: 24px;
+  width: 100%;
+}
+#english-w {
+  height: 24px;
+  width: 90%;
+}
+#russian-w {
+  height: 24px;
+  width: 25%;
+}
+#arabic-w {
+  height: 24px;
+  width: 20%;
+}
+#general {
+  font-weight: bold;
+  font-size: 20px;
+  height: 10px;
+}
+#languages {
+  font-weight: bold;
+  font-size: 20px;
+  height: 10px;
+}
+.slider {
+  -webkit-appearance: none;
+  width: 50%;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  margin: 5px;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #167250;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 20px;
+  border-radius: 50%;
+  background: #118359;
+  cursor: pointer;
+}
+.form-element label {
+  display: inline-block;
+  margin-left: 2px;
+  font-size: 15px;
+  padding-top: 15px;
+}
+#present {
+  display: inline-block;
+  margin-left: 0px;
+  font-size: 15px;
+}
+#errorMsg-fn,
+#errorMsg-ci,
+#errorMsg-fh,
+#errorMsg-l,
+#errorMsg-sn,
+#errorMsg-e {
+  display: none;
+}
+#savebt {
+  margin-left: 19cm;
+  margin-top: 3px;
+}
+.w3-row-padding > .w3-twothird {
+  padding-top: 8px;
+}

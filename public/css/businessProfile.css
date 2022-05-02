@@ -1,0 +1,70 @@
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Roboto", sans-serif;
+}
+#name {
+  font-family: "Roboto", sans-serif;
+  color: darkcyan;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+#schedule-bt {
+  font-family: "Roboto", sans-serif;
+  width: 5cm;
+  margin-left: 100px;
+}
+#delete-acc-bt {
+  font-family: "Roboto", sans-serif;
+  width: 3.5cm;
+}
+#edit-profile-bt {
+  font-family: "Roboto", sans-serif;
+  width: 3.5cm;
+}
+#edit-training-bt {
+  font-family: "Roboto", sans-serif;
+  width: 3.8cm;
+}
+#spanish {
+  display: none;
+}
+#arabic {
+  display: none;
+}
+#spanish-w {
+  height: 24px;
+  width: 25%;
+}
+#hebrew-w {
+  height: 24px;
+  width: 100%;
+}
+#english-w {
+  height: 24px;
+  width: 90%;
+}
+#russian-w {
+  height: 24px;
+  width: 25%;
+}
+#arabic-w {
+  height: 24px;
+  width: 20%;
+}
+li {
+  font-family: "Roboto", sans-serif;
+  color: rgb(80, 80, 80);
+  font-size: 20px;
+}
+#training-types {
+  font-size: 30px;
+}
+.w3-row-padding > .w3-twothird {
+  padding-top: 8px;
+}
