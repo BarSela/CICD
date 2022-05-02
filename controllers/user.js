@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt"); //Password encryption
 const jwt = require("jsonwebtoken");
-const User = require("../model/user");
+const User = require("../model/trainerUser");
 
 module.exports = {
   signup: (req, res, next) => {

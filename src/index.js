@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { signup, login } = require("../controllers/user");
-const { addTraining } = require("../controllers/trainer");
+//const { addTraining } = require("../controllers/trainer");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -40,33 +40,35 @@ var connected;
 app.get("/", (req, res) => {
   res.render("pages/homePage", { connected: connected });
 });
+app.get("/QNA", (req, res) => {
+  res.render("pages/QNA", { connected: connected });
+});
 
 app.get("/signUp", (req, res) => {
   var status = "true";
 
   res.render("pages/signUp", { status: status, connected: connected });
 });
+app.get("/aboutUs", (req, res) => {
+  connected = "true";
+  res.render("pages/aboutUs", { connected: connected });
+});
 
 app.get("/login", (req, res) => {
   var loginStatus = "true";
   res.render("pages/login", { loginStatus: loginStatus, connected: connected });
 });
-app.get("/calendar", (req, res) => {
-  res.render("pages/calendar");
-});
+// app.get("/calendar", (req, res) => {
+//   res.render("pages/calendar");
+// });
 app.get("/homePage", (req, res) => {
   res.render("pages/homePage");
 });
 
-app.get("/wellcomePage", (req, res) => {
-  connected = "true";
-  res.render("pages/wellcomePage", { connected: connected });
-});
 app.get("/logout", (req, res) => {
   connected = "false";
   res.render("pages/homePage", { connected: connected });
 });
-
-app.post("/log", login);
+app.post("/login", login);
 app.post("/signup", signup);
-app.post("/new", addTraining);
+//app.post("/new", addTraining);
