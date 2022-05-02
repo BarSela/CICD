@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+  <title>Business profile</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  <link rel="stylesheet" href="/css/createBusinessProfile.css" />
+  <link rel="stylesheet" href="/css/footer.css" />
+  
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  
+  <style></style>
+  
+  <body class="w3-light-grey" id="page-top">
+    <!-- Page Container -->
+    <div class="w3-content w3-margin-top">
+      <!-- The Grid -->
+      <div class="w3-row-padding">
+        
+
+
+        <div class="page" id="create-page">
+          <div class="w3-container w3-card w3-white w3-margin-bottom">
+            <h2 class="w3-text-grey w3-padding-16">
+              
+            </h2>
+            <div class="w3-container" id="create-inside" style="max-width: 950px; margin-left: 270px; ">
+              <div class="w3-card-4">
+                <div class="w3-container w3-teal">
+                  <h2>Create Your Business profile</h2>
+                  
+
+                </div>
+                <!-- Business profile Form -->
+                <form class="w3-container"
+                action="/CreateBusinessP"
+                method="POST"
+                onsubmit="return validateProfileBusiness()">
+                  <label class="w3-text-grey"><br>In order to continue the registration process you must complete your business profile</br></label>
+                </br>
+                  <!-- general -->
+                  <label class="w3-text-grey" id="general"><b>General</br></label>
+                  <label id="errorMsg-fn" style="font-size: 14px; color: red" ><b>Full name must contain only letters </br></label>
+                    <label class="w3-text-teal" ><b>Specialty</br></label>
+                    <select class="w3-input w3-border w3-light-grey w3-round-xlarge" id="specialty-Input" name="specialty">
+                      <option value="personal">Personal Trainer</option>
+                      <option value="athletics">Athletics</option>
+                      <option value="gymnastics">Gymnastics</option>
+                      <option value="aerobic">Aerobic</option>
+                      <option value="gym">Gym</option>
+                      <option value="cross-fit">Cross-fit</option>
+                      <option value="mental-wellness">Mental-wellness</option>
+                      <option value="feldenkrais">Feldenkrais</option>
+                      
+                      
+                    </select>
+                    
+                    <p>      
+                      <label class="w3-text-teal"><b>City</b></label>
+                      <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="city-Input" name="City" type="text" required>
+                      <label id="errorMsg-ci" style="font-size: 14px; color: red" ><b>city must contain only letters </br></label>
+ 
+                        <label class="w3-text-teal"><b>Phone</b></label>
+                        <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="phone-Input" name="Phone" type="phone" required>
+                        <label id="errorMsg-fh" style="font-size: 14px; color: red" ><b>phone number nust 10 digits, With a legal Israeli prefix </br></label>
+      
+                          <!-- <label class="w3-text-teal"><b>Email</b></label>
+                          <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="email-Input" name="Email" type="email" required >    -->
+                            <label class="w3-text-teal"><b>About Section (Description)</b></label>
+                            <span class="w3-input w3-border w3-light-grey w3-round-xlarge"" role="textbox"  id="about-Input" name="Description" type="text" required contenteditable></p>
+                              <hr />
+                              <label class="w3-text-grey" id="languages"><b>Languages</b></label>
+                              <label class="w3-text-grey"><br>Select the level of language proficiency</br></label>
+                              <!-- language section -->
+                                <div class="form-element">
+                                  <label class="w3-text-teal" style="margin-right: 3px;"><b>Hebrew</br></label>
+                                  <input class="slider" id="hebrew-edit" type="range" min="0" max="100" step="10" value="0" >
+                                  <label class="w3-text-grey" id="hebp">0</label>
+                                  <label class="w3-text-grey" id="present">%</label>
+                                  <b></br>
+                                  <label class="w3-text-teal" style="margin-right: 6px;"><b>English</br></label>
+                                  <input class="slider" id="english-edit" type="range" min="0" max="100" step="10" value="0" >
+                                  <label class="w3-text-grey" id="enbp">0</label>
+                                  <label class="w3-text-grey" id="present">%</label>
+                                  <b></br>
+                                  <label class="w3-text-teal"><b>Russian</br></label>
+                                  <input class="slider" id="russian-edit" type="range" min="0" max="100" step="10" value="0">
+                                  <label class="w3-text-grey" id="rubp">0</label>
+                                  <label class="w3-text-grey" id="present">%</label>
+                                  <b></br>
+                                  <label class="w3-text-teal"><b>Spanish</br></label>
+                                  <input class="slider" id="spanish-edit" type="range" min="0" max="100" step="10" value="0">
+                                  <label class="w3-text-grey" id="spbp">0</label>
+                                  <label class="w3-text-grey" id="present">%</label>
+                                  <b></br>
+                                  <label class="w3-text-teal" style="margin-right: 13px;"><b>Arabic</br></label>
+                                  <input class="slider" id="arabic-edit" type="range" min="0" max="100" step="10" value="0">
+                                  <label class="w3-text-grey" id="arbp">0</label>
+                                  <label class="w3-text-grey" id="present">%</label>
+                                </div>
+                                <label id="errorMsg-l" style="font-size: 14px; color: red" ><b>Choose at least one language you speak </br></label>
+
+                                <hr />
+                                <!-- >Certification section -->
+                                <label class="w3-text-grey" id="certification"><b>Certification</b></label>
+                              <label class="w3-text-grey"><br>Please fill in where you were certified as a Trainer and when, </br></label>
+                              <label class="w3-text-teal"><b>Shcool Name</b></label>
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="schoolName-Input" name="schoolName" type="text" required></p>
+                              <label id="errorMsg-sn" style="font-size: 14px; color: red" ><b>The school name where you have been certified must contain only letters  </br></label>
+                              <label class="w3-text-teal"><b>Year</b></label>
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="cert-date-Input" name="year" type="date" required></p>
+                              <label class="w3-text-teal"><b>Certification info</b></label>
+                              <label class="w3-text-grey"><br>Please describe the training that  you were certified </br></label>                              
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="cert-info-Input" name="info" type="text" required></p>
+                              <hr />
+
+                              <!-- >Training Types section -->
+
+                              <label class="w3-text-grey" id="Training-Types"><b>Training Types</br></label>
+                                <label class="w3-text-grey"><br>Please enter training types (at least 1) </b></label>
+                                <label class="w3-text-grey"><br>To add more then one click'+' </br></label>
+                              <label class="w3-text-teal"><br> Name of Training type:</b></label>
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="training-name-1"  type="text" required></p>
+                              <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="duration-type-1"  type="number" min="0" max="120" required></p>
+                              <label class="w3-text-grey" id="price"><b>Price</b></label>
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="price-type-1"  type="number" min="0" required></p>
+                              <div id="training-type-2">
+                              <button class="w3-button w3-circle w3-teal" id="delTrainingbt" type="button" onclick="delTrainingType('training-type-2','training-name-2','duration-type-2','price-type-2')" >-</button>
+                              <label class="w3-text-teal"><b>Name of Training type:</b></label>
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="training-name-2"  type="text" ></p>
+                              <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="duration-type-2"  type="number" min="0" max="120" ></p>
+                              <label class="w3-text-grey" id="price"><b>Price</b></label>
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="price-type-2"  type="number" min="0" h></p>
+                              </div>
+                              
+                              <div id="training-type-3" >
+                                <button class="w3-button w3-circle w3-teal" id="delTrainingbt" type="button" onclick="delTrainingType('training-type-3','training-name-3','duration-type-3','price-type-3')" >-</button>
+                                <label class="w3-text-teal"><b>Name of Training type:</b></label>
+                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="training-name-3" " type="text" ></p>
+                                <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
+                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="duration-type-3"  type="number" min="0" max="120" ></p>
+                                <label class="w3-text-grey" id="price"><b>Price</b></label>
+                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="price-type-3"  type="number" min="0" ></p>
+                              </div>
+                              <div id="training-type-4">
+                                <button class="w3-button w3-circle w3-teal" id="delTrainingbt" type="button" onclick="delTrainingType('training-type-4','training-name-4','duration-type-4','price-type-4')" >-</button>
+                                <label class="w3-text-teal"><b>Name of Training type:</b></label>
+                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="training-name-4" type="text"></p>
+                                <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
+                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="duration-type-4"  type="number" min="0" max="120"></p>
+                                <label class="w3-text-grey" id="price"><b>Price</b></label>
+                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="price-type-4"  type="number" min="0"></p>
+                                </div>
+                              <b></br>
+                              <button class="w3-button w3-circle w3-teal" type="button" style="margin-left: 10cm;" id="addTrainingTypebt" onclick="addTrainingType()" >+</button>
+                              
+
+                              
+                    <p>
+                  <button class="w3-btn w3-teal w3-round-xlarge" type="submit" id="savebt">Create</button></p>
+                </form>
+              </div>
+            <br />
+          </div>
+
+          
+
+          <!-- End Right Column -->
+        </div>
+
+        <!-- End Grid -->
+      </div>
+
+      <!-- End Page Container -->
+    </div>
+    
+    
+    
+    <script>
+
+      //attrs temp
+      //var businessName=document.getElementById("businassName-Input").value;
+      //var fullName=document.getElementById("fullName-Input").value;
+      //var specialty=document.getElementById("specialty-Input").value;
+      //var city=document.getElementById("city-Input").value;
+      //var phone=document.getElementById("phone-Input").value;
+      //var email=document.getElementById("email-Input").value;
+      //var about=document.getElementById("about-Input").value;
+
+      var hebrew=document.getElementById('hebrew-edit').value;
+      var english=document.getElementById('english-edit').value;
+      var spanish=document.getElementById('spanish-edit').value;
+      var russian=document.getElementById('russian-edit').value;
+      var arabic=document.getElementById('arabic-edit').value;
+
+      //var schoolName=document.getElementById("schoolName-Input").value;
+      //var year=document.getElementById("cert-data-Input").value;
+      //var certificationInfo=document.getElementById("cert-info-Input").value;
+    
+
+      
+      //training type1
+      var trainingType1=document.getElementById("training-name-1");
+      var duration1=document.getElementById("duration-type-1");
+      var price1=document.getElementById("price-type-1");
+      
+        
+      //training type2
+      var trainingTypeName2=document.getElementById("training-name-2");
+      var duration2=document.getElementById("duration-type-2");
+      var price2=document.getElementById("price-type-2");
+      
+      
+      //training type3
+      var trainingTypeName3=document.getElementById("training-name-3");
+      var duration3=document.getElementById("duration-type-3");
+      var price3=document.getElementById("price-type-3");
+      
+      
+      //training type4
+      var trainingTypeName4=document.getElementById("training-name-4");
+      var duration4=document.getElementById("duration-type-4");
+      var price4=document.getElementById("price-type-4");
+      
+      //plus to add training type button
+      var TrainingTypebt=document.getElementById("addTrainingTypebt");
+      //add or remove training type functions
+      function addTrainingType(){
+        
+        if(document.getElementById("training-type-2").style.display=="" || document.getElementById("training-type-2").style.display=="none")
+        {
+          document.getElementById("training-type-2").style.display="block";
+          document.getElementById("training-name-2").setAttribute("required","");
+          document.getElementById("duration-type-2").setAttribute("required","");
+          document.getElementById("price-type-2").setAttribute("required","");
+
+          MaxTrainingType();
+          
+          return;
+        } 
+        if(document.getElementById("training-type-3").style.display==""|| document.getElementById("training-type-3").style.display=="none"){
+          document.getElementById("training-type-3").style.display="block";
+          document.getElementById("training-name-3").setAttribute("required","");
+          document.getElementById("duration-type-3").setAttribute("required","");
+          document.getElementById("price-type-3").setAttribute("required","");
+          MaxTrainingType();
+          return;
+        }
+        if(document.getElementById("training-type-4").style.display==""|| document.getElementById("training-type-4").style.display=="none"){
+          document.getElementById("training-type-4").style.display="block";
+          document.getElementById("training-name-4").setAttribute("required","");
+          document.getElementById("duration-type-4").setAttribute("required","");
+          document.getElementById("price-type-4").setAttribute("required","");
+          MaxTrainingType();
+          return;
+        }
+        return;
+      }
+      function MaxTrainingType()
+      {
+        if(document.getElementById("training-type-4").style.display=="block" && document.getElementById("training-type-3").style.display=="block" && document.getElementById("training-type-2").style.display=="block"){
+          
+          TrainingTypebt.style.display='none';
+        }
+      }
+
+      function delTrainingType(trainingTypeId, nameId,durationId,priceId){
+        
+        document.getElementById(nameId).value="";
+        document.getElementById(durationId).value="";
+        document.getElementById(priceId).value="";
+        document.getElementById(trainingTypeId).style.display='none';
+
+        document.getElementById(nameId).removeAttribute("required");
+        document.getElementById(durationId).removeAttribute("required");
+        document.getElementById(priceId).removeAttribute("required");
+        
+        TrainingTypebt.style.display='block';
+      }
+      function onlyLetters(str) {
+        return /^[a-zA-Z]+$/.test(str);
+      }
+      function validPhone(phone){
+        if(phone.charAt(0)==0 & phone.charAt(5)==0 && phone.length==10)
+        {
+          return true;
+        }
+        return false;
+      }
+      function validateProfileBusiness()
+      {
+        
+        var fullName=document.getElementById("fullName-Input").value;
+        var city=document.getElementById("city-Input").value;
+        var phone=document.getElementById("phone-Input").value;
+        //var email=document.getElementById("email-Input").value;
+        
+
+        var hebrew=document.getElementById('hebrew-edit').value;
+        var english=document.getElementById('english-edit').value;
+        var spanish=document.getElementById('spanish-edit').value;
+        var russian=document.getElementById('russian-edit').value;
+        var arabic=document.getElementById('arabic-edit').value;
+
+        var schoolName=document.getElementById("schoolName-Input").value;
+        
+        if(!onlyLetters(fullName))
+        {
+          document.getElementById("errorMsg-fn").style.display="block";
+          return false;
+        }
+        if(!onlyLetters(city))
+        {
+          document.getElementById("errorMsg-ci").style.display="block";
+          return false;
+        }
+        if(!validPhone(phone))
+        {
+          document.getElementById("errorMsg-ph").style.display="block";
+          return false;
+        }
+        if(hebrew==0 && english==0 && russian==0 && spanish==0 && arabic==0)
+        {
+          document.getElementById("errorMsg-l").style.display="block";
+          return false;
+        }
+        if(!onlyLetters(schoolName))
+        {
+          document.getElementById("errorMsg-sn").style.display="block";
+          return false;
+        }
+
+        return true;
+      }
+      
+
+      //languges
+      var hebrewEdit=document.getElementById('hebrew-edit');
+      var englishEdit=document.getElementById('english-edit');
+      var spanishEdit=document.getElementById('spanish-edit');
+      var russianEdit=document.getElementById('russian-edit');
+      var arabicEdit=document.getElementById('arabic-edit');
+
+      //show % according to what is selected in the range input
+      hebrewEdit.addEventListener("click", function() {
+        document.getElementById('hebp').innerHTML=hebrewEdit.value; });
+
+      englishEdit.addEventListener("click", function() {
+        document.getElementById('enbp').innerHTML=englishEdit.value; });
+
+      russianEdit.addEventListener("click", function() {
+        document.getElementById('rubp').innerHTML=russianEdit.value; });
+
+      spanishEdit.addEventListener("click", function() {
+        document.getElementById('spbp').innerHTML=spanishEdit.value; });
+
+      arabicEdit.addEventListener("click", function() {
+        document.getElementById('arbp').innerHTML=arabicEdit.value; });
+
+
+    </script>
+    <footer><%- include('../partials/footer') %></footer>
+  </body>
+</html>

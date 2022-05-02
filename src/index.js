@@ -57,6 +57,18 @@ app.get("/personalProfile", (req, res) => {
   connected = "true";
   res.render("pages/personalProfile", { connected: connected });
 });
+app.get("/createBusinessProfile", (req, res) => {
+  connected = "true";
+  res.render("pages/createBusinessProfile", { connected: connected });
+});
+app.get("/BusinessProfile", (req, res) => {
+  connected = "true";
+  res.render("pages/BusinessProfile", { connected: connected });
+});
+app.get("/editBusinessProfile", (req, res) => {
+  connected = "true";
+  res.render("pages/editBusinessProfile", { connected: connected });
+});
 
 app.get("/login", (req, res) => {
   var loginStatus = "true";

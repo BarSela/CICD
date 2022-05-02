@@ -1,0 +1,199 @@
+#businassName-Input {
+  width: 400px;
+}
+#fullName-Input {
+  width: 400px;
+}
+#specialty-Input {
+  width: 400px;
+}
+#city-Input {
+  width: 400px;
+}
+#phone-Input {
+  width: 400px;
+}
+#email-Input {
+  width: 450px;
+}
+#about-Input {
+  height: 150px;
+}
+#schoolName-Input {
+  width: 450px;
+}
+#cert-date-Input {
+  width: 250px;
+  text-align: center;
+}
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Roboto", sans-serif;
+}
+#name {
+  font-family: "Roboto", sans-serif;
+  color: darkcyan;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+#schedule-bt {
+  font-family: "Roboto", sans-serif;
+  width: 5cm;
+  margin-left: 100px;
+}
+#delete-acc-bt {
+  font-family: "Roboto", sans-serif;
+  width: 3.5cm;
+}
+#edit-profile-bt {
+  font-family: "Roboto", sans-serif;
+  width: 3.5cm;
+}
+#edit-training-bt {
+  font-family: "Roboto", sans-serif;
+  width: 3.8cm;
+}
+#spanish {
+  display: none;
+}
+#spanish-w {
+  height: 24px;
+  width: 25%;
+}
+#hebrew-w {
+  height: 24px;
+  width: 100%;
+}
+#english-w {
+  height: 24px;
+  width: 90%;
+}
+#russian-w {
+  height: 24px;
+  width: 25%;
+}
+#arabic-w {
+  height: 24px;
+  width: 20%;
+}
+#general {
+  font-weight: bold;
+  font-size: 20px;
+  height: 10px;
+}
+#languages {
+  font-weight: bold;
+  font-size: 20px;
+  height: 10px;
+}
+#Training-Types {
+  font-weight: bold;
+  font-size: 20px;
+  height: 10px;
+  margin-bottom: 10px;
+}
+#duration {
+  margin-top: 2px;
+}
+#duration-type-1,
+#price-type-1,
+#duration-type-2,
+#price-type-2,
+#duration-type-3,
+#price-type-3,
+#duration-type-4,
+#price-type-4 {
+  width: 150px;
+  height: 30px;
+  text-align: center;
+}
+#training-type-1,
+#training-type-2,
+#training-type-3,
+#training-type-4 {
+  width: 450px;
+}
+.slider {
+  -webkit-appearance: none;
+  width: 50%;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  margin: 5px;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #167250;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 20px;
+  border-radius: 50%;
+  background: #118359;
+  cursor: pointer;
+}
+.form-element label {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 15px;
+  padding-top: 15px;
+  margin-right: 2px;
+}
+
+#present {
+  display: inline-block;
+  margin-left: 0px;
+  font-size: 15px;
+}
+#training-type-2 {
+  display: none;
+}
+#training-type-3 {
+  display: none;
+}
+#training-type-4 {
+  display: none;
+}
+#training-name-1,
+#training-name-2,
+#training-name-3,
+#training-name-4 {
+  width: 450px;
+}
+
+#delTrainingbt {
+  display: inline-block;
+  margin-right: 3px;
+  margin-bottom: 2px;
+}
+#errorMsg-fn,
+#errorMsg-ci,
+#errorMsg-fh,
+#errorMsg-l,
+#errorMsg-sn {
+  display: none;
+}
+#savebt {
+  margin-left: 19cm;
+  margin-top: 3px;
+}
+.w3-content {
+  max-width: 100%;
+}
