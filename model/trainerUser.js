@@ -43,7 +43,7 @@ const trainerUser = new mongoose.Schema({
   },
 
   phone: {
-    type: Int16Array,
+    type: Number,
     required: true,
   },
 

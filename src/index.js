@@ -53,6 +53,10 @@ app.get("/aboutUs", (req, res) => {
   connected = "true";
   res.render("pages/aboutUs", { connected: connected });
 });
+app.get("/personalProfile", (req, res) => {
+  connected = "true";
+  res.render("pages/personalProfile", { connected: connected });
+});
 
 app.get("/login", (req, res) => {
   var loginStatus = "true";

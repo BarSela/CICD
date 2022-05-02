@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
- 
   <head>
     <title>Shape</title>
     <%- include('../partials/head'); %>
@@ -10,193 +9,165 @@
   </head>
   <header><%- include('../partials/header') %></header>
   <body>
-    
-         <div class="banner">
-           <div class="content">
-              <h1>So much more than<br> just a <span>fitness app</span></h1>
-              <h3>Grow your business and increase revenue with SHAPE<br>
-              online scheduling, management, and membership system <br>
-              for trainers, gyms, fitness centers, and more.</h3>
-              <div class="btn-group">
-                <button type="button" id="get-started-btn">Get Started</button>>
-                <button type="button" id="about-btn">About Us</button>>
-              </div>
-           </div>
-         </div>
-       
-     <!-- --About section start---->
-	<section class="about">
-    <div class="title">
-      <h2>our story</h2>
+    <div class="banner">
+      <div class="content">
+        <h1>
+          So much more than<br />
+          just a <span>fitness app</span>
+        </h1>
+        <h3>
+          Grow your business and increase revenue with SHAPE<br />
+          online scheduling, management, and membership system <br />
+          for trainers, gyms, fitness centers, and more.
+        </h3>
+        <div class="btn-group">
+          <button type="button" id="get-started-btn">Get Started</button>
+          <button type="button" id="about-btn">About Us</button>
+          <button
+            type="button"
+            id="about-btn"
+            onclick="location.href='/personalProfile'"
+          >
+            Personal profile
+          </button>
+        </div>
+      </div>
     </div>
-		<!-- <div class="main"> -->
+
+    <!-- --About section start---->
+    <section class="about">
+      <div class="title">
+        <h2>our story</h2>
+      </div>
+      <!-- <div class="main"> -->
       <div class="slideshow-container">
-        
         <div class="mySlides fade">
           <div class="about-container">
             <h5>The vision</h5>
-                <P>We began SHAPE with an idea and an ambition to help personal trainers
-                  build thriving businesses through the use of intelligent software.
-                  few years on, SHAPE has become an essential platform that allows
-                    thousands of trainers across the globe to reach millions
-                    of clients - each and every day. 
-                    The progression of technology brings us infinite opportunity to evolve SHAPE ,
-                      making that original idea still as exciting as ever.
-                </P>
+            <P
+              >We began SHAPE with an idea and an ambition to help personal
+              trainers build thriving businesses through the use of intelligent
+              software. few years on, SHAPE has become an essential platform
+              that allows thousands of trainers across the globe to reach
+              millions of clients - each and every day. The progression of
+              technology brings us infinite opportunity to evolve SHAPE , making
+              that original idea still as exciting as ever.
+            </P>
           </div>
         </div>
         <div class="mySlides fade">
           <div class="about-container">
             <h5>Made by trainers, for trainers</h5>
-                <P>Years of industry experience helped us understand what’s
-                   essential to personal training businesses. Every feature
-                    of SHAPE supports the unique needs of Personal Training 
-                    and is highly flexible to celebrate the unique 
-                    approaches of each and every trainer. Continual
-                     dialogue with our trainers enables us understand 
-                     how SHAPE will help them do what they do best,
-                    both now and into the future.
-                </P>
+            <P
+              >Years of industry experience helped us understand what’s
+              essential to personal training businesses. Every feature of SHAPE
+              supports the unique needs of Personal Training and is highly
+              flexible to celebrate the unique approaches of each and every
+              trainer. Continual dialogue with our trainers enables us
+              understand how SHAPE will help them do what they do best, both now
+              and into the future.
+            </P>
           </div>
         </div>
-          <div class="mySlides fade">
-            <div class="about-container">
-              <h5>Guided by our principals</h5>
-                  <P>With the evolution of personal training and rapid changes in technology,
-                     we keep SHAPE ahead of the curve by continually releasing updates,
-                      features and innovations. While things inevitably change,
-                       we are guided by our six core design principles to ensure we remain
-                        the same SHAPE platform our trainers have always loved.
-                  </P>
-            </div>
+        <div class="mySlides fade">
+          <div class="about-container">
+            <h5>Guided by our principals</h5>
+            <P
+              >With the evolution of personal training and rapid changes in
+              technology, we keep SHAPE ahead of the curve by continually
+              releasing updates, features and innovations. While things
+              inevitably change, we are guided by our six core design principles
+              to ensure we remain the same SHAPE platform our trainers have
+              always loved.
+            </P>
+          </div>
         </div>
-          <a class="prev" onclick="plusSlides(-1)">❮</a>
-          <a class="next" onclick="plusSlides(1)">❯</a>
-      </div>      
-    <!-- </div> -->
-        
-  </section>
+        <a class="prev" onclick="plusSlides(-1)">❮</a>
+        <a class="next" onclick="plusSlides(1)">❯</a>
+      </div>
+      <!-- </div> -->
+    </section>
     <!-----service section start----------->
     <!-- <section class="service-container"> -->
-      <div class="service">
-        <div class="title">
-          <h2>Our Services</h2>
+    <div class="service">
+      <div class="title">
+        <h2>Our Services</h2>
+      </div>
+
+      <div class="services-box">
+        <div class="service-card">
+          <i class="fas fa-bars"></i>
+          <h5>Grow your membership</h5>
+          <div class="pra">
+            <p>
+              Give your members the ability to check your schedule, book
+              in-person classes, and view their registrations wherever they are.
+            </p>
+            <p style="text-align: center">
+              <a class="button" href="#">Read More</a>
+            </p>
+          </div>
         </div>
 
-          <div class="services-box">
-            <div class="service-card">
-              <i class="fas fa-bars"></i>
-              <h5>Grow your membership</h5>
-              <div class="pra">
-                <p>Give your members the ability to check your schedule, book in-person classes, and view their registrations wherever they are.</p>
-                <p style="text-align: center;">
-                  <a class="button" href="#">Read More</a>
-                </p>
-              </div>
-            </div>
+        <div class="service-card">
+          <i class="far fa-user"></i>
+          <h5>Organize your schedule</h5>
+          <div class="pra">
+            <p>
+              Auto-adjust for time zones, let clients easily cancel & reschedule
+              themselves, and send automated reminders to keep clients prompt.
+            </p>
 
-            <div class="service-card">
-              <i class="far fa-user"></i>
-              <h5>Organize your schedule</h5>
-              <div class="pra">
-                <p>Auto-adjust for time zones, let clients easily cancel & reschedule themselves, and send automated reminders to keep clients prompt.</p>
-
-           <p style="text-align: center;">
-             <a class="button" href="#">Read More</a>
-           </p>
-         </div>
-       </div>
-
-<<<<<<< HEAD
-       <div class="service-card">
-         <i class="far fa-bell"></i>
-         <h5>Manage your clients </h5>
-         <div class="pra">
-           <p>Everything you need in one place. 
-             Easily keep track of your clients' information
-              including their bookings, payments and progress.</p>
-           <p style="text-align: center;">
-             <a class="button" href="#">Read More</a>
-           </p>
-         </div>
-       </div>
-     </div>
- </div>
-<!-- </section> -->
-<footer><%- include('../partials/footer') %></footer>
-
-       
-</body>
-<script>
-let slideIndex = 1;
-showSlides(slideIndex);
-// Next/previous controls
-function plusSlides(n) {
- showSlides(slideIndex += n);
-}
-// Thumbnail image controls
-function currentSlide(n) {
- showSlides(slideIndex = n);
-}
-function showSlides(n) {
- let i;
- let slides = document.getElementsByClassName("mySlides");
- if (n > slides.length) {slideIndex = 1}
- if (n < 1) {slideIndex = slides.length}
- for (i = 0; i < slides.length; i++) {
-   slides[i].style.display = "none";
- }
-
- slides[slideIndex-1].style.display = "block";
-}
-</script>
-=======
-            <div class="service-card">
-              <i class="far fa-bell"></i>
-              <h5>Manage your clients </h5>
-              <div class="pra">
-                <p>Everything you need in one place. 
-                  Easily keep track of your clients' information
-                   including their bookings, payments and progress.</p>
-                <p style="text-align: center;">
-                  <a class="button" href="#">Read More</a>
-                </p>
-              </div>
-            </div>
+            <p style="text-align: center">
+              <a class="button" href="#">Read More</a>
+            </p>
           </div>
-      </div>
-   <!-- </section> -->
-   <footer><%- include('../partials/footer') %></footer>
+        </div>
 
-            
+        <div class="service-card">
+          <i class="far fa-bell"></i>
+          <h5>Manage your clients</h5>
+          <div class="pra">
+            <p>
+              Everything you need in one place. Easily keep track of your
+              clients' information including their bookings, payments and
+              progress.
+            </p>
+            <p style="text-align: center">
+              <a class="button" href="#">Read More</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- </section> -->
+    <footer><%- include('../partials/footer') %></footer>
   </body>
   <script>
     let slideIndex = 1;
     showSlides(slideIndex);
-
     // Next/previous controls
     function plusSlides(n) {
-      showSlides(slideIndex += n);
+      showSlides((slideIndex += n));
     }
-
     // Thumbnail image controls
     function currentSlide(n) {
-      showSlides(slideIndex = n);
+      showSlides((slideIndex = n));
     }
-
     function showSlides(n) {
       let i;
       let slides = document.getElementsByClassName("mySlides");
-
-      if (n > slides.length) {slideIndex = 1}
-      if (n < 1) {slideIndex = slides.length}
+      if (n > slides.length) {
+        slideIndex = 1;
+      }
+      if (n < 1) {
+        slideIndex = slides.length;
+      }
       for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
       }
-    
-      slides[slideIndex-1].style.display = "block";
+
+      slides[slideIndex - 1].style.display = "block";
     }
   </script>
- 
 </html>
->>>>>>> 53228cd6297496580a1dbd1fa77e766256a36827
