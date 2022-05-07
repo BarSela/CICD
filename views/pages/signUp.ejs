@@ -1,123 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>    
-    <meta charset="UTF-8">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="css/signUp.css">
-    <link rel="stylesheet" href="css/footer.css" />
-</head>
 
-<body>
-    <div class="full-page">
-      <label id="errorMsg" style="font-size: 16px; color: red" hidden></label>
-      
-        <div id='register-form'class='Registration-page'>
-            <div class="form-box">
-                <div class='button-box'>
-                    <div id='btn'></div>
-                    <button type='button'onclick='Trainer()'class='toggle-btn'>Trainer</button>
-                    <button type='button'onclick='Trainee()'class='toggle-btn'>Trainee</button>
+<html>
+    <head><%- include('../partials/head'); %></head>
+    <header><%- include('../partials/header') %></header>
+    <body>
+            <div class="signup-wrapper">
+              <h2>Registration</h2>
+              <div class="register-switch">
+                <input type="radio" name="userType" value="Trainee" id="trainee" class="register-switch-input" onclick="traineeForm()" checked>
+                <label for="trainee" class="register-switch-label">Trainee</label>
+                <input type="radio" name="userType" value="Trainer" id="trainer" class="register-switch-input" onclick="trainerForm()">
+                <label for="trainer" class="register-switch-label">Trainer</label>
+             </div>
+              <label id="errorMsg" style="font-size: 16px; color: red" hidden></label>
+              <form class="signup" id="trainee-form" action="/signUp" method="POST" onsubmit="return validateSignupForm()"  >
+                <input type="text" id="userType" name="userType" value="trainee" style="display:none;"/>
+                <div class="input-box">
+                  <input type="text" id="fullName" name="fullName" placeholder="Enter your name" required/>
                 </div>
-               
-                <form id='Trainee' class='input-group-Trainee'>
-                    <input type='text'class='input-field'placeholder='Full Name' required>
-                    <input type='email'class='input-field'placeholder='Email' required>
-                    <input type='password'class='input-field'placeholder='Enter Password' required>
-                    <input type='password'class='input-field'placeholder='Confirm Password'  required>
-                    <input type='checkbox'class='check-box'>
-                    <span class="Agreement">I agree to the terms and conditions</span>
-                    <button type='submit'class='submit-btn'>Register Now</button>
-                    
-                </form>
-                <form id='Trainer' class='input-group-Trainer' action="/signup"
-                method="POST"
-                onsubmit="return validateSignupForm()"</form>
-                    <input type='text'class='input-field'placeholder='Full Name' required>
-                    <input type='text'class='input-field'placeholder='Business Name' required>
-                    <input type='email'class='input-field'placeholder='Email' required>
-                    <input type='password'class='input-field'placeholder='Enter Password' required>
-                    <input type='password'class='input-field'placeholder='Confirm Password'  required>
-                    <input type='checkbox'class='check-box'>
-                    <span class="Agreement">I agree to the terms and conditions</span>
-                    <button type='submit'class='submit-btn'>Register Now</button>
-                    
-                    </div>
-		        </form>
-            </div>
-            <footer><%- include('../partials/footer') %></footer>
-        </div>
-      
-    </div>
+                <div class="input-box">
+                  <input type="text" id="email" name="email" placeholder="Enter your email" required/>
+                </div>
+                <div class="input-box">
+                  <input type="password" id="password" name="password" placeholder="Create password" required/>
+                </div>
+                <div class="input-box">
+                  <input type="password" id="passwordRepeat" name="passwordRepeat" placeholder="Confirm password" required/>
+                </div>
+                <div class="gender" id ="gender" >
+                <input type="radio" id="male" name="gender" value="male" checked>Male
+                <input type="radio" id="female" name="gender" value="female">Female
+                <input type="radio" id="other" name="gender" value="other"> Other
+                </div>
+                <div class="policy-cb">
+                  <h3><input type="checkbox" id="cb" name="cb"/>    I accept all terms & condition</h3>
+                </div>                  	
+                <div class="input-box button">
+                  <input type="submit" onclick="submitForm()" id =trainee-reg value="Register Now" />
+                </div>
+                <div class="text">
+                  <h3>Already have an account? <a href="/login">Login now</a></h3>
+                </div>
+              </form>
+              <form class="signup" id="trainer-form" action="/signUp" method="POST" onsubmit="return validateSignupForm()" hidden  >
+                <div class="input-box">
+                  <input type="text" id="fullName" name="fullName" placeholder="Enter your name" required/>
+                </div>
+                <div class="input-box">
+                  <input type="text" id="businessName" name="businessName" placeholder="Enter your business name" required style="display:"/>
+                </div>
+                <div class="input-box">
+                  <input type="text" id="email" name="email" placeholder="Enter your email" required/>
+                </div>
+                <div class="input-box">
+                  <input type="password" id="password" name="password" placeholder="Create password" required/>
+                </div>
+                <div class="input-box">
+                  <input type="password" id="passwordRepeat" name="passwordRepeat" placeholder="Confirm password" required/>
+                </div>
+                <div class="gender" id = "gender">
+                <input type="radio" id="male" name="gender" value="male" checked > Male
+                <input type="radio" id="female" name="gender" value="female"> Female
+                <input type="radio" id="other" name="gender" value="other"> Other
+                </div>
+                <div class="policy-cb">
+                  <h3><input type="checkbox" id="cb" name="cb"/>    I accept all terms & condition</h3>
+                </div>                  	
+                <div class="input-box button">
+                  <input type="submit" onclick="submitForm()" id =trainer-reg value="Register Now" />
+                </div>
+                <div class="text">
+                  <h3>Already have an account? <a href="/login">Login now</a></h3>
+                </div>
+              </form>
+            </div>    
+      <script>
+        console.log(document.getElementById("userType").value);
+        function traineeForm(){
+         
+          document.getElementById("userType").value = "trainee";
+          console.log(document.getElementById("userType").value);
+          document.getElementById("trainer-form").hidden = true;
+          document.getElementById("trainee-form").hidden = false;
+        }
+        function trainerForm(){
     
-  
-    <script>
-        var x=document.getElementById('Trainer');
-		var y=document.getElementById('Trainee');
-		var z=document.getElementById('btn');
-		function Trainee()
-		{
-			x.style.left='-400px';
-			y.style.left='50px';
-			z.style.left='110px';
-		}
-		function Trainer()
-		{
-			x.style.left='50px';
-			y.style.left='450px';
-			z.style.left='0px';
-		}
+          document.getElementById("userType").value = "trainer";
+          console.log(document.getElementById("userType").value);
+          document.getElementById("trainee-form").hidden = true;
+          document.getElementById("trainer-form").hidden = false;
 
-    var regStatus = true;
-    var errorMsg = document.getElementById("errorMsg");
-    errorMsg.style.display = "none";
+        }
+        function submitForm(){
+          if(userType == "trainee"){
+            document.getElementById("trainee-form").submit();
+          }
+          if(userType == "trainer"){
+            document.getElementById("trainer-form").submit();
+          }
+          
+        
+        }
+        var regStatus = true;
+        var errorMsg = document.getElementById("errorMsg");
+        errorMsg.style.display = "none";
+        if ("<%= status %>" == "false") {
+          errorMsg.innerHTML = "This email is already exixt";
+          errorMsg.style.display = "block";
+          regStatus = false;
+        }
+        function validateSignupForm() {
+          var regStatus = true;
+          var userType = document.getElementById("userType").value;
+          var fullName = document.getElementById("fullName").value;
+          var email = document.getElementById("email").value;
+          var password = document.getElementById("password").value;
+          var passwordRepeat = document.getElementById("passwordRepeat").value;
+          var businessName = document.getElementById("businessName").value;
+          var checkbox = document.getElementById("cb").checked;
+          var gender = document.getElementById("gender").value;
+          console.log(document.getElementById("userType").value);
+          console.log(document.getElementById("fullName").value);
+          console.log(document.getElementById("email").value);
+          console.log(document.getElementById("password").value);
+          console.log(document.getElementById("businessName").value);
+          console.log(document.getElementById("cb").checked);
+                  
+          if (!checkbox) {
+            errorMsg.innerHTML = "You must agree the terms";
+            errorMsg.style.display = "block";
+            return false;
+          }
+          if (password.length < 8) {
+            errorMsg.innerHTML =
+              "Your password must include atleast 8 characters";
+            errorMsg.style.display = "block";
+            return false;
+          }
 
-    if ("<%= status %>" == "false") {
-      errorMsg.innerHTML = "This email is already exixt";
-      errorMsg.style.display = "block";
-      regStatus = false;
-    }
-    function validateSignupForm() {
-      var regStatus = true;
-      var fullName = document.getElementById("fullName").value;
-      var email = document.getElementById("email").value;
-      var password = document.getElementById("password").value;
-      var passwordRepeat = document.getElementById("passwordRepeat").value;
-      var checkbox = document.getElementById("cb").checked;
+          if (password != passwordRepeat) {
+            errorMsg.innerHTML = "please confirm your password";
+            errorMsg.style.display = "block";
+            return false;
+          }
 
-      if (!checkbox) {
-        errorMsg.innerHTML = "You must agree the terms";
-        errorMsg.style.display = "block";
-        return false;
-      }
-      if (password.length < 8) {
-        errorMsg.innerHTML =
-          "Your password must include atleast 8 characters";
-        errorMsg.style.display = "block";
-        return false;
-      }
+          if (!ValidateEmail(email)) {
+            errorMsg.innerHTML = "You have entered an invalid email address!";
+            errorMsg.style.display = "block";
+            return false;
+          }
+          return regStatus;
+        }
 
-      if (password != passwordRepeat) {
-        errorMsg.innerHTML = "please confirm your password";
-        errorMsg.style.display = "block";
-        return false;
-      }
-
-      if (!ValidateEmail(email)) {
-        errorMsg.innerHTML = "You have entered an invalid email address!";
-        errorMsg.style.display = "block";
-        return false;
-      }
-
-      return regStatus;
-    }
-
-    function ValidateEmail(email) {
-      return /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(email);
-    }
-
-	</script>
-
-
-    
-</body>
+        function ValidateEmail(email) {
+          return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+        }
+      </script>
+    </body>
+ 
 </html>

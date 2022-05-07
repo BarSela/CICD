@@ -39,9 +39,13 @@ h5,
 h6 {
   font-family: "Roboto", sans-serif;
 }
+.container{
+  max-height: 800px;
+}
+
 #name {
   font-family: "Roboto", sans-serif;
-  color: darkcyan;
+  color: #6c9da4;
   margin-left: 10px;
   margin-top: 10px;
 }
@@ -55,6 +59,7 @@ h6 {
   width: 3.5cm;
 }
 #edit-profile-bt {
+  background-color: #6c9da4;
   font-family: "Roboto", sans-serif;
   width: 3.5cm;
 }
@@ -114,7 +119,7 @@ h6 {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #167250;
+  background: #6c9da4;
   cursor: pointer;
 }
 
@@ -122,7 +127,7 @@ h6 {
   width: 25px;
   height: 20px;
   border-radius: 50%;
-  background: #118359;
+  background: #6c9da4;
   cursor: pointer;
 }
 .form-element label {

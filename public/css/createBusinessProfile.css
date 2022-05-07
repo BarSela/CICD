@@ -1,3 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.w3-content{
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 120px auto 120px;
+  background-color: rgb(41, 38, 38);
+  padding: 0 20px 20px;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
+}
 #businassName-Input {
   width: 400px;
 }
@@ -194,6 +213,4 @@ h6 {
   margin-left: 19cm;
   margin-top: 3px;
 }
-.w3-content {
-  max-width: 100%;
-}
+

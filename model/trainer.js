@@ -2,9 +2,14 @@ const mongoose = require("mongoose");
 
 const { ObjectId } = mongoose.Schema;
 
-// trainee schema
-const traineeUser = new mongoose.Schema({
+// trainer schema
+const trainerUser = new mongoose.Schema({
   fullName: {
+    type: String,
+    required: true,
+    maxlength: 32,
+  },
+  businessName: {
     type: String,
     required: true,
     maxlength: 32,
@@ -32,10 +37,25 @@ const traineeUser = new mongoose.Schema({
     required: true,
   },
 
+  specialty: {
+    type: String,
+    required: true,
+  },
+
+  city: {
+    type: String,
+    required: true,
+  },
+
+  phone: {
+    type: Number,
+    required: true,
+  },
+
   exist: {
     type: Boolean,
     required: true,
   },
 });
 
-module.exports = mongoose.model("Trainee", traineeUser);
+module.exports = mongoose.model("Trainer", trainerUser);

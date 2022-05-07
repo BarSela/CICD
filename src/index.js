@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { signup, login } = require("../controllers/user");
-//const { addTraining } = require("../controllers/trainer");
+const {login, signup } = require("../controllers/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -34,8 +33,8 @@ app.listen(port, () => {
 });
 
 //Routing for the GET request methods
-//var status = "false";
-var connected;
+var status = "false";
+var connected = false;
 
 app.get("/", (req, res) => {
   res.render("pages/homePage", { connected: connected });
@@ -46,7 +45,6 @@ app.get("/QNA", (req, res) => {
 
 app.get("/signUp", (req, res) => {
   var status = "true";
-
   res.render("pages/signUp", { status: status, connected: connected });
 });
 app.get("/aboutUs", (req, res) => {
@@ -56,6 +54,19 @@ app.get("/aboutUs", (req, res) => {
 app.get("/personalProfile", (req, res) => {
   connected = "true";
   res.render("pages/personalProfile", { connected: connected });
+});
+
+app.get("/findTrainer", (req, res) => {
+  connected = "true";
+  res.render("pages/findTrainer",{ connected: connected });
+});
+app.get("/trainerdashboard", (req, res) => {
+  connected = "true";
+  res.render("pages/trainerdashboard",{ connected: connected });
+});
+app.get("/traineeDashboard", (req, res) => {
+  connected = "true";
+  res.render("pages/traineeDashboard",{ connected: connected });
 });
 app.get("/createBusinessProfile", (req, res) => {
   connected = "true";
@@ -74,17 +85,21 @@ app.get("/login", (req, res) => {
   var loginStatus = "true";
   res.render("pages/login", { loginStatus: loginStatus, connected: connected });
 });
-// app.get("/calendar", (req, res) => {
-//   res.render("pages/calendar");
-// });
+app.get("/calendar", (req, res) => {
+  var loginStatus = "true";
+  res.render("pages/calendar", { loginStatus: loginStatus, connected: connected });
+});
+
 app.get("/homePage", (req, res) => {
-  res.render("pages/homePage");
+  res.render("pages/homePage",{ connected: connected });
 });
 
 app.get("/logout", (req, res) => {
   connected = "false";
   res.render("pages/homePage", { connected: connected });
 });
+
 app.post("/login", login);
-app.post("/signup", signup);
+app.post("/signUp",signup);
+// app.post("/signUp",signupAsTrainer);
 //app.post("/new", addTraining);

@@ -1,8 +1,8 @@
 footer {
-  position: relative;
+  position: absolute;
   width: 100%;
-  height: 390px;
-  background: #d3d3d3;
+  height: 300px;
+  background: #212020;
   display: flex;
   flex-direction: column;
   align-items: center;

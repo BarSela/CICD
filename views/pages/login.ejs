@@ -1,49 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Log In</title>
-    <link rel="stylesheet" href="css/login.css" />
-    <link rel="stylesheet" href="css/footer.css" />
-  </head>
-  <body>
-    <label
-      id="logErrorMsg"
-      style="font-size: 16px; color: red; text-align: center"
-      hidden
-    ></label>
-    <div id="login-form" class="login-page">
-      <div class="form-box">
-        <h1>Log In</h1>
-
-        <form id="login" class="input-group-login">
-          <input
-            type="email"
-            class="input-field"
-            placeholder="Enter your email"
-            required
-          />
-          <input
-            type="password"
-            class="input-field"
-            placeholder="Enter password"
-            required
-          />
-          <button type="submit" class="submit-btn" id="loginBtn">Log in</button>
-        </form>
-      </div>
-      <footer><%- include('../partials/footer') %></footer>
-    </div>
-    <script>
-      var logStatus = true;
-      var logErrorMsg = document.getElementById("logErrorMsg");
-      logErrorMsg.style.display = "none";
-
-      if ("<%= loginStatus %>" == "false") {
-        logErrorMsg.innerHTML = "The email or password is incorrect";
-        logErrorMsg.style.display = "block";
-        logStatus = false;
-      }
-    </script>
-  </body>
+<html>
+  <html>
+    <head>
+      <link rel="stylesheet" href="/css/homePage.css">
+      <%- include('../partials/head'); %>
+    </head>
+    <header><%- include('../partials/header') %></header>
+    <body>
+     
+        <div class="login-wrapper">     
+            <h2>Login</h2>
+            <label id="logErrorMsg" style="font-size: 16px; color: red; text-align: center;" hidden></label> 
+            <form class="login" action="/login" method="POST">
+                <div class="txt_field">
+                    <input type="email" name="email" required>
+                    <span></span>
+                    <label>Email</label>
+                </div>
+                <div class="txt_field">
+                    <input type="password" name="password" required>
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <div class="forgot-password">Forgot Password?</div>
+                    <input type="submit" value="Login">
+                    <div class="signup-link">
+                    Not a member? <a href="/signUp">Signup</a>
+                </div>
+            </form>
+        </div>
+            <script>
+                var logStatus = true;
+                var logErrorMsg =document.getElementById("logErrorMsg");
+                logErrorMsg.style.display = 'none';
+                
+                if ("<%= loginStatus %>" == 'false'){
+                        
+                        logErrorMsg.innerHTML = "The email or password is incorrect";
+                        logErrorMsg.style.display='block';
+                        logStatus=false;
+                    }  
+            </script>
+    </body>
+  </html>
 </html>

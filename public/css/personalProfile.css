@@ -1,13 +1,103 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:900,300);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
-  background-color: #161616;
+  /* background-color: #161616;
   font-family: roboto;
-  margin-top: 200px;
+  margin-top: 200px; */
+}
+.container .profile-details {
+  height: 250px;
+  margin-top: 40px;
+}
+.profile-details .input-box {
+  height: 48px;
+  margin: 20px 0;
+}
+.input-box label{
+  color: #555;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 20px ;
+  display: inline-block;
+  text-align: right;
+  width: 90px;
+  margin-top: 0px;
+
+}
+
+.profile-details .input-box input {
+  height: 100%;
+  width: 40%;
+  outline: none;
+  padding: 0 15px;
+  font-size: 17px;
+  font-weight: 400;
+  color: #333;
+  border: 1.5px solid #c7bebe;
+  border-bottom-width: 2.5px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+.input-box input:focus,
+.input-box input:valid {
+  border-color: #6c9da4;
+}
+
+form h3 {
+  color: #707070;
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 30px;
+  
+}
+.input-box.button input {
+  position: static;
+  color: #fff;
+  letter-spacing: 1px;
+  border: none;
+  background: #6c9da4;
+  cursor: pointer;
+}
+.input-box.button input:hover {
+  position: static;
+  background: #6c9da4;
+}
+form .text h3 {
+  color: #333;
+  width: 100%;
+  text-align: center;
+  margin-left: -30px;
+  
+}
+form .text h3 a {
+  color: #6c9da4;
+  text-decoration: none;
+}
+form .text h3 a:hover {
+  text-decoration: underline;
+}
+.gender {
+  margin: 18px 20px;
+  align-items: center; 
+}
+.gender [type=radio]{
+  margin: 10px 10px;
+  
+}
+.btn-group button{
+  width: 150px;
+  
+  
 }
 .container {
+  position: relative;
   width: 1200px;
   margin: 120px auto 120px;
-  background-color: rgb(41, 38, 38);
+  background-color: rgba(255, 255, 255, 0.815);
   padding: 0 20px 20px;
   border-radius: 6px;
   -webkit-border-radius: 6px;
@@ -67,11 +157,11 @@ h2 {
   font-size: 32px;
   font-weight: 600;
   margin-bottom: 15px;
-  color: rgb(255, 255, 255);
+  color: rgb(94, 94, 94);
 }
 h4 {
-  font-size: 16px;
-  color: #2f7272;
+  font-size: 20px;
+  color: #6c9da4;
   letter-spacing: 1px;
   margin-bottom: 25px;
 }

@@ -8,63 +8,123 @@ h5,
 h6 {
   font-family: "Roboto", sans-serif;
 }
-#name {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* CONTENT */
+#content {
+	position: relative;
+	width: calc(100% - 260px);
+	left: 260px;
+	transition: all .3s ease;
+}
+#sidebar.hide + #content {
+	width: calc(100% - 60px);
+	left: 60px;
+}
+/* NAVBAR */
+nav {
+	background: var(--light);
+	height: 64px;
+	padding: 0 20px;
+	display: flex;
+	align-items: center;
+	grid-gap: 28px;
+	position: sticky;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+/* .w3-content {
+  height: 100vh;
+  width: 100%;
+  background-image: linear-gradient(
+      rgba(19, 37, 41, 0.979),
+      rgba(19, 37, 41, 0.979)
+    )
+    /*,url(login.jpg)*/;
+  /* background-position: center;
+  background-size: cover;
+  position: absolute; */
+/* } */
+/* .w3-margin-top{
+  height: 100vh;
+  width: 100%;
+} */ 
+main {
+	width: 100%;
+	padding: 24px 20px 20px 20px;
+}
+main #name {
   font-family: "Roboto", sans-serif;
   color: darkcyan;
   margin-left: 10px;
   margin-top: 10px;
 }
-#schedule-bt {
+main #schedule-bt {
   font-family: "Roboto", sans-serif;
   width: 5cm;
   margin-left: 100px;
 }
-#delete-acc-bt {
+main #delete-acc-bt {
   font-family: "Roboto", sans-serif;
   width: 3.5cm;
 }
-#edit-profile-bt {
+main #edit-profile-bt {
   font-family: "Roboto", sans-serif;
   width: 3.5cm;
 }
-#edit-training-bt {
+main #edit-training-bt {
   font-family: "Roboto", sans-serif;
   width: 3.8cm;
 }
-#spanish {
+main #spanish {
   display: none;
 }
-#arabic {
+main #arabic {
   display: none;
 }
-#spanish-w {
+main #spanish-w {
   height: 24px;
   width: 25%;
 }
-#hebrew-w {
+main #hebrew-w {
   height: 24px;
   width: 100%;
 }
-#english-w {
+main #english-w {
   height: 24px;
   width: 90%;
 }
-#russian-w {
+main #russian-w {
   height: 24px;
   width: 25%;
 }
-#arabic-w {
+main #arabic-w {
   height: 24px;
   width: 20%;
 }
-li {
+main li {
   font-family: "Roboto", sans-serif;
   color: rgb(80, 80, 80);
   font-size: 20px;
 }
-#training-types {
+main #training-types {
   font-size: 30px;
 }
-.w3-row-padding > .w3-twothird {
+main .w3-row-padding > .w3-twothird {
   padding-top: 8px;
+}
+@media screen and (max-width: 768px) {
+	#content {
+		position: relative;
+		width: calc(100% - 60px);
+		transition: all .3s ease;
+	}
+	nav .nav-link,
+	nav .divider {
+		display: none;
+	}
 }

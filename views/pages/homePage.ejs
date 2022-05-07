@@ -21,35 +21,31 @@
           for trainers, gyms, fitness centers, and more.
         </h3>
         <div class="btn-group">
+          <div class="btn-group">
           <button
             type="button"
             id="get-started-btn"
-            onclick="location.href='/SignUp'"
+            onclick="location.href='/signUp'"
           >
-            Get Started
-          </button>
-          <button type="button" id="about-btn">About Us</button>
-          <button
-            type="button"
-            id="about-btn"
-            onclick="location.href='/personalProfile'"
-          >
-            Personal profile
+          Get Started
           </button>
           <button
             type="button"
-            id="about-btn"
-            onclick="location.href='/createBusinessProfile'"
-          >
-            create business profile
+            id="dashboard"
+            onclick="location.href='/traineedashboard'"
+            style="display: none;">
+            dashboard
           </button>
+        </div>
           <button
             type="button"
             id="about-btn"
-            onclick="location.href='/businessProfile'"
+            onclick="location.href='/aboutUs'"
           >
-            business profile
+          About Us
           </button>
+          
+          
         </div>
       </div>
     </div>
@@ -164,6 +160,15 @@
     <footer><%- include('../partials/footer') %></footer>
   </body>
   <script>
+    console.log("<%= connected %>");
+    if ("<%= connected %>" == "true") {
+      document.getElementById("get-started-btn").style.display="none";
+      document.getElementById("dashboard").style.display = "block";
+    } else {
+      document.getElementById("get-started-btn").style.display="block";
+      document.getElementById("dashboard").style.display="none";
+    }
+    
     let slideIndex = 1;
     showSlides(slideIndex);
     // Next/previous controls

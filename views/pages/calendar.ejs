@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='utf-8' />
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet'>
+    <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Muli:300,400,600,800,900' />
+
+  
+    <link href='/main.css' rel='stylesheet' />
+    <script src='/main.js'></script>
+    <script>
+      
+      // Loading the calendar
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          // themeSystem: 'bootstrap',
+          initialView: 'dayGridMonth',
+          aspectRatio: 1.5,
+          height:800,
+        
+        customButtons:
+        {
+          addEventButton: {
+            text: 'add event',
+            click: function() {
+              document.getElementById("newTrainingForm").style.display = "block";
+              var btn =document.getElementById("create-btn");
+              btn.addEventListener("click",function() {
+                var dateStr = document.getElementById("date").value;
+                var trainingType = document.getElementById("Type").value;
+                // var duration = document.getElementById("Duration");
+                // var price = document.getElementById("Price");
+                var time = document.getElementById("start-time").value;
+                console.log(time);
+                var date = new Date(dateStr +'T'+time); // will be in local time
+                if (!isNaN(date.valueOf())) { // valid?
+                  
+                  calendar.addEvent({
+                    title: trainingType,
+                    start: date,
+                    allDay: true
+                  });
+                  alert('Great. Now, update your database...');
+                } else {
+                  alert('Invalid date.');
+                }
+              
+              });
+            }
+          }
+        },
+        headerToolbar: {
+            
+            left:  'today,addEventButton',
+            center: 'prev,title,next',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay' 
+          
+        }
+      });
+
+        calendar.render(); 
+        var event= {title: 'Event1',start: '2022-04-04'};
+          
+      });
+    </script>
+  </head>
+  <body>
+    
+  <%- include('../partials/sidebar') %>
+  
+  
+    <%- include('../partials/navbar') %>
+    
+  <main>
+    
+        <div class="split left">
+           <div class="form-wrapper" id="newTrainingForm">
+              <h2>Schedule New Training</h2>
+             <form  class="form-container"  >
+                <div class="txt_field">
+                <select id="Type" name="Training Type">
+                <option value="Yoga">Yoga</option>
+                <option value="Zumba">Zumba</option>
+                <option value="kick-box">kick-box</option>
+                </select>
+                <span></span>
+                <label>Training Type</label>
+                </div>
+                <div class="txt_field"> <input id="title" type="text"name="training title" required/>
+                <span></span>
+                <label>training description</label>
+                </div>
+                <div class="date_fields">
+                  <div class="txt_field"><input id="date"type="date"required />
+                    <span></span>
+                  </div>
+                  <div class="txt_field">
+                    <input
+                    id="start-time"
+                    type="time"
+                    required
+                    />
+                    <span></span>
+                  </div>
+                </div>
+                <div class="label-group">
+                  <label id="Duration"><a>Duration: </a></label>
+                  <label id="Price"><a>Price: </a></label>
+                </div>
+                <div class="btn-group">
+                  <button type="submit" id="create-btn" onclick="validateTrainingForm()">Create</button>
+                  <button type="button"  onclick="closeForm()">Close</button>
+                </div>
+             </form>
+           </div>
+        </div>
+
+        <div class="split right">
+         
+            <div id='calendar' ></div>
+       
+        </div>
+     
+    </main>
+
+
+<script>
+
+function openForm() {
+  document.getElementById("newTrainingForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("newTrainingForm").style.display = "none";
+}
+
+function validateTrainingForm(){
+        var trainingType = document.getElementById("Type");
+        var duration = document.getElementById("Duration");
+        var price = document.getElementById("Price");
+        var time = document.getElementById("start_time");
+        var event= {title: 'Event1',start: '2022-04-04'};
+        console.log("LLL");
+        
+      }
+      
+</script>
+  </body>
+</html>

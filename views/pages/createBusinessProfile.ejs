@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html>
-  <title>Business profile</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-  <link rel="stylesheet" href="/css/createBusinessProfile.css" />
-  <link rel="stylesheet" href="/css/footer.css" />
   
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Roboto"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-  />
+  <head>
+    <title>Business profile</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link rel="stylesheet" href="/css/createBusinessProfile.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
+    
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+      
+  </head>
   
-  <style></style>
   
   <body class="w3-light-grey" id="page-top">
+  <%- include('../partials/sidebar') %>
+  <%- include('../partials/navbar') %>
     <!-- Page Container -->
     <div class="w3-content w3-margin-top">
       <!-- The Grid -->
       <div class="w3-row-padding">
         
-
-
         <div class="page" id="create-page">
           <div class="w3-container w3-card w3-white w3-margin-bottom">
             <h2 class="w3-text-grey w3-padding-16">
@@ -368,6 +371,6 @@
 
 
     </script>
-    <footer><%- include('../partials/footer') %></footer>
   </body>
+  
 </html>

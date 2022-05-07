@@ -4,97 +4,68 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Roboto"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-  />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
   <link rel="stylesheet" href="/css/personalProfile.css" />
-  <link rel="stylesheet" href="/css/footer.css" />
 
   <body>
+    <%- include('../partials/traineeSidebar') %>
+    <section id="content">
+    <%- include('../partials/navbar') %>
     <div class="container">
-      <div class="avatar-flip">
-        <img
-          src="/assets/bar.jpg"
-          height="150"
-          width="150"
-          style="cursor: zoom-in"
-          id="pic1"
-        />
-        <img
-          src="/assets/bar.jpg"
-          height="150"
-          width="150"
-          style="cursor: zoom-in"
-          id="pic2"
-        />
+      <div class="avatar-flip"><img src="/assets/bar.jpg" height="150" width="150" style="cursor: zoom-in"id="pic1"/>
+        <img  src="/assets/bar.jpg"  height="150"  width="150"  style="cursor: zoom-in"    id="pic2" />
       </div>
-      <div id="pictureBt" style="margin-left: 24cm; display: inline-block">
-        <button
-          class="fa fa-pencil-square-o w3-button w3-teal w3-round-xlarge"
-          id="Edit-profile-bt" onclick="location.href='/editPersonalProfile'"
-        >
-          profile
-        </button>
-        <button
-          class="fa fa-pencil-square-o w3-button w3-teal w3-round-xlarge"
-          id="Edit-picture-bt"
-        >
-          picture
-        </button>
+    
         <form onclick="replacePic()" id="upload-pic">
           <label for="img">Select image:</label>
           <input type="file" id="img" name="img" accept="image/*" />
           <input type="submit" />
         </form>
         <div class="form-popup w3-border" id="editPic" >
-          <form action="/action_page.php" class="form-container" ">
+          <form action="/action_page.php" class="form-container"">
             <h1>Change profile picture</h1>
-          
             <input  type="file" id="img" name="img" accept="image/*" />
             <button class="w3-input w3-border w3-light-grey w3-round-xlarge" id="submit-pic" type="button" value="click" style="margin: 5px;"/>
           </form>
         </div>
-      </div>
+     
       <h2>Bar Sela</h2>
       <h4>Personal Profile</h4>
-      <div id="profile-details">
-        <p class=" w3-teal w3-round-xlarge" style="width: 800px;margin-left: 4.5cm;">Full Name</p>
-        <p id="fullName">
-          <i
-            class=" fa-fw w3-margin-right w3-large w3-text-teal"
-          ></i
-          >Bar sela
-        </p>
-        <p class=" w3-teal w3-round-xlarge" style="width: 800px;margin-left: 4.5cm;">Gender</p>
-        <p id="Gender">
-          <i
-            class=" fa-fw w3-margin-right w3-large w3-text-teal"
-          ></i
-          >Female
-        </p>
-        <p class=" w3-teal w3-round-xlarge" style="width: 800px;margin-left: 4.5cm;">Email</p>
-        <p id="Email">
-          <i
-            class=" fa-fw w3-margin-right w3-large w3-text-teal"
-          ></i
-          >Barsela03@gmail.com
-        </p>
-        <p class=" w3-teal w3-round-xlarge" style="width: 800px;margin-left: 4.5cm;">Date of Registretion</p>
-        <p id="JoinSite">
-          <i
-            class=" fa-fw w3-margin-right w3-large w3-text-teal"
-          ></i
-          >15/04/2022
-        </p>
+      <div class="btn-group" id="pictureBt" style=" margin-left: 20px; display:inline-block;">
+        <button
+          class="fa fa-pencil-square-o w3-button w3-teal w3-round-xlarge"
+          id="Edit-profile-bt" onclick="location.href='/editPersonalProfile'"
+        >Edit profile
+        </button>
+        <button class="fa fa-pencil-square-o w3-button w3-teal w3-round-xlarge"
+          id="Edit-picture-bt">upload picture
+        </button>
+        <button class="fa fa-pencil-square-o w3-button w3-teal w3-round-xlarge"
+          id="Edit-picture-bt">change password
+        </button>
       </div>
-      
+       <div class="profile-details">
+          <div class="input-box">
+            <label for="fullName">FullName</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Bar Sela" readonly/>
+          </div>
+          <div class="input-box">
+            <label for="email" style="padding-right:10px;">Email </label>
+            <input type="email" id="email" name="email" placeholder="BarSela@gmail.com" style="padding-right:10px;" readonly/>
+          </div>
+          <div class="input-box">
+            <label for="password">password</label>
+            <input type="password" id="password" name="password" placeholder="**********" readonly/>
+          </div>
+          <div class="gender" id ="gender" >
+          <input type="radio" id="male" name="gender" value="male" checked >Male
+          <input type="radio" id="female" name="gender" value="female"  disabled>Female
+          <input type="radio" id="other" name="gender" value="other"  disabled> Other
+          </div>
+      </div>
     </div>
-    <footer><%- include('../partials/footer') %></footer>
+  </section>
     <script>
       function openForm() {
         document.getElementById("editPic").style.display = "block";
@@ -113,7 +84,6 @@
         });
         function replacePic(){
           var newPic=document.getElementById("img").value;
-          console.log('hhhh');
           document.getElementById("pic2").innerHTML=newPic;
           document.getElementById("pic1").innerHTML=newPic;
         }

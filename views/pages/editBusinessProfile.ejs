@@ -13,12 +13,17 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
   />
   <link rel="stylesheet" href="/css/editBusinessProfile.css" />
-  <link rel="stylesheet" href="/css/footer.css" />
+<body>
+  <!-- SIDEBAR -->
+  <%- include('../partials/sidebar') %>
   
-  
-  <body class="w3-light-grey">
+  <section id="content">
+    <%- include('../partials/navbar') %>
+  <!-- MAIN -->
+    <main>
+
     <!-- Page Container -->
-    <div class="w3-content w3-margin-top" style="max-width: 1700px">
+    <div class="w3-content w3-margin-top" style="max-width: 1700px; max-height:1000px;" >
       <!-- The Grid -->
       <div class="w3-row-padding">
         <!-- Left Column -->
@@ -59,21 +64,8 @@
                 >Barsela03@gmail.com
               </p>
               <hr />
-
-              <p class="w3-large">
-                <b
-                  ><i
-                    class="fa fa-calendar-check-o fa-fw w3-margin-right w3-text-teal"
-                  ></i
-                  >Schedule</b
-                >
-              </p>
-              <div class="w3-white">
-                <button class="w3-button w3-teal w3-round-xlarge" id="schedule-bt"> Schedule</button>
-              </div>
-
               <br />
-              <hr />
+          
               <p class="w3-large w3-text-theme">
                 <b
                   ><i class="fa fa-globe fa-fw w3-margin-right w3-text-teal"></i
@@ -244,6 +236,10 @@
 
       <!-- End Page Container -->
     </div>
+  </main>
+  <!-- MAIN -->
+</section>
+<!-- NAVBAR -->
     <script>
       //attrs temp
       var businassName=document.getElementById('businassName-Input').value="Bar Fitness";
@@ -341,6 +337,5 @@
       
       }
     </script>
-    <footer><%- include('../partials/footer') %></footer>
-  </body>
+</body>
 </html>
