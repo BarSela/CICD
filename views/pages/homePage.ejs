@@ -160,13 +160,16 @@
     <footer><%- include('../partials/footer') %></footer>
   </body>
   <script>
-    console.log("<%= connected %>");
-    if ("<%= connected %>" == "true") {
+    
+    if ("<%= userID %>" != "") {
       document.getElementById("get-started-btn").style.display="none";
       document.getElementById("dashboard").style.display = "block";
     } else {
+
       document.getElementById("get-started-btn").style.display="block";
       document.getElementById("dashboard").style.display="none";
+      
+      
     }
     
     let slideIndex = 1;

@@ -33,57 +33,54 @@ app.listen(port, () => {
 });
 
 //Routing for the GET request methods
-var status = "false";
-var connected = false;
+var userType = "";
+var userID = "";
 
 app.get("/", (req, res) => {
-  res.render("pages/homePage", { connected: connected });
+  res.render("pages/homePage", { userID: userID });
 });
 app.get("/QNA", (req, res) => {
-  res.render("pages/QNA", { connected: connected });
+  res.render("pages/QNA", { userID: userID });
 });
 
 app.get("/signUp", (req, res) => {
   var status = "true";
-  res.render("pages/signUp", { status: status, connected: connected });
+  res.render("pages/signUp", { status: status, userID: userID });
 });
 app.get("/aboutUs", (req, res) => {
-  connected = "true";
-  res.render("pages/aboutUs", { connected: connected });
+  res.render("pages/aboutUs", { userID: userID });
 });
 app.get("/personalProfile", (req, res) => {
-  connected = "true";
-  res.render("pages/personalProfile", { connected: connected });
+  res.render("pages/personalProfile", { userID: userID });
 });
 
 app.get("/findTrainer", (req, res) => {
-  connected = "true";
-  res.render("pages/findTrainer",{ connected: connected });
+  res.render("pages/findTrainer",{ userID: userID });
 });
 app.get("/trainerdashboard", (req, res) => {
-  connected = "true";
-  res.render("pages/trainerdashboard",{ connected: connected });
+
+  res.render("pages/trainerdashboard",{ userID: userID });
 });
 app.get("/traineeDashboard", (req, res) => {
-  connected = "true";
-  res.render("pages/traineeDashboard",{ connected: connected });
+
+  res.render("pages/traineeDashboard",{ userID: userID });
 });
 app.get("/createBusinessProfile", (req, res) => {
-  connected = "true";
-  res.render("pages/createBusinessProfile", { connected: connected });
+
+  res.render("pages/createBusinessProfile", { userID: userID });
 });
 app.get("/businessProfile", (req, res) => {
-  connected = "true";
-  res.render("pages/businessProfile", { connected: connected });
+  
+  res.render("pages/businessProfile", { userID: userID });
 });
 app.get("/editBusinessProfile", (req, res) => {
-  connected = "true";
-  res.render("pages/editBusinessProfile", { connected: connected });
+
+  res.render("pages/editBusinessProfile", { userID: userID });
 });
 
 app.get("/login", (req, res) => {
   var loginStatus = "true";
-  res.render("pages/login", { loginStatus: loginStatus, connected: connected });
+  res.render("pages/login", { loginStatus: loginStatus, userID: userID });
 });
 app.get("/calendar", (req, res) => {
   var loginStatus = "true";
@@ -91,15 +88,14 @@ app.get("/calendar", (req, res) => {
 });
 
 app.get("/homePage", (req, res) => {
-  res.render("pages/homePage",{ connected: connected });
+  res.render("pages/homePage",{ userID: userID });
 });
 
 app.get("/logout", (req, res) => {
   connected = "false";
-  res.render("pages/homePage", { connected: connected });
+  res.render("pages/homePage", { userID: userID });
 });
 
 app.post("/login", login);
 app.post("/signUp",signup);
-// app.post("/signUp",signupAsTrainer);
-//app.post("/new", addTraining);
+

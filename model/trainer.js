@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const trainingType = require("../model/trainingType");
 const { ObjectId } = mongoose.Schema;
 
 // trainer schema
@@ -31,31 +31,79 @@ const trainerUser = new mongoose.Schema({
     type: String,
     required: true,
   },
+  trainingTypes:[
+    {
+      trainingId:{
+        type:String,
+      }
+    }
+  ],
 
-  Date_of_Registretion: {
-    type: Date,
-    required: true,
-  },
+  // Date_of_Registretion: {
+  //   type: Date,
+  //   required: true,
+  // },
 
   specialty: {
     type: String,
-    required: true,
+    required:false,
   },
 
   city: {
     type: String,
-    required: true,
+    required: false,
   },
 
   phone: {
     type: Number,
-    required: true,
+    required: false,
+  },
+  english:{
+    type: Number,
+    default: 0,
+    required: false,
   },
 
-  exist: {
-    type: Boolean,
-    required: true,
+  spanish:{
+    type: Number,
+    default: 0,
+    required: false,
   },
+
+  arabic:{
+    type: Number,
+    default: 0,
+    required: false,
+  },
+
+  russian:{
+    type: Number,
+    default: 0,
+    required: false,
+  },
+
+  hebrew:{
+    type: Number,
+    default: 0,
+    required: false,
+  },
+  about:{
+    type:String,
+  },
+  schoolName:{
+    type:String,
+    required: false,
+  },
+  schoolYear:{
+    type:Number,
+    required: false,
+  },
+  schoolInfo:{
+    type:String,
+    required: false,
+  },
+
+  
 });
 
 module.exports = mongoose.model("Trainer", trainerUser);

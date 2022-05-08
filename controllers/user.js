@@ -3,25 +3,37 @@ const bcrypt = require("bcrypt"); //Password encryption
 const jwt = require("jsonwebtoken");
 const Trainee = require("../model/trainee");
 const Trainer = require("../model/trainer");
-
+const Trainer = require("../model/trainer");
 module.exports = {
   signup: (req, res, next) => {
-    var connected = "false";
+    var userID = "";
     var status = "false";
     var userType = req.body.userType;
     var fullName = req.body.fullName;
     var businessName = req.body.businessName;
     var email = req.body.email;
     var password = req.body.password;
-    var gender = req.body.gender;
-    console.log(userType);
+    var male = req.body.male;
+    var female = req.body.female;
+    var other = req.body.other;
+    var gender = "male";
+    console.log(male);
+    if(male){
+      gender = "male";
+    }
+    else if(female){
+      gender ="female";
+    }
+    else if (other){
+      gender = "other";
+    }
     if(userType == "trainee"){
         //checks if the email already exists in the databases
     Trainee.find({ email }).then((trainees) => {
         if (trainees.length >= 1) {
           return res.render("pages/signUp", {
             status: status,
-            connected: connected,
+            userID: userID,
           });
         }
   
@@ -32,6 +44,9 @@ module.exports = {
               error,
             });
           }
+
+          // const trainer = await Trainee.findById();
+          
           const trainee = new Trainee({
             fullName,
             email,
@@ -40,7 +55,12 @@ module.exports = {
           });
           trainee.save().then((result) => {
               console.log("new trainee created");
-              return res.redirect("/traineeDashboard");
+              
+              userID = trainee._id.toString();
+              res.render("pages/createBusinessProfile",{userID:userID});
+              // userID = trainee.find({ email })._id;
+              
+              // return res.redirect("/traineeDashboard",userID);
             })
             .catch((error) => {
               res.status(500).json({
@@ -57,7 +77,7 @@ module.exports = {
         if (trainers.length >= 1) {
           return res.render("pages/signUp", {
             status: status,
-            connected: connected,
+            userID: userID,
           });
         }
   
@@ -77,7 +97,12 @@ module.exports = {
           });
           trainer.save().then((result) => {
               console.log("new trainer created");
-              return res.redirect("/trainerDashboard");
+              // res.status(200).render("/createBusinessProfile",{userId:result._id});
+              userID = trainer._id.toString();
+              res.render("pages/createBusinessProfile",{userID:userID});
+              // return res.redirect("/createBusinessProfile");
+
+              // res.status(200).render("",{userId:result._id}).
             })
             .catch((error) => {
               res.status(500).json({
@@ -93,20 +118,57 @@ module.exports = {
   login: (req, res) => {
     const { email, password } = req.body;
     var loginStatus = "false";
-    var connected = "false";
+    var userID = "";
     Trainee.find({ email }).then((trainees) => {
       //If the user list is empty
       if (trainees.length === 0) {
-        return res.render("pages/login", { loginStatus: loginStatus,connected: connected, });
-      }
-
+        Trainer.find({ email }).then((trainers) => {
+          //If the user list is empty
+          if (trainers.length === 0) {
+            return res.render("pages/login", { loginStatus: loginStatus,userID: userID });
+          }
+    
+          const [user] = trainers;
+          //Checking the password
+          bcrypt.compare(password, user.password, (error, result) => {
+            if (error) {
+              return res.render("pages/login", {
+                loginStatus: loginStatus,
+                userID: userID,
+              });
+            }
+    
+            if (result) {
+              const token = jwt.sign(
+                {
+                  id: user._id,
+                  email: user.email,
+                },
+                "lihi",
+                {
+                  //For how long the user can stay connected
+                  expiresIn: "1H", //1 hour
+                }
+              );
+    
+              console.log("Auth successful");
+              return res.render("pages/traineeDashboard",{userID: userID});
+            }
+            //If the password is incorrect
+            return res.render("pages/login", {
+              loginStatus: loginStatus,
+              userID: userID,
+            });
+          });
+        });      }
+      else {
       const [user] = trainees;
       //Checking the password
       bcrypt.compare(password, user.password, (error, result) => {
         if (error) {
           return res.render("pages/login", {
             loginStatus: loginStatus,
-            connected: connected,
+            userID: userID,
           });
         }
 
@@ -124,14 +186,16 @@ module.exports = {
           );
 
           console.log("Auth successful");
-          return res.redirect("/traineeDashboard");
+          return res.render("pages/traineeDashboard",{userID: userID});
         }
         //If the password is incorrect
         return res.render("pages/login", {
           loginStatus: loginStatus,
-          connected: connected,
+          userID: userID,
         });
       });
+    }
     });
+    
   },
 };
