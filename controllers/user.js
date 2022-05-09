@@ -1,14 +1,13 @@
 
 const bcrypt = require("bcrypt"); //Password encryption
 const jwt = require("jsonwebtoken");
-const { ObjectId } = require("mongoose/lib/schema/index");
 const Trainee = require("../model/trainee");
 const Trainer = require("../model/trainer");
 const User = require("../model/user");
 module.exports = {
 
   signup: (req, res, next) => {
-    var userID = "";
+    var userEmail = "";
     var status = "false";
     var userType = req.body.userType;
     var fullName = req.body.fullName;
@@ -36,10 +35,10 @@ module.exports = {
         if (trainees.length >= 1) {
           return res.render("pages/signUp", {
             status: status,
-            userID: userID,
+            userEmail: userEmail,
           });
         }
-  
+
         //Password encryption
         bcrypt.hash(password, 10, (error, hash) => {
           if (error) {
@@ -60,7 +59,6 @@ module.exports = {
           const trainee = new Trainee({fullName, email,  password: hash, gender});
           trainee.save().then((result) => {
               console.log("new trainee created");
-              
               res.redirect("/traineeDashboard/"+trainee._id);
             })
             .catch((error) => {
@@ -81,7 +79,7 @@ module.exports = {
         if (trainers.length >= 1) {
           return res.render("pages/signUp", {
             status: status,
-            userID: userID,
+            userEmail: userEmail,
           });
         }
   
@@ -128,14 +126,15 @@ module.exports = {
   },
 
   login: (req, res) => {
-    const { email, password } = req.body;
+    const email = req.body.email;
+    const password = req.body.password;
     var loginStatus = "false";
-    var userID = "";
-    
-    User.find({ email }).then((users) => {
+    var userEmail = "";
+    console.log("email1 : "+email);
+    User.find({ email:email }).then((users) => {
       //If the user list is empty
       if (users.length === 0) {
-        return res.render("pages/login", { loginStatus: loginStatus,userID: userID});
+        return res.render("pages/login", { loginStatus: loginStatus,userEmail: userEmail});
       }
 
       const [user] = users;
@@ -144,41 +143,54 @@ module.exports = {
         if (error) {
           return res.render("pages/login", {
             loginStatus: loginStatus,
-            userID: userID,
+            userEmail: userEmail,
           });
         }
-
         if (result) {
-          res.user = user;
-          req.user = user;
-          console.log("user : "+ res.user);
-          const token = jwt.sign(
-            {
-              id: user._id,
-              email: user.email,
-            },
-            "lihi",
-            {
-              //For how long the user can stay connected
-              expiresIn: "1H", //1 hour
-            }
-          );
+          
           if(user.userType == "trainer"){
+            console.log("trainer if \n");
+            // Trainer.find({email:email}).then((trainers) => {
+            //   //If the user list is empty
+            //   if (trainers.length === 0) {
+            //     console.log("error - failed to load user");
+
+            //   }
+            //   else{
+            //   const [trainer] = trainers;
+            //   user._id = trainer._id;
+            //   console.log("trainer: "+trainer);
+            //   }
+           
+            // });
             console.log("Auth successful");
-            return res.redirect("/createBusinessProfile/"+user._id);
+            return res.redirect("/createBusinessProfile/"+ user.email);
           }
           else if(user.userType == "trainee"){
+            // Trainee.find({ email:email }).then((trainees) => {
+            //   //If the user list is empty
+            //   if (trainees.length === 0) {
+            //     console.log("error - failed to load user");
+            //   }
+            //   else{
+            //   const [trainee] = trainees;
+            //   console.log("trainee: "+trainee);
+            //   user._id = trainee._id;
+            //   }
+             
+            // });
             console.log("Auth successful");
-            return res.redirect("/traineeDashboard/"+user._id);
+            console.log("userID: "+ user.email);
+            return res.redirect("/traineeDashboard/"+user.email);
           }
           
         }
         //If the password is incorrect
         return res.render("pages/login", {
           loginStatus: loginStatus,
-          userID: userID,
+          userEmail: userEmail,
         });
-      });
-    });
+      });//end bcrypt
+    });//end User.find
   },
 };

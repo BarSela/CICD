@@ -32,7 +32,7 @@
           <button
             type="button"
             id="dashboard"
-            onclick="location.href='/traineedashboard/<%= userID %>'"
+            onclick="location.href='/traineedashboard/<%= userEmail %>'"
             style="display: none;">
             dashboard
           </button>
@@ -161,7 +161,7 @@
   </body>
   <script>
     
-    if ("<%= userID %>" != "") {
+    if ("<%= userEmail %>" != "") {
       document.getElementById("get-started-btn").style.display="none";
       document.getElementById("dashboard").style.display = "block";
     } else {
