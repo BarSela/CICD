@@ -14,7 +14,6 @@ const trainerUser = new mongoose.Schema({
     required: true,
     maxlength: 32,
   },
-
   email: {
     type: String,
     required: true,
@@ -31,12 +30,12 @@ const trainerUser = new mongoose.Schema({
     type: String,
     required: true,
   },
-  trainingTypes:[
+  trainingTypes: [
     {
-      trainingId:{
-        type:String,
-      }
-    }
+      trainingId: {
+        type: String,
+      },
+    },
   ],
 
   // Date_of_Registretion: {
@@ -46,7 +45,7 @@ const trainerUser = new mongoose.Schema({
 
   specialty: {
     type: String,
-    required:false,
+    required: false,
   },
 
   city: {
@@ -55,55 +54,53 @@ const trainerUser = new mongoose.Schema({
   },
 
   phone: {
-    type: Number,
+    type: String,
     required: false,
   },
-  english:{
-    type: Number,
-    default: 0,
-    required: false,
-  },
-
-  spanish:{
+  english: {
     type: Number,
     default: 0,
     required: false,
   },
 
-  arabic:{
+  spanish: {
     type: Number,
     default: 0,
     required: false,
   },
 
-  russian:{
+  arabic: {
     type: Number,
     default: 0,
     required: false,
   },
 
-  hebrew:{
+  russian: {
     type: Number,
     default: 0,
     required: false,
   },
-  about:{
-    type:String,
-  },
-  schoolName:{
-    type:String,
-    required: false,
-  },
-  schoolYear:{
-    type:Number,
-    required: false,
-  },
-  schoolInfo:{
-    type:String,
-    required: false,
-  },
 
-  
+  hebrew: {
+    type: Number,
+    default: 0,
+    required: false,
+  },
+  about: {
+    type: String,
+  },
+  schoolName: {
+    type: String,
+    required: false,
+  },
+  schoolDate: {
+    type: Number,
+    required: false,
+  },
+  schoolInfo: {
+    type: String,
+    required: false,
+  },
 });
 
 module.exports = mongoose.model("Trainer", trainerUser);

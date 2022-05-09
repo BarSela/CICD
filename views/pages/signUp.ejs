@@ -1,171 +1,276 @@
 <!DOCTYPE html>
 
 <html>
-    <head><%- include('../partials/head'); %></head>
-    <header><%- include('../partials/header') %></header>
-    <body>
-            <div class="signup-wrapper">
-              <h2>Registration</h2>
-              <div class="register-switch">
-                <input type="radio" name="userType" value="Trainee" id="trainee" class="register-switch-input" onclick="traineeForm()" checked>
-                <label for="trainee" class="register-switch-label">Trainee</label>
-                <input type="radio" name="userType" value="Trainer" id="trainer" class="register-switch-input" onclick="trainerForm()">
-                <label for="trainer" class="register-switch-label">Trainer</label>
-             </div>
-              <label id="errorMsg" style="font-size: 16px; color: red" hidden></label>
-              <form class="signup" id="trainer-form" action="/signUp" method="POST" onsubmit="return validateSignupForm()" hidden  >
-                <input type="text" id="userType" name="userType" value="trainee" style="display:none;"/>
-                <div class="input-box">
-                  <input type="text" id="fullName" name="fullName" placeholder="Enter your name" required/>
-                </div>
-                <div class="input-box">
-                  <input type="text" id="businessName" name="businessName" placeholder="Enter your business name" required />
-                </div>
-                <div class="input-box">
-                  <input type="text" id="email" name="email" placeholder="Enter your email" required/>
-                </div>
-                <div class="input-box">
-                  <input type="password" id="password" name="password" placeholder="Create password" required/>
-                </div>
-                <div class="input-box">
-                  <input type="password" id="passwordRepeat" name="passwordRepeat" placeholder="Confirm password" required/>
-                </div>
-                <div class="gender" id = "gender">
-                <input type="radio" id="male" name="gender" value="male" checked onselect=""> Male
-                <input type="radio" id="female" name="gender" value="female"> Female
-                <input type="radio" id="other" name="gender" value="other"> Other
-                </div>
-                <div class="policy-cb">
-                  <h3><input type="checkbox" id="cb" name="cb"/>    I accept all terms & condition</h3>
-                </div>                  	
-                <div class="input-box button">
-                  <input type="submit" onclick="submitForm()" id =trainer-reg value="Register Now" />
-                </div>
-                <div class="text">
-                  <h3>Already have an account? <a href="/login">Login now</a></h3>
-                </div>
-              </form>
-            <form class="signup" id="trainee-form" action="/signUp" method="POST" onsubmit="return validateSignupForm()"  >
-              <input type="text" id="userType" name="userType" value="trainee" style="display:none;"/>
-              <div class="input-box">
-                <input type="text" id="fullName" name="fullName" placeholder="Enter your name" required/>
-              </div>
-              <div class="input-box">
-                <input type="text" id="email" name="email" placeholder="Enter your email" required/>
-              </div>
-              <div class="input-box">
-                <input type="password" id="password" name="password" placeholder="Create password" required/>
-              </div>
-              <div class="input-box">
-                <input type="password" id="passwordRepeat" name="passwordRepeat" placeholder="Confirm password" required/>
-              </div>
-              <div class="gender" id ="gender" >
-              <input type="radio" id="male" name="gender" value="male" checked>Male
-              <input type="radio" id="female" name="gender" value="female">Female
-              <input type="radio" id="other" name="gender" value="other"> Other
-              </div>
-              <div class="policy-cb">
-                <h3><input type="checkbox" id="cb" name="cb"/>    I accept all terms & condition</h3>
-              </div>                  	
-              <div class="input-box button">
-                <input type="submit" onclick="submitForm()" id =trainee-reg value="Register Now" />
-              </div>
-              <div class="text">
-                <h3>Already have an account? <a href="/login">Login now</a></h3>
-              </div>
-            </form>
-              
-            </div>    
-      <script>
-          var male = document.getElementById("male");
-          var female = document.getElementById("female");
-          var other = document.getElementById("other");
-         
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <header><%- include('../partials/header') %></header>
+  <body>
+    <div class="signup-wrapper">
+      <h2>Registration</h2>
+      <div class="register-switch">
+        <input
+          type="radio"
+          name="userType"
+          value="Trainee"
+          id="trainee"
+          class="register-switch-input"
+          onclick="traineeForm()"
+          checked
+        />
+        <label for="trainee" class="register-switch-label">Trainee</label>
+        <input
+          type="radio"
+          name="userType"
+          value="Trainer"
+          id="trainer"
+          class="register-switch-input"
+          onclick="trainerForm()"
+        />
+        <label for="trainer" class="register-switch-label">Trainer</label>
+      </div>
+      <label id="errorMsg" style="font-size: 16px; color: red" hidden></label>
+      <form
+        class="signup"
+        id="trainer-form"
+        action="/signUp"
+        method="POST"
+        onsubmit="return validateSignupForm()"
+        hidden
+      >
+        <input
+          type="text"
+          id="userType"
+          name="userType"
+          value="trainee"
+          style="display: none"
+        />
+        <div class="input-box">
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            placeholder="Enter your name"
+            required
+          />
+        </div>
+        <div class="input-box">
+          <input
+            type="text"
+            id="businessName"
+            name="businessName"
+            placeholder="Enter your business name"
+            required
+          />
+        </div>
+        <div class="input-box">
+          <input
+            type="text"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+        <div class="input-box">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Create password"
+            required
+          />
+        </div>
+        <div class="input-box">
+          <input
+            type="password"
+            id="passwordRepeat"
+            name="passwordRepeat"
+            placeholder="Confirm password"
+            required
+          />
+        </div>
+        <div class="input-box" id="gender">
+          <select id="genderTrainerInput" name="gender">
+            <option value="male">male</option>
+            <option value="female">female</option>
+            <option value="other">other</option>
+          </select>
+        </div>
+        <div class="policy-cb">
+          <h3>
+            <input type="checkbox" id="cb" name="cb" /> I accept all terms &
+            condition
+          </h3>
+        </div>
+        <div class="input-box button">
+          <input
+            type="submit"
+            onclick="submitForm()"
+            id="trainer-reg"
+            value="Register Now"
+          />
+        </div>
+        <div class="text">
+          <h3>Already have an account? <a href="/login">Login now</a></h3>
+        </div>
+      </form>
+      <form
+        class="signup"
+        id="trainee-form"
+        action="/signUp"
+        method="POST"
+        onsubmit="return validateSignupForm()"
+      >
+        <input
+          type="text"
+          id="userType"
+          name="userType"
+          value="trainee"
+          style="display: none"
+        />
+        <div class="input-box">
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            placeholder="Enter your name"
+            required
+          />
+        </div>
+        <div class="input-box">
+          <input
+            type="text"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+        <div class="input-box">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Create password"
+            required
+          />
+        </div>
+        <div class="input-box">
+          <input
+            type="password"
+            id="passwordRepeat"
+            name="passwordRepeat"
+            placeholder="Confirm password"
+            required
+          />
+        </div>
+        <div class="input-box" id="gender">
+          <select id="genderTraineeInput" name="gender">
+            <option value="male">male</option>
+            <option value="female">female</option>
+            <option value="other">other</option>
+          </select>
+        </div>
+        <div class="policy-cb">
+          <h3>
+            <input type="checkbox" id="cb" name="cb" /> I accept all terms &
+            condition
+          </h3>
+        </div>
+        <div class="input-box button">
+          <input
+            type="submit"
+            onclick="submitForm()"
+            id="trainee-reg"
+            value="Register Now"
+          />
+        </div>
+        <div class="text">
+          <h3>Already have an account? <a href="/login">Login now</a></h3>
+        </div>
+      </form>
+    </div>
+    <script>
+      console.log(document.getElementById("userType").value);
+      function traineeForm() {
+        document.getElementById("userType").value = "trainee";
         console.log(document.getElementById("userType").value);
-        function traineeForm(){
-         
-          document.getElementById("userType").value = "trainee";
-          console.log(document.getElementById("userType").value);
-          document.getElementById("trainer-form").hidden = true;
-          document.getElementById("trainee-form").hidden = false;
+        document.getElementById("trainer-form").hidden = true;
+        document.getElementById("trainee-form").hidden = false;
+      }
+      function trainerForm() {
+        document.getElementById("userType").value = "trainer";
+        console.log(document.getElementById("userType").value);
+        document.getElementById("trainee-form").hidden = true;
+        document.getElementById("trainer-form").hidden = false;
+      }
+      function submitForm() {
+        if (userType == "trainee") {
+          document.getElementById("trainee-form").submit();
         }
-        function trainerForm(){
-    
-          document.getElementById("userType").value = "trainer";
-          console.log(document.getElementById("userType").value);
-          document.getElementById("trainee-form").hidden = true;
-          document.getElementById("trainer-form").hidden = false;
+        if (userType == "trainer") {
+          document.getElementById("trainer-form").submit();
+        }
+      }
+      var regStatus = true;
+      var errorMsg = document.getElementById("errorMsg");
+      errorMsg.style.display = "none";
+      if ("<%= status %>" == "false") {
+        errorMsg.innerHTML = "This email is already exixt";
+        errorMsg.style.display = "block";
+        regStatus = false;
+      }
 
-        }
-        function submitForm(){
-          if(userType == "trainee"){
-            document.getElementById("trainee-form").submit();
-          }
-          if(userType == "trainer"){
-            document.getElementById("trainer-form").submit();
-          }
-          
-        
-        }
+      function validateSignupForm() {
         var regStatus = true;
-        var errorMsg = document.getElementById("errorMsg");
-        errorMsg.style.display = "none";
-        if ("<%= status %>" == "false") {
-          errorMsg.innerHTML = "This email is already exixt";
+        var userType = document.getElementById("userType").value;
+        var fullName = document.getElementById("fullName").value;
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        var passwordRepeat = document.getElementById("passwordRepeat").value;
+        var businessName = document.getElementById("businessName").value;
+        var checkbox = document.getElementById("cb").checked;
+        var gender = getGender();
+        document.getElementById("gender").value = gender;
+        console.log((document.getElementById("gender").value = gender));
+        console.log(document.getElementById("userType").value);
+        console.log(document.getElementById("fullName").value);
+        console.log(document.getElementById("email").value);
+        console.log(document.getElementById("password").value);
+        console.log(document.getElementById("businessName").value);
+        console.log(gender);
+        console.log(document.getElementById("cb").checked);
+
+        if (!checkbox) {
+          errorMsg.innerHTML = "You must agree the terms";
           errorMsg.style.display = "block";
-          regStatus = false;
+          return false;
         }
-        
-        function validateSignupForm() {
-          var regStatus = true;
-          var userType = document.getElementById("userType").value;
-          var fullName = document.getElementById("fullName").value;
-          var email = document.getElementById("email").value;
-          var password = document.getElementById("password").value;
-          var passwordRepeat = document.getElementById("passwordRepeat").value;
-          var businessName = document.getElementById("businessName").value;
-          var checkbox = document.getElementById("cb").checked;
-          var gender = getGender();
-          document.getElementById("gender").value = gender;
-          console.log( document.getElementById("gender").value = gender);
-          console.log(document.getElementById("userType").value);
-          console.log(document.getElementById("fullName").value);
-          console.log(document.getElementById("email").value);
-          console.log(document.getElementById("password").value);
-          console.log(document.getElementById("businessName").value);
-          console.log(gender);
-          console.log(document.getElementById("cb").checked);
-                  
-          if (!checkbox) {
-            errorMsg.innerHTML = "You must agree the terms";
-            errorMsg.style.display = "block";
-            return false;
-          }
-          if (password.length < 8) {
-            errorMsg.innerHTML =
-              "Your password must include atleast 8 characters";
-            errorMsg.style.display = "block";
-            return false;
-          }
-
-          if (password != passwordRepeat) {
-            errorMsg.innerHTML = "please confirm your password";
-            errorMsg.style.display = "block";
-            return false;
-          }
-
-          if (!ValidateEmail(email)) {
-            errorMsg.innerHTML = "You have entered an invalid email address!";
-            errorMsg.style.display = "block";
-            return false;
-          }
-          return regStatus;
+        if (password.length < 8) {
+          errorMsg.innerHTML =
+            "Your password must include atleast 8 characters";
+          errorMsg.style.display = "block";
+          return false;
         }
 
-        function ValidateEmail(email) {
-          return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+        if (password != passwordRepeat) {
+          errorMsg.innerHTML = "please confirm your password";
+          errorMsg.style.display = "block";
+          return false;
         }
-      </script>
-    </body>
- 
+
+        if (!ValidateEmail(email)) {
+          errorMsg.innerHTML = "You have entered an invalid email address!";
+          errorMsg.style.display = "block";
+          return false;
+        }
+        return regStatus;
+      }
+
+      function ValidateEmail(email) {
+        return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+      }
+    </script>
+  </body>
 </html>

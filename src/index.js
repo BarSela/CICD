@@ -1,6 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const {login, signup ,profile} = require("../controllers/user");
+const {
+  login,
+  signup,
+  profile,
+  createBusinessP,
+} = require("../controllers/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../model/user");
@@ -26,9 +31,9 @@ mongoose.connection.on("connected", () => {
 app.set("view engine", "ejs");
 
 // MiddleWare
-app.use(function(req, res, next) {
-  res.locals.user = req.user;  
- 
+app.use(function (req, res, next) {
+  res.locals.user = req.user;
+
   next();
 });
 app.use(express.static("public"));
@@ -63,12 +68,10 @@ var userObj;
 //     next(new Error('failed to load user'))
 //   }
 //   const [trainer] = trainers;
-  
+
 // })
 // });
 
-
-  
 app.get("/", (req, res) => {
   res.render("pages/homePage", { userEmail: userEmail });
 });
@@ -96,7 +99,7 @@ app.get("/personalProfile", (req, res) => {
   //   }
 
   //   const [user] = users;
-  
+
   //   console.log(user);
   // });
   // Trainer.find({ id_:id }).then((trainers) => {
@@ -113,13 +116,13 @@ app.get("/personalProfile", (req, res) => {
 
 app.get("/findTrainer", (req, res) => {
   console.log(userEmail);
-  res.render("pages/findTrainer",{ userEmail: userEmail });
+  res.render("pages/findTrainer", { userEmail: userEmail });
 });
 
 app.get("/trainerdashboard", (req, res) => {
-  res.render("pages/trainerdashboard",{ userEmail: userEmail });
+  res.render("pages/trainerdashboard", { userEmail: userEmail });
 });
-app.get("/traineeDashboard/:email",async (req, res) => {
+app.get("/traineeDashboard/:email", async (req, res) => {
   userEmail = req.params.email;
   // console.log("userID :"+userEmail);
   // const user = await User.findById(userEmail);
@@ -128,20 +131,18 @@ app.get("/traineeDashboard/:email",async (req, res) => {
   // const trainee = await Trainee.find({email});
   // userID = trainee.id;
   // console.log("userID2 :"+ trainee._id);
-  res.render("pages/traineeDashboard",{ userEmail: userEmail });
+  res.render("pages/traineeDashboard", { userEmail: userEmail });
 });
 
 app.get("/createBusinessProfile/:email", (req, res) => {
   userEmail = req.params.email;
-  console.log("trainerID: "+ userEmail);
+  console.log("trainerID: " + userEmail);
   res.render("pages/createBusinessProfile", { userEmail: userEmail });
 });
 app.get("/businessProfile", (req, res) => {
-  
   res.render("pages/businessProfile", { userEmail: userEmail });
 });
 app.get("/editBusinessProfile", (req, res) => {
-
   res.render("pages/editBusinessProfile", { userEmail: userEmail });
 });
 
@@ -151,11 +152,14 @@ app.get("/login", (req, res) => {
 });
 app.get("/calendar", (req, res) => {
   var loginStatus = "true";
-  res.render("pages/calendar", { loginStatus: loginStatus, connected: connected });
+  res.render("pages/calendar", {
+    loginStatus: loginStatus,
+    connected: connected,
+  });
 });
 
 app.get("/homePage", (req, res) => {
-  res.render("pages/homePage",{ userEmail: userEmail });
+  res.render("pages/homePage", { userEmail: userEmail });
 });
 
 app.get("/logout", (req, res) => {
@@ -164,5 +168,6 @@ app.get("/logout", (req, res) => {
 });
 
 app.post("/login", login);
-app.post("/signUp",signup);
+app.post("/signUp", signup);
 // app.post("/profile",profile);
+app.post("/createBusinessP", createBusinessP);

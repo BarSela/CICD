@@ -17,8 +17,7 @@
   background-size: cover;
   background-position: center;
 }
-.video-overlay{
-  
+.video-overlay {
   background-color: rgba(17, 27, 29, 0.7);
   position: fixed;
   right: 0;
@@ -26,48 +25,46 @@
   min-width: 100%;
   min-height: 100%;
   background-size: cover;
-  
 }
 
 /* nav bar */
-.navbar{
-  padding: 20px 0; 
-  width: 85%; 
+.navbar {
+  padding: 20px 0;
+  width: 85%;
   margin: auto;
   display: flex;
   align-items: center;
-  justify-content: space-between; 
-     
+  justify-content: space-between;
 }
-.navbar ul li{
-    list-style: none;
-    display: inline-block;
-    margin: 0 20px;
-    position: relative;
+.navbar ul li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 20px;
+  position: relative;
 }
-.navbar ul li a{
-    font-size: 22px;
-    text-decoration: none;
-    color: #fff;
-    text-transform: uppercase;
-}
-.navbar ul li::after{
-    content: '';
-    height: 3px;
-    width: 0;
-    background:#6c9da4;
-    position: absolute;
-    left: 0;
-    bottom: -10px;
-}
-.navbar ul li:hover:after{
-    width: 100%;
-}
-.navbar ul li a logoutItem{
+.navbar ul li a {
+  font-size: 22px;
   text-decoration: none;
   color: #fff;
   text-transform: uppercase;
-  margin-left:20px;
+}
+.navbar ul li::after {
+  content: "";
+  height: 3px;
+  width: 0;
+  background: #6c9da4;
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+}
+.navbar ul li:hover:after {
+  width: 100%;
+}
+.navbar ul li a logoutItem {
+  text-decoration: none;
+  color: #fff;
+  text-transform: uppercase;
+  margin-left: 20px;
 }
 /*end nav bar */
 /*End header */
@@ -275,7 +272,6 @@ h5 {
   background-position: center;
 }
 
-
 /* Login page */
 .login-wrapper {
   position: absolute;
@@ -418,18 +414,20 @@ input[type="submit"]:hover {
   height: 48px;
   margin: 15px 0;
 }
-#trainer-form .input-box{
+#trainer-form .input-box {
   height: 48px;
   margin: 5px 0;
 }
 .register-switch {
-  margin-top:20px;
+  margin-top: 20px;
   height: 42px;
   margin-bottom: 10px;
   border-radius: 2px;
   background-color: #f2f2f2;
-  -webkit-box-shadow: inset 0 1px rgba(0, 0, 0, 0.05), inset 1px 0 rgba(0, 0, 0, 0.02), inset -1px 0 rgba(0, 0, 0, 0.02);
-  box-shadow: inset 0 1px rgba(0, 0, 0, 0.05), inset 1px 0 rgba(0, 0, 0, 0.02), inset -1px 0 rgba(0, 0, 0, 0.02);
+  -webkit-box-shadow: inset 0 1px rgba(0, 0, 0, 0.05),
+    inset 1px 0 rgba(0, 0, 0, 0.02), inset -1px 0 rgba(0, 0, 0, 0.02);
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.05), inset 1px 0 rgba(0, 0, 0, 0.02),
+    inset -1px 0 rgba(0, 0, 0, 0.02);
 }
 .register-switch-input {
   display: none;
@@ -451,13 +449,14 @@ input[type="submit"]:hover {
   color: #434248;
   text-shadow: 0 1px rgba(255, 255, 255, 0.5);
   background: #6c9da4;
-  background-color:#6c9da4;
+  background-color: #6c9da4;
   border-radius: 2px;
   background-image: -webkit-linear-gradient(top, #6c9da4, #6c9da4);
   background-image: -moz-linear-gradient(top, #6c9da4, #6c9da4);
   background-image: -o-linear-gradient(top, #fefefe, #eeeeee);
   background-image: linear-gradient(to bottom, #6c9da4be, #6c9da4bd);
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
@@ -481,14 +480,12 @@ form .input-box input {
 form .policy-cb {
   display: flex;
   align-items: center;
-  
 }
 form h3 {
   color: #707070;
   font-size: 14px;
   font-weight: 500;
   margin-left: 30px;
-  
 }
 .input-box.button input {
   position: static;
@@ -502,12 +499,28 @@ form h3 {
   position: static;
   background: #6c9da4;
 }
+form .input-box select {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  padding: 0 15px;
+  font-size: 17px;
+  font-weight: 400;
+  color: #333;
+  border: 1.5px solid #c7bebe;
+  border-bottom-width: 2.5px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+.input-box select:focus,
+.input-box select:valid {
+  border-color: #6c9da4;
+}
 form .text h3 {
   color: #333;
   width: 100%;
   text-align: center;
   margin-left: -30px;
-  
 }
 form .text h3 a {
   color: #6c9da4;
@@ -518,13 +531,11 @@ form .text h3 a:hover {
 }
 .gender {
   margin: 18px 20px;
-  align-items: center; 
+  align-items: center;
 }
-.gender [type=radio]{
+.gender [type="radio"] {
   margin: 10px 10px;
-  
 }
-
 
 /*End signup page*/
 
@@ -631,7 +642,6 @@ img {
     opacity: 1;
   }
 }
-
 
 /* On smaller screens, decrease text size */
 @media only screen and (max-width: 400px) {
