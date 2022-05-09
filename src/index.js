@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const {login, signup } = require("../controllers/user");
+const {login, signup ,findByID, findByEmail} = require("../controllers/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -23,6 +23,11 @@ mongoose.connection.on("connected", () => {
 app.set("view engine", "ejs");
 
 // MiddleWare
+app.use(function(req, res, next) {
+  res.locals.user = req.user;  
+ 
+  next();
+});
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 // for parsing application to x-www-form-urlencoded
@@ -55,18 +60,22 @@ app.get("/personalProfile", (req, res) => {
 });
 
 app.get("/findTrainer", (req, res) => {
+  console.log(userID);
   res.render("pages/findTrainer",{ userID: userID });
 });
-app.get("/trainerdashboard", (req, res) => {
 
+app.get("/trainerdashboard", (req, res) => {
   res.render("pages/trainerdashboard",{ userID: userID });
 });
-app.get("/traineeDashboard", (req, res) => {
-
+app.get("/traineeDashboard/:id", (req, res) => {
+  userID = req.params.id;
+  console.log("traineeID: "+ userID);
   res.render("pages/traineeDashboard",{ userID: userID });
 });
-app.get("/createBusinessProfile", (req, res) => {
 
+app.get("/createBusinessProfile/:id", (req, res) => {
+  userID = req.params.id;
+  console.log("trainerID: "+ userID);
   res.render("pages/createBusinessProfile", { userID: userID });
 });
 app.get("/businessProfile", (req, res) => {

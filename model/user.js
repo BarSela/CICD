@@ -5,7 +5,6 @@ const { ObjectId } = mongoose.Schema;
 const userSchema = new mongoose.Schema(
   {
     
-  
     email: {
       type: String,
       required: true,
