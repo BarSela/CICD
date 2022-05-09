@@ -5,6 +5,7 @@ const {
   signup,
   profile,
   createBusinessP,
+  editBusinessP,
 } = require("../controllers/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -171,3 +172,4 @@ app.post("/login", login);
 app.post("/signUp", signup);
 // app.post("/profile",profile);
 app.post("/createBusinessP", createBusinessP);
+app.post("/editBusinessP", editBusinessP);

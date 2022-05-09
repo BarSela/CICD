@@ -163,16 +163,16 @@
                         
                       </select>     
                       <label class="w3-text-teal"><b>City</br></label>
-                      <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="city-Input" name="City" type="text" required>  
+                      <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="city-Input" name="city" type="text" required>  
                       <label id="errorMsg-ci" style="font-size: 14px; color: red" ><b>city must contain only letters </br></label> 
                       <label class="w3-text-teal"><b>Phone</br></label>
-                      <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="phone-Input" name="Phone" type="text" required>                        
+                      <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="phone-Input" name="phone" type="text" required>                        
                       <label id="errorMsg-fh" style="font-size: 14px; color: red" ><b>phone number nust 10 digits, With a legal Israeli prefix </br></label>      
                       <label class="w3-text-teal"><b>Email</br></label>
-                      <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="email-Input" name="Email" type="text" required >      
+                      <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="email-Input" name="email" type="text" required >      
                       <label id="errorMsg-e" style="font-size: 14px; color: red" ><b>Invalid email </br></label>
                       <label class="w3-text-teal"><b>About Section (Description)</br></label>
-                      <span class="w3-input w3-border w3-light-grey w3-round-xlarge"" role="textbox"  id="about-Input" name="Description" type="text" required contenteditable></p>
+                      <span class="w3-input w3-border w3-light-grey w3-round-xlarge"" role="textbox"  id="about-Input" name="about" type="text" required contenteditable></p>
 
                       <hr />
                       <label class="w3-text-grey" id="languages"><b>Languages</b></label>
@@ -180,27 +180,27 @@
                       <!-- language section -->
                         <div class="form-element">
                           <label class="w3-text-teal" style="margin-right: 3px;"><b>Hebrew</br></label>
-                          <input class="slider" id="hebrew-edit" type="range" min="0" max="100" step="10" value="0" >
+                          <input class="slider" id="hebrew-edit" name="hebrew" type="range" min="0" max="100" step="10" value="0" >
                           <label class="w3-text-grey" id="hebp">0</label>
                           <label class="w3-text-grey" id="present">%</label>
                           <b></br>
                           <label class="w3-text-teal" style="margin-right: 6px;"><b>English</br></label>
-                          <input class="slider" id="english-edit" type="range" min="0" max="100" step="10" value="0" >
+                          <input class="slider" id="english-edit" name="english" type="range" min="0" max="100" step="10" value="0" >
                           <label class="w3-text-grey" id="enbp">0</label>
                           <label class="w3-text-grey" id="present">%</label>
                           <b></br>
                           <label class="w3-text-teal"><b>Russian</br></label>
-                          <input class="slider" id="russian-edit" type="range" min="0" max="100" step="10" value="0">
+                          <input class="slider" id="russian-edit" name="russian" type="range" min="0" max="100" step="10" value="0">
                           <label class="w3-text-grey" id="rubp">0</label>
                           <label class="w3-text-grey" id="present">%</label>
                           <b></br>
                           <label class="w3-text-teal"><b>Spanish</br></label>
-                          <input class="slider" id="spanish-edit" type="range" min="0" max="100" step="10" value="0">
+                          <input class="slider" id="spanish-edit" name="spanish" type="range" min="0" max="100" step="10" value="0">
                           <label class="w3-text-grey" id="spbp">0</label>
                           <label class="w3-text-grey" id="present">%</label>
                           <b></br>
                           <label class="w3-text-teal" style="margin-right: 13px;"><b>Arabic</br></label>
-                          <input class="slider" id="arabic-edit" type="range" min="0" max="100" step="10" value="0">
+                          <input class="slider" id="arabic-edit" name="arabic" type="range" min="0" max="100" step="10" value="0">
                           <label class="w3-text-grey" id="arbp">0</label>
                           <label class="w3-text-grey" id="present">%</label>
                         </div>
@@ -214,7 +214,7 @@
                               <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="schoolName-Input" name="schoolName" type="text" required></p>
                               <label id="errorMsg-sn" style="font-size: 14px; color: red" ><b>The school name where you have been certified must contain only letters  </br></label>
                               <label class="w3-text-teal"><b>Year</b></label>
-                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="cert-date-Input" name="year" type="date" required></p>
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="cert-date-Input" name="date" type="date" required></p>
                               <label class="w3-text-teal"><b>Certification info</b></label>
                               <label class="w3-text-grey"><br>Please describe the training that  you were certified </br></label>                              
                               <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="cert-info-Input" name="info" type="text" required></p>
@@ -242,12 +242,12 @@
 <!-- NAVBAR -->
     <script>
       //attrs temp
-      var businassName=document.getElementById('businassName-Input').value="Bar Fitness";
-      var fullName=document.getElementById('fullName-Input').value="Bar Sela";
-      var specialty=document.getElementById('specialty-Input').value="athletic";
-      var city=document.getElementById('city-Input').value="Rehovot";
-      var phone=document.getElementById('phone-Input').value="052-6761996";
-      var email=document.getElementById('email-Input').value="Barsela03@gmail.com";
+      //var businassName=document.getElementById('businassName-Input').value="Bar Fitness";
+      //var fullName=document.getElementById('fullName-Input').value="Bar Sela";
+      //var specialty=document.getElementById('specialty-Input').value="athletic";
+      //var city=document.getElementById('city-Input').value="Rehovot";
+      //var phone=document.getElementById('phone-Input').value="052-6761996";
+      //var email=document.getElementById('email-Input').value="Barsela03@gmail.com";
 
       //languges
       var hebrewEdit=document.getElementById('hebrew-edit');

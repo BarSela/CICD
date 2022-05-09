@@ -236,4 +236,44 @@ module.exports = {
       }
     );
   },
+  editBusinessP: async (req, res, next) => {
+    let businassName = req.body.BusinessName;
+    let fullName = req.body.fullName;
+    let specialty = req.body.specialty;
+    let city = req.body.city;
+    let phone = req.body.phone;
+    let about = req.body.about;
+    let schoolName = req.body.schoolName;
+    let schoolDate = req.body.date;
+    let schoolInfo = req.body.info;
+
+    let hebrew = req.body.Hebrew;
+    let english = req.body.english;
+    let russian = req.body.russian;
+    let spanish = req.body.spanish;
+    let arabic = req.body.arabic;
+
+    const trainer = await Trainer.findOneAndUpdate(
+      { email: userEmail },
+      {
+        $set: {
+          businassName: businassName,
+          fullName: fullName,
+          specialty: specialty,
+          city: city,
+          phone: phone,
+          about: about,
+          schoolName: schoolName,
+          schoolDate: schoolDate,
+          schoolInfo: schoolInfo,
+          hebrew: hebrew,
+          english: english,
+          spanish: spanish,
+          russian: russian,
+          arabic: arabic,
+        },
+      }
+    );
+
+  },
 };
