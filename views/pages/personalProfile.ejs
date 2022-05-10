@@ -15,83 +15,42 @@
     <div class="container">
       <div class="avatar-flip"><img src="/assets/bar.jpg" height="150" width="150" style="cursor: zoom-in"id="pic1"/>
         <img  src="/assets/bar.jpg"  height="150"  width="150"  style="cursor: zoom-in"    id="pic2" />
-      </div>
-    
-        <form onclick="replacePic()" id="upload-pic">
-          <label for="img">Select image:</label>
-          <input type="file" id="img" name="img" accept="image/*" />
-          <input type="submit" />
-        </form>
-        <div class="form-popup w3-border" id="editPic" >
-          <form action="/action_page.php" class="form-container"">
-            <h1>Change profile picture</h1>
-            <input  type="file" id="img" name="img" accept="image/*" />
-            <button class="w3-input w3-border w3-light-grey w3-round-xlarge" id="submit-pic" type="button" value="click" style="margin: 5px;"/>
-          </form>
-        </div>
-     
+      </div> 
       <h2>Bar Sela</h2>
       <h4>Personal Profile</h4>
-      <div class="btn-group" id="pictureBt" style=" margin-left: 20px; display:inline-block;">
-        <button
-          class="fa fa-pencil-square-o w3-button w3-teal w3-round-xlarge"
-          id="Edit-profile-bt" onclick="location.href='/editPersonalProfile'"
-        >Edit profile
-        </button>
-        <button class="fa fa-pencil-square-o w3-button w3-teal w3-round-xlarge"
-          id="Edit-picture-bt">upload picture
-        </button>
-        <button class="fa fa-pencil-square-o w3-button w3-teal w3-round-xlarge"
-          id="Edit-picture-bt">change password
-        </button>
+      <div class="btn-group">
+        <button type="button" id="Edit-profile-bt" onclick="editProfile()">Edit Profile</button>
       </div>
-       <div class="profile-details">
-          <div class="input-box">
-            <label for="fullName">FullName</label>
-            <input type="text" id="fullName" name="fullName" placeholder="Bar Sela" readonly/>
-          </div>
-          <div class="input-box">
-            <label for="email" style="padding-right:10px;">Email </label>
-            <input type="email" id="email" name="email" placeholder="BarSela@gmail.com" style="padding-right:10px;" readonly/>
-          </div>
-          <div class="input-box">
-            <label for="registration">registration date</label>
-            <input type="date" id="registration" name="registration date" placeholder="**********" readonly/>
-          </div>
-          <div class="gender" id ="gender" >
-          <input type="radio" id="male" name="gender" value="male" checked >Male
-          <input type="radio" id="female" name="gender" value="female"  disabled>Female
-          <input type="radio" id="other" name="gender" value="other"  disabled> Other
-          </div>
+       <div class="profile-details">    
+          <form class="profile" id="profile-form"   >
+              <div class="input-box">
+                <label for="fullName">FullName</label> 
+                <input type="text" id="fullName" name="fullName" placeholder="<%= user.fullName %>" readonly/>
+              </div>
+              <div class="input-box">
+                <label for="email" style="padding-right:10px;">Email </label>
+                <input type="email" id="email" name="email" placeholder= "<%= user.email %>" style="padding-right:10px;" readonly/>
+              </div>
+              <div class="input-box">
+                <label for="registration">registration date</label>
+                <input type="text" id="registration" name="registration date" placeholder="**********" readonly/>
+              </div>
+              <div class="gender" id ="gender" >
+              <input type="radio" id="male" name="gender" value="male" checked >Male
+              <input type="radio" id="female" name="gender" value="female"  disabled>Female
+              <input type="radio" id="other" name="gender" value="other"  disabled> Other
+              </div>
+        </form>
       </div>
     </div>
   </section>
     <script>
-      function openForm() {
+      
+      function editProfile(){
+        window.location.href = "/editPersonalProfile";
+      }
+      
         
-        document.getElementById("editPic").style.display = "block";
-      }
-      function closeForm() {
-        document.getElementById("editPic").style.display = "none";
-      }
-      document
-        .getElementById("Edit-picture-bt")
-        .addEventListener("click", function () {
-          if (document.getElementById("editPic").style.display == "block") {
-            closeForm();
-          } else {
-            openForm();
-          }
-        });
-        function replacePic(){
-          var newPic=document.getElementById("img").value;
-          document.getElementById("pic2").innerHTML=newPic;
-          document.getElementById("pic1").innerHTML=newPic;
-        }
-        document.getElementById("submit-pic").addEventListener("click",function(){
-          replacePic();
-          closeForm();
-        });
     </script>
     
   </body>
