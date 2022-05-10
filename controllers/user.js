@@ -6,7 +6,7 @@ const User = require("../model/user");
 var userEmail = "";
 var userType = "";
 module.exports = {
-  signup: (req, res, next) => {
+  signup: async (req, res, next) => {
     let status = "false";
     let userType = req.body.userType;
     let fullName = req.body.fullName;
@@ -125,7 +125,7 @@ module.exports = {
     }
   },
 
-  login: (req, res) => {
+  login: async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     userEmail = "";
@@ -303,11 +303,14 @@ module.exports = {
     var gender = req.body.gender;
     var status = "false";
     const currUser = await User.findOne({ email: userEmail });
+
     //check if the new email already exsits in the DB
     let user = await User.findOne({ email: newEmail });
     console.log(user);
-    if (user != null) {
+    if (user != null && newEmail != userEmail) {
       console.log("if user");
+      console.log(userEmail);
+      console.log(currUser);
       return res.render("pages/editPersonalProfile", {
         userEmail: userEmail,
         user: currUser,
@@ -328,11 +331,13 @@ module.exports = {
 
     if (user) {
       console.log("Email updated successfully");
+
+      console.log(userT);
     } else {
       console.log("Failed to update email (profile Page -user)");
       res.redirect("/");
     }
-    if (userType == "trainer") {
+    if (userT == "trainer") {
       const trainer = await Trainer.findOneAndUpdate(
         { email: userEmail },
         {
@@ -344,16 +349,14 @@ module.exports = {
         }
       );
       if (trainer) {
-        return res.render("pages/personalProfile", {
-          userEmail: newEmail,
-          user: trainer,
-          status: "true",
-        });
+        userEmail = newEmail;
+        return res.redirect("personalProfile/" + newEmail);
       } else {
         console.log("Failed to update email (profile Page - trainer)");
         res.redirect("/");
       }
-    } else if (userType == "trainee") {
+    } else if (userT == "trainee") {
+      console.log(newEmail);
       const trainee = await Trainee.findOneAndUpdate(
         { email: userEmail },
         {
@@ -366,11 +369,9 @@ module.exports = {
       );
       console.log(trainee);
       if (trainee) {
-        return res.render("pages/personalProfile", {
-          userEmail: newEmail,
-          user: trainee,
-          status: "true",
-        });
+        console.log(newEmail);
+        userEmail = newEmail;
+        return res.redirect("personalProfile/" + newEmail);
       } else {
         console.log("Failed to update email (profile Page - trainee)");
         res.redirect("/");
@@ -380,12 +381,12 @@ module.exports = {
   editPassword: async (req, res) => {
     let currPassword = req.body.currPassword;
     let newPassword = req.body.newPassword;
-    let loginStatus = "false";
+    let status = "false";
     User.find({ email: userEmail }).then((users) => {
       //If the user list is empty
       if (users.length === 0) {
         return res.render("pages/editPersonalProfile", {
-          loginStatus: loginStatus,
+          status: status,
           user: userEmail,
         });
       }
@@ -401,6 +402,7 @@ module.exports = {
         }
         if (result) {
           if (user.userType == "trainer") {
+            console.log(" not okkkkkkkkkkkk");
             const userU = await User.findOneAndUpdate(
               { email: userEmail },
               {
@@ -429,6 +431,7 @@ module.exports = {
               return res.render("/");
             }
           } else if (user.userType == "trainee") {
+            console.log("okkkkkkkkkkkk trainer");
             const userU = await User.findOneAndUpdate(
               { email: userEmail },
               {
@@ -437,6 +440,7 @@ module.exports = {
                 },
               }
             );
+            console.log("update1");
             if (userU) {
               const trainee = await Trainee.findOneAndUpdate(
                 { email: userEmail },
@@ -446,6 +450,7 @@ module.exports = {
                   },
                 }
               );
+              console.log("update2");
               if (trainee) {
                 return res.redirect("/personalProfile");
               } else {
@@ -460,8 +465,9 @@ module.exports = {
         }
         //If the password is incorrect
         return res.render("pages/editPersonalProfile", {
-          loginStatus: loginStatus,
+          status: status,
           user: userEmail,
+          userEmail: userEmail,
         });
       }); //end bcrypt
     }); //end User.find

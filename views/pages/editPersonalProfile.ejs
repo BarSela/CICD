@@ -67,7 +67,7 @@
               <label for="password">password</label>
               <input
                 type="password"
-                id="fullName"
+                id="paasword"
                 name="currPassword"
                 placeholder="Enter current password"
               />
@@ -190,12 +190,14 @@
       var editStatus = true;
       console.log("<%= status %>");
       if ("<%= status %>" == "false") {
-        errorMsg.innerHTML = "This email is already exists";
+        errorMsg.innerHTML = "This email is already exists or password not match";
         errorMsg.style.display = "block";
         editStatus = false;
       }
+      function onlyLetters(str) {
+        return /^[a-zA-Z]+$/.test(str);
+      }
       function validateEditForm() {
-        editStatus = true;
         var fullName = document.getElementById("fullName").value;
         var email = document.getElementById("email").value;
 
@@ -205,7 +207,14 @@
           errorMsg.style.display = "block";
           return false;
         }
-        return editStatus;
+        if(!onlyLetters(fullName))
+        {
+          errorMsg.innerHTML = "You have entered an invalid full name!";
+          errorMsg.style.display = "block";
+          return false;
+        }
+
+        return true;
       }
       function ValidateEmail(email) {
         return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
