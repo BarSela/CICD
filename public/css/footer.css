@@ -29,6 +29,7 @@ footer p:nth-child(2) {
   width: 500px;
   text-align: center;
   line-height: 26px;
+  font-weight: solid;
 }
 footer a {
   width: 170px;
@@ -42,14 +43,18 @@ footer a {
   color: white;
   text-decoration: none;
   font-size: 20px;
+  font-weight: solid;
+
 }
 footer .button {
+  font-weight: solid;
   display: flex;
 }
 footer .end {
   position: absolute;
 }
 footer i {
+  font-weight: solid;
   font-style: italic;
 }
 footer a:hover {

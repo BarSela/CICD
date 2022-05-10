@@ -13,107 +13,96 @@
     <section id="content">
     <%- include('../partials/navbar') %>
     <div class="container">
-        <!-- popup window for change password -->
-        <!-- <div class="profile-details"> -->
-           
-        <!-- </div> -->
-        
-      <div class="avatar-flip"><img src="/assets/bar.jpg" height="150" width="150" style="cursor: zoom-in"id="pic1"/>
-        <img  src="/assets/bar.jpg"  height="150"  width="150"  style="cursor: zoom-in"    id="pic2" />
-      </div>
-
-      <h2>Bar Sela</h2>
-      <h4>Personal Profile</h4>
-      <div class="btn-group">
-        <button type="button" id="uplaod-pic-btn" onclick="validateTrainingForm()">upload picture</button>
-        <button type="button" id="change-pass-btn" onclick="openPasswordForm()">change password</button>
-      </div>
-       <div class="profile-details">
-        <form  class="form-container" id="change-pass-form" style="display: none;" >
-            <div class="input-box">
-                <label for="fullName">password</label> 
-                <input type="password" id="fullName"  placeholder="Enter current password" />
-               </div>
-               <div class="input-box">
-                <label for="new-password" style="padding-right:10px;">new password</label>
-                <input type="password" id="new-password"  placeholder= "Enter new password" style="padding-right:10px;" />
-               </div>
-               <div class="input-box">
-                <label for="new-password" style="padding-right:10px;">confirm password</label>
-                <input type="password" id="confirm-new-password"  placeholder= "confirm your new password" style="padding-right:10px;" />
-               </div>
-              <div class="btn-group">
-                <button type="submit" id="create-btn" onclick="validatePasswordForm()">change password</button>
-                <button type="button"  onclick="closePasswordForm()">Cancel</button>
-              </div>
-           </form>
-          <form class="profile" id="profile-form" action="/profile" method="POST" onsubmit="return validateSignupForm()"   >
-               <div class="input-box">
-                <label for="fullName">FullName</label> 
-                <input type="text" id="fullName" name="fullName" placeholder="<%= user.fullName %>" />
-               </div>
-               <div class="input-box">
-                <label for="email" style="padding-right:10px;">Email </label>
-                <input type="email" id="email" name="email" placeholder= "<%= user.email %>" style="padding-right:10px;" />
-               </div>
-               <div class="input-box">
-                <label for="registration">registration date</label>
-                <input type="text" id="registration" name="registration date" placeholder="**********" />
-               </div>
-                <div class="gender" id ="gender" >
-                <input type="radio" id="male" name="gender" value="male" checked >Male
-                <input type="radio" id="female" name="gender" value="female"  disabled>Female
-                <input type="radio" id="other" name="gender" value="other"  disabled> Other
-               </div>
-               <div class="input-box button" >
-                <input type="submit"   id="save-btn" value="Save"  />
-              </div>
-        </form>
-      </div>
+            <!-- popup window for change password -->
+            <!-- <div class="profile-details"> -->
+            <!-- </div> -->   
+          <div class="avatar-flip"><img src="/assets/bar.jpg" height="150" width="150" style="cursor: zoom-in"id="pic1"/>
+            <img  src="/assets/bar.jpg"  height="150"  width="150"  style="cursor: zoom-in"    id="pic2" />
+          </div>
+          <h2>Bar Sela</h2>
+          <h4>Personal Profile</h4>
+          <div class="btn-group">
+            <button type="button" id="uplaod-pic-btn" onclick="validateTrainingForm()">upload picture</button>
+            <button type="button" id="change-pass-btn" onclick="openPasswordForm()">change password</button>
+          </div>
+          <div class="profile-details">
+            <label id="errorMsg" style="font-size: 16px; color: red" hidden></label>
+            <form  class="form-container" id="change-pass-form" style="display: none;" >
+                  <div class="input-box">
+                    <label for="fullName">password</label> 
+                    <input type="password" id="fullName"  placeholder="Enter current password" />
+                  </div>
+                  <div class="input-box">
+                    <label for="new-password" style="padding-right:10px;">new password</label>
+                    <input type="password" id="new-password"  placeholder= "Enter new password" style="padding-right:10px;" />
+                  </div>
+                  <div class="input-box">
+                    <label for="new-password" style="padding-right:10px;">confirm password</label>
+                    <input type="password" id="confirm-new-password"  placeholder= "confirm your new password" style="padding-right:10px;" />
+                  </div>
+                  <div class="btn-group">
+                    <button type="button" id="change-btn" onclick="validatePasswordForm()">change password</button>
+                    <button type="button"  onclick="closePasswordForm()">Cancel</button>
+                  </div>
+              </form>
+              <form class="profile" id="profile-form" action="/profile" method="POST" onsubmit="return validateSignupForm()"   >
+                  <div class="input-box">
+                    <label for="fullName">FullName</label> 
+                    <input type="text" id="fullName" name="fullName" placeholder="<%= user.fullName %>" />
+                  </div>
+                  <div class="input-box">
+                    <label for="email" style="padding-right:10px;">Email </label>
+                    <input type="email" id="email" name="email" placeholder= "<%= user.email %>" style="padding-right:10px;" />
+                  </div>
+                  <div class="input-box">
+                    <label for="registration">registration date</label>
+                    <input type="text" id="registration" name="registration date" placeholder="**********" />
+                  </div>
+                    <div class="gender" id ="gender" >
+                    <input type="radio" id="male" name="gender" value="male" checked >Male
+                    <input type="radio" id="female" name="gender" value="female"  disabled>Female
+                    <input type="radio" id="other" name="gender" value="other"  disabled> Other
+                  </div>
+                  <div class="input-box button" >
+                    <input type="submit"  id="save-btn" value="Save"  />
+                  </div>
+            </form>
+          </div>
     </div>
   </section>
     <script>
+       errorMsg.style.display = "none";
         function openPasswordForm(){
             document.getElementById("profile-form").style.display = "none";
             document.getElementById("change-pass-form").style.display = "block";
-            var btn =document.getElementById("create-btn");
+            document.getElementById("uplaod-pic-btn").style.display = "none";
+            document.getElementById("change-pass-btn").style.display = "none";
         }
         function closePasswordForm(){
             document.getElementById("change-pass-form").style.display = "none";
+            document.getElementById("profile-form").style.display = "block";
+            document.getElementById("uplaod-pic-btn").style.display = "block";
+            document.getElementById("change-pass-btn").style.display = "block";
         }
-        function openForm() {
-        document.getElementById("editPic").style.display = "block";
-      }
-      function closeForm() {
-        document.getElementById("editPic").style.display = "none";
-      }
-      document.getElementById("uplaod-pic-btn").addEventListener("click", function () {
-          if (document.getElementById("editPic").style.display == "block") {
-            closeForm();
-          } else {
-            openForm();
-          }
-        });
-        function replacePic(){
-          var newPic=document.getElementById("img").value;
-          document.getElementById("pic2").innerHTML=newPic;
-          document.getElementById("pic1").innerHTML=newPic;
+        var editStatus = true;
+        console.log("<%= status %>");
+        if ("<%= status %>" == "false") {
+          errorMsg.innerHTML = "This email is already exixt";
+          errorMsg.style.display = "block";
+          editStatus = false;
         }
-        document.getElementById("submit-pic").addEventListener("click",function(){
-          replacePic();
-          closeForm();
-        });
         function validateSignupForm() {
+          editStatus = true;
           var fullName = document.getElementById("fullName").value;
           var email = document.getElementById("email").value;
-         
+    
           if (!ValidateEmail(email)) {
             console.log("!ValidateEmail");
-            // errorMsg.innerHTML = "You have entered an invalid email address!";
-            // errorMsg.style.display = "block";
+            errorMsg.innerHTML = "You have entered an invalid email address!";
+            errorMsg.style.display = "block";
             return false;
           }
-          return true;
+          return editStatus;
         }
         function ValidateEmail(email) {
           return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);

@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt"); //Password encryption
 const Trainee = require("../model/trainee");
 const Trainer = require("../model/trainer");
-const TrainingType = require("../model/trainingType");
 const user = require("../model/user");
 const User = require("../model/user");
 var userEmail = "";
@@ -110,7 +109,6 @@ module.exports = {
             .save()
             .then((result) => {
               console.log("new trainer created");
-              // res.status(200).render("/createBusinessProfile",{userId:result._id});
               userEmail = trainer.email;
               return res.redirect("/createBusinessProfile/" + trainer.email);
             })
@@ -170,7 +168,7 @@ module.exports = {
       }); //end bcrypt
     }); //end User.find
   },
-  createBusinessP: async (req, res) => {
+  createBusinessP: async (req, res, next) => {
     let specialty = req.body.specialty;
     let city = req.body.city;
     let phone = req.body.phone;
@@ -185,45 +183,10 @@ module.exports = {
     let russian = req.body.russian;
     let arabic = req.body.arabic;
 
-    // let typeName1 = req.body.typeName1;
-    // let typeName2 = req.body.typeName2;
-    // let typeName3 = req.body.typeName3;
-    // let typeName4 = req.body.typeName4;
-
-    // let typeDuration1 = req.body.typeDuration1;
-    // let typeDuration2 = req.body.typeDuration2;
-    // let typeDuration3 = req.body.typeDuration3;
-    // let typeDuration4 = req.body.typeDuration4;
-
-    // let typePrice1 = req.body.typePrice1;
-    // let typePrice2 = req.body.typePrice2;
-    // let typePrice3 = req.body.typePrice3;
-    // let typePrice4 = req.body.typePrice4;
-
-    // console.log(typeName1);
-    // console.log(typeDuration1);
-    // console.log(typePrice1);
-
-    // const trainingType = new TrainingType({
-    //   typeName1,
-    //   typeDuration1,
-    //   typePrice1,
-    // });
-    // trainingType
-    //   .save()
-    //   .then((result) => {
-    //     console.log("new training type created");
-    //   })
-    //   .catch((error) => {
-    //     res.status(500).json({
-    //       error,
-    //     });
-    //     console.log("post error ");
-    //   });
-    // console.log(typeof typeName2);
-    // let trainingTypeId = trainingType._id.toString();
-    // console.log("trainingTypeId: ");
-    // console.log(trainingTypeId);
+    console.log("city");
+    console.log(city);
+    console.log("hebrew");
+    console.log(hebrew);
     const trainer = await Trainer.findOneAndUpdate(
       { email: userEmail },
       {
@@ -244,12 +207,10 @@ module.exports = {
       }
     );
     if (trainer) {
-      console.log("1");
-      console.log(trainer);
-      return res.redirect("/businessProfile");
+      res.render("pages/businessProfile", { userEmail, trainer });
     } else {
       console("Error to find trainer");
-      return res.render("/");
+      res.render("/");
     }
   },
   editBusinessP: async (req, res, next) => {
@@ -290,70 +251,79 @@ module.exports = {
         },
       }
     );
-    if (trainer) {
-      res.redirect("/businessProfile");
-    } else {
-      console("Error to find trainer");
-      res.render("/");
-    }
   },
   profile: async (req, res) => {
     var fullName = req.body.fullName;
-    var email = req.body.email;
-    console.log("profile");
-    const user = await User.findOneAndUpdate(
+    var newEmail = req.body.email;
+    var status = "false";
+    const currUser = await User.find({ email: userEmail });
+    //check if the new email already exsits in the DB
+    let user = await User.findOne({ email: newEmail });
+    console.log(user);
+    if (user != null) {
+      console.log("if user");
+      return res.render("pages/editPersonalProfile", {
+        userEmail: userEmail,
+        user: currUser,
+        status: status,
+      });
+    }
+
+    //else
+    user = await User.findOneAndUpdate(
       { email: userEmail },
       {
         $set: {
           fullName: fullName,
-          email: email,
+          email: newEmail,
         },
       }
     );
     if (user) {
-      console.log("sucssefule");
+      console.log("Email updated successfully");
     } else {
-      console.log("user Error (profile Page -user)");
+      console.log("Failed to update email (profile Page -user)");
       res.redirect("/");
     }
-
     if (userType == "trainer") {
       const trainer = await Trainer.findOneAndUpdate(
         { email: userEmail },
         {
           $set: {
             fullName: fullName,
-            email: email,
+            email: newEmail,
           },
         }
       );
       if (trainer) {
-        console.log("sucssefule");
         return res.render("pages/personalProfile", {
-          userEmail: userEmail,
-          trainer,
+          userEmail: newEmail,
+          user: trainer,
+          status: "true",
         });
       } else {
-        console.log("user Error (profile Page -trainer)");
+        console.log("Failed to update email (profile Page - trainer)");
         res.redirect("/");
       }
     } else if (userType == "trainee") {
-      console.log(userEmail);
-
-      const user = await Trainee.findOneAndUpdate(
+      const trainee = await Trainee.findOneAndUpdate(
         { email: userEmail },
         {
           $set: {
             fullName: fullName,
-            email: email,
+            email: newEmail,
           },
         }
       );
-      if (user) {
-        console.log("sucssefule");
-        return res.render("/updateProfile", { userEmail: userEmail, user });
+      console.log(trainee);
+      if (trainee) {
+        return res.render("pages/personalProfile", {
+          userEmail: newEmail,
+          user: trainee,
+          status: "true",
+        });
       } else {
-        console.log("user Error (profile Page -trainee)");
+        console.log("Failed to update email (profile Page - trainee)");
         res.redirect("/");
       }
     }
