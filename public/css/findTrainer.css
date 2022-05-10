@@ -1,0 +1,190 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    font-family: "Poppins", sans-serif;
+  }
+  body {
+    background-color: #f5f8ff;
+  }
+  /* CONTENT */
+  #content {
+      position: relative;
+      width: calc(100% - 260px);
+      left: 260px;
+      transition: all .3s ease;
+      max-height: 1000px;
+  }
+  #sidebar.hide + #content {
+      width: calc(100% - 60px);
+      left: 60px;
+  }
+  /* MAIN */
+  main {
+      background-color: #fcfcfcad;
+      width: 70%;
+      padding: 24px 20px 20px 20px;
+    align-items: center;
+  }
+  .wrapper {
+    position: relative;
+    width: 1200px;
+    margin: 120px auto 120px;
+    background-color: rgba(255, 255, 255, 0.851);
+    padding: 0 20px 20px;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
+    text-align: center;
+    min-height: 600px;
+  }
+  #search-container {
+    padding:  40px 20px;
+    margin: 1em 0;
+  }
+  #search-container input {
+    background-color: transparent;
+    width: 40%;
+    border-bottom: 2px solid #110f29;
+    padding: 1em 0.3em;
+  }
+  #search-container input:focus {
+    border-bottom-color: #6c9da4;
+  }
+  #search-container button {
+    padding: 1em 2em;
+    margin-left: 1em;
+    background-color: #6c9da4;
+    color: #ffffff;
+    border-radius: 5px;
+    margin-top: 0.5em;
+  }
+  .button-value {
+    border: 2px solid #6c9da4;
+    padding: 1em 2.2em;
+    border-radius: 3em;
+    background-color: transparent;
+    color: #6759ff;
+    cursor: pointer;
+  }
+  .active {
+    background-color: #6c9da4;
+    color: #ffffff;
+  }
+  #products {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-column-gap: 1.5em;
+    padding: 2em 0;
+  }
+  .card {
+    background-color: #ffffff;
+    max-width: 18em;
+    margin-top: 1em;
+    padding: 1em;
+    border-radius: 5px;
+    box-shadow: 1em 2em 2.5em rgba(1, 2, 68, 0.08);
+  }
+  .image-container {
+    text-align: center;
+  }
+  img {
+    max-width: 100%;
+    object-fit: contain;
+    height: 15em;
+  }
+  .container {
+    padding-top: 1em;
+    color: #110f29;
+  }
+  .container h5 {
+    font-weight: 500;
+  }
+  .hide {
+    display: none;
+  }
+  .trainers-area-wrapper {
+    margin-left: 22%;
+    text-align: center;
+    width: 60%;
+    height: 20%;
+    
+  }
+  
+  
+  @media screen and (max-width: 720px) {
+    img {
+      max-width: 100%;
+      object-fit: contain;
+      height: 10em;
+    }
+    .card {
+      max-width: 10em;
+      margin-top: 1em;
+    }
+    #products {
+      grid-template-columns: auto auto;
+      grid-column-gap: 1em;
+    }
+  }
+  @import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+  
+  .container{
+    margin: 40px;
+    padding: 80px;
+  }
+  
+  
+  .trainer-profile {
+    padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow:2px 2px 10px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      max-width: 100%;
+      margin: 20px;
+      overflow: hidden;
+      width: 700px;
+  }
+  
+  .trainer-profile h6 {
+      opacity: 0.6;
+      margin: 0;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+  }
+  
+  .trainer-profile h2 {
+      letter-spacing: 1px;
+      margin: 10px 0;
+  }
+  
+  
+  
+  .trainer-info {
+    
+      padding: 30px;
+      position: relative;
+      width: 100%;
+  }
+  
+  .btn {
+      background-color: #6c9da4;
+      border: 0;
+      border-radius: 50px;
+      box-shadow: 10px 10px 10px rgba(0.2, 0.2, 0.2, 0.2);
+      color: #fff;
+      font-size: 16px;
+      padding: 12px 25px;
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      letter-spacing: 1px;
+  }
+  
+  

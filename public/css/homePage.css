@@ -37,12 +37,14 @@
   justify-content: space-between;
 }
 .navbar ul li {
+  
   list-style: none;
   display: inline-block;
   margin: 0 20px;
   position: relative;
 }
 .navbar ul li a {
+  position: relative;
   font-size: 22px;
   text-decoration: none;
   color: #fff;
@@ -65,7 +67,6 @@
   text-decoration: none;
   color: #fff;
   text-transform: uppercase;
-  margin-left: 20px;
 }
 .navbar .logo{
 	color: white;

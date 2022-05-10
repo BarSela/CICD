@@ -335,7 +335,7 @@ app.get("/homePage", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-  connected = "false";
+  userEmail = "";
   res.render("pages/homePage", { userEmail: userEmail });
 });
 
