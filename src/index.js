@@ -68,26 +68,28 @@ app.get("/condNterms", (req, res) => {
 });
 app.get("/personalProfile", async (req, res) => {
   console.log(userEmail);
-  res.render("pages/personalProfile", {userEmail:userEmail,user:userObj});
-    
-        
+  res.render("pages/personalProfile", { userEmail: userEmail, user: userObj });
 });
 app.get("/editPersonalProfile", async (req, res) => {
   console.log(userEmail);
-  res.render("pages/editPersonalProfile", {userEmail:userEmail,user:userObj });     
+  res.render("pages/editPersonalProfile", {
+    userEmail: userEmail,
+    user: userObj,
+  });
 });
 app.get("/findTrainer", (req, res) => {
   const value = "fitness";
-  Trainer.find({ "businessName": {'$regex': '.*'+value+'.*'}}).then((trainers) => {
-    console.log("trainers: "+trainers);
-   
-  });
-  res.render("pages/findTrainer",{ userEmail: userEmail });
+  Trainer.find({ businessName: { $regex: ".*" + value + ".*" } }).then(
+    (trainers) => {
+      console.log("trainers: " + trainers);
+    }
+  );
+  res.render("pages/findTrainer", { userEmail: userEmail });
 });
 app.post("/findTrainer", (req, res) => {
   console.log(userEmail);
-  
-  res.render("pages/findTrainer",{ userEmail: userEmail });
+
+  res.render("pages/findTrainer", { userEmail: userEmail });
 });
 
 app.get("/trainerdashboard", (req, res) => {
@@ -95,29 +97,52 @@ app.get("/trainerdashboard", (req, res) => {
 });
 app.get("/traineeDashboard/:email", async (req, res) => {
   userEmail = req.params.email;
-  User.find({ email:userEmail }).then((users) => {
+  User.find({ email: userEmail }).then((users) => {
     //If the user list is empty
     if (users.length === 0) {
       console.log("user Error");
-      res.redirect('/');    
+      res.redirect("/");
+    } else {
+      const [user] = users;
+      userObj = user;
+      res.render("pages/traineeDashboard", { userEmail: userEmail, user });
     }
-    else{
-    const [user] = users;
-    userObj = user;
-    res.render("pages/traineeDashboard", {userEmail:userEmail,user});
-    }
-  });    
+  });
 });
 
 app.get("/createBusinessProfile/:email", (req, res) => {
   userEmail = req.params.email;
   res.render("pages/createBusinessProfile", { userEmail: userEmail });
 });
+
 app.get("/businessProfile", (req, res) => {
-  res.render("pages/businessProfile", { userEmail: userEmail,user:userObj });
+  console.log("2");
+  console.log(userEmail);
+  console.log("3");
+  console.log(userObj);
+
+  Trainer.find({ email: userEmail }).then((users) => {
+    //If the user list is empty
+    if (users.length === 0) {
+      console.log("user Error");
+      res.redirect("/");
+    } else {
+      const [user] = users;
+      userObj = user;
+      console.log("4");
+      console.log(userObj);
+      res.render("pages/businessProfile", {
+        userEmail: userEmail,
+        user: userObj,
+      });
+    }
+  });
 });
 app.get("/editBusinessProfile", (req, res) => {
-  res.render("pages/editBusinessProfile", { userEmail: userEmail });
+  res.render("pages/editBusinessProfile", {
+    userEmail: userEmail,
+    user: userObj,
+  });
 });
 
 app.get("/login", (req, res) => {
@@ -143,6 +168,6 @@ app.get("/logout", (req, res) => {
 
 app.post("/login", login);
 app.post("/signUp", signup);
-app.post("/profile",profile);
+app.post("/profile", profile);
 app.post("/createBusinessP", createBusinessP);
 app.post("/editBusinessP", editBusinessP);

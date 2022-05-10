@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt"); //Password encryption
 const Trainee = require("../model/trainee");
 const Trainer = require("../model/trainer");
+const TrainingType = require("../model/trainingType");
 const user = require("../model/user");
 const User = require("../model/user");
 var userEmail = "";
@@ -33,7 +34,7 @@ module.exports = {
               error,
             });
           }
-          const user = new User({fullName, email, password: hash, userType });
+          const user = new User({ fullName, email, password: hash, userType });
           user
             .save()
             .then((result) => {
@@ -51,10 +52,12 @@ module.exports = {
             password: hash,
             gender,
           });
-          trainee.save().then((result) => {
-            userEmail = trainee.email;
+          trainee
+            .save()
+            .then((result) => {
+              userEmail = trainee.email;
               console.log("new trainee created");
-              return res.redirect("/traineeDashboard/"+ trainee.email);
+              return res.redirect("/traineeDashboard/" + trainee.email);
             })
             .catch((error) => {
               res.status(500).json({
@@ -84,7 +87,7 @@ module.exports = {
               error,
             });
           }
-          const user = new User({fullName, email, password: hash, userType });
+          const user = new User({ fullName, email, password: hash, userType });
           user
             .save()
             .then((result) => {
@@ -109,7 +112,7 @@ module.exports = {
               console.log("new trainer created");
               // res.status(200).render("/createBusinessProfile",{userId:result._id});
               userEmail = trainer.email;
-              return res.redirect("/createBusinessProfile/"+trainer.email);
+              return res.redirect("/createBusinessProfile/" + trainer.email);
             })
             .catch((error) => {
               res.status(500).json({
@@ -125,10 +128,10 @@ module.exports = {
   login: (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    userEmail ="";
+    userEmail = "";
     var loginStatus = "false";
     console.log("email1 : " + email);
-    User.find({ email:email }).then((users) => {
+    User.find({ email: email }).then((users) => {
       //If the user list is empty
       if (users.length === 0) {
         return res.render("pages/login", {
@@ -147,18 +150,16 @@ module.exports = {
           });
         }
         if (result) {
-          
-          if(user.userType == "trainer"){
+          if (user.userType == "trainer") {
             userEmail = user.email;
             userType = "trainer";
             console.log("Auth successful");
-            return res.redirect("/createBusinessProfile/"+ user.email);
-          }
-          else if(user.userType == "trainee"){
+            return res.redirect("/createBusinessProfile/" + user.email);
+          } else if (user.userType == "trainee") {
             userEmail = user.email;
             userType = "trainee";
             console.log("Auth successful");
-            return res.redirect("/traineeDashboard/"+user.email);
+            return res.redirect("/traineeDashboard/" + user.email);
           }
         }
         //If the password is incorrect
@@ -169,7 +170,7 @@ module.exports = {
       }); //end bcrypt
     }); //end User.find
   },
-  createBusinessP: async (req, res, next) => {
+  createBusinessP: async (req, res) => {
     let specialty = req.body.specialty;
     let city = req.body.city;
     let phone = req.body.phone;
@@ -184,10 +185,45 @@ module.exports = {
     let russian = req.body.russian;
     let arabic = req.body.arabic;
 
-    console.log("city");
-    console.log(city);
-    console.log("hebrew");
-    console.log(hebrew);
+    // let typeName1 = req.body.typeName1;
+    // let typeName2 = req.body.typeName2;
+    // let typeName3 = req.body.typeName3;
+    // let typeName4 = req.body.typeName4;
+
+    // let typeDuration1 = req.body.typeDuration1;
+    // let typeDuration2 = req.body.typeDuration2;
+    // let typeDuration3 = req.body.typeDuration3;
+    // let typeDuration4 = req.body.typeDuration4;
+
+    // let typePrice1 = req.body.typePrice1;
+    // let typePrice2 = req.body.typePrice2;
+    // let typePrice3 = req.body.typePrice3;
+    // let typePrice4 = req.body.typePrice4;
+
+    // console.log(typeName1);
+    // console.log(typeDuration1);
+    // console.log(typePrice1);
+
+    // const trainingType = new TrainingType({
+    //   typeName1,
+    //   typeDuration1,
+    //   typePrice1,
+    // });
+    // trainingType
+    //   .save()
+    //   .then((result) => {
+    //     console.log("new training type created");
+    //   })
+    //   .catch((error) => {
+    //     res.status(500).json({
+    //       error,
+    //     });
+    //     console.log("post error ");
+    //   });
+    // console.log(typeof typeName2);
+    // let trainingTypeId = trainingType._id.toString();
+    // console.log("trainingTypeId: ");
+    // console.log(trainingTypeId);
     const trainer = await Trainer.findOneAndUpdate(
       { email: userEmail },
       {
@@ -207,12 +243,13 @@ module.exports = {
         },
       }
     );
-    if(trainer){
-      res.render("pages/businessProfile",{userEmail,trainer});
-    }
-    else{
+    if (trainer) {
+      console.log("1");
+      console.log(trainer);
+      return res.redirect("/businessProfile");
+    } else {
       console("Error to find trainer");
-      res.render("/");
+      return res.render("/");
     }
   },
   editBusinessP: async (req, res, next) => {
@@ -253,9 +290,14 @@ module.exports = {
         },
       }
     );
-
+    if (trainer) {
+      res.redirect("/businessProfile");
+    } else {
+      console("Error to find trainer");
+      res.render("/");
+    }
   },
-  profile: async(req, res) => {
+  profile: async (req, res) => {
     var fullName = req.body.fullName;
     var email = req.body.email;
     console.log("profile");
@@ -266,16 +308,16 @@ module.exports = {
           fullName: fullName,
           email: email,
         },
-      });
-      if(user){
-        console.log("sucssefule");
       }
-      else{
-        console.log("user Error (profile Page -user)");
-          res.redirect('/');    
-      }
-  
-    if(userType == "trainer"){
+    );
+    if (user) {
+      console.log("sucssefule");
+    } else {
+      console.log("user Error (profile Page -user)");
+      res.redirect("/");
+    }
+
+    if (userType == "trainer") {
       const trainer = await Trainer.findOneAndUpdate(
         { email: userEmail },
         {
@@ -283,41 +325,37 @@ module.exports = {
             fullName: fullName,
             email: email,
           },
+        }
+      );
+      if (trainer) {
+        console.log("sucssefule");
+        return res.render("pages/personalProfile", {
+          userEmail: userEmail,
+          trainer,
         });
-        if(trainer){
-          console.log("sucssefule");
-          return res.render("pages/personalProfile", {userEmail:userEmail,trainer});
-        }
-        else{
-          console.log("user Error (profile Page -trainer)");
-            res.redirect('/');    
-        }
-          
-       
-    }   
-    else if(userType == "trainee"){
+      } else {
+        console.log("user Error (profile Page -trainer)");
+        res.redirect("/");
+      }
+    } else if (userType == "trainee") {
       console.log(userEmail);
 
       const user = await Trainee.findOneAndUpdate(
-          { email: userEmail },
-          {
-            $set: {
-              fullName: fullName,
-              email: email,
-            },
-          });
-          if(user){
-            console.log("sucssefule");
-            return res.render("/updateProfile", {userEmail:userEmail,user});
-          }
-          else{
-            console.log("user Error (profile Page -trainee)");
-              res.redirect('/');    
-          }
-            
-        } 
-          
-     
+        { email: userEmail },
+        {
+          $set: {
+            fullName: fullName,
+            email: email,
+          },
+        }
+      );
+      if (user) {
+        console.log("sucssefule");
+        return res.render("/updateProfile", { userEmail: userEmail, user });
+      } else {
+        console.log("user Error (profile Page -trainee)");
+        res.redirect("/");
+      }
+    }
   },
-
 };

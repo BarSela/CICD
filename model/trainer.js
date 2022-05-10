@@ -36,8 +36,6 @@ const trainerUser = new mongoose.Schema({
       },
     },
   ],
-
-
   specialty: {
     type: String,
     required: false,

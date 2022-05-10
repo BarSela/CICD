@@ -114,7 +114,7 @@
                                 <!-- >Certification section -->
                                 <label class="w3-text-grey" id="certification"><b>Certification</b></label>
                               <label class="w3-text-grey"><br>Please fill in where you were certified as a Trainer and when, </br></label>
-                              <label class="w3-text-teal"><b>Shcool Name</b></label>
+                              <label class="w3-text-teal"><b>School Name</b></label>
                               <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="schoolName-Input" name="schoolName" type="text" required></p>
                               <label id="errorMsg-sn" style="font-size: 14px; color: red" ><b>The school name where you have been certified must contain only letters  </br></label>
                               <label class="w3-text-teal"><b>Certification date</b></label>
@@ -130,38 +130,38 @@
                                 <label class="w3-text-grey"><br>Please enter training types (at least 1) </b></label>
                                 <label class="w3-text-grey"><br>To add more then one click'+' </br></label>
                               <label class="w3-text-teal"><br> Name of Training type:</b></label>
-                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="training-name-1"  type="text" required></p>
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="training-name-1" name="typeName1" type="text" required></p>
                               <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
-                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="duration-type-1"  type="number" min="0" max="120" required></p>
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="duration-type-1" name="typeDuration1" type="number" min="0" max="120" required></p>
                               <label class="w3-text-grey" id="price"><b>Price</b></label>
-                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="price-type-1"  type="number" min="0" required></p>
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="price-type-1" name="typePrice1"  type="number" min="0" required></p>
                               <div id="training-type-2">
                               <button class="w3-button w3-circle w3-teal" id="delTrainingbt" type="button" onclick="delTrainingType('training-type-2','training-name-2','duration-type-2','price-type-2')" >-</button>
                               <label class="w3-text-teal"><b>Name of Training type:</b></label>
-                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="training-name-2"  type="text" ></p>
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="training-name-2" name="typeName2" type="text" ></p>
                               <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
-                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="duration-type-2"  type="number" min="0" max="120" ></p>
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="duration-type-2"  name="typeDuration2" type="number" min="0" max="120" ></p>
                               <label class="w3-text-grey" id="price"><b>Price</b></label>
-                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="price-type-2"  type="number" min="0" h></p>
+                              <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="price-type-2" name="typePrice2" type="number" min="0" h></p>
                               </div>
                               
                               <div id="training-type-3" >
                                 <button class="w3-button w3-circle w3-teal" id="delTrainingbt" type="button" onclick="delTrainingType('training-type-3','training-name-3','duration-type-3','price-type-3')" >-</button>
                                 <label class="w3-text-teal"><b>Name of Training type:</b></label>
-                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="training-name-3" " type="text" ></p>
+                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="training-name-3" name="typeName3" " type="text" ></p>
                                 <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
-                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="duration-type-3"  type="number" min="0" max="120" ></p>
+                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="duration-type-3" name="typeDuration3"  type="number" min="0" max="120" ></p>
                                 <label class="w3-text-grey" id="price"><b>Price</b></label>
-                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="price-type-3"  type="number" min="0" ></p>
+                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="price-type-3" name="typePrice3" type="number" min="0" ></p>
                               </div>
                               <div id="training-type-4">
                                 <button class="w3-button w3-circle w3-teal" id="delTrainingbt" type="button" onclick="delTrainingType('training-type-4','training-name-4','duration-type-4','price-type-4')" >-</button>
                                 <label class="w3-text-teal"><b>Name of Training type:</b></label>
-                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="training-name-4" type="text"></p>
+                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="training-name-4" name="typeName4" type="text"></p>
                                 <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
-                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="duration-type-4"  type="number" min="0" max="120"></p>
+                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="duration-type-4" name="typeDuration4" type="number" min="0" max="120"></p>
                                 <label class="w3-text-grey" id="price"><b>Price</b></label>
-                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="price-type-4"  type="number" min="0"></p>
+                                <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="price-type-4" name="typePrice4" type="number" min="0"></p>
                                 </div>
                               <b></br>
                               <button class="w3-button w3-circle w3-teal" type="button" style="margin-left: 10cm;" id="addTrainingTypebt" onclick="addTrainingType()" >+</button>

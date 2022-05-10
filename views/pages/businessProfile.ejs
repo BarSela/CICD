@@ -31,38 +31,29 @@
             <div class="w3-third">
               <div class="w3-white w3-text-grey w3-card-4">
                 <div class="container">
-                  <h2 id="name">Bar Fitness</h2>
+                  
+                  <h2 id="name" ><%= user.businessName %></h2>
                 </div>
                 <div class="w3-container">
                   <p id="fullName">
-                    <i
-                      class="fa fa-user-o fa-fw w3-margin-right w3-large w3-text-teal"
-                    ></i
-                    >Bar sela
+                    <i class="fa fa-user-o fa-fw w3-margin-right w3-large w3-text-teal"></i>
+                    <%= user.fullName %>
                   </p>
                   <p id="specialty">
-                    <i
-                      class="fa fa-certificate fa-fw w3-margin-right w3-large w3-text-teal"
-                    ></i
-                    >athletic
+                    <i class="fa fa-certificate fa-fw w3-margin-right w3-large w3-text-teal"></i>
+                    <%= user.specialty%>
                   </p>
                   <p id="city">
-                    <i
-                      class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"
-                    ></i
-                    >Rehovot
+                    <i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>
+                    <%= user.city %>
                   </p>
                   <p id="phone">
-                    <i
-                      class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"
-                    ></i
-                    >052-6761996
+                    <i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>
+                    <%= user.phone %>
                   </p>
                   <p id="email">
-                    <i
-                      class="fa fa-envelope-o fa-fw w3-margin-right w3-large w3-text-teal"
-                    ></i
-                    >Barsela03@gmail.com
+                    <i class="fa fa-envelope-o fa-fw w3-margin-right w3-large w3-text-teal"></i>
+                    <%= user.email %>
                   </p>
                   <hr />
 
@@ -86,31 +77,31 @@
                       >Languages</b
                     >
                   </p>
-                  <p id="hebrew">Hebrew</p>
+                  <p id="hebrew-t">Hebrew</p>
                   <div class="w3-light-grey w3-round-xlarge" id="hebrew">
                     <div
                       class="w3-round-xlarge w3-teal" id="hebrew-w"
                     ></div>
                   </div>
-                  <p id="english">English</p>
+                  <p id="english-t">English</p>
                   <div class="w3-light-grey w3-round-xlarge" id="english">
                     <div
                       class="w3-round-xlarge w3-teal" id="english-w"
                     ></div>
                   </div>
-                  <p id="russian">Russian</p>
+                  <p id="russian-t">Russian</p>
                   <div class="w3-light-grey w3-round-xlarge" id="russian">
                     <div
                       class="w3-round-xlarge w3-teal" id="russian-w"
                     ></div>
                   </div>
-                  <p id="spanish">Spanish</p>
+                  <p id="spanish-t">Spanish</p>
                   <div class="w3-light-grey w3-round-xlarge" id="spanish">
                     <div
                       class="w3-round-xlarge w3-teal" id="spanish-w"
                     ></div>
                   </div>
-                  <p id="arabic">Arabic</p>
+                  <p id="arabic-t">Arabic</p>
                   <div class="w3-light-grey w3-round-xlarge" id="arabic">
                     <div
                       class="w3-round-xlarge w3-teal" id="arabic-w"
@@ -129,8 +120,9 @@
                   </p>
                   <div class="w3-white w3-row-padding" id="Settings">
                     <button class="w3-button w3-teal w3-round-xlarge" id="edit-profile-bt" onclick="location.href='/editBusinessProfile'"> Edit profile</button>
-                    <button class="w3-button w3-teal w3-round-xlarge" id="delete-acc-bt"> Delete account</button>
                     <button class="w3-button w3-teal w3-round-xlarge" id="edit-training-bt"> Edit training types</button>
+                    <br/><br/>
+                    <button class="w3-button w3-teal w3-round-xlarge" id="delete-acc-bt"> Delete account</button>
 
                   </div>
 
@@ -154,10 +146,7 @@
                 <div class="w3-container">
                   <h5 class="w3-opacity">
                     <b></b>
-                      Yoga, Pilates and Athletics Training Studio Suitable for all
-                      ages! A suitable medical certificate must be presented before
-                      the first training session Our studio works about five times a
-                      week and with a wide target audience
+                    <%= user.about %>
                     </b>
                   </h5>
                   <hr />
@@ -169,6 +158,7 @@
                       <li><i class="fa-li fa fa-check w3-text-teal"></i>Yoga</li>
                       <li><i class="fa-li fa fa-check w3-text-teal"></i>Zumba</li>
                       <li><i class="fa-li fa fa-check w3-text-teal"></i>Pilates</li>
+                      <li><i class="fa-li fa fa-check w3-text-teal"></i></li>
                     </ul>
                   </p>
                 </div>
@@ -178,20 +168,30 @@
               <div class="w3-container w3-card w3-white">
                 <h2 class="w3-text-grey w3-padding-16">
                   <i
-                    class="fa fa-graduation-cap  fa-fw w3-margin-right w3-xxlarge w3-text-teal"
-                  ></i
-                  >Certification
+                    class="fa fa-graduation-cap  fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>
+                  Certification
                 </h2>
                 <div class="w3-container">
                   <h5 class="w3-opacity">
-                    <b>name of school</b>
-                  </h5>
+                    <b>Certification school: </br></h5>
+
+                  
                   <h6 class="w3-text-teal">
-                    <i class="fa fa-calendar fa-fw w3-margin-right"></i>certification year
-                  </h6>
-                  <p>
-                    bla bla bla
-                  </p>
+                    <i class="fa fa-calendar fa-fw w3-margin-right"></i><%= user.schoolDate%></br></h6>
+                    <p style="color:rgb(73, 73, 73);text-decoration: underline;">
+                      school Name:
+                    </p> 
+                    <p style="color:rgb(73, 73, 73);">
+                      <%= user.schoolName%>
+                    </p> </br>
+                    <p style="color:rgb(73, 73, 73);text-decoration: underline;">
+                      Certification Info:
+                    </p> 
+                    <p style="color:rgb(73, 73, 73);">
+                      <%= user.schoolInfo%>
+                    </p> 
+                  
+
                   <hr />
                 </div>
               </div>
@@ -210,6 +210,62 @@
 </section>
   </body>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script>
+if('<%= user.hebrew %>' != 0)
+      {
+
+        var hebrewV='<%= user.hebrew %>'+'%';
+        document.getElementById('hebrew-w').style.width=hebrewV;
+      }
+      else
+      {
+        document.getElementById('hebrew').style.display='none';
+        document.getElementById('hebrew-t').style.display='none';
+      }
+      if('<%= user.english %>' != 0)
+      {
+        document.getElementById('english').style.display=none;
+        var englishV='<%= user.english %>'+'%';
+      document.getElementById('english-w').style.width=englishV;
+      }
+      else{
+        document.getElementById('english').style.display='none';
+        document.getElementById('english-t').style.display='none';
+      }
+      if('<%= user.spanish %>' != 0)
+      {
+        document.getElementById('spanish').style.display="none";
+        var spanishV='<%= user.spanish %>'+'%';
+      document.getElementById('spanish-w').style.width=spanishV;
+      }
+      else{
+        document.getElementById('spanish').style.display='none';
+        document.getElementById('spanish-t').style.display='none';
+      }
+      if('<%= user.russian %>' != 0)
+      {
+        document.getElementById('russian-w').style.display=none;
+        var russianV='<%= user.russian %>'+'%';
+      document.getElementById('russian-w').style.width=russianV;
+      }
+      else
+      {
+        document.getElementById('russian').style.display='none';
+        document.getElementById('russian-t').style.display='none';
+      }
+      if('<%= user.arabic %>' != 0)
+      {
+        document.getElementById('arabic-w').style.display=none;
+        var arabicV='<%= user.arabic %>'+'%';
+      document.getElementById('arabic-w').style.width=arabicV;
+      }
+      else{
+        document.getElementById('arabic').style.display='none';
+        document.getElementById('arabic-t').style.display='none';
+      }
+
+
+  </script>
 </html>
 
 
