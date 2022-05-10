@@ -18,7 +18,6 @@ const trainerUser = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    //match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
   },
 
   password: {
@@ -38,10 +37,6 @@ const trainerUser = new mongoose.Schema({
     },
   ],
 
-  // Date_of_Registretion: {
-  //   type: Date,
-  //   required: true,
-  // },
 
   specialty: {
     type: String,
@@ -94,7 +89,7 @@ const trainerUser = new mongoose.Schema({
     required: false,
   },
   schoolDate: {
-    type: Number,
+    type: String,
     required: false,
   },
   schoolInfo: {

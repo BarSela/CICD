@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt"); //Password encryption
-const jwt = require("jsonwebtoken");
 const Trainee = require("../model/trainee");
 const Trainer = require("../model/trainer");
+const user = require("../model/user");
 const User = require("../model/user");
 var userEmail = "";
 var userType = "";
@@ -13,9 +13,6 @@ module.exports = {
     let businessName = req.body.businessName;
     let email = req.body.email;
     let password = req.body.password;
-    let male = req.body.male;
-    let female = req.body.female;
-    let other = req.body.other;
     let gender = req.body.gender;
 
     //trainee user
@@ -36,7 +33,7 @@ module.exports = {
               error,
             });
           }
-          const user = new User({ email, password: hash, userType });
+          const user = new User({fullName, email, password: hash, userType });
           user
             .save()
             .then((result) => {
@@ -54,11 +51,10 @@ module.exports = {
             password: hash,
             gender,
           });
-          trainee
-            .save()
-            .then((result) => {
+          trainee.save().then((result) => {
+            userEmail = trainee.email;
               console.log("new trainee created");
-              res.redirect("/traineeDashboard/" + trainee._id);
+              return res.redirect("/traineeDashboard/"+ trainee.email);
             })
             .catch((error) => {
               res.status(500).json({
@@ -88,7 +84,7 @@ module.exports = {
               error,
             });
           }
-          const user = new User({ email, password: hash, userType });
+          const user = new User({fullName, email, password: hash, userType });
           user
             .save()
             .then((result) => {
@@ -112,8 +108,8 @@ module.exports = {
             .then((result) => {
               console.log("new trainer created");
               // res.status(200).render("/createBusinessProfile",{userId:result._id});
-              userID = trainer._id.toString();
-              return res.redirect("/createBusinessProfile/" + trainer._id);
+              userEmail = trainer.email;
+              return res.redirect("/createBusinessProfile/"+trainer.email);
             })
             .catch((error) => {
               res.status(500).json({
@@ -129,9 +125,10 @@ module.exports = {
   login: (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
+    userEmail ="";
     var loginStatus = "false";
     console.log("email1 : " + email);
-    User.find({ email: email }).then((users) => {
+    User.find({ email:email }).then((users) => {
       //If the user list is empty
       if (users.length === 0) {
         return res.render("pages/login", {
@@ -150,43 +147,18 @@ module.exports = {
           });
         }
         if (result) {
-          userEmail = email;
-          if (user.userType == "trainer") {
+          
+          if(user.userType == "trainer"){
+            userEmail = user.email;
             userType = "trainer";
-
-            console.log("trainer if \n");
-            // Trainer.find({email:email}).then((trainers) => {
-            //   //If the user list is empty
-            //   if (trainers.length === 0) {
-            //     console.log("error - failed to load user");
-
-            //   }
-            //   else{
-            //   const [trainer] = trainers;
-            //   user._id = trainer._id;
-            //   console.log("trainer: "+trainer);
-            //   }
-
-            // });
             console.log("Auth successful");
-            return res.redirect("/createBusinessProfile/" + user.email);
-          } else if (user.userType == "trainee") {
+            return res.redirect("/createBusinessProfile/"+ user.email);
+          }
+          else if(user.userType == "trainee"){
+            userEmail = user.email;
             userType = "trainee";
-            // Trainee.find({ email:email }).then((trainees) => {
-            //   //If the user list is empty
-            //   if (trainees.length === 0) {
-            //     console.log("error - failed to load user");
-            //   }
-            //   else{
-            //   const [trainee] = trainees;
-            //   console.log("trainee: "+trainee);
-            //   user._id = trainee._id;
-            //   }
-
-            // });
             console.log("Auth successful");
-            console.log("userID: " + user.email);
-            return res.redirect("/traineeDashboard/" + user.email);
+            return res.redirect("/traineeDashboard/"+user.email);
           }
         }
         //If the password is incorrect
@@ -235,6 +207,13 @@ module.exports = {
         },
       }
     );
+    if(trainer){
+      res.render("pages/businessProfile",{userEmail,trainer});
+    }
+    else{
+      console("Error to find trainer");
+      res.render("/");
+    }
   },
   editBusinessP: async (req, res, next) => {
     let businassName = req.body.BusinessName;
@@ -276,4 +255,69 @@ module.exports = {
     );
 
   },
+  profile: async(req, res) => {
+    var fullName = req.body.fullName;
+    var email = req.body.email;
+    console.log("profile");
+    const user = await User.findOneAndUpdate(
+      { email: userEmail },
+      {
+        $set: {
+          fullName: fullName,
+          email: email,
+        },
+      });
+      if(user){
+        console.log("sucssefule");
+      }
+      else{
+        console.log("user Error (profile Page -user)");
+          res.redirect('/');    
+      }
+  
+    if(userType == "trainer"){
+      const trainer = await Trainer.findOneAndUpdate(
+        { email: userEmail },
+        {
+          $set: {
+            fullName: fullName,
+            email: email,
+          },
+        });
+        if(trainer){
+          console.log("sucssefule");
+          return res.render("pages/personalProfile", {userEmail:userEmail,trainer});
+        }
+        else{
+          console.log("user Error (profile Page -trainer)");
+            res.redirect('/');    
+        }
+          
+       
+    }   
+    else if(userType == "trainee"){
+      console.log(userEmail);
+
+      const user = await Trainee.findOneAndUpdate(
+          { email: userEmail },
+          {
+            $set: {
+              fullName: fullName,
+              email: email,
+            },
+          });
+          if(user){
+            console.log("sucssefule");
+            return res.render("/updateProfile", {userEmail:userEmail,user});
+          }
+          else{
+            console.log("user Error (profile Page -trainee)");
+              res.redirect('/');    
+          }
+            
+        } 
+          
+     
+  },
+
 };
