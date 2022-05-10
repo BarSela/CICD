@@ -163,7 +163,7 @@
                       <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="email-Input" value="<%= user.email %>" name="email" type="text" required >      
                       <label id="errorMsg-e" style="font-size: 14px; color: red" ><b>Invalid email </br></label>
                       <label class="w3-text-teal"><b>About Section (Description)</br></label>
-                      <span class="w3-input w3-border w3-light-grey w3-round-xlarge" id="about-Input"  name="about" type="text" contenteditable></p>
+                      <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="about-Input" value="<%= user.about %>" name="about" type="text" required ></p>
 
                       <hr />
                       <label class="w3-text-grey" id="languages"><b>Languages</b></label>
@@ -231,9 +231,8 @@
 <!-- NAVBAR -->
 
     <script>
-      if('<%= user.hebrew %>' != 0)
+      if('<%= user.hebrew %>' != '0')
       {
-
         var hebrewV='<%= user.hebrew %>'+'%';
         document.getElementById('hebrew-w').style.width=hebrewV;
       }
@@ -242,9 +241,8 @@
         document.getElementById('hebrew').style.display='none';
         document.getElementById('hebrew-t').style.display='none';
       }
-      if('<%= user.english %>' != 0)
+      if('<%= user.english %>' != '0')
       {
-        document.getElementById('english').style.display=none;
         var englishV='<%= user.english %>'+'%';
       document.getElementById('english-w').style.width=englishV;
       }
@@ -252,9 +250,8 @@
         document.getElementById('english').style.display='none';
         document.getElementById('english-t').style.display='none';
       }
-      if('<%= user.spanish %>' != 0)
+      if('<%= user.spanish %>' != '0')
       {
-        document.getElementById('spanish').style.display="none";
         var spanishV='<%= user.spanish %>'+'%';
       document.getElementById('spanish-w').style.width=spanishV;
       }
@@ -262,9 +259,8 @@
         document.getElementById('spanish').style.display='none';
         document.getElementById('spanish-t').style.display='none';
       }
-      if('<%= user.russian %>' != 0)
+      if('<%= user.russian %>' != '0')
       {
-        document.getElementById('russian-w').style.display=none;
         var russianV='<%= user.russian %>'+'%';
       document.getElementById('russian-w').style.width=russianV;
       }
@@ -273,9 +269,8 @@
         document.getElementById('russian').style.display='none';
         document.getElementById('russian-t').style.display='none';
       }
-      if('<%= user.arabic %>' != 0)
+      if('<%= user.arabic %>' != '0')
       {
-        document.getElementById('arabic-w').style.display=none;
         var arabicV='<%= user.arabic %>'+'%';
       document.getElementById('arabic-w').style.width=arabicV;
       }

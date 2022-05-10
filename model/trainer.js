@@ -81,6 +81,7 @@ const trainerUser = new mongoose.Schema({
   },
   about: {
     type: String,
+    required: false,
   },
   schoolName: {
     type: String,

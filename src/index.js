@@ -121,10 +121,28 @@ app.get("/createBusinessProfile/:email", (req, res) => {
 });
 
 app.get("/businessProfile", (req, res) => {
-  res.render("pages/businessProfile", { userEmail: userEmail, user: userObj });
+  Trainer.find({ email: userEmail }).then((users) => {
+    //If the user list is empty
+    if (users.length === 0) {
+      console.log("user Error");
+      res.redirect("/");
+    } else {
+      const [user] = users;
+      userObj = user;
+
+      console.log(userObj);
+      res.render("pages/businessProfile", {
+        userEmail: userEmail,
+        user: userObj,
+      });
+    }
+  });
 });
 app.get("/editBusinessProfile", (req, res) => {
-  res.render("pages/editBusinessProfile", { userEmail: userEmail });
+  res.render("pages/editBusinessProfile", {
+    userEmail: userEmail,
+    user: userObj,
+  });
 });
 
 app.get("/login", (req, res) => {

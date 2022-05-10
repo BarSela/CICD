@@ -211,9 +211,8 @@
   </body>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script>
-if('<%= user.hebrew %>' != 0)
+if('<%= user.hebrew %>' != '0')
       {
-
         var hebrewV='<%= user.hebrew %>'+'%';
         document.getElementById('hebrew-w').style.width=hebrewV;
       }
@@ -222,9 +221,8 @@ if('<%= user.hebrew %>' != 0)
         document.getElementById('hebrew').style.display='none';
         document.getElementById('hebrew-t').style.display='none';
       }
-      if('<%= user.english %>' != 0)
+      if('<%= user.english %>' != '0')
       {
-        document.getElementById('english').style.display=none;
         var englishV='<%= user.english %>'+'%';
       document.getElementById('english-w').style.width=englishV;
       }
@@ -232,9 +230,8 @@ if('<%= user.hebrew %>' != 0)
         document.getElementById('english').style.display='none';
         document.getElementById('english-t').style.display='none';
       }
-      if('<%= user.spanish %>' != 0)
+      if('<%= user.spanish %>' != '0')
       {
-        document.getElementById('spanish').style.display="none";
         var spanishV='<%= user.spanish %>'+'%';
       document.getElementById('spanish-w').style.width=spanishV;
       }
@@ -242,9 +239,8 @@ if('<%= user.hebrew %>' != 0)
         document.getElementById('spanish').style.display='none';
         document.getElementById('spanish-t').style.display='none';
       }
-      if('<%= user.russian %>' != 0)
+      if('<%= user.russian %>' != '0')
       {
-        document.getElementById('russian-w').style.display=none;
         var russianV='<%= user.russian %>'+'%';
       document.getElementById('russian-w').style.width=russianV;
       }
@@ -253,9 +249,8 @@ if('<%= user.hebrew %>' != 0)
         document.getElementById('russian').style.display='none';
         document.getElementById('russian-t').style.display='none';
       }
-      if('<%= user.arabic %>' != 0)
+      if('<%= user.arabic %>' != '0')
       {
-        document.getElementById('arabic-w').style.display=none;
         var arabicV='<%= user.arabic %>'+'%';
       document.getElementById('arabic-w').style.width=arabicV;
       }
