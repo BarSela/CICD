@@ -1,54 +1,20 @@
 
 * {
-  padding: 0;
-  margin: 0;
   font-family: "Josefin Sans", sans-serif;
-  box-sizing: border-box;
 }
 
-.condNterms {
-  
-}
-.main {
-  height: 550px;
-  width: 1130px;
-  max-width: 95%;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
 .condNterms-text {
-  width: 550px;
+  width: 100%;
   color: white;
+  margin-top: 50%;
 }
 
-.condNterms img {
-  height: 550px;
-  width: 520px;
-}
-.condNterms-text h1 {
-  color: white;
-  font-size: 80px;
-  text-transform: capitalize;
-  margin-bottom: 20px;
-}
-
-.condNterms-text h5 {
-  color: white;
-  font-size: 25px;
-  text-transform: capitalize;
-  margin-bottom: 25px;
-  letter-spacing: 2px;
-}
-span {
-  color: #2f7272;
+.about .footerCond{
+  position: relative;
 }
 
 
- .li a{
-   color: white;
- }
+
 
 
 

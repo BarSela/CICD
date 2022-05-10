@@ -67,15 +67,106 @@ app.get("/condNterms", (req, res) => {
   res.render("pages/condNterms", { userEmail: userEmail });
 });
 app.get("/personalProfile", async (req, res) => {
-  res.render("pages/personalProfile", { userEmail: userEmail, user: userObj });
+
+  User.find({ email: userEmail }).then((users) => {
+    //If the user list is empty
+    if (users.length === 0) {
+      console.log("user Error");
+      res.redirect("/");
+    } else {
+      const [user] = users;
+      var userObjInfo = user;
+
+      if (userObjInfo.userType == "trainee") {
+        Trainee.find({ email: userEmail }).then((trainees) => {
+          //If the user list is empty
+          if (users.length === 0) {
+            console.log("trainee Error");
+            res.redirect("/");
+          } else {
+            const [user] = trainees;
+            userObj = user;
+
+            console.log(userObj);
+            res.render("pages/personalProfile", {
+              userEmail: userEmail,
+              user: userObj,
+              info: userObjInfo,
+            });
+          }
+        });
+      } else {
+        Trainer.find({ email: userEmail }).then((trainers) => {
+          //If the user list is empty
+          if (users.length === 0) {
+            console.log("user Error");
+            res.redirect("/");
+          } else {
+            const [user] = trainers;
+            userObj = user;
+
+            console.log(userObj);
+            res.render("pages/personalProfile", {
+              userEmail: userEmail,
+              user: userObj,
+              info: userObjInfo,
+            });
+          }
+        });
+      }
+    }
+  });
 });
 app.get("/editPersonalProfile", async (req, res) => {
   var status = "true";
   console.log(status);
-  res.render("pages/editPersonalProfile", {
-    userEmail: userEmail,
-    user: userObj,
-    status: status,
+  User.find({ email: userEmail }).then((users) => {
+    //If the user list is empty
+    if (users.length === 0) {
+      console.log("user Error");
+      res.redirect("/");
+    } else {
+      const [user] = users;
+      var userObjInfo = user;
+
+      if (userObjInfo.userType == "trainee") {
+        Trainee.find({ email: userEmail }).then((trainees) => {
+          //If the user list is empty
+          if (users.length === 0) {
+            console.log("trainee Error");
+            res.redirect("/");
+          } else {
+            const [user] = trainees;
+            userObj = user;
+
+            console.log(userObj);
+            res.render("pages/editPersonalProfile", {
+              userEmail: userEmail,
+              user: userObj,
+              info: userObjInfo,status: status,
+            });
+          }
+        });
+      } else {
+        Trainer.find({ email: userEmail }).then((trainers) => {
+          //If the user list is empty
+          if (users.length === 0) {
+            console.log("user Error");
+            res.redirect("/");
+          } else {
+            const [user] = trainers;
+            userObj = user;
+
+            console.log(userObj);
+            res.render("pages/editPersonalProfile", {
+              userEmail: userEmail,
+              user: userObj,
+              info: userObjInfo,status: status,
+            });
+          }
+        });
+      }
+    }
   });
 });
 app.get("/findTrainer", (req, res) => {

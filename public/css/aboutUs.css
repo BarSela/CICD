@@ -13,7 +13,7 @@
 
 .about img {
   height: 550px;
-  width: 520px;
+  width: 400px;
 }
 
 .about-text {
@@ -48,7 +48,7 @@ span {
 }
 
 .about-text p {
-  color: white;
+  color: rgb(255, 255, 255);
   letter-spacing: 1px;
   line-height: 28px;
   font-size: 18px;
@@ -60,6 +60,8 @@ span {
   line-height: 28px;
   font-size: 25px;
   margin-bottom: 45px;
+  font-family: "Josefin Sans", sans-serif;
+
 }
 
 button {

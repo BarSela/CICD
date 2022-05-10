@@ -14,7 +14,6 @@ body {
   margin-top: 40px;
   margin-right: 150px;
   align-items: center;
- 
 }
 .profile-details .input-box {
   height: 48px;
@@ -23,6 +22,22 @@ body {
 .form-container .input-box {
   height: 48px;
   margin: 20px 0;
+}
+.profile-details .input-box select {
+  height: 90%;
+  width: 40%;
+  outline: none;
+  padding: 0 15px;
+  font-size: 17px;
+  font-weight: 400;
+  color: #333;
+  border: 1.5px solid #c7bebe;
+  border-bottom-width: 2.5px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+.input-box select:focus, .input-box select:valid {
+  border-color: #6c9da4;
 }
 .form-container .input-box input {
   height: 90%;
@@ -37,8 +52,8 @@ body {
   border-radius: 6px;
   transition: all 0.3s ease;
 }
-.input-box label{
-  margin: 20px ;
+.input-box label {
+  margin: 20px;
   color: #555;
   flex-direction: row;
   display: inline-block;
@@ -46,7 +61,6 @@ body {
   width: 120px;
   margin-top: 0px;
   justify-content: flex-end;
-
 }
 .profile-details .input-box input {
   height: 90%;
@@ -69,7 +83,6 @@ form h3 {
   color: #707070;
   font-size: 14px;
   font-weight: 500;
-  
 }
 .input-box.button input {
   margin-left: 180px;
@@ -90,7 +103,6 @@ form .text h3 {
   width: 100%;
   text-align: center;
   margin-left: -30px;
-  
 }
 form .text h3 a {
   color: #6c9da4;
@@ -103,13 +115,11 @@ form .text h3 a:hover {
   width: calc(50% - 200px);
   position: relative;
   margin-left: 42%;
-  align-items: center; 
+  align-items: center;
 }
-.gender [type=radio]{
+.gender [type="radio"] {
   margin: 10px 15px;
-  
 }
-
 
 .container {
   position: relative;
@@ -124,19 +134,16 @@ form .text h3 a:hover {
   -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
   -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
   text-align: center;
-
 }
 
-.btn-group{
+.btn-group {
   border: none;
   color: white;
   text-align: center;
   align-items: center;
   margin: 10px 10px;
-  
- 
 }
-.btn-group button{
+.btn-group button {
   height: 40px;
   border: 1px solid;
   color: #e9f4fb;
@@ -144,26 +151,23 @@ form .text h3 a:hover {
   font-weight: 10px;
   border-radius: 25px;
   cursor: pointer;
-  margin: 0px 15px; 
-  width: 180px; 
+  margin: 0px 15px;
+  width: 180px;
   background-color: #6c9da4;
-
 }
-.btn-group button:focus{
+.btn-group button:focus {
   border: #818a8e;
 }
-.btn-group button::selection{
+.btn-group button::selection {
   background-color: transparent;
   border: 2px solid #6c9da4;
-
 }
-button[type="button"]{
+button[type="button"] {
   background: #6c9da4;
   font-weight: 10px;
   color: #e9f4fb;
 }
-.form-container .btn-group{
-  
+.form-container .btn-group {
   border: none;
   color: white;
   text-align: center;
@@ -171,7 +175,7 @@ button[type="button"]{
   margin: 30px 40px;
   margin-left: 50px;
 }
-.form-container .btn-group button{
+.form-container .btn-group button {
   height: 40px;
   border: 1px solid;
   color: #e9f4fb;
@@ -179,8 +183,8 @@ button[type="button"]{
   font-weight: 10px;
   border-radius: 25px;
   cursor: pointer;
-  margin: 0px 15px; 
-  width: 180px; 
+  margin: 0px 15px;
+  width: 180px;
   background-color: #6c9da4;
 }
 
@@ -312,18 +316,17 @@ input[type="submit"]:hover {
   margin-right: 43%;
   margin-bottom: 40%;
 }
-.profile-details .form-container{
+.profile-details .form-container {
   height: 350px;
   margin-top: 40px;
   align-items: center;
- 
 }
 .profile-details .form-container .input-box {
   height: 48px;
   margin: 20px 0;
 }
-.input-box label{
-  margin: 20px ;
+.input-box label {
+  margin: 20px;
   color: #555;
   flex-direction: row;
   display: inline-block;
@@ -331,7 +334,6 @@ input[type="submit"]:hover {
   width: 140px;
   margin-top: 0px;
   justify-content: flex-end;
-
 }
 .profile-details .form-container .input-box input {
   height: 90%;
@@ -351,4 +353,3 @@ input[type="submit"]:hover {
   border-color: #6c9da4;
 }
 /* Add styles to the form container */
-
