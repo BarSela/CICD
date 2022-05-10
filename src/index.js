@@ -224,20 +224,47 @@ app.get("/editPersonalProfile", async (req, res) => {
     }
   });
 });
-app.get("/findTrainer", (req, res) => {
-  const value = "fitness";
-  Trainer.find({ businessName: { $regex: ".*" + value + ".*" } }).then(
-    (trainers) => {
-      console.log("trainers: " + trainers);
-    }
-  );
-  res.render("pages/findTrainer", { userEmail: userEmail });
-});
-app.post("/findTrainer", (req, res) => {
-  console.log(userEmail);
 
-  res.render("pages/findTrainer", { userEmail: userEmail });
+app.get("/findTrainer", (req, res) => {
+
+  Trainer.find({}).then((trainers) => {
+  res.render("pages/findTrainer",{ userEmail: userEmail,trainers });
+ 
+  });
+  
 });
+app.post("/searchTrainer", (req, res) => {
+  
+  let traineeInput = req.body.traineeInput;
+  let filter = req.body.filterInput;
+  filter = filter.toString();
+
+  if(filter == "fullName"){
+    Trainer.find({fullName:{ $regex: ".*" + traineeInput + ".*" } }).then(
+      (trainers) => {
+        res.render("pages/findTrainer",{ userEmail: userEmail,trainers });
+      });
+  }
+  else if(filter == "businessName"){
+    Trainer.find({businessName:{ $regex: ".*" + traineeInput + ".*" } }).then(
+      (trainers) => {
+        res.render("pages/findTrainer",{ userEmail: userEmail,trainers });
+      });
+  }
+  else if(filter == "specialty"){
+    Trainer.find({specialty:{ $regex: ".*" + traineeInput + ".*" } }).then(
+      (trainers) => {
+        res.render("pages/findTrainer",{ userEmail: userEmail,trainers });
+      });
+  }
+  else if(filter == "city"){
+    Trainer.find({city:{ $regex: ".*" + traineeInput + ".*" } }).then(
+      (trainers) => {
+        res.render("pages/findTrainer",{ userEmail: userEmail,trainers });
+      });
+  }
+});
+
 
 app.get("/trainerdashboard", (req, res) => {
   res.render("pages/trainerdashboard", { userEmail: userEmail });

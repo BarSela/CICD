@@ -1,8 +1,9 @@
 const bcrypt = require("bcrypt"); //Password encryption
 const Trainee = require("../model/trainee");
 const Trainer = require("../model/trainer");
-const TrainingType = require("../model/trainingType");
 const User = require("../model/user");
+const TrainingType = require("../model/trainingType");
+
 var userEmail = "";
 var userType = "";
 module.exports = {
