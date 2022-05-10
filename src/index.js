@@ -326,7 +326,7 @@ app.get("/calendar", (req, res) => {
   var loginStatus = "true";
   res.render("pages/calendar", {
     loginStatus: loginStatus,
-    connected: connected,
+    userEmail: userEmail,
   });
 });
 

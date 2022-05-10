@@ -186,45 +186,46 @@ module.exports = {
     let russian = req.body.russian;
     let arabic = req.body.arabic;
 
-    // let typeName1 = req.body.typeName1;
-    // let typeName2 = req.body.typeName2;
-    // let typeName3 = req.body.typeName3;
-    // let typeName4 = req.body.typeName4;
+    let typeName1 = req.body.typeName1;
+    let typeName2 = req.body.typeName2;
+    let typeName3 = req.body.typeName3;
+    let typeName4 = req.body.typeName4;
 
-    // let typeDuration1 = req.body.typeDuration1;
-    // let typeDuration2 = req.body.typeDuration2;
-    // let typeDuration3 = req.body.typeDuration3;
-    // let typeDuration4 = req.body.typeDuration4;
+    let typeDuration1 = parseInt(req.body.typeDuration1);
+    let typeDuration2 = req.body.typeDuration2;
+    let typeDuration3 = req.body.typeDuration3;
+    let typeDuration4 = req.body.typeDuration4;
 
-    // let typePrice1 = req.body.typePrice1;
-    // let typePrice2 = req.body.typePrice2;
-    // let typePrice3 = req.body.typePrice3;
-    // let typePrice4 = req.body.typePrice4;
+    let typePrice1 = parseInt(req.body.typePrice1);
+    let typePrice2 = parseInt(req.body.typePrice2);
+    let typePrice3 = req.body.typePrice3;
+    let typePrice4 = req.body.typePrice4;
+   
+    console.log(typeName1);
+    console.log(typeDuration1);
+    console.log(typePrice1);
 
-    // console.log(typeName1);
-    // console.log(typeDuration1);
-    // console.log(typePrice1);
-
-    // const trainingType = new TrainingType({
-    //   typeName1,
-    //   typeDuration1,
-    //   typePrice1,
-    // });
-    // trainingType
-    //   .save()
-    //   .then((result) => {
-    //     console.log("new training type created");
-    //   })
-    //   .catch((error) => {
-    //     res.status(500).json({
-    //       error,
-    //     });
-    //     console.log("post error ");
-    //   });
-    // console.log(typeof typeName2);
-    // let trainingTypeId = trainingType._id.toString();
-    // console.log("trainingTypeId: ");
-    // console.log(trainingTypeId);
+    const trainingType = new TrainingType({
+      name:typeName1.toString(),
+      duration:typeDuration1,
+      price:typePrice1,
+    });
+    console.log("trainingtype:"+trainingType);
+    trainingType
+      .save()
+      .then((result) => {
+        console.log("new training type created");
+      })
+      .catch((error) => {
+        res.status(500).json({
+          error,
+        });
+        console.log("post error ");
+      });
+    console.log(typeof typePrice1);
+    let trainingTypeId = trainingType._id.toString();
+    console.log("trainingTypeId: ");
+    console.log(trainingTypeId);
     const trainer = await Trainer.findOneAndUpdate(
       { email: userEmail },
       {
@@ -241,6 +242,7 @@ module.exports = {
           spanish: spanish,
           russian: russian,
           arabic: arabic,
+          trainingType1:trainingType._id.toString(),
         },
       }
     );

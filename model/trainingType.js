@@ -6,17 +6,17 @@ const { ObjectId } = mongoose.Schema;
 const trainingType = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: false,
     maxlength: 32,
   },
   
   duration: {
     type: Number,
-    required: true,
+    required: false,
   },
   price: {
     type: Number,
-    required: true,
+    required: false,
   },
 
   
