@@ -57,15 +57,35 @@
   left: 0;
   bottom: -10px;
 }
-.navbar ul li:hover:after {
+
+/* .navbar ul li:hover:after {
   width: 100%;
-}
-.navbar ul li a logoutItem {
+} */
+.navbar ul li a .logoutItem {
   text-decoration: none;
   color: #fff;
   text-transform: uppercase;
   margin-left: 20px;
 }
+.navbar .logo{
+	color: white;
+	font-size: 45px;
+	letter-spacing: 1px;
+	
+}
+#logo-nav{
+  cursor: pointer;
+  font-size: 45px;
+}
+#logo-nav::after{
+  content: "";
+  background: none;
+}
+#logo-nav:hover:after{
+  font-size: 45px;
+ 
+}
+
 /*end nav bar */
 /*End header */
 
@@ -183,6 +203,7 @@ button:hover {
 .service {
   position: relative;
   width: 100%;
+  max-height: 90%;
   /* height: 400px ;*/
   background: #101010;
   align-items: center;
@@ -196,7 +217,18 @@ button:hover {
 }
 .title h2 {
   position: relative;
-  /* top: 30px; */
+  top: 50px;
+  align-items: center;
+  color: white;
+  font-size: 60px;
+  font-family: "Josefin Sans";
+  width: 1000px;
+  margin: 10px auto;
+  text-align: center;
+}
+.service .title h2 {
+  position: relative;
+  top: 0px;
   align-items: center;
   color: white;
   font-size: 60px;
@@ -216,7 +248,7 @@ button:hover {
 .service-card {
   height: 365px;
   width: 335px;
-  padding: 20px 35px;
+  padding: 40px 20px;
   background: #191919;
   border-radius: 20px;
   margin: 30px;
@@ -248,10 +280,13 @@ h5 {
   text-decoration: none;
   border: 2px solid transparent;
   font-weight: bold;
-  padding: 9px 22px;
+  padding: 10px 25px;
+  justify-content: center;
   border-radius: 30px;
   transition: 0.4s;
+  text-align: center;
 }
+
 .service-card .button:hover {
   background-color: transparent;
   border: 2px solid #2f7272;
@@ -565,7 +600,12 @@ form .text h3 a:hover {
   bottom: 35px;
   font-size: 14px;
 }
-
+.about-container{
+  max-width: 80%;
+  align-items: center;
+  color: white;
+  margin-left: 100px;
+}
 /* Slideshow container */
 .slideshow-container {
   max-width: 1000px;

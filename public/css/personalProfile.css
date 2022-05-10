@@ -109,10 +109,8 @@ form .text h3 a:hover {
   margin: 10px 15px;
   
 }
-.btn-group button{
-  width: 150px;
-    
-}
+
+
 .container {
   position: relative;
   width: 1200px;
@@ -128,12 +126,14 @@ form .text h3 a:hover {
   text-align: center;
 
 }
+
 .btn-group{
   border: none;
   color: white;
   text-align: center;
   align-items: center;
   margin: 10px 10px;
+  
  
 }
 .btn-group button{
@@ -146,6 +146,8 @@ form .text h3 a:hover {
   cursor: pointer;
   margin: 0px 15px; 
   width: 180px; 
+  background-color: #6c9da4;
+
 }
 .btn-group button:focus{
   border: #818a8e;
@@ -159,6 +161,27 @@ button[type="button"]{
   background: #6c9da4;
   font-weight: 10px;
   color: #e9f4fb;
+}
+.form-container .btn-group{
+  
+  border: none;
+  color: white;
+  text-align: center;
+  align-items: center;
+  margin: 30px 40px;
+  margin-left: 50px;
+}
+.form-container .btn-group button{
+  height: 40px;
+  border: 1px solid;
+  color: #e9f4fb;
+  font-size: 18px;
+  font-weight: 10px;
+  border-radius: 25px;
+  cursor: pointer;
+  margin: 0px 15px; 
+  width: 180px; 
+  background-color: #6c9da4;
 }
 
 .container:hover .avatar-flip {
