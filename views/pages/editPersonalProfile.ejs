@@ -59,12 +59,16 @@
             class="form-container"
             id="change-pass-form"
             style="display: none"
+            action="/editPassword"
+            method="POST"
+            onsubmit="return validateEditPasswordForm()"
           >
             <div class="input-box">
-              <label for="fullName">password</label>
+              <label for="password">password</label>
               <input
                 type="password"
                 id="fullName"
+                name="currPassword"
                 placeholder="Enter current password"
               />
             </div>
@@ -75,6 +79,7 @@
               <input
                 type="password"
                 id="new-password"
+                name="newPassword"
                 placeholder="Enter new password"
                 style="padding-right: 10px"
               />
@@ -92,7 +97,7 @@
             </div>
             <div class="btn-group">
               <button
-                type="button"
+                type=submit"
                 id="change-btn"
                 onclick="validatePasswordForm()"
               >
@@ -106,9 +111,9 @@
           <form
             class="profile"
             id="profile-form"
-            action="/profile"
+            action="/editPersonalprofile"
             method="POST"
-            onsubmit="return validateSignupForm()"
+            onsubmit="return validateEditForm()"
           >
             <div class="input-box">
               <label for="fullName">FullName</label>
@@ -153,25 +158,43 @@
     <script>
       errorMsg.style.display = "none";
       function openPasswordForm() {
+
         document.getElementById("profile-form").style.display = "none";
         document.getElementById("change-pass-form").style.display = "block";
-        document.getElementById("uplaod-pic-btn").style.display = "none";
         document.getElementById("change-pass-btn").style.display = "none";
       }
       function closePasswordForm() {
-        document.getElementById("change-pass-form").style.display = "none";
+        document.getElementById("change-pass-form").style.display = "block";
         document.getElementById("profile-form").style.display = "block";
-        document.getElementById("uplaod-pic-btn").style.display = "block";
         document.getElementById("change-pass-btn").style.display = "block";
+      }
+      function validateEditPasswordForm() {
+        var password = document.getElementById("new-password").value;
+        var passwordRepeat = document.getElementById(
+          "confirm-new-password"
+        ).value;
+        if (password.length < 8) {
+          errorMsg.innerHTML =
+            "Your password must include atleast 8 characters";
+          errorMsg.style.display = "block";
+          return false;
+        }
+        if (password != passwordRepeat) {
+          errorMsg.innerHTML = "please confirm your password";
+          errorMsg.style.display = "block";
+          return false;
+        }
+        console.log("good password");
+        return true;
       }
       var editStatus = true;
       console.log("<%= status %>");
       if ("<%= status %>" == "false") {
-        errorMsg.innerHTML = "This email is already exixt";
+        errorMsg.innerHTML = "This email is already exists";
         errorMsg.style.display = "block";
         editStatus = false;
       }
-      function validateSignupForm() {
+      function validateEditForm() {
         editStatus = true;
         var fullName = document.getElementById("fullName").value;
         var email = document.getElementById("email").value;

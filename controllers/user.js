@@ -55,6 +55,7 @@ module.exports = {
             .save()
             .then((result) => {
               userEmail = trainee.email;
+              userType = trainee.userType;
               console.log("new trainee created");
               return res.redirect("/traineeDashboard/" + trainee.email);
             })
@@ -110,6 +111,7 @@ module.exports = {
             .then((result) => {
               console.log("new trainer created");
               userEmail = trainer.email;
+              userType = trainer.userType;
               return res.redirect("/createBusinessProfile/" + trainer.email);
             })
             .catch((error) => {
@@ -295,11 +297,12 @@ module.exports = {
       res.render("/");
     }
   },
-  profile: async (req, res) => {
+  editPersonalprofile: async (req, res) => {
     var fullName = req.body.fullName;
     var newEmail = req.body.email;
+    var gender = req.body.gender;
     var status = "false";
-    const currUser = await User.find({ email: userEmail });
+    const currUser = await User.findOne({ email: userEmail });
     //check if the new email already exsits in the DB
     let user = await User.findOne({ email: newEmail });
     console.log(user);
@@ -311,7 +314,7 @@ module.exports = {
         status: status,
       });
     }
-
+    let userT = currUser.userType;
     //else
     user = await User.findOneAndUpdate(
       { email: userEmail },
@@ -322,6 +325,7 @@ module.exports = {
         },
       }
     );
+
     if (user) {
       console.log("Email updated successfully");
     } else {
@@ -335,6 +339,7 @@ module.exports = {
           $set: {
             fullName: fullName,
             email: newEmail,
+            gender: gender,
           },
         }
       );
@@ -355,6 +360,7 @@ module.exports = {
           $set: {
             fullName: fullName,
             email: newEmail,
+            gender: gender,
           },
         }
       );
@@ -370,5 +376,96 @@ module.exports = {
         res.redirect("/");
       }
     }
+  },
+  editPassword: async (req, res) => {
+    let currPassword = req.body.currPassword;
+    let newPassword = req.body.newPassword;
+    let loginStatus = "false";
+    User.find({ email: userEmail }).then((users) => {
+      //If the user list is empty
+      if (users.length === 0) {
+        return res.render("pages/editPersonalProfile", {
+          loginStatus: loginStatus,
+          user: userEmail,
+        });
+      }
+
+      const [user] = users;
+      //Checking the password
+      bcrypt.compare(currPassword, user.password, async (error, result) => {
+        if (error) {
+          return res.render("pages/editPersonalProfile", {
+            loginStatus: loginStatus,
+            user: userEmail,
+          });
+        }
+        if (result) {
+          if (user.userType == "trainer") {
+            const userU = await User.findOneAndUpdate(
+              { email: userEmail },
+              {
+                $set: {
+                  password: newPassword,
+                },
+              }
+            );
+            if (userU) {
+              const trainer = await Trainer.findOneAndUpdate(
+                { email: userEmail },
+                {
+                  $set: {
+                    password: newPassword,
+                  },
+                }
+              );
+              if (trainer) {
+                return res.redirect("/personalProfile");
+              } else {
+                console("Error to find trainer");
+                return res.render("/");
+              }
+            } else {
+              console("Error to find user");
+              return res.render("/");
+            }
+          } else if (user.userType == "trainee") {
+            const userU = await User.findOneAndUpdate(
+              { email: userEmail },
+              {
+                $set: {
+                  password: newPassword,
+                },
+              }
+            );
+            if (userU) {
+              const trainee = await Trainee.findOneAndUpdate(
+                { email: userEmail },
+                {
+                  $set: {
+                    password: newPassword,
+                  },
+                }
+              );
+              if (trainee) {
+                return res.redirect("/personalProfile");
+              } else {
+                console("Error to find trainee");
+                res.render("/");
+              }
+            } else {
+              console("Error to find user");
+              res.render("/");
+            }
+          }
+        }
+        //If the password is incorrect
+        return res.render("pages/editPersonalProfile", {
+          loginStatus: loginStatus,
+          user: userEmail,
+        });
+      }); //end bcrypt
+    }); //end User.find
+
+    console.log("okkkkkkkkkkkk");
   },
 };

@@ -3,9 +3,10 @@ const mongoose = require("mongoose");
 const {
   login,
   signup,
-  profile,
+  editPersonalprofile,
   createBusinessP,
   editBusinessP,
+  editPassword,
 } = require("../controllers/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -67,7 +68,6 @@ app.get("/condNterms", (req, res) => {
   res.render("pages/condNterms", { userEmail: userEmail });
 });
 app.get("/personalProfile", async (req, res) => {
-
   User.find({ email: userEmail }).then((users) => {
     //If the user list is empty
     if (users.length === 0) {
@@ -143,7 +143,8 @@ app.get("/editPersonalProfile", async (req, res) => {
             res.render("pages/editPersonalProfile", {
               userEmail: userEmail,
               user: userObj,
-              info: userObjInfo,status: status,
+              info: userObjInfo,
+              status: status,
             });
           }
         });
@@ -161,7 +162,8 @@ app.get("/editPersonalProfile", async (req, res) => {
             res.render("pages/editPersonalProfile", {
               userEmail: userEmail,
               user: userObj,
-              info: userObjInfo,status: status,
+              info: userObjInfo,
+              status: status,
             });
           }
         });
@@ -259,6 +261,7 @@ app.get("/logout", (req, res) => {
 
 app.post("/login", login);
 app.post("/signUp", signup);
-app.post("/profile", profile);
+app.post("/editPersonalprofile", editPersonalprofile);
 app.post("/createBusinessP", createBusinessP);
 app.post("/editBusinessP", editBusinessP);
+app.post("/editPassword", editPassword);
