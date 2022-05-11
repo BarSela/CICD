@@ -1,0 +1,121 @@
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Roboto", sans-serif;
+}
+#remember {
+  text-decoration: underline;
+}
+#name {
+  font-family: "Roboto", sans-serif;
+  color: darkcyan;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+#delete-acc-bt {
+  font-family: "Roboto", sans-serif;
+  width: 3.5cm;
+}
+#edit-profile-bt {
+  font-family: "Roboto", sans-serif;
+  width: 3.5cm;
+}
+#edit-training-bt {
+  font-family: "Roboto", sans-serif;
+  width: 3.8cm;
+}
+
+#Training-Types {
+  font-weight: bold;
+  font-size: 20px;
+  height: 10px;
+  margin-bottom: 10px;
+}
+#duration {
+  margin-top: 2px;
+}
+#duration-type-1,
+#price-type-1,
+#duration-type-2,
+#price-type-2,
+#duration-type-3,
+#price-type-3,
+#duration-type-4,
+#price-type-4 {
+  width: 150px;
+  height: 30px;
+  text-align: center;
+}
+#training-type-1,
+#training-type-2,
+#training-type-3,
+#training-type-4 {
+  width: 450px;
+}
+
+#training-type-2 {
+  display: none;
+}
+#training-type-3 {
+  display: none;
+}
+#training-type-4 {
+  display: none;
+}
+#training-name-1,
+#training-name-2,
+#training-name-3,
+#training-name-4 {
+  width: 450px;
+}
+
+#delTrainingbt {
+  display: inline-block;
+  margin-right: 3px;
+  margin-bottom: 2px;
+}
+
+#savebt {
+  margin-left: 19cm;
+  margin-top: 3px;
+}
+#spanish {
+  display: none;
+}
+#arabic {
+  display: none;
+}
+#spanish-w {
+  height: 24px;
+  width: 25%;
+}
+#hebrew-w {
+  height: 24px;
+  width: 100%;
+}
+#english-w {
+  height: 24px;
+  width: 90%;
+}
+#russian-w {
+  height: 24px;
+  width: 25%;
+}
+#arabic-w {
+  height: 24px;
+  width: 20%;
+}
+li {
+  font-family: "Roboto", sans-serif;
+  color: rgb(80, 80, 80);
+  font-size: 20px;
+}
+#training-types {
+  font-size: 30px;
+}

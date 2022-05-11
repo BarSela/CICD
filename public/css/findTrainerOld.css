@@ -47,21 +47,6 @@
     padding:  40px 20px;
     margin: 1em 0;
   }
-  #myForm option{
-    background-color: #6c9da4;
-
-  }
-  #myForm select{
-    background-color: #6c9da4;
-    border: 0;
-    border-radius: 5px;
-    box-shadow: 10px 10px 10px rgba(0.2, 0.2, 0.2, 0.2);
-    color: #fff;
-    font-size: 15px;
-    text-align: center;
-    padding: 12px 25px;
-    letter-spacing: 1px;
-  }
   #search-container input {
     background-color: transparent;
     width: 40%;

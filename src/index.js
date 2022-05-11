@@ -7,6 +7,8 @@ const {
   createBusinessP,
   editBusinessP,
   editPassword,
+  deleteAccount,
+  editTrainingTypes,
 } = require("../controllers/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -227,45 +229,41 @@ app.get("/editPersonalProfile", async (req, res) => {
 });
 
 app.get("/findTrainer", (req, res) => {
-
   Trainer.find({}).then((trainers) => {
-  res.render("pages/findTrainer",{ userEmail: userEmail,trainers });
- 
+    res.render("pages/findTrainer", { userEmail: userEmail, trainers });
   });
-  
 });
 app.post("/searchTrainer", (req, res) => {
-  
   let traineeInput = req.body.traineeInput;
   let filter = req.body.filterInput;
   filter = filter.toString();
 
-  if(filter == "fullName"){
-    Trainer.find({fullName:{ $regex: ".*" + traineeInput + ".*" } }).then(
+  if (filter == "fullName") {
+    Trainer.find({ fullName: { $regex: ".*" + traineeInput + ".*" } }).then(
       (trainers) => {
-        res.render("pages/findTrainer",{ userEmail: userEmail,trainers });
-      });
-  }
-  else if(filter == "businessName"){
-    Trainer.find({businessName:{ $regex: ".*" + traineeInput + ".*" } }).then(
+        res.render("pages/findTrainer", { userEmail: userEmail, trainers });
+      }
+    );
+  } else if (filter == "businessName") {
+    Trainer.find({ businessName: { $regex: ".*" + traineeInput + ".*" } }).then(
       (trainers) => {
-        res.render("pages/findTrainer",{ userEmail: userEmail,trainers });
-      });
-  }
-  else if(filter == "specialty"){
-    Trainer.find({specialty:{ $regex: ".*" + traineeInput + ".*" } }).then(
+        res.render("pages/findTrainer", { userEmail: userEmail, trainers });
+      }
+    );
+  } else if (filter == "specialty") {
+    Trainer.find({ specialty: { $regex: ".*" + traineeInput + ".*" } }).then(
       (trainers) => {
-        res.render("pages/findTrainer",{ userEmail: userEmail,trainers });
-      });
-  }
-  else if(filter == "city"){
-    Trainer.find({city:{ $regex: ".*" + traineeInput + ".*" } }).then(
+        res.render("pages/findTrainer", { userEmail: userEmail, trainers });
+      }
+    );
+  } else if (filter == "city") {
+    Trainer.find({ city: { $regex: ".*" + traineeInput + ".*" } }).then(
       (trainers) => {
-        res.render("pages/findTrainer",{ userEmail: userEmail,trainers });
-      });
+        res.render("pages/findTrainer", { userEmail: userEmail, trainers });
+      }
+    );
   }
 });
-
 
 app.get("/trainerdashboard/:email", (req, res) => {
   userEmail = req.params.email;
@@ -283,7 +281,6 @@ app.get("/trainerdashboard/:email", (req, res) => {
       });
     }
   });
- 
 });
 
 app.get("/traineeDashboard/:email", async (req, res) => {
@@ -320,7 +317,6 @@ app.get("/createBusinessProfile/:email", (req, res) => {
       });
     }
   });
- 
 });
 
 app.get("/businessProfile", (req, res) => {
@@ -328,7 +324,12 @@ app.get("/businessProfile", (req, res) => {
   let trainerId2 = "";
   let trainerId3 = "";
   let trainerId4 = "";
-  let trainingTypes ={trainingType1:typeName1,trainingType2:typeName2,trainingType3:typeName3,trainingType4:typeName4}
+  let trainingTypes = {
+    trainingType1: typeName1,
+    trainingType2: typeName2,
+    trainingType3: typeName3,
+    trainingType4: typeName4,
+  };
 
   Trainer.find({ email: userEmail }).then((users) => {
     //If the user list is empty
@@ -342,12 +343,18 @@ app.get("/businessProfile", (req, res) => {
       trainerId2 = user.trainerId2;
       trainerId3 = user.trainerId2;
       trainerId4 = user.trainerId2;
-      trainingTypes ={trainingType1:typeName1,trainingType2:typeName2,trainingType3:typeName3,trainingType4:typeName4}
+      trainingTypes = {
+        trainingType1: typeName1,
+        trainingType2: typeName2,
+        trainingType3: typeName3,
+        trainingType4: typeName4,
+      };
 
       console.log(userObj);
       res.render("pages/businessProfile", {
         userEmail: userEmail,
-        user: userObj,trainingTypes
+        user: userObj,
+        trainingTypes,
       });
     }
   });
@@ -364,29 +371,33 @@ app.get("/login", (req, res) => {
   res.render("pages/login", { loginStatus: loginStatus, userEmail: userEmail });
 });
 app.get("/calendar", (req, res) => {
-  TrainingType.find( userObj.trainingType1 ).then((types) => {
+  TrainingType.find(userObj.trainingType1).then((types) => {
     //If the user list is empty
     if (types.length === 0) {
       console.log("user Error");
       res.redirect("/");
     } else {
       const [type] = types;
-    
+
       console.log(userObj);
       res.render("pages/businessProfile", {
         userEmail: userEmail,
-        user: userObj,types
+        user: userObj,
+        types,
       });
     }
   });
   res.render("pages/calendar", {
-    
-    userEmail: userEmail,user:userObj
+    userEmail: userEmail,
+    user: userObj,
   });
 });
 
 app.get("/homePage", (req, res) => {
   res.render("pages/homePage", { userEmail: userEmail });
+});
+app.get("/editTrainingTypes", (req, res) => {
+  res.render("pages/editTrainingTypes", { user: userEmail });
 });
 
 app.get("/logout", (req, res) => {
@@ -400,9 +411,10 @@ app.post("/editPersonalprofile", editPersonalprofile);
 app.post("/createBusinessP", createBusinessP);
 app.post("/editBusinessP", editBusinessP);
 app.post("/editPassword", editPassword);
-app.post("/newTrainind",(req, res) => {
-  
+app.post("/newTrainind", (req, res) => {
   let traineeInput = req.body.Type;
   let filter = req.body.filterInput;
   filter = filter.toString();
 });
+app.post("/deleteAccount", deleteAccount);
+app.post("/editTrainingTypes", editTrainingTypes);

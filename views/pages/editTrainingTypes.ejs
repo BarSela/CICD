@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+  <title>Business profile</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  <link rel="stylesheet" href="/css/editTrainingTypes.css" />
+  
+  
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  
+  
+  <body class="w3-light-grey" id="page-top">
+        <!-- Page Container -->
+        <div class="w3-content w3-margin-top" style="max-width: 1500px">
+          <!-- The Grid -->
+          <div class="w3-row-padding" >
+            <!-- Left Column -->
+            <div class="w3-third" >
+              <div class="w3-white w3-text-grey w3-card-4" >
+                <div class="container">
+                  <h2 id="name"><%= user.businessName %></h2>
+                </div>
+                <div class="w3-container">
+                  <p id="fullName">
+                    <i
+                      class="fa fa-user-o fa-fw w3-margin-right w3-large w3-text-teal"
+                    ></i
+                    ><%= user.fullName %>
+                  </p>
+                  <p id="specialty">
+                    <i
+                      class="fa fa-certificate fa-fw w3-margin-right w3-large w3-text-teal"
+                    ></i
+                    ><%= user.specialty %>
+                  </p>
+                  <p id="city">
+                    <i
+                      class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"
+                    ></i
+                    ><%= user.city %>
+                  </p>
+                  <p id="phone"></p>
+                    <i
+                      class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"
+                    ></i
+                    ><%= user.phone %>
+                  </p>
+                  <p id="email">
+                    <i
+                      class="fa fa-envelope-o fa-fw w3-margin-right w3-large w3-text-teal"
+                    ></i
+                    ><%= user.email %>
+                  </p>
+                  <hr />
+    
+                  <p class="w3-large">
+                    <b
+                      ><i
+                        class="fa fa-calendar-check-o fa-fw w3-margin-right w3-text-teal"
+                      ></i
+                      >Schedule</b
+                    >
+                  </p>
+                  <div class="w3-white">
+                    <button class="w3-button w3-teal w3-round-xlarge" id="schedule-bt"> Schedule</button>
+                  </div>
+    
+                  <br />
+                  <hr />
+                  <p class="w3-large w3-text-theme">
+                    <b
+                      ><i class="fa fa-globe fa-fw w3-margin-right w3-text-teal"></i
+                      >Languages</b
+                    >
+                  </p>
+                  <p id="hebrew-t">Hebrew</p>
+                  <div class="w3-light-grey w3-round-xlarge" id="hebrew">
+                    <div
+                      class="w3-round-xlarge w3-teal" id="hebrew-w"
+                    ></div>
+                  </div>
+                  <p id="english-t">English</p>
+                  <div class="w3-light-grey w3-round-xlarge" id="english">
+                    <div
+                      class="w3-round-xlarge w3-teal" id="english-w"
+                    ></div>
+                  </div>
+                  <p id="russian-t">Russian</p>
+                  <div class="w3-light-grey w3-round-xlarge" id="russian">
+                    <div
+                      class="w3-round-xlarge w3-teal" id="russian-w"
+                    ></div>
+                  </div>
+                  <p id="spanish-t">Spanish</p>
+                  <div class="w3-light-grey w3-round-xlarge" id="spanish">
+                    <div
+                      class="w3-round-xlarge w3-teal" id="spanish-w"
+                    ></div>
+                  </div>
+                  <p id="arabic-t">Arabic</p>
+                  <div class="w3-light-grey w3-round-xlarge" id="arabic">
+                    <div
+                      class="w3-round-xlarge w3-teal" id="arabic-w"
+                    ></div>
+                  </div>
+                  <br />
+                  <hr />
+    
+                  <p class="w3-large">
+                    <b
+                      ><i
+                        class="fa fa-pencil fa-fw w3-margin-right w3-text-teal"
+                      ></i
+                      >Settings</b
+                    >
+                  </p>
+                  <div class="w3-white w3-row-padding" id="Settings">
+                    <button class="w3-button w3-teal w3-round-xlarge" id="edit-profile-bt" onclick="location.href='/editBusinessProfile'"> Edit profile</button>
+                    <button class="w3-button w3-teal w3-round-xlarge" id="edit-training-bt" onclick="location.href='/editTrainingTypes'"> Edit training types</button>
+    
+                  </div>
+    
+                  <br />
+                </div>
+              </div>
+              <br />
+    
+              <!-- End Left Column -->
+            </div>
+    
+            <!-- Right Column -->
+            <div class="w3-twothird">
+              <div class="w3-container w3-card w3-white w3-margin-bottom">
+                <form class="w3-container"
+                action="//editTrainingTypes"
+                method="POST">
+                <h2 class="w3-text-grey w3-padding-16">
+                  <i
+                    class="fa fa-plus fa-fw w3-margin-right w3-xxlarge w3-text-teal"
+                  ></i
+                  >Training Types
+                </h2>
+                <div class="w3-container">
+                  <label class="w3-text-grey "><b id="remember">Remember:</b><b>  you must have at least one training type.</br></label>
+                    <label class="w3-text-grey"><b>You can add more training types by clicking the + button. (you can only afford 4 training types</br></label>
+                    <!-- >Training Types section -->
+                                
+                    <label class="w3-text-teal"><br> Name of Training type:</b></label>    
+                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="training-name-1"  type="text" required></p>
+                    <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
+                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="duration-type-1"  type="number" min="0" max="120" required></p>        
+                    <label class="w3-text-grey" id="price"><b>Price</b></label>
+                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="price-type-1"  type="number" min="0" required></p>
+                    
+                    <div id="training-type-2">
+                    <button class="w3-button w3-circle w3-teal" id="delTrainingbt" type="button" onclick="delTrainingType('training-type-2','training-name-2','duration-type-2','price-type-2')" >-</button>
+                    <label class="w3-text-teal"><b>Name of Training type:</b></label>
+                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="training-name-2"  type="text" ></p>
+                    <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
+                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="duration-type-2"  type="number" min="0" max="120" ></p>
+                    <label class="w3-text-grey" id="price"><b>Price</b></label>
+                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="price-type-2"  type="number" min="0" h></p>
+                    </div>
+                                
+                    <div id="training-type-3" >
+                    <button class="w3-button w3-circle w3-teal" id="delTrainingbt" type="button" onclick="delTrainingType('training-type-3','training-name-3','duration-type-3','price-type-3')" >-</button>
+                    <label class="w3-text-teal"><b>Name of Training type:</b></label>
+                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="training-name-3" " type="text" ></p>
+                    <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
+                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="duration-type-3"  type="number" min="0" max="120" ></p>
+                    <label class="w3-text-grey" id="price"><b>Price</b></label>
+                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="price-type-3"  type="number" min="0" ></p>
+                    </div>
+  
+                    <div id="training-type-4">
+                    <button class="w3-button w3-circle w3-teal" id="delTrainingbt" type="button" onclick="delTrainingType('training-type-4','training-name-4','duration-type-4','price-type-4')" >-</button>
+                    <label class="w3-text-teal"><b>Name of Training type:</b></label>
+                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="training-name-4" type="text"></p>
+                    <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
+                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="duration-type-4"  type="number" min="0" max="120"></p>
+                    <label class="w3-text-grey" id="price"><b>Price</b></label>
+                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="price-type-4"  type="number" min="0"></p>
+                    </div>
+                    <b></br>
+                    <button class="w3-button w3-circle w3-teal" type="button" style="margin-left: 10cm;" id="addTrainingTypebt" onclick="addTrainingType()" >+</button>
+                    <p>
+                    <button class="w3-btn w3-teal w3-round-xlarge" type="submit" id="savebt">Save Changes</button></p>
+                  </form>
+                </div>
+                  
+              </div>
+              </div>
+    
+              <!-- End Right Column -->
+            </div>
+    
+            <!-- End Grid -->
+          </div>
+    
+          <!-- End Page Container -->
+        </div>
+    <!-- Page Container!!!!! -->
+    
+    <script>
+
+if('<%= user.hebrew %>' != '0')
+      {
+        var hebrewV='<%= user.hebrew %>'+'%';
+        document.getElementById('hebrew-w').style.width=hebrewV;
+      }
+      else
+      {
+        document.getElementById('hebrew').style.display='none';
+        document.getElementById('hebrew-t').style.display='none';
+      }
+      if('<%= user.english %>' != '0')
+      {
+        var englishV='<%= user.english %>'+'%';
+      document.getElementById('english-w').style.width=englishV;
+      }
+      else{
+        document.getElementById('english').style.display='none';
+        document.getElementById('english-t').style.display='none';
+      }
+      if('<%= user.spanish %>' != '0')
+      {
+        var spanishV='<%= user.spanish %>'+'%';
+      document.getElementById('spanish-w').style.width=spanishV;
+      }
+      else{
+        document.getElementById('spanish').style.display='none';
+        document.getElementById('spanish-t').style.display='none';
+      }
+      if('<%= user.russian %>' != '0')
+      {
+        var russianV='<%= user.russian %>'+'%';
+      document.getElementById('russian-w').style.width=russianV;
+      }
+      else
+      {
+        document.getElementById('russian').style.display='none';
+        document.getElementById('russian-t').style.display='none';
+      }
+      if('<%= user.arabic %>' != '0')
+      {
+        var arabicV='<%= user.arabic %>'+'%';
+      document.getElementById('arabic-w').style.width=arabicV;
+      }
+      else{
+        document.getElementById('arabic').style.display='none';
+        document.getElementById('arabic-t').style.display='none';
+      }  
+      //training type1
+      var trainingType1=document.getElementById("training-name-1");
+      var duration1=document.getElementById("duration-type-1");
+      var price1=document.getElementById("price-type-1");
+      
+        
+      //training type2
+      var trainingTypeName2=document.getElementById("training-name-2");
+      var duration2=document.getElementById("duration-type-2");
+      var price2=document.getElementById("price-type-2");
+      
+      
+      //training type3
+      var trainingTypeName3=document.getElementById("training-name-3");
+      var duration3=document.getElementById("duration-type-3");
+      var price3=document.getElementById("price-type-3");
+      
+      
+      //training type4
+      var trainingTypeName4=document.getElementById("training-name-4");
+      var duration4=document.getElementById("duration-type-4");
+      var price4=document.getElementById("price-type-4");
+      
+      //plus to add training type button
+      var TrainingTypebt=document.getElementById("addTrainingTypebt");
+      //add or remove training type functions
+      function addTrainingType(){
+        
+        if(document.getElementById("training-type-2").style.display=="" || document.getElementById("training-type-2").style.display=="none")
+        {
+          document.getElementById("training-type-2").style.display="block";
+          document.getElementById("training-name-2").setAttribute("required","");
+          document.getElementById("duration-type-2").setAttribute("required","");
+          document.getElementById("price-type-2").setAttribute("required","");
+
+          MaxTrainingType();
+          
+          return;
+        } 
+        if(document.getElementById("training-type-3").style.display==""|| document.getElementById("training-type-3").style.display=="none"){
+          document.getElementById("training-type-3").style.display="block";
+          document.getElementById("training-name-3").setAttribute("required","");
+          document.getElementById("duration-type-3").setAttribute("required","");
+          document.getElementById("price-type-3").setAttribute("required","");
+          MaxTrainingType();
+          return;
+        }
+        if(document.getElementById("training-type-4").style.display==""|| document.getElementById("training-type-4").style.display=="none"){
+          document.getElementById("training-type-4").style.display="block";
+          document.getElementById("training-name-4").setAttribute("required","");
+          document.getElementById("duration-type-4").setAttribute("required","");
+          document.getElementById("price-type-4").setAttribute("required","");
+          MaxTrainingType();
+          return;
+        }
+        return;
+      }
+      function MaxTrainingType()
+      {
+        if(document.getElementById("training-type-4").style.display=="block" && document.getElementById("training-type-3").style.display=="block" && document.getElementById("training-type-2").style.display=="block"){
+          
+          TrainingTypebt.style.display='none';
+        }
+      }
+
+      function delTrainingType(trainingTypeId, nameId,durationId,priceId){
+        
+        document.getElementById(nameId).value="";
+        document.getElementById(durationId).value="";
+        document.getElementById(priceId).value="";
+        document.getElementById(trainingTypeId).style.display='none';
+
+        document.getElementById(nameId).removeAttribute("required");
+        document.getElementById(durationId).removeAttribute("required");
+        document.getElementById(priceId).removeAttribute("required");
+        
+        TrainingTypebt.style.display='block';
+      }
+      
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,115 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	
+}
+.delete-page {
+	height: 100%;
+	width: 100%;
+	background-image: linear-gradient(
+		rgba(19, 37, 41, 0.979),
+		rgba(19, 37, 41, 0.979)
+	  )
+	  /*,url(login.jpg)*/;
+	background-position: center;
+	background-size: cover;
+	position: absolute;
+  }
+  
+
+.delete-box{
+	width: 480px;
+	position: absolute;
+	top: 35%;
+	left: 55%;
+	transform: translate(-50%,-50%);
+	color: #0c0c0c;
+	background:none;
+	
+}
+
+.delete-box h1{
+	color: white;
+    font-size: 50px;
+    text-transform: capitalize;
+    margin-bottom: 50px;
+	padding: 22px 0;
+	background:none;
+}
+
+
+.text-box{
+	width: 100%;
+	overflow: hidden;
+	font-size: 20px;
+	padding: 8px 0;
+	margin: 8px 0;
+	border-bottom: 1px solid #0c0c0c;
+	background:none;
+
+}
+.text-box input{
+	border: none;
+	outline: none;
+	background: none;
+	color: #2f7272ec;
+	font-size: 25px;
+	width: 450px;
+	float: left;
+	margin: 0 10px;
+	
+}
+
+input:focus {
+	box-shadow: 0 0 5px #2f7272ec;
+	padding: 3px 0px 3px 3px;
+	margin: 5px 1px 3px 0px;
+	border: 1px solid #2f7272ec;
+  }
+
+  ::-webkit-input-placeholder {
+	/* Chrome/Opera/Safari */
+	font-weight: bold;
+	color: white;
+  }
+
+  input[type = password]:focus {
+	box-shadow: 10 10 5px #2f7272ec;
+	padding: 6px 15px 6px 6px;
+	margin: 5px 1px 3px 0px;
+	border: 1px solid #2f7272ec;
+  }
+
+.btn{
+	width: 100%;
+
+	border: 2px solid#265c5c;
+	color: #2f7272ec;
+	padding: 10px;
+	font-size: 25px;
+	cursor: pointer;
+	margin: 12px 0;
+	
+
+	
+	padding: 8px 27px;
+	
+	display: block;
+
+	background: #2f7272ec;
+
+	outline: none;
+	border-radius: 30px;
+	color: white;
+
+
+}
+
+.btn:hover{
+    background: transparent;
+    border: 2px solid #2f7272ec;
+    cursor: pointer;
+}
+
+

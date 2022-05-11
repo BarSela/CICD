@@ -1,79 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <title>Q&A</title>
-
-    <link rel="stylesheet" href="/css/QNA.css" />
+    <link rel="stylesheet" href="css/QNA.css" />
     <link rel="stylesheet" href="/css/footer.css" />
   </head>
-
+  <header><%- include('../partials/header') %></header>
   <body>
-    <section class="section" id="first-sec">
-      <div class="title">
-        <h1>Q & A</h1>
-        <h4>top 6 questions and answers on the site may be helpful!</h4>
-      </div>
-
-      <div class="QNA-center section-center" id="qna-center">
-        <article class="trainer-img">
-          <img src="/assets/Q&A.jpg" alt="" />
-        </article>
-        <article class="QNA">
-          <div class="btn-container">
-            <button class="tab-btn active" data-id="Trainee">Trainee</button>
-            <button class="tab-btn" data-id="Trainer">Trainer</button>
-            <button class="tab-btn" data-id="Navigation">Navigation</button>
-          </div>
-          <div class="QNA-content">
-            <!-- single item -->
-            <div class="content active" id="Trainee">
-              <h4>Trainee</h4>
-              <p>
-                I'm baby wolf pickled schlitz try-hard normcore marfa man bun
-                mumblecore vice pop-up XOXO lomo kombucha glossier bicycle
-                rights. Umami kinfolk salvia jean shorts offal venmo. Knausgaard
-                tilde try-hard, woke fixie banjo man bun. Small batch tumeric
-                mustache tbh wayfarers 8-bit shaman chartreuse tacos. Viral
-                direct trade hoodie ugh chambray, craft beer pork belly flannel
-                tacos single-origin coffee art party migas plaid pop-up.
-              </p>
-            </div>
-            <!-- end of single item -->
-            <!-- single item -->
-            <div class="content" id="Trainer">
-              <h4>Trainer</h4>
-              <ul>
-                <li id="q">question 1:</li>
-                <li>answer</li>
-                <li id="q">question 2:</li>
-                <li>answer</li>
-                <li id="q">question 3:</li>
-                <li>answer</li>
+    <section class="about">
+        <div class="qa-text" >
+            <h5>Top questions and answers on the site may be helpful!</h5>
+            <p>
+                <ul><il>Trainee<br></il>
+                    <il>How much does training cost?<br></il>
+                    The payment is determined by the trainer according to the type of training and the duration of his training<br> <br> 
+                    <il>Where can you train with a personal trainer?<br></il>
+                    You can search by type of training and desired location and see the trainers in all areas offered by the them<br><br> 
+                    <il>What types of training can a personal fitness trainer deliver?<br></il>
+                    personal trainer, athletics, gymnastics, aerobic, cross-fit, gym, mental-wellness and feldenkrais
+                </ul> 
+                <ul><il><br><br><br>Trainer<br></il>
+                <il>How is the payment made from the trainees?<br></il>
+                The payment is must be paid at least one hour before the training starts by "bit" application <br> <br> 
+                <il>At what ages are my trainees?<br></il>
+                The train must be above then 18 years old<br><br> 
+                <il>Can I cancel training?<br></il>
+                  Yes, you can cancel it while the training does not started
               </ul>
-            </div>
-            <!-- end of single item -->
-            <!-- single item -->
-            <div class="content" id="Navigation">
-              <h4>Navigation</h4>
-              <p>
-                Chambray authentic truffaut, kickstarter brunch taxidermy vape
-                heirloom four dollar toast raclette shoreditch church-key.
-                Poutine etsy tote bag, cred fingerstache leggings cornhole
-                everyday carry blog gastropub. Brunch biodiesel sartorial mlkshk
-                swag, mixtape hashtag marfa readymade direct trade man braid
-                cold-pressed roof party. Small batch adaptogen coloring book
-                heirloom. Letterpress food truck hammock literally hell of wolf
-                beard adaptogen everyday carry. Dreamcatcher pitchfork yuccie,
-                banh mi salvia venmo photo booth quinoa chicharrones.
-              </p>
-            </div>
-            <!-- end of single item -->
-          </div>
-        </article>
+          </p>
       </div>
     </section>
-
-    <script src="/js/QNA.js"></script>
-    <footer><%- include('../partials/footer') %></footer>
+    <div class="footerQA"><footer><%- include('../partials/footer') %></footer></div>
   </body>
 </html>

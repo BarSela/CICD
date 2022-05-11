@@ -187,31 +187,33 @@ module.exports = {
     let arabic = req.body.arabic;
 
     let typeName1 = req.body.typeName1;
+
     let typeName2 = req.body.typeName2;
     let typeName3 = req.body.typeName3;
     let typeName4 = req.body.typeName4;
 
     let typeDuration1 = parseInt(req.body.typeDuration1);
-    let typeDuration2 = req.body.typeDuration2;
-    let typeDuration3 = req.body.typeDuration3;
-    let typeDuration4 = req.body.typeDuration4;
+    let typeDuration2 = parseInt(req.body.typeDuration2);
+    let typeDuration3 = parseInt(req.body.typeDuration3);
+    let typeDuration4 = parseInt(req.body.typeDuration4);
 
     let typePrice1 = parseInt(req.body.typePrice1);
     let typePrice2 = parseInt(req.body.typePrice2);
-    let typePrice3 = req.body.typePrice3;
-    let typePrice4 = req.body.typePrice4;
-   
-    console.log(typeName1);
-    console.log(typeDuration1);
-    console.log(typePrice1);
-    let trainingTypes ={trainingType1:typeName1,trainingType2:typeName2,trainingType3:typeName3,trainingType4:typeName4}
-    const trainingType = new TrainingType({
-      name:typeName1.toString(),
-      duration:typeDuration1,
-      price:typePrice1,
+    let typePrice3 = parseInt(req.body.typePrice3);
+    let typePrice4 = parseInt(req.body.typePrice4);
+
+    let typeId1 = "";
+    let typeId2 = "";
+    let typeId3 = "";
+    let typeId4 = "";
+
+    const trainingType1 = new TrainingType({
+      name: typeName1.toString(),
+      duration: typeDuration1,
+      price: typePrice1,
     });
-    console.log("trainingtype:"+trainingType);
-    trainingType
+    console.log("trainingtype:" + trainingType1);
+    trainingType1
       .save()
       .then((result) => {
         console.log("new training type created");
@@ -222,11 +224,79 @@ module.exports = {
         });
         console.log("post error ");
       });
-    console.log(typeof typePrice1);
-    let trainingTypeId = trainingType._id.toString();
-    console.log("trainingTypeId: ");
-    console.log(trainingTypeId);
-    trainingTypes.trainingType1 =trainingTypeId;
+    typeId1 = trainingType1._id.toString();
+    console.log("typeid1:", typeId1);
+
+    if (typeName2) {
+      const trainingType2 = new TrainingType({
+        name: typeName2.toString(),
+        duration: typeDuration2,
+        price: typePrice2,
+      });
+      console.log("trainingtype:" + trainingType2);
+      trainingType2
+        .save()
+        .then((result) => {
+          console.log("new training type created");
+        })
+        .catch((error) => {
+          res.status(500).json({
+            error,
+          });
+          console.log("post error ");
+        });
+      typeId2 = trainingType2._id.toString();
+    }
+    if (typeName3) {
+      const trainingType3 = new TrainingType({
+        name: typeName3.toString(),
+        duration: typeDuration3,
+        price: typePrice3,
+      });
+      console.log("trainingtype:" + trainingType3);
+      trainingType3
+        .save()
+        .then((result) => {
+          console.log("new training type created");
+        })
+        .catch((error) => {
+          res.status(500).json({
+            error,
+          });
+          console.log("post error ");
+        });
+      typeId3 = trainingType3._id.toString();
+    }
+    if (typeName4) {
+      const trainingType4 = new TrainingType({
+        name: typeName4.toString(),
+        duration: typeDuration4,
+        price: typePrice4,
+      });
+      console.log("trainingtype:" + trainingType4);
+      trainingType4
+        .save()
+        .then((result) => {
+          console.log("new training type created");
+        })
+        .catch((error) => {
+          res.status(500).json({
+            error,
+          });
+          console.log("post error ");
+        });
+      typeId4 = trainingType4._id.toString();
+    }
+    console.log(typeId1);
+    console.log(typeId2);
+    console.log(typeId3);
+    console.log(typeId4);
+
+    // var training = {
+    //   name: typeName1,
+    //   duration: typeDuration1,
+    //   price: typePrice1,
+    // };
     const trainer = await Trainer.findOneAndUpdate(
       { email: userEmail },
       {
@@ -243,14 +313,46 @@ module.exports = {
           spanish: spanish,
           russian: russian,
           arabic: arabic,
-          trainingType1:trainingType._id.toString(),
+          trainingTypeA: typeName1.toString(),
+          trainingType1: typeId1,
+          trainingType2: typeId2,
+          trainingType3: typeId3,
+          trainingType4: typeId4,
         },
       }
     );
+
     if (trainer) {
-      console.log("1");
       console.log(trainer);
-      return res.render("pages/businessProfile",{userEmail:trainer.email,user:trainer,trainingTypes});
+      console.log("1");
+      //const trainingType1= await TrainingType.findById(typeId1);
+      //trainingType1.name;
+      // type1 = typeName1;
+      // type2 = typeName2;
+      // type3 = typeName3;
+      // type4 = typeName4;
+      TrainingType.findById(typeId1).then((trainingTypes) => {
+        //If the user list is empty
+        if (trainingTypes.length === 0) {
+          console.log(" Error");
+          res.redirect("/");
+        } else {
+          const [user] = users;
+          userObj = user;
+
+          console.log(userObj);
+          res.render("pages/businessProfile", {
+            userEmail: userEmail,
+            user: userObj,
+          });
+        }
+      });
+
+      return res.render("pages/businessProfile", { user: userEmail });
+      // return res.redirect(
+      //   "/businessProfile/" + type1 + "/" + type2 + "/" + type3 + "/" + type4
+      // );
+      //return res.redirect("/businessProfile");
     } else {
       console("Error to find trainer");
       return res.render("/");
@@ -295,7 +397,7 @@ module.exports = {
       }
     );
     if (trainer) {
-      res.render("/businessProfile",trainer);
+      res.render("/businessProfile", trainer);
     } else {
       console("Error to find trainer");
       res.render("/");
@@ -406,7 +508,6 @@ module.exports = {
         }
         if (result) {
           if (user.userType == "trainer") {
-          
             const userU = await User.findOneAndUpdate(
               { email: userEmail },
               {
@@ -478,4 +579,110 @@ module.exports = {
 
     console.log("okkkkkkkkkkkk");
   },
+  deleteAccount: async (req, res) => {
+    const currUser = await User.findOne({ email: userEmail });
+    let userType = currUser.userType;
+    console.log(userType);
+    if (userType == "trainer") {
+      const user = await Trainer.findOneAndDelete({ email: userEmail });
+    }
+    if (userType == "trainee") {
+      const user = await Trainee.findOneAndDelete({ email: userEmail });
+    }
+    const user = await User.findOneAndDelete({ email: userEmail });
+
+    if (user) {
+      userEmail = "";
+      return res.redirect("/logout");
+    } else {
+      console("Error to find user-fail delete account");
+      res.render("/");
+    }
+  },
+  editTrainingTypes: async (req, res) => {
+    const trainingType1 = await Trainer.findOneAndUpdate(
+      { email: userEmail },
+      {
+        $set: {
+          businassName: businassName,
+          fullName: fullName,
+          specialty: specialty,
+          city: city,
+          phone: phone,
+          about: about,
+          schoolName: schoolName,
+          schoolDate: schoolDate,
+          schoolInfo: schoolInfo,
+          hebrew: hebrew,
+          english: english,
+          spanish: spanish,
+          russian: russian,
+          arabic: arabic,
+        },
+      }
+    );
+    if (trainingType1) {
+      
+      
+    } else {
+      console("Error to find trainer");
+      res.render("/");
+    }
+    const trainingType1 = await Trainer.findOneAndUpdate(
+      { email: userEmail },
+      {
+        $set: {
+          businassName: businassName,
+          fullName: fullName,
+          specialty: specialty,
+          city: city,
+          phone: phone,
+          about: about,
+          schoolName: schoolName,
+          schoolDate: schoolDate,
+          schoolInfo: schoolInfo,
+          hebrew: hebrew,
+          english: english,
+          spanish: spanish,
+          russian: russian,
+          arabic: arabic,
+        },
+      }
+    );
+    if (trainingType1) {
+      const trainingType1 = await Trainer.findOneAndUpdate(
+        { email: userEmail },
+        {
+          $set: {
+            businassName: businassName,
+            fullName: fullName,
+            specialty: specialty,
+            city: city,
+            phone: phone,
+            about: about,
+            schoolName: schoolName,
+            schoolDate: schoolDate,
+            schoolInfo: schoolInfo,
+            hebrew: hebrew,
+            english: english,
+            spanish: spanish,
+            russian: russian,
+            arabic: arabic,
+          },
+        }
+      );
+      if (trainingType1) {
+        
+        
+      } else {
+        console("Error to find trainer");
+        res.render("/");
+      }
+      
+    } else {
+      console("Error to find trainer");
+      res.render("/");
+    }
+  },
+  res.render("/businessProfile", trainer);
 };
