@@ -227,14 +227,12 @@ module.exports = {
         duration: typeDuration2,
         price: typePrice2,
       }
-      // trainer = await Trainer.findOneAndUpdate(
-      //   { email: userEmail },
-      //   {
-      //     $set: {
-      //       trainingTypes:[{trainingType2}]
-      //     }
-      //   }
-      //     );
+      
+    }
+    else{
+      trainingType2 ={
+        name:"empty"
+      }
     }   
     console.log("trainingtype:" + trainingType2);
       
@@ -244,14 +242,12 @@ module.exports = {
         duration: typeDuration3,
         price: typePrice3,
       }
-      // trainer = await Trainer.findOneAndUpdate(
-      //   { email: userEmail },
-      //   {
-      //     $set: {
-      //       trainingTypes:[{trainingType3}]
-      //     }
-      //   }
-      //     );
+      
+    }
+    else{
+      trainingType3 ={
+        name:"empty"
+      }
     }
     if (typeName4) {
       trainingType4 ={
@@ -259,15 +255,13 @@ module.exports = {
         duration: typeDuration4,
         price: typePrice4,
       }
-      // trainer = await Trainer.findOneAndUpdate(
-      //   { email: userEmail },
-      //   {
-      //     $set: {
-      //       trainingTypes:[{trainingType4}]
-      //     }
-      //   }
-      //     );
     }
+    else{
+      trainingType4 ={
+        name:"empty"
+      }
+    }
+    console.log(trainingType4);
     console.log(typeId1);
     console.log(typeId2);
     console.log(typeId3);
@@ -572,13 +566,19 @@ module.exports = {
     let trainer;
     const currtrainer = await Trainer.findOne({ email: userEmail });
 
-    if (currtrainer.TrainingTypes[0].name != typeName1.toString())
-      trainingType1 = {
-        name: typeName1.toString(),
-        duration: typeDuration1,
-        price: typePrice1,
-      };
-
+    trainingType1 = {
+      name: typeName1.toString(),
+      duration: typeDuration1,
+      price: typePrice1,
+    };
+    currtrainer = await Trainer.findOneAndUpdate(
+      { email: userEmail },
+      {
+        $set: {
+          trainingTypes: [trainingType1],
+        },
+      }
+    );
     console.log("trainingtype:" + trainingType1);
 
     if (typeName2) {
@@ -587,7 +587,7 @@ module.exports = {
         duration: typeDuration2,
         price: typePrice2,
       };
-      trainer = await Trainer.findOneAndUpdate(
+      currtrainer = await Trainer.findOneAndUpdate(
         { email: userEmail },
         {
           $set: {
@@ -604,7 +604,7 @@ module.exports = {
         duration: typeDuration3,
         price: typePrice3,
       };
-      trainer = await Trainer.findOneAndUpdate(
+      currtrainer = await Trainer.findOneAndUpdate(
         { email: userEmail },
         {
           $set: {
@@ -619,7 +619,7 @@ module.exports = {
         duration: typeDuration4,
         price: typePrice4,
       };
-      trainer = await Trainer.findOneAndUpdate(
+      currtrainer = await Trainer.findOneAndUpdate(
         { email: userEmail },
         {
           $set: {
@@ -628,5 +628,8 @@ module.exports = {
         }
       );
     }
+    console.log("111");
+    return res.redirect("/businessProfile");
   },
+ 
 };

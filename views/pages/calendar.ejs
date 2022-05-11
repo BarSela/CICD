@@ -86,16 +86,16 @@
                 
                 <select id="Type" name="Type">
                 <% if(typeof user != "undefined" ) { %>
-                <% if(typeof user.trainingTypes[0] != "undefined" ) { %>
+                <% if(typeof user.trainingTypes[0].name != 'empty' ) { %>
                 <option value="trainingType1"><%= user.trainingTypes[0].name %></option>
                 <% } %>
-                <% if(typeof user.trainingTypes[1] != "undefined" ) { %>
+                <% if(typeof user.trainingTypes[1].name != 'empty' ) { %>
                 <option value="trainingType2"><%= user.trainingTypes[1].name %></option>
                 <% } %>
-                <% if(typeof user.trainingTypes[2] != "undefined" ) { %>
+                <% if(typeof user.trainingTypes[2].name != 'empty' ) { %>
                 <option value="trainingType3"><%= user.trainingTypes[2].name %></option>
                 <% } %>
-                <% if(typeof user.trainingTypes[3] != "undefined" ) { %>
+                <% if(typeof user.trainingTypes[3].name != 'empty' ) { %>
                 <option value="trainingType4"><%= user.trainingTypes[3].name %></option>
                 <% } %>
                 <% } %>

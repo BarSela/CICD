@@ -8,7 +8,7 @@ const {
   editBusinessP,
   editPassword,
   deleteAccount,
-  editTrainingTypes,
+  editTrainingTypes,newTraining
 } = require("../controllers/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -318,6 +318,12 @@ app.get("/traineeDashboard/:email", async (req, res) => {
     } else {
       const [user] = users;
       userObj = user;
+      // if(user.userType == "trainer"){
+      //   res.render("pages/trainerDashboard", {
+      //     userEmail: userEmail,
+      //     user: userObj,
+      //   });
+      // }
       res.render("pages/traineeDashboard", {
         userEmail: userEmail,
         user: userObj,
@@ -431,45 +437,45 @@ app.post("/editPersonalprofile", editPersonalprofile);
 app.post("/createBusinessP", createBusinessP);
 app.post("/editBusinessP", editBusinessP);
 app.post("/editPassword", editPassword);
-app.post("/newTraining",  (req, res) => {
+
+app.post("/newTraining",async (req, res) => {
   let traineeInput = req.body.Type;
   let date = req.body.date;
   let trainingName;
   let duration;
   let price;
-  // if(userObj instanceof Trainee){
-  //   userObj.trainingTypes.forEach(type => {
-  //     if(type.name == traineeInput){
-  //       trainingName = type.name;
-  //       duration = type.duration;
-  //       price = type.price;
-  //       await Trainer.findOneAndUpdate(
-  //         { email: userObj.email },
-  //         {
-  //           $set: {
-      
-           
-  //           trainings:[{
-  //             trainingType:"627b5b7068494c494be48d7f",
-  //             trainingDate: new Date().getDate(),
-  //             available: true,
-      
-  //           },
-  //           {
-  //             trainingType:"627b5b7068494c494be48d7e",
-  //             trainingDate: new Date().getDate(),
-  //             available: true,
-      
-  //           }]
-              
-  //           },
-  //         }
-  //       );
-  //     }
-  //   });
-  // }
+  if(userObj instanceof Trainee){
+    userObj.trainingTypes.forEach(type => {
+      if(type.name == traineeInput){
+        trainingName = type.name;
+        duration = type.duration;
+        price = type.price;
+        console.log(trainingName);
+      }});
+      await Trainer.findOneAndUpdate(
+        { email: userObj.email },
+        {
+          $set: {
+    
+          trainings:[{
+            trainingType:trainingName,
+            trainingDate: date,
+            available: true,
+    
+          }],
+          
+          },
+        }
+        
+      );
+      res.render("pages/calendar", {
+        userEmail: userEmail,
+        user: userObj,
+      });
+      console.log("HHHHHHH");
+    
+  }
 
- 
 });
 app.post("/deleteAccount", deleteAccount);
 app.post("/editTrainingTypes", editTrainingTypes);
