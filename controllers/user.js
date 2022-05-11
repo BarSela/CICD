@@ -340,7 +340,7 @@ module.exports = {
       }
     );
     if (trainer) {
-      res.render("/businessProfile", trainer);
+      res.redirect("/businessProfile");
     } else {
       console("Error to find trainer");
       res.render("/");

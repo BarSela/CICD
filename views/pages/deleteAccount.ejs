@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Delete Account</title>
+    <%- include('../partials/head'); %>
+    <link rel="stylesheet" href="/css/deleteAccount.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
+    <link rel="stylesheet" href="/css/navBar.css" />
+  </head>
+  <body>
+    
+  
+    <form class="delete-page" action="/deleteAccount" method="POST">
+      <div class="delete-box">
+        <h1>Delete Account</h1>
+        <div class="text-box">
+          <input type="password" placeholder="password" name="" value="" />
+        </div>
+        <input class="btn" type="submit" name="deleteAcc" value="Delete Account"/>
+        <input class="btn" type="button" name="deleteAcc" value="Cancel" onclick="location.href='/editPersonalProfile'"/>
+      </div>
+    </form>
+  
+  </body>
+</html>

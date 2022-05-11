@@ -100,8 +100,11 @@ const trainerUser = new mongoose.Schema({
   trainings:[
     {
       trainingType:String,
-      trainingDate: Date,
+      trainingDate: String,
+      startHour:String,
       available: Boolean,
+      duration:Number,
+      price:Number,
     },]
 });
 

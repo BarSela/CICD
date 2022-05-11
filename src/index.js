@@ -8,7 +8,7 @@ const {
   editBusinessP,
   editPassword,
   deleteAccount,
-  editTrainingTypes,newTraining
+  editTrainingTypes
 } = require("../controllers/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -349,7 +349,9 @@ app.get("/createBusinessProfile/:email", (req, res) => {
     }
   });
 });
-
+app.get("/deleteAccount", (req, res) => {
+  res.render("pages/deleteAccount"), { userEmail: userEmail };
+});
 app.get("/businessProfile", (req, res) => {
   
 
@@ -441,18 +443,25 @@ app.post("/editPassword", editPassword);
 app.post("/newTraining",async (req, res) => {
   let traineeInput = req.body.Type;
   let date = req.body.date;
+  let time = req.body.time;
   let trainingName;
   let duration;
   let price;
-  if(userObj instanceof Trainee){
+  
+  console.log("traineeInput"+traineeInput);
+  if(userObj instanceof Trainer){
+    
     userObj.trainingTypes.forEach(type => {
       if(type.name == traineeInput){
+        console.log("YESS");
         trainingName = type.name;
         duration = type.duration;
         price = type.price;
         console.log(trainingName);
       }});
-      await Trainer.findOneAndUpdate(
+      trainings =userObj.trainings;
+      console.log(trainings);
+      userObj =await Trainer.findOneAndUpdate(
         { email: userObj.email },
         {
           $set: {
@@ -460,7 +469,10 @@ app.post("/newTraining",async (req, res) => {
           trainings:[{
             trainingType:trainingName,
             trainingDate: date,
+            startHour:time.toString(),
             available: true,
+            duration:duration,
+            price:price
     
           }],
           
@@ -468,13 +480,12 @@ app.post("/newTraining",async (req, res) => {
         }
         
       );
-      res.render("pages/calendar", {
-        userEmail: userEmail,
-        user: userObj,
-      });
-      console.log("HHHHHHH");
     
   }
+  res.render("pages/trainerDashboard", {
+    userEmail: userEmail,
+    user: userObj,
+  });
 
 });
 app.post("/deleteAccount", deleteAccount);

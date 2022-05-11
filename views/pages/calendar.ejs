@@ -81,22 +81,22 @@
         <div class="split left">
            <div class="form-wrapper" id="newTrainingForm">
               <h2>Schedule New Training</h2>
-             <form  class="form-container"  action="newTraining" method="POST" >
+             <form  class="form-container"  action="/newTraining" method="POST" >
                 <div class="txt_field">
                 
                 <select id="Type" name="Type">
                 <% if(typeof user != "undefined" ) { %>
-                <% if(typeof user.trainingTypes[0].name != 'empty' ) { %>
-                <option value="trainingType1"><%= user.trainingTypes[0].name %></option>
+                <% if(typeof user.trainingTypes[0].name != "empty" ) { %>
+                <option value="<%= user.trainingTypes[0].name %>"><%= user.trainingTypes[0].name %></option>
                 <% } %>
-                <% if(typeof user.trainingTypes[1].name != 'empty' ) { %>
-                <option value="trainingType2"><%= user.trainingTypes[1].name %></option>
+                <% if(typeof user.trainingTypes[1].name != "empty" ) { %>
+                <option value="<%= user.trainingTypes[1].name %>"><%= user.trainingTypes[1].name %></option>
                 <% } %>
-                <% if(typeof user.trainingTypes[2].name != 'empty' ) { %>
-                <option value="trainingType3"><%= user.trainingTypes[2].name %></option>
+                <% if(typeof user.trainingTypes[2].name != "empty" ) { %>
+                <option value="<%= user.trainingTypes[2].name %>"><%= user.trainingTypes[2].name %></option>
                 <% } %>
-                <% if(typeof user.trainingTypes[3].name != 'empty' ) { %>
-                <option value="trainingType4"><%= user.trainingTypes[3].name %></option>
+                <% if(typeof user.trainingTypes[3].name != "empty" ) { %>
+                <option value="<%= user.trainingTypes[3].name %>"><%= user.trainingTypes[3].name %></option>
                 <% } %>
                 <% } %>
                 </select>
@@ -114,7 +114,8 @@
                   </div>
                   <div class="txt_field">
                     <input
-                    id="start-time"
+                    id="time"
+                    name="time"
                     type="time"
                     required
                     />
@@ -129,7 +130,7 @@
                 </div>
          
                 <div class="btn-group">
-                  <button type="submit" id="create-btn" onclick="validateTrainingForm()">Create</button>
+                  <button type="submit" id="create-btn" >Create</button>
                   <button type="button"  onclick="closeForm()">Close</button>
                 </div>
              </form>
