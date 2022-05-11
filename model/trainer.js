@@ -30,19 +30,6 @@ const trainerUser = new mongoose.Schema({
     required: true,
   },
 
-  trainingType1:{
-    type:String,
-    
-  },
-  trainingType2:{
-    type:String
-  },
-  trainingType3:{
-    type:String
-  },
-  trainingType4:{
-    type:String
-  },
   specialty: {
     type: String,
     required: false,

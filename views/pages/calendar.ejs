@@ -43,7 +43,8 @@
                     start: date,
                     allDay: true
                   });
-                  alert('Great. Now, update your database...');
+                  alert('Great. new training added to your schedual');
+                
                 } else {
                   alert('Invalid date.');
                 }
@@ -78,15 +79,26 @@
         <div class="split left">
            <div class="form-wrapper" id="newTrainingForm">
               <h2>Schedule New Training</h2>
-             <form  class="form-container" action="newTrainind" method="POST" >
+             <form  class="form-container"   >
                 <div class="txt_field">
                 
                 <select id="Type" name="Type">
-                <option value="trainingType1"><%= user.trainingType1 %></option>
-                <option value="trainingType2">Yoga</option>
-                <option value="trainingType3">Zumba</option>
-                <option value="trainingType4">Kickbox</option>
+                <% if(typeof user != "undefined" ) { %>
+                <% if(typeof user.trainingTypes[0] != "undefined" ) { %>
+                <option value="trainingType1"><%= user.trainingTypes[0].name %></option>
+                <% } %>
+                <% if(typeof user.trainingTypes[1] != "undefined" ) { %>
+                <option value="trainingType2"><%= user.trainingTypes[1].name %></option>
+                <% } %>
+                <% if(typeof user.trainingTypes[2] != "undefined" ) { %>
+                <option value="trainingType3"><%= user.trainingTypes[2].name %></option>
+                <% } %>
+                <% if(typeof user.trainingTypes[3] != "undefined" ) { %>
+                <option value="trainingType4"><%= user.trainingTypes[3].name %></option>
+                <% } %>
+                <% } %>
                 </select>
+                
                 <span></span>
                 <label>Training Type</label>
                 </div>

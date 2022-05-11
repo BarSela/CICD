@@ -155,11 +155,13 @@ module.exports = {
           if (user.userType == "trainer") {
             userEmail = user.email;
             userType = "trainer";
+            console.log("trainer");
             console.log("Auth successful");
             return res.redirect("/trainerDashboard/" + user.email);
           } else if (user.userType == "trainee") {
             userEmail = user.email;
             userType = "trainee";
+            console.log("trainee");
             console.log("Auth successful");
             return res.redirect("/traineeDashboard/" + user.email);
           }

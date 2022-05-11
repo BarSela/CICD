@@ -290,22 +290,34 @@ app.post("/searchTrainer", (req, res) => {
   }
 });
 
-app.get("/trainerdashboard/:email", (req, res) => {
+app.get("/trainerdashboard/:email",async (req, res) => {
   userEmail = req.params.email;
-  User.find({ email: userEmail }).then((users) => {
-    //If the user list is empty
-    if (users.length === 0) {
-      console.log("user Error");
-      res.redirect("/");
-    } else {
-      const [user] = users;
-      userObj = user;
-      res.render("pages/trainerdashboard", {
-        userEmail: userEmail,
-        user: userObj,
-      });
-    }
-  });
+  let trainer = await Trainer.findOne({ email: userEmail });
+  console.log(trainer);
+  if(trainer){
+    userObj = trainer;
+    res.render("pages/trainerdashboard", {
+            userEmail: userEmail,
+            user: userObj,
+          });
+  }
+  else{
+    res.redirect("/");
+  }
+  // Trainer.find({ email: userEmail }).then((trainers) => {
+  //   //If the user list is empty
+  //   if (trainers.length === 0) {
+  //     console.log("user Error");
+  //     res.redirect("/");
+  //   } else {
+  //     const [user] = trainers;
+  //     userObj = user;
+  //     res.render("pages/trainerdashboard", {
+  //       userEmail: userEmail,
+  //       user: userObj,
+  //     });
+  //   }
+  // });
 });
 
 app.get("/traineeDashboard/:email", async (req, res) => {
