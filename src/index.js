@@ -345,16 +345,7 @@ app.get("/createBusinessProfile/:email", (req, res) => {
 });
 
 app.get("/businessProfile", (req, res) => {
-  let trainerId1 = "";
-  let trainerId2 = "";
-  let trainerId3 = "";
-  let trainerId4 = "";
-  let trainingTypes = {
-    trainingType1: typeName1,
-    trainingType2: typeName2,
-    trainingType3: typeName3,
-    trainingType4: typeName4,
-  };
+  
 
   Trainer.find({ email: userEmail }).then((users) => {
     //If the user list is empty
@@ -364,22 +355,11 @@ app.get("/businessProfile", (req, res) => {
     } else {
       const [user] = users;
       userObj = user;
-      trainerId1 = user.trainerId1;
-      trainerId2 = user.trainerId2;
-      trainerId3 = user.trainerId2;
-      trainerId4 = user.trainerId2;
-      trainingTypes = {
-        trainingType1: typeName1,
-        trainingType2: typeName2,
-        trainingType3: typeName3,
-        trainingType4: typeName4,
-      };
-
+      
       console.log(userObj);
       res.render("pages/businessProfile", {
         userEmail: userEmail,
         user: userObj,
-        trainingTypes,
       });
     }
   });

@@ -3,6 +3,7 @@ const Trainee = require("../model/trainee");
 const Trainer = require("../model/trainer");
 const User = require("../model/user");
 const TrainingType = require("../model/trainingType");
+const res = require("express/lib/response");
 
 var userEmail = "";
 var userType = "";
@@ -187,7 +188,6 @@ module.exports = {
     let arabic = req.body.arabic;
 
     let typeName1 = req.body.typeName1;
-
     let typeName2 = req.body.typeName2;
     let typeName3 = req.body.typeName3;
     let typeName4 = req.body.typeName4;
@@ -206,98 +206,72 @@ module.exports = {
     let typeId2 = "";
     let typeId3 = "";
     let typeId4 = "";
-
-    const trainingType1 = new TrainingType({
+    let trainingType1;
+    let trainingType2;
+    let trainingType3;
+    let trainingType4;
+    let trainer;
+     trainingType1 ={
       name: typeName1.toString(),
       duration: typeDuration1,
       price: typePrice1,
-    });
-    console.log("trainingtype:" + trainingType1);
-    trainingType1
-      .save()
-      .then((result) => {
-        console.log("new training type created");
-      })
-      .catch((error) => {
-        res.status(500).json({
-          error,
-        });
-        console.log("post error ");
-      });
-    typeId1 = trainingType1._id.toString();
-    console.log("typeid1:", typeId1);
+    }
 
+    console.log("trainingtype:" + trainingType1);
+    
     if (typeName2) {
-      const trainingType2 = new TrainingType({
+        trainingType2 ={
         name: typeName2.toString(),
         duration: typeDuration2,
         price: typePrice2,
-      });
-      console.log("trainingtype:" + trainingType2);
-      trainingType2
-        .save()
-        .then((result) => {
-          console.log("new training type created");
-        })
-        .catch((error) => {
-          res.status(500).json({
-            error,
-          });
-          console.log("post error ");
-        });
-      typeId2 = trainingType2._id.toString();
-    }
+      }
+      trainer = await Trainer.findOneAndUpdate(
+        { email: userEmail },
+        {
+          $set: {
+            trainingTypes:[trainingType2]
+          }
+        }
+          );
+    }   
+    console.log("trainingtype:" + trainingType2);
+      
     if (typeName3) {
-      const trainingType3 = new TrainingType({
+      trainingType3 ={
         name: typeName3.toString(),
         duration: typeDuration3,
         price: typePrice3,
-      });
-      console.log("trainingtype:" + trainingType3);
-      trainingType3
-        .save()
-        .then((result) => {
-          console.log("new training type created");
-        })
-        .catch((error) => {
-          res.status(500).json({
-            error,
-          });
-          console.log("post error ");
-        });
-      typeId3 = trainingType3._id.toString();
+      }
+      trainer = await Trainer.findOneAndUpdate(
+        { email: userEmail },
+        {
+          $set: {
+            trainingTypes:[trainingType3]
+          }
+        }
+          );
     }
     if (typeName4) {
-      const trainingType4 = new TrainingType({
+      trainingType4 ={
         name: typeName4.toString(),
         duration: typeDuration4,
         price: typePrice4,
-      });
-      console.log("trainingtype:" + trainingType4);
-      trainingType4
-        .save()
-        .then((result) => {
-          console.log("new training type created");
-        })
-        .catch((error) => {
-          res.status(500).json({
-            error,
-          });
-          console.log("post error ");
-        });
-      typeId4 = trainingType4._id.toString();
+      }
+      trainer = await Trainer.findOneAndUpdate(
+        { email: userEmail },
+        {
+          $set: {
+            trainingTypes:[trainingType4]
+          }
+        }
+          );
     }
     console.log(typeId1);
     console.log(typeId2);
     console.log(typeId3);
     console.log(typeId4);
 
-    // var training = {
-    //   name: typeName1,
-    //   duration: typeDuration1,
-    //   price: typePrice1,
-    // };
-    const trainer = await Trainer.findOneAndUpdate(
+    trainer = await Trainer.findOneAndUpdate(
       { email: userEmail },
       {
         $set: {
@@ -313,50 +287,23 @@ module.exports = {
           spanish: spanish,
           russian: russian,
           arabic: arabic,
-          trainingTypeA: typeName1.toString(),
-          trainingType1: typeId1,
-          trainingType2: typeId2,
-          trainingType3: typeId3,
-          trainingType4: typeId4,
+          trainingTypes:[trainingType1]
+    
+          },
+          
         },
-      }
+      
     );
 
     if (trainer) {
       console.log(trainer);
       console.log("1");
-      //const trainingType1= await TrainingType.findById(typeId1);
-      //trainingType1.name;
-      // type1 = typeName1;
-      // type2 = typeName2;
-      // type3 = typeName3;
-      // type4 = typeName4;
-      TrainingType.findById(typeId1).then((trainingTypes) => {
-        //If the user list is empty
-        if (trainingTypes.length === 0) {
-          console.log(" Error");
-          res.redirect("/");
-        } else {
-          const [user] = users;
-          userObj = user;
-
-          console.log(userObj);
-          res.render("pages/businessProfile", {
-            userEmail: userEmail,
-            user: userObj,
-          });
-        }
-      });
-
-      return res.render("pages/businessProfile", { user: userEmail });
-      // return res.redirect(
-      //   "/businessProfile/" + type1 + "/" + type2 + "/" + type3 + "/" + type4
-      // );
-      //return res.redirect("/businessProfile");
-    } else {
-      console("Error to find trainer");
-      return res.render("/");
+      
+      return res.redirect("/businessProfile");
     }
+      else{
+        res.redirect("/");
+      }
   },
   editBusinessP: async (req, res, next) => {
     let businassName = req.body.BusinessName;
