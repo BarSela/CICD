@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt"); //Password encryption
 const Trainee = require("../model/trainee");
 const Trainer = require("../model/trainer");
 const User = require("../model/user");
-const TrainingType = require("../model/trainingType");
+
 
 
 var userEmail = "";
@@ -697,7 +697,7 @@ module.exports = {
       })   
   
       },
-      deleteTraining: async(userEmail,typeID) => {
+      deleteTrainingType: async(userEmail,typeID) => {
       
         let types;
         Trainer.findOne({email:userEmail}).then((trainer) => {

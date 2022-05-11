@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const trainingType = require("../model/trainingType");
+
 const { ObjectId } = mongoose.Schema;
 
 // trainer schema

@@ -8,13 +8,12 @@ const {
   editBusinessP,
   editPassword,
   deleteAccount,
-  editTrainingTypes,deleteTraining,addTraining,addTrainingType
+  editTrainingTypes,deleteTraining,addTraining,addTrainingType,deleteTrainingType
 } = require("../controllers/user");
 const bcrypt = require("bcrypt");
 const User = require("../model/user");
 const Trainer = require("../model/trainer");
 const Trainee = require("../model/trainee");
-const TrainingType = require("../model/trainingType");
 const { findByIdAndUpdate } = require("../model/trainee");
 const app = express();
 const port = process.env.PORT || 5000;
@@ -389,27 +388,16 @@ app.get("/login", (req, res) => {
   res.render("pages/login", { loginStatus: loginStatus, userEmail: userEmail });
 });
 app.get("/calendar", (req, res) => {
-  TrainingType.find(userObj.trainingType1).then((types) => {
-    //If the user list is empty
-    if (types.length === 0) {
-      console.log("user Error");
-      res.redirect("/");
-    } else {
-      const [type] = types;
-
-      console.log(userObj);
-      res.render("pages/businessProfile", {
+  
+      res.render("pages/calendar", {
         userEmail: userEmail,
         user: userObj,
         types,
       });
-    }
+    
   });
-  res.render("pages/calendar", {
-    userEmail: userEmail,
-    user: userObj,
-  });
-});
+  
+
 
 app.get("/homePage", (req, res) => {
   res.render("pages/homePage", { userEmail: userEmail });
