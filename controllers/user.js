@@ -684,5 +684,5 @@ module.exports = {
       res.render("/");
     }
   },
-  res.render("/businessProfile", trainer);
+  //res.render("/businessProfile", trainer);
 };
