@@ -8,10 +8,9 @@ const {
   editBusinessP,
   editPassword,
   deleteAccount,
-  editTrainingTypes
+  editTrainingTypes,deleteTraining,addTraining,addTrainingType
 } = require("../controllers/user");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const User = require("../model/user");
 const Trainer = require("../model/trainer");
 const Trainee = require("../model/trainee");
@@ -61,7 +60,7 @@ app.get("/", (req, res) => {
 });
 app.get("/QNA",async (req, res) => {
   const mytrainer = await Trainer.findOneAndUpdate(
-    { email: "Elon11@gmail.com" },
+    { email: "lihi@gmail.com" },
     {
       $set: {
 
@@ -82,7 +81,13 @@ app.get("/QNA",async (req, res) => {
       },
     }
   );
+  let t ={
+    name:"Zuzuzu",
+    duration:50,
+    price:60
 
+  }
+    console.log(addTrainingType("newTrainer@gmail.com",t));
   res.render("pages/QNA", { userEmail: userEmail });
 });
 

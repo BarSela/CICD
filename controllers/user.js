@@ -3,7 +3,7 @@ const Trainee = require("../model/trainee");
 const Trainer = require("../model/trainer");
 const User = require("../model/user");
 const TrainingType = require("../model/trainingType");
-const res = require("express/lib/response");
+
 
 var userEmail = "";
 var userType = "";
@@ -631,5 +631,125 @@ module.exports = {
     console.log("111");
     return res.redirect("/businessProfile");
   },
+  getAllTrainers: () => {
+    Trainer.find().then((trainers) => {
+        return trainers;
+    }).catch(error => {
+        return null;
+        
+    });
+  },
+  getAllTrainings: (userEmail) => {
+      Trainer.findOne({email:userEmail}).then((trainer) => {
+          return trainer.trainings;
+      }).catch(error => {
+          return null;
+          
+      });
+    },
+  getAllTrainingTypes: (userEmail) => {
+      Trainer.findOne({email:userEmail}).then((trainer) => {
+          return trainer.trainingTypes;
+      }).catch(error => {
+          return null;
+          
+      });
+    },
+  addTraining:async(userEmail,training) => {
+    let trainings;
+      Trainer.findOne({email:userEmail}).then((trainer) => {
+          if (!trainer) {
+              return false;    
+          }
+          else{
+            if(trainer.trainings){
+              trainings = trainer.trainings;
+              trainings[trainings.length] = training;
+              }
+            
+          }
+          Trainer.updateOne({ _id: trainer._id }, {trainings:trainings}).then(() => {
+            return true;
+        }).catch(error => {
+            return false;
+            }); 
+    })   
+
+    },
+    addTrainingType:async(userEmail,type) => {
+      let types;
+        Trainer.findOne({email:userEmail}).then((trainer) => {
+            if (!trainer) {
+                return false;    
+            }
+            else{
+              if(trainer.trainingTypes){
+                types = trainer.trainingTypes;
+                types[types.length] = type;
+                }
+              
+            }
+            Trainer.updateOne({ _id: trainer._id }, {trainingTypes:types}).then(() => {
+              return true;
+          }).catch(error => {
+              return false;
+              }); 
+      })   
+  
+      },
+      deleteTraining: async(userEmail,typeID) => {
+      
+        let types;
+        Trainer.findOne({email:userEmail}).then((trainer) => {
+            if (!trainer) {
+                return false;    
+            }
+            else{
+              if(trainer.trainingTypes){
+                types = trainer.trainingTypes;
+                for( var i = 0; i < trainings.length; i++){ 
+                  
+                  if(types[i]._id.toString() == trainingID)
+                  { 
+                    types.splice(i, 1); 
+                  }
+                
+                }
+              } 
+            }
+            Trainer.updateOne({ _id: trainer._id }, {trainingTypes:types}).then(() => {
+              return true;
+          }).catch(error => {
+              return false;
+              }); 
+      })   
+      },
+    deleteTraining: async(userEmail,trainingID) => {
+      
+      let trainings;
+      Trainer.findOne({email:userEmail}).then((trainer) => {
+          if (!trainer) {
+              return false;    
+          }
+          else{
+            if(trainer.trainings){
+              trainings = trainer.trainings;
+              for( var i = 0; i < trainings.length; i++){ 
+                
+                if(trainings[i]._id.toString() == trainingID)
+                { 
+                  trainings.splice(i, 1); 
+                }
+              
+              }
+            } 
+          }
+          Trainer.updateOne({ _id: trainer._id }, {trainings:trainings}).then(() => {
+            return true;
+        }).catch(error => {
+            return false;
+            }); 
+    })   
+    },
  
 };

@@ -109,3 +109,7 @@ const trainerUser = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Trainer", trainerUser);
+
+
+
+
