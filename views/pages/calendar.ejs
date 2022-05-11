@@ -71,20 +71,21 @@
     
   <%- include('../partials/sidebar') %>
   
-  
-    <%- include('../partials/navbar') %>
+  <%- include('../partials/navbar') %>
     
   <main>
     
         <div class="split left">
            <div class="form-wrapper" id="newTrainingForm">
               <h2>Schedule New Training</h2>
-             <form  class="form-container"  >
+             <form  class="form-container" action="newTrainind" method="POST" >
                 <div class="txt_field">
-                <select id="Type" name="Training Type">
-                <option value="Yoga">Yoga</option>
-                <option value="Zumba">Zumba</option>
-                <option value="kick-box">kick-box</option>
+                
+                <select id="Type" name="Type">
+                <option value="trainingType1"><%= user.trainingType1 %></option>
+                <option value="trainingType2">Yoga</option>
+                <option value="trainingType3">Zumba</option>
+                <option value="trainingType4">Kickbox</option>
                 </select>
                 <span></span>
                 <label>Training Type</label>
@@ -107,9 +108,12 @@
                   </div>
                 </div>
                 <div class="label-group">
+                  
+                   
                   <label id="Duration"><a>Duration: </a></label>
                   <label id="Price"><a>Price: </a></label>
                 </div>
+         
                 <div class="btn-group">
                   <button type="submit" id="create-btn" onclick="validateTrainingForm()">Create</button>
                   <button type="button"  onclick="closeForm()">Close</button>
@@ -128,7 +132,13 @@
 
 
 <script>
-
+update();
+       function update() {
+				var select = document.getElementById("Type");
+				var option = select.options[select.selectedIndex];
+				select.value = option.value;
+      
+			}
 function openForm() {
   document.getElementById("newTrainingForm").style.display = "block";
 }

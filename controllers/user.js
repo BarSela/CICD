@@ -155,7 +155,7 @@ module.exports = {
             userEmail = user.email;
             userType = "trainer";
             console.log("Auth successful");
-            return res.redirect("/createBusinessProfile/" + user.email);
+            return res.redirect("/trainerDashboard/" + user.email);
           } else if (user.userType == "trainee") {
             userEmail = user.email;
             userType = "trainee";
@@ -204,7 +204,7 @@ module.exports = {
     console.log(typeName1);
     console.log(typeDuration1);
     console.log(typePrice1);
-
+    let trainingTypes ={trainingType1:typeName1,trainingType2:typeName2,trainingType3:typeName3,trainingType4:typeName4}
     const trainingType = new TrainingType({
       name:typeName1.toString(),
       duration:typeDuration1,
@@ -226,6 +226,7 @@ module.exports = {
     let trainingTypeId = trainingType._id.toString();
     console.log("trainingTypeId: ");
     console.log(trainingTypeId);
+    trainingTypes.trainingType1 =trainingTypeId;
     const trainer = await Trainer.findOneAndUpdate(
       { email: userEmail },
       {
@@ -249,7 +250,7 @@ module.exports = {
     if (trainer) {
       console.log("1");
       console.log(trainer);
-      return res.redirect("/businessProfile");
+      return res.render("pages/businessProfile",{userEmail:trainer.email,user:trainer,trainingTypes});
     } else {
       console("Error to find trainer");
       return res.render("/");
@@ -294,7 +295,7 @@ module.exports = {
       }
     );
     if (trainer) {
-      res.redirect("/businessProfile");
+      res.render("/businessProfile",trainer);
     } else {
       console("Error to find trainer");
       res.render("/");
@@ -405,7 +406,7 @@ module.exports = {
         }
         if (result) {
           if (user.userType == "trainer") {
-            console.log(" not okkkkkkkkkkkk");
+          
             const userU = await User.findOneAndUpdate(
               { email: userEmail },
               {
