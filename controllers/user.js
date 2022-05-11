@@ -600,7 +600,7 @@ module.exports = {
     }
   },
   editTrainingTypes: async (req, res) => {
-    const trainingType1 = await Trainer.findOneAndUpdate(
+    trainingType1 = await Trainer.findOneAndUpdate(
       { email: userEmail },
       {
         $set: {
@@ -628,7 +628,7 @@ module.exports = {
       console("Error to find trainer");
       res.render("/");
     }
-    const trainingType1 = await Trainer.findOneAndUpdate(
+  trainingType1 = await Trainer.findOneAndUpdate(
       { email: userEmail },
       {
         $set: {

@@ -54,9 +54,34 @@ var userEmail = "";
 var userObj;
 
 app.get("/", (req, res) => {
+
+  
   res.render("pages/homePage", { userEmail: userEmail });
 });
-app.get("/QNA", (req, res) => {
+app.get("/QNA",async (req, res) => {
+  const mytrainer = await Trainer.findOneAndUpdate(
+    { email: "Elon11@gmail.com" },
+    {
+      $set: {
+
+     
+      trainings:[{
+        trainingType:"627b5b7068494c494be48d7f",
+        trainingDate: new Date().getDate(),
+        available: true,
+
+      },
+      {
+        trainingType:"627b5b7068494c494be48d7e",
+        trainingDate: new Date().getDate(),
+        available: true,
+
+      }]
+        
+      },
+    }
+  );
+
   res.render("pages/QNA", { userEmail: userEmail });
 });
 

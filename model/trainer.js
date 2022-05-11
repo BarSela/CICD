@@ -102,6 +102,20 @@ const trainerUser = new mongoose.Schema({
     type: String,
     required: false,
   },
+  trainingTypes:[
+    {
+      myid: String,
+      name: String,
+      duration: Number,
+      price:Number,
+    },
+  ],
+  trainings:[
+    {
+      trainingType:String,
+      trainingDate: Date,
+      available: Boolean,
+    },]
 });
 
 module.exports = mongoose.model("Trainer", trainerUser);
