@@ -20,6 +20,7 @@
           initialView: 'dayGridMonth',
           aspectRatio: 1.5,
           height:800,
+          selectable: true,
         
         customButtons:
         {
@@ -63,6 +64,7 @@
       });
 
         calendar.render(); 
+        calendar.display.allDay();
         var event= {title: 'Event1',start: '2022-04-04'};
           
       });
@@ -79,7 +81,7 @@
         <div class="split left">
            <div class="form-wrapper" id="newTrainingForm">
               <h2>Schedule New Training</h2>
-             <form  class="form-container"   >
+             <form  class="form-container"  action="newTraining" method="POST" >
                 <div class="txt_field">
                 
                 <select id="Type" name="Type">
@@ -107,7 +109,7 @@
                 <label>training description</label>
                 </div>
                 <div class="date_fields">
-                  <div class="txt_field"><input id="date"type="date"required />
+                  <div class="txt_field"><input id="date" name="date" type="date"required />
                     <span></span>
                   </div>
                   <div class="txt_field">

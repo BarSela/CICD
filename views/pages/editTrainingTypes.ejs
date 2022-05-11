@@ -154,7 +154,7 @@
                     <!-- >Training Types section -->
                                 
                     <label class="w3-text-teal"><br> Name of Training type:</b></label>    
-                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="training-name-1"  type="text" required></p>
+                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="training-name-1" value="<%= user.trainingTypes[1] %>" type="text" required></p>
                     <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
                     <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="duration-type-1"  type="number" min="0" max="120" required></p>        
                     <label class="w3-text-grey" id="price"><b>Price</b></label>
@@ -283,6 +283,36 @@ if('<%= user.hebrew %>' != '0')
       
       //plus to add training type button
       var TrainingTypebt=document.getElementById("addTrainingTypebt");
+
+      console.log('1');
+      console.log('<%= user.trainingTypes[0].name %>');
+      console.log('<%= user.trainingTypes[1] %>');
+      //let name1='<%= user.trainingTypes[0].name %>';
+      //document.getElementById("training-name-1").valueL=name1;
+          //document.getElementById("duration-type-2").setAttribute("required","");
+          //document.getElementById("price-type-2").setAttribute("required","");
+
+      if('<%= user.trainingTypes[1] %>')
+      {
+        document.getElementById("training-type-2").style.display="block";
+          document.getElementById("training-name-2").setAttribute("required","");
+          document.getElementById("duration-type-2").setAttribute("required","");
+          document.getElementById("price-type-2").setAttribute("required","");
+      }
+      if('<%= user.trainingTypes[2] %>')
+      {
+        document.getElementById("training-type-3").style.display="block";
+          document.getElementById("training-name-3").setAttribute("required","");
+          document.getElementById("duration-type-3").setAttribute("required","");
+          document.getElementById("price-type-3").setAttribute("required","");
+      }
+      if('<%= user.trainingTypes[3] %>')
+      {
+        document.getElementById("training-type-4").style.display="block";
+          document.getElementById("training-name-4").setAttribute("required","");
+          document.getElementById("duration-type-4").setAttribute("required","");
+          document.getElementById("price-type-4").setAttribute("required","");
+      }
       //add or remove training type functions
       function addTrainingType(){
         

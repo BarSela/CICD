@@ -227,14 +227,14 @@ module.exports = {
         duration: typeDuration2,
         price: typePrice2,
       }
-      trainer = await Trainer.findOneAndUpdate(
-        { email: userEmail },
-        {
-          $set: {
-            trainingTypes:[trainingType2]
-          }
-        }
-          );
+      // trainer = await Trainer.findOneAndUpdate(
+      //   { email: userEmail },
+      //   {
+      //     $set: {
+      //       trainingTypes:[{trainingType2}]
+      //     }
+      //   }
+      //     );
     }   
     console.log("trainingtype:" + trainingType2);
       
@@ -244,14 +244,14 @@ module.exports = {
         duration: typeDuration3,
         price: typePrice3,
       }
-      trainer = await Trainer.findOneAndUpdate(
-        { email: userEmail },
-        {
-          $set: {
-            trainingTypes:[trainingType3]
-          }
-        }
-          );
+      // trainer = await Trainer.findOneAndUpdate(
+      //   { email: userEmail },
+      //   {
+      //     $set: {
+      //       trainingTypes:[{trainingType3}]
+      //     }
+      //   }
+      //     );
     }
     if (typeName4) {
       trainingType4 ={
@@ -259,14 +259,14 @@ module.exports = {
         duration: typeDuration4,
         price: typePrice4,
       }
-      trainer = await Trainer.findOneAndUpdate(
-        { email: userEmail },
-        {
-          $set: {
-            trainingTypes:[trainingType4]
-          }
-        }
-          );
+      // trainer = await Trainer.findOneAndUpdate(
+      //   { email: userEmail },
+      //   {
+      //     $set: {
+      //       trainingTypes:[{trainingType4}]
+      //     }
+      //   }
+      //     );
     }
     console.log(typeId1);
     console.log(typeId2);
@@ -289,7 +289,7 @@ module.exports = {
           spanish: spanish,
           russian: russian,
           arabic: arabic,
-          trainingTypes:[trainingType1]
+          trainingTypes:[trainingType1,trainingType2,trainingType3,trainingType4]
     
           },
           
@@ -548,90 +548,85 @@ module.exports = {
       res.render("/");
     }
   },
+
   editTrainingTypes: async (req, res) => {
-    trainingType1 = await Trainer.findOneAndUpdate(
-      { email: userEmail },
-      {
-        $set: {
-          businassName: businassName,
-          fullName: fullName,
-          specialty: specialty,
-          city: city,
-          phone: phone,
-          about: about,
-          schoolName: schoolName,
-          schoolDate: schoolDate,
-          schoolInfo: schoolInfo,
-          hebrew: hebrew,
-          english: english,
-          spanish: spanish,
-          russian: russian,
-          arabic: arabic,
-        },
-      }
-    );
-    if (trainingType1) {
-      
-      
-    } else {
-      console("Error to find trainer");
-      res.render("/");
-    }
-  trainingType1 = await Trainer.findOneAndUpdate(
-      { email: userEmail },
-      {
-        $set: {
-          businassName: businassName,
-          fullName: fullName,
-          specialty: specialty,
-          city: city,
-          phone: phone,
-          about: about,
-          schoolName: schoolName,
-          schoolDate: schoolDate,
-          schoolInfo: schoolInfo,
-          hebrew: hebrew,
-          english: english,
-          spanish: spanish,
-          russian: russian,
-          arabic: arabic,
-        },
-      }
-    );
-    if (trainingType1) {
-      const trainingType1 = await Trainer.findOneAndUpdate(
+    let typeName1 = req.body.typeName1;
+    let typeName2 = req.body.typeName2;
+    let typeName3 = req.body.typeName3;
+    let typeName4 = req.body.typeName4;
+
+    let typeDuration1 = parseInt(req.body.typeDuration1);
+    let typeDuration2 = parseInt(req.body.typeDuration2);
+    let typeDuration3 = parseInt(req.body.typeDuration3);
+    let typeDuration4 = parseInt(req.body.typeDuration4);
+
+    let typePrice1 = parseInt(req.body.typePrice1);
+    let typePrice2 = parseInt(req.body.typePrice2);
+    let typePrice3 = parseInt(req.body.typePrice3);
+    let typePrice4 = parseInt(req.body.typePrice4);
+
+    let trainingType1;
+    let trainingType2;
+    let trainingType3;
+    let trainingType4;
+    let trainer;
+    const currtrainer = await Trainer.findOne({ email: userEmail });
+
+    if (currtrainer.TrainingTypes[0].name != typeName1.toString())
+      trainingType1 = {
+        name: typeName1.toString(),
+        duration: typeDuration1,
+        price: typePrice1,
+      };
+
+    console.log("trainingtype:" + trainingType1);
+
+    if (typeName2) {
+      trainingType2 = {
+        name: typeName2.toString(),
+        duration: typeDuration2,
+        price: typePrice2,
+      };
+      trainer = await Trainer.findOneAndUpdate(
         { email: userEmail },
         {
           $set: {
-            businassName: businassName,
-            fullName: fullName,
-            specialty: specialty,
-            city: city,
-            phone: phone,
-            about: about,
-            schoolName: schoolName,
-            schoolDate: schoolDate,
-            schoolInfo: schoolInfo,
-            hebrew: hebrew,
-            english: english,
-            spanish: spanish,
-            russian: russian,
-            arabic: arabic,
+            trainingTypes: [trainingType2],
           },
         }
       );
-      if (trainingType1) {
-        
-        
-      } else {
-        console("Error to find trainer");
-        res.render("/");
-      }
-      
-    } else {
-      console("Error to find trainer");
-      res.render("/");
+    }
+    console.log("trainingtype:" + trainingType2);
+
+    if (typeName3) {
+      trainingType3 = {
+        name: typeName3.toString(),
+        duration: typeDuration3,
+        price: typePrice3,
+      };
+      trainer = await Trainer.findOneAndUpdate(
+        { email: userEmail },
+        {
+          $set: {
+            trainingTypes: [trainingType3],
+          },
+        }
+      );
+    }
+    if (typeName4) {
+      trainingType4 = {
+        name: typeName4.toString(),
+        duration: typeDuration4,
+        price: typePrice4,
+      };
+      trainer = await Trainer.findOneAndUpdate(
+        { email: userEmail },
+        {
+          $set: {
+            trainingTypes: [trainingType4],
+          },
+        }
+      );
     }
   },
-  //res.render("/businessProfile", trainer);
 };

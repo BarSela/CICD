@@ -16,6 +16,7 @@ const User = require("../model/user");
 const Trainer = require("../model/trainer");
 const Trainee = require("../model/trainee");
 const TrainingType = require("../model/trainingType");
+const { findByIdAndUpdate } = require("../model/trainee");
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -304,20 +305,7 @@ app.get("/trainerdashboard/:email",async (req, res) => {
   else{
     res.redirect("/");
   }
-  // Trainer.find({ email: userEmail }).then((trainers) => {
-  //   //If the user list is empty
-  //   if (trainers.length === 0) {
-  //     console.log("user Error");
-  //     res.redirect("/");
-  //   } else {
-  //     const [user] = trainers;
-  //     userObj = user;
-  //     res.render("pages/trainerdashboard", {
-  //       userEmail: userEmail,
-  //       user: userObj,
-  //     });
-  //   }
-  // });
+
 });
 
 app.get("/traineeDashboard/:email", async (req, res) => {
@@ -414,7 +402,22 @@ app.get("/homePage", (req, res) => {
   res.render("pages/homePage", { userEmail: userEmail });
 });
 app.get("/editTrainingTypes", (req, res) => {
-  res.render("pages/editTrainingTypes", { user: userEmail });
+  Trainer.find({ email: userEmail }).then((users) => {
+    //If the user list is empty
+    if (users.length === 0) {
+      console.log("user Error");
+      res.redirect("/");
+    } else {
+      const [user] = users;
+      userObj = user;
+
+      console.log(userObj);
+      res.render("pages/editTrainingTypes", {
+        userEmail: userEmail,
+        user: userObj,
+      });
+    }
+  });
 });
 
 app.get("/logout", (req, res) => {
@@ -428,10 +431,45 @@ app.post("/editPersonalprofile", editPersonalprofile);
 app.post("/createBusinessP", createBusinessP);
 app.post("/editBusinessP", editBusinessP);
 app.post("/editPassword", editPassword);
-app.post("/newTrainind", (req, res) => {
+app.post("/newTraining",  (req, res) => {
   let traineeInput = req.body.Type;
-  let filter = req.body.filterInput;
-  filter = filter.toString();
+  let date = req.body.date;
+  let trainingName;
+  let duration;
+  let price;
+  // if(userObj instanceof Trainee){
+  //   userObj.trainingTypes.forEach(type => {
+  //     if(type.name == traineeInput){
+  //       trainingName = type.name;
+  //       duration = type.duration;
+  //       price = type.price;
+  //       await Trainer.findOneAndUpdate(
+  //         { email: userObj.email },
+  //         {
+  //           $set: {
+      
+           
+  //           trainings:[{
+  //             trainingType:"627b5b7068494c494be48d7f",
+  //             trainingDate: new Date().getDate(),
+  //             available: true,
+      
+  //           },
+  //           {
+  //             trainingType:"627b5b7068494c494be48d7e",
+  //             trainingDate: new Date().getDate(),
+  //             available: true,
+      
+  //           }]
+              
+  //           },
+  //         }
+  //       );
+  //     }
+  //   });
+  // }
+
+ 
 });
 app.post("/deleteAccount", deleteAccount);
 app.post("/editTrainingTypes", editTrainingTypes);
