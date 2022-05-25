@@ -102,11 +102,12 @@ main {
     margin: 0px 5px; 
   } 
   .form-wrapper{
-  
+    box-sizing: content-box;
     top: 11%;
     left: 80px;
     width: 350px;
-    background: white;
+    background-color: rgba(0,0,0,0.5);
+    /* background: white; */
     border-radius: 10px;
     box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
   }
@@ -117,6 +118,9 @@ main {
     border-bottom: 1px solid silver;
   }
   .form-wrapper .form-container{
+    background-color: rgb(255, 255, 255);
+
+
     padding: 50px 40px;
     box-sizing: border-box;
   }
@@ -241,7 +245,7 @@ main {
   }
   
   .label-group{
-    padding: 20px 5px; 
+    padding: 10px 5px; 
     width:85%; 
     margin: 10px 9px;
     display: flex;
@@ -262,6 +266,17 @@ main {
   }
   
   
+ 
+  #cover{
+      position:fixed;
+      top:0;
+      left:0;
+      background:rgba(0,0,0,0.6);
+      z-index:5;
+      width:100%;
+      height:100%;
+      display:none;
+  }
   
   /*end add new training form */
   

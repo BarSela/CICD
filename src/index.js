@@ -258,7 +258,6 @@ app.get("/findTrainer", (req, res) => {
 });
 app.post("/selectTrainer",async (req, res) => {
   let email = req.body.email;
-  let trainings;
   console.log(email);
   let trainer = await Trainer.findOne({ email: email });
   if(trainer != null){
@@ -306,13 +305,13 @@ app.post("/searchTrainer", (req, res) => {
   }
 });
 
-app.get("/trainerdashboard/:email",async (req, res) => {
+app.get("/trainerDashboard/:email",async (req, res) => {
   userEmail = req.params.email;
   let trainer = await Trainer.findOne({ email: userEmail });
   console.log(trainer);
   if(trainer){
     userObj = trainer;
-    res.render("pages/trainerdashboard", {
+    res.render("pages/trainerDashboard", {
             userEmail: userEmail,
             user: userObj,
           });
@@ -325,25 +324,20 @@ app.get("/trainerdashboard/:email",async (req, res) => {
 
 app.get("/traineeDashboard/:email", async (req, res) => {
   userEmail = req.params.email;
-  User.find({ email: userEmail }).then((users) => {
+  Trainee.find({ email: userEmail }).then((trainees) => {
     //If the user list is empty
-    if (users.length === 0) {
+    if (trainees.length === 0) {
       console.log("user Error");
       res.redirect("/");
     } else {
-      const [user] = users;
-      userObj = user;
-      // if(user.userType == "trainer"){
-      //   res.render("pages/trainerDashboard", {
-      //     userEmail: userEmail,
-      //     user: userObj,
-      //   });
-      // }
-      res.render("pages/traineeDashboard", {
-        userEmail: userEmail,
-        user: userObj,
-      });
+      const [trainee] = trainees;
+      userObj = trainee;
+      
     }
+    res.render("pages/traineeDashboard", {
+      userEmail: userEmail,
+      user: userObj,
+    });
   });
 });
 
@@ -450,26 +444,27 @@ app.post("/editPassword", editPassword);
 app.post("/editPassword", editPassword);
 app.post("/TrainingReg",async (req, res) => {
     
-    let date = req.body.date;
-    let time = req.body.time;
-    let trainingName = req.body.type;
-    let duration = 80;
-    let price = 60;
+    let date = req.body.dateIn;
+    let time = req.body.startIn;
+    let trainingName = req.body.typeIn;
+    let duration = req.body.durationIn;
+    let price = req.body.priceIn;
     let trainee;
-    console.log(date.type);
-    console.log(time.type);
-    console.log(trainingName);
-   
+ 
+    console.log(userEmail);
+    console.log(date);
+    console.log(time);
+
         console.log("isTrainee");
         trainee = await Trainee.findOneAndUpdate(
           { email:
-            "bbb@gmail.com" },
+            userEmail },
           {
             $set: {
               
             trainings:[{
               trainingType:trainingName,
-              trainingDate: date,
+              trainingDate: date.toString,
               startHour: time,
               pass: false,
               duration:duration,
@@ -499,6 +494,8 @@ app.post("/newTraining",async (req, res) => {
   let price;
   
   console.log("traineeInput"+traineeInput);
+  console.log(userObj);
+
   if(userObj instanceof Trainer){
     
     userObj.trainingTypes.forEach(type => {

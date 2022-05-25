@@ -62,7 +62,6 @@
           
         }
       });
-
         calendar.render(); 
         calendar.display.allDay();
         var event= {title: 'Event1',start: '2022-04-04'};
@@ -79,7 +78,7 @@
   <main>
     
         <div class="split left">
-           <div class="form-wrapper" id="newTrainingForm">
+           <div class="form-wrapper" id="newTrainingForm" style="display: none;">
               <h2>Schedule New Training</h2>
              <form  class="form-container"  action="/newTraining" method="POST" >
                 <div class="txt_field">
@@ -157,11 +156,9 @@ update();
 function openForm() {
   document.getElementById("newTrainingForm").style.display = "block";
 }
-
 function closeForm() {
   document.getElementById("newTrainingForm").style.display = "none";
 }
-
 function validateTrainingForm(){
         var trainingType = document.getElementById("Type");
         var duration = document.getElementById("Duration");
