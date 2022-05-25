@@ -39,11 +39,11 @@
         
         <div class="container">
           <% if(typeof trainers != "undefined" ) { %>
-
           <% trainers.forEach(trainer => { %>
           <div class="trainer-profile">
                 <div class="trainer-info">
-                  
+                  <form action="/selectTrainer" method="POST">
+                  <input type="text" value="<%= trainer.email %>" name="email" hidden >
                   <ul class="list-group">
                     <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; <%= trainer.fullName %></li>
                     <li class="list-item"><strong class="text-dark">BusinessName:</strong> &nbsp; <%= trainer.businessName %></li>
@@ -56,7 +56,8 @@
                       &nbsp; <%= trainer.about %>
                     </div>
                   </ul>
-              <!-- <button class="btn">Book </button> -->
+              <button class="btn" onClick="location.href='/viewSchedual'">Book </button>
+            </form>
             </div>
           </div>
           <% }); %>
@@ -77,13 +78,8 @@
        
       
         
-
-
         
       </script> 
     </body>
  </html>
- 
- 
- 
  

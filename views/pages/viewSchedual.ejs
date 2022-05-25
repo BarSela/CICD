@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='utf-8' />
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet'>
+    <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Muli:300,400,600,800,900' />
+
+  
+    <link href='/main.css' rel='stylesheet' />
+    <script src='/main.js'></script>
+    <script>
+      let trainer;
+      let date;
+      let dateStr;
+      let time;
+      let type = "<%= trainer.trainingTypes[0].name %>" 
+      var trainings; 
+      var calendarEl;
+      var calendar ;
+      // Loading the calendar
+    
+      document.addEventListener('DOMContentLoaded', function() {
+         calendarEl = document.getElementById('calendar');
+         calendar = new FullCalendar.Calendar(calendarEl, {
+          // themeSystem: 'bootstrap',
+          initialView: 'dayGridMonth',
+          aspectRatio: 1.5,
+          height:800,
+          selectable: true,
+        
+       
+        headerToolbar: {
+            
+            left:  'today',
+            center: 'prev,title,next',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay' 
+          
+        },
+        eventClick: function(info) {
+            document.getElementById("newTrainingForm").style.display = "block";
+       
+
+        // change the border color just for fun
+        info.el.style.borderColor = 'red';
+  }
+        
+        
+      });
+        len = "<%= trainer.trainings.length %>"
+        type = "<%= trainer.trainings[0].trainingType %>"
+        dateStr = "<%= trainer.trainings[0].trainingDate %>"
+        time = "<%= trainer.trainings[0].startHour %>"
+        date = new Date(dateStr +'T'+time);
+        
+        if (!isNaN(date.valueOf())) { // valid?
+                console.log(" ifYESS")
+                calendar.addEvent({
+                    title: type,
+                    start: date,
+                    allDay: true
+                  });
+            }
+        calendar.render(); 
+        update({calendar:mycalendar});
+        
+      });
+    </script>
+  </head>
+  <body>
+
+  <main>
+    
+         
+            <div id='calendar' ></div>
+            <div class="form-wrapper" id="newTrainingForm" style="display:none;">
+                <h2>Schedule New Training</h2>
+               <form  class="form-container" action="/TrainingReg" method="post" >
+                  <div class="txt_field">
+                  <% if(typeof trainer != "undefined" ) { %>
+                  <select id="Type" name="Type" onchange="update()">
+                    
+                      <option value="<%= trainer.trainings[0].trainingType %>">"<%= trainer.trainings[0].trainingType %>"</option>
+                      </select>
+                      <% } %>  
+                  <span></span>
+                  <label>Training Type</label>
+                  </div>
+                  <div class="txt_field"> <input id="type" type="text" name="type" value="<%= trainer.trainings[0].trainingType %>""/>
+                  <span></span>
+                  <label>training description</label>
+                  </div>
+                  <div class="date_fields">
+                    <div class="txt_field"><input id="date" name="date" type="date" value="<%= trainer.trainings[0].trainingDate %>" />
+                      <span></span>
+                    </div>
+                    <div class="txt_field">
+                      <input
+                      id="time"
+                      name="time"
+                      type="time"
+                      value="<%= trainer.trainings[0].startHour %>"
+                      />
+                      <span></span>
+                    </div>
+                  </div>
+                  <div class="label-group">
+                    <label id="Duration"><a>Duration: </a>"<%= trainer.trainings[0].duration %>"</label>
+                    <label id="Price"><a>Price: </a>"<%= trainer.trainings[0].price %>"</label>
+                  </div>
+           
+                  <div class="btn-group">
+                    <button type="submit" id="create-btn" >Create</button>
+                    <button type="button"  onclick="closeForm()">Close</button>
+                  </div>
+               </form>
+             </div>
+            
+     
+     
+    </main>
+    <script>
+        function openForm() {
+  document.getElementById("newTrainingForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("newTrainingForm").style.display = "none";
+}
+
+        function update({calendar:mycalendar}){
+        len = "<%= trainer.trainings.length %>"
+        type = "<%= trainer.trainings[0].trainingType %>"
+        dateStr = "<%= trainer.trainings[0].trainingDate %>"
+        time = "<%= trainer.trainings[0].startHour %>"
+        date = new Date(dateStr +'T'+time);
+        
+        if (!isNaN(date.valueOf())) { // valid?
+                console.log(" ifYESS")
+                calendar.addEvent({
+                    title: type,
+                    start: date,
+                    allDay: true
+                  });
+            }
+            calendar.render();
+            // for( let i=0 ; i<1; i++){
+            // dateStr = trainings[i].trainingDate;
+            // time = trainings[i].startHour;
+            // date = new Date(dateStr +'T'+time); // will be in local time
+            // }
+            }
+     </script> 
+  </body>
+</html>
+
+

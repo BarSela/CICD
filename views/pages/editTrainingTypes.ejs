@@ -1,345 +1,702 @@
-<!DOCTYPE html>
-<html>
-  <title>Business profile</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-  <link rel="stylesheet" href="/css/editTrainingTypes.css" />
-  
-  
+<html lang="he" dir="rtl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,,user-scalable=no,maximum-scale=1,initial-scale=1">
+  <title>TRAX</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="white">
+  <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
   <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Roboto"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-  />
-  
-  
-  <body class="w3-light-grey" id="page-top">
-        <!-- Page Container -->
-        <div class="w3-content w3-margin-top" style="max-width: 1500px">
-          <!-- The Grid -->
-          <div class="w3-row-padding" >
-            <!-- Left Column -->
-            <div class="w3-third" >
-              <div class="w3-white w3-text-grey w3-card-4" >
-                <div class="container">
-                  <h2 id="name"><%= user.businessName %></h2>
-                </div>
-                <div class="w3-container">
-                  <p id="fullName">
-                    <i
-                      class="fa fa-user-o fa-fw w3-margin-right w3-large w3-text-teal"
-                    ></i
-                    ><%= user.fullName %>
-                  </p>
-                  <p id="specialty">
-                    <i
-                      class="fa fa-certificate fa-fw w3-margin-right w3-large w3-text-teal"
-                    ></i
-                    ><%= user.specialty %>
-                  </p>
-                  <p id="city">
-                    <i
-                      class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"
-                    ></i
-                    ><%= user.city %>
-                  </p>
-                  <p id="phone"></p>
-                    <i
-                      class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"
-                    ></i
-                    ><%= user.phone %>
-                  </p>
-                  <p id="email">
-                    <i
-                      class="fa fa-envelope-o fa-fw w3-margin-right w3-large w3-text-teal"
-                    ></i
-                    ><%= user.email %>
-                  </p>
-                  <hr />
-    
-                  <p class="w3-large">
-                    <b
-                      ><i
-                        class="fa fa-calendar-check-o fa-fw w3-margin-right w3-text-teal"
-                      ></i
-                      >Schedule</b
-                    >
-                  </p>
-                  <div class="w3-white">
-                    <button class="w3-button w3-teal w3-round-xlarge" id="schedule-bt"> Schedule</button>
-                  </div>
-    
-                  <br />
-                  <hr />
-                  <p class="w3-large w3-text-theme">
-                    <b
-                      ><i class="fa fa-globe fa-fw w3-margin-right w3-text-teal"></i
-                      >Languages</b
-                    >
-                  </p>
-                  <p id="hebrew-t">Hebrew</p>
-                  <div class="w3-light-grey w3-round-xlarge" id="hebrew">
-                    <div
-                      class="w3-round-xlarge w3-teal" id="hebrew-w"
-                    ></div>
-                  </div>
-                  <p id="english-t">English</p>
-                  <div class="w3-light-grey w3-round-xlarge" id="english">
-                    <div
-                      class="w3-round-xlarge w3-teal" id="english-w"
-                    ></div>
-                  </div>
-                  <p id="russian-t">Russian</p>
-                  <div class="w3-light-grey w3-round-xlarge" id="russian">
-                    <div
-                      class="w3-round-xlarge w3-teal" id="russian-w"
-                    ></div>
-                  </div>
-                  <p id="spanish-t">Spanish</p>
-                  <div class="w3-light-grey w3-round-xlarge" id="spanish">
-                    <div
-                      class="w3-round-xlarge w3-teal" id="spanish-w"
-                    ></div>
-                  </div>
-                  <p id="arabic-t">Arabic</p>
-                  <div class="w3-light-grey w3-round-xlarge" id="arabic">
-                    <div
-                      class="w3-round-xlarge w3-teal" id="arabic-w"
-                    ></div>
-                  </div>
-                  <br />
-                  <hr />
-    
-                  <p class="w3-large">
-                    <b
-                      ><i
-                        class="fa fa-pencil fa-fw w3-margin-right w3-text-teal"
-                      ></i
-                      >Settings</b
-                    >
-                  </p>
-                  <div class="w3-white w3-row-padding" id="Settings">
-                    <button class="w3-button w3-teal w3-round-xlarge" id="edit-profile-bt" onclick="location.href='/editBusinessProfile'"> Edit profile</button>
-                    <button class="w3-button w3-teal w3-round-xlarge" id="edit-training-bt" onclick="location.href='/editTrainingTypes'"> Edit training types</button>
-    
-                  </div>
-    
-                  <br />
-                </div>
-              </div>
-              <br />
-    
-              <!-- End Left Column -->
-            </div>
-    
-            <!-- Right Column -->
-            <div class="w3-twothird">
-              <div class="w3-container w3-card w3-white w3-margin-bottom">
-                <form class="w3-container"
-                action="/editTrainingTypes"
-                method="POST">
-                <h2 class="w3-text-grey w3-padding-16">
-                  <i
-                    class="fa fa-plus fa-fw w3-margin-right w3-xxlarge w3-text-teal"
-                  ></i
-                  >Training Types
-                </h2>
-                <div class="w3-container">
-                  <label class="w3-text-grey "><b id="remember">Remember:</b><b>  you must have at least one training type.</br></label>
-                    <label class="w3-text-grey"><b>You can add more training types by clicking the + button. (you can only afford 4 training types</br></label>
-                    <!-- >Training Types section -->
-                    <% if(typeof user.trainingTypes != "undefined" ) { %>
-                                  
-                    <label class="w3-text-teal"><br> Name of Training type:</b></label>    
-                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="training-name-1" type="text" value = "<%= user.trainingTypes[0].name %>" required></p>
-                    <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
-                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="duration-type-1"  type="number" value = "<%= user.trainingTypes[0].duration %>" min="0" max="120" required></p>        
-                    <label class="w3-text-grey" id="price"><b>Price</b></label>
-                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="price-type-1"  type="number" min="0" value = "<%= user.trainingTypes[0].price %>" required></p>
-                   
-                    <% } %> 
-                    <% if(typeof user.trainingTypes != "undefined" ) { %>
-                    <div id="training-type-2">
-                    <button class="w3-button w3-circle w3-teal" id="delTrainingbt" type="button" onclick="delTrainingType('training-type-2','training-name-2','duration-type-2','price-type-2')" >-</button>
-                    <label class="w3-text-teal"><b>Name of Training type:</b></label>
-                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="training-name-2"  type="text" ></p>
-                    <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
-                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="duration-type-2"  type="number" min="0" max="120" ></p>
-                    <label class="w3-text-grey" id="price"><b>Price</b></label>
-                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="price-type-2"  type="number" min="0" h></p>
-                    </div>
-                    <% } %>         
-                    <div id="training-type-3" >
-                    <button class="w3-button w3-circle w3-teal" id="delTrainingbt" type="button" onclick="delTrainingType('training-type-3','training-name-3','duration-type-3','price-type-3')" >-</button>
-                    <label class="w3-text-teal"><b>Name of Training type:</b></label>
-                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="training-name-3" " type="text" ></p>
-                    <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
-                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="duration-type-3"  type="number" min="0" max="120" ></p>
-                    <label class="w3-text-grey" id="price"><b>Price</b></label>
-                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge"" id="price-type-3"  type="number" min="0" ></p>
-                    </div>
-  
-                    <div id="training-type-4">
-                    <button class="w3-button w3-circle w3-teal" id="delTrainingbt" type="button" onclick="delTrainingType('training-type-4','training-name-4','duration-type-4','price-type-4')" >-</button>
-                    <label class="w3-text-teal"><b>Name of Training type:</b></label>
-                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="training-name-4" type="text"></p>
-                    <label class="w3-text-grey" id="duration"><b>Duration (minutes)</b></label>
-                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="duration-type-4"  type="number" min="0" max="120"></p>
-                    <label class="w3-text-grey" id="price"><b>Price</b></label>
-                    <input class="w3-input w3-border w3-light-grey w3-round-xlarge" id="price-type-4"  type="number" min="0"></p>
-                    </div>
-                    <b></br>
-                    <button class="w3-button w3-circle w3-teal" type="button" style="margin-left: 10cm;" id="addTrainingTypebt" onclick="addTrainingType()" >+</button>
-                    <p>
-                    <button class="w3-btn w3-teal w3-round-xlarge" type="submit" id="savebt">Save Changes</button></p>
-                  </form>
-                </div>
-                  
-              </div>
-              </div>
-    
-              <!-- End Right Column -->
-            </div>
-    
-            <!-- End Grid -->
+    href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed:400,500,600|MuseoModerno:400,500,600|Roboto:300,400,500,700|Material+Icons|Calligraffitti|Audiowide"
+    rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
+  <script type="text/javascript" src="app.033571273e358b0878f7.js"></script>
+  <link href="/css/editTrainingTypes.css" rel="stylesheet">
+</head>
+
+<body>
+  <main class="v-content" data-booted="true" style="padding: 64px 120px 0px 0px;">
+    <div class="v-content__wrap">
+      <div class="container fluid grid-list-lg">
+        <div class="layout pt-3 column">
+          <div class="flex">
+
           </div>
-    
-          <!-- End Page Container -->
-        </div>
-    <!-- Page Container!!!!! -->
-    
-    <script>
-
-if('<%= user.hebrew %>' != '0')
-      {
-        var hebrewV='<%= user.hebrew %>'+'%';
-        document.getElementById('hebrew-w').style.width=hebrewV;
-      }
-      else
-      {
-        document.getElementById('hebrew').style.display='none';
-        document.getElementById('hebrew-t').style.display='none';
-      }
-      if('<%= user.english %>' != '0')
-      {
-        var englishV='<%= user.english %>'+'%';
-      document.getElementById('english-w').style.width=englishV;
-      }
-      else{
-        document.getElementById('english').style.display='none';
-        document.getElementById('english-t').style.display='none';
-      }
-      if('<%= user.spanish %>' != '0')
-      {
-        var spanishV='<%= user.spanish %>'+'%';
-      document.getElementById('spanish-w').style.width=spanishV;
-      }
-      else{
-        document.getElementById('spanish').style.display='none';
-        document.getElementById('spanish-t').style.display='none';
-      }
-      if('<%= user.russian %>' != '0')
-      {
-        var russianV='<%= user.russian %>'+'%';
-      document.getElementById('russian-w').style.width=russianV;
-      }
-      else
-      {
-        document.getElementById('russian').style.display='none';
-        document.getElementById('russian-t').style.display='none';
-      }
-      if('<%= user.arabic %>' != '0')
-      {
-        var arabicV='<%= user.arabic %>'+'%';
-      document.getElementById('arabic-w').style.width=arabicV;
-      }
-      else{
-        document.getElementById('arabic').style.display='none';
-        document.getElementById('arabic-t').style.display='none';
-      }  
-     //training type1
-     var trainingType1=document.getElementById("training-name-1");
-      var duration1=document.getElementById("duration-type-1");
-      var price1=document.getElementById("price-type-1");
-      
-        
-      //training type2
-      var trainingTypeName2=document.getElementById("training-name-2");
-      var duration2=document.getElementById("duration-type-2");
-      var price2=document.getElementById("price-type-2");
-      
-      
-      //training type3
-      var trainingTypeName3=document.getElementById("training-name-3");
-      var duration3=document.getElementById("duration-type-3");
-      var price3=document.getElementById("price-type-3");
-      
-      
-      //training type4
-      var trainingTypeName4=document.getElementById("training-name-4");
-      var duration4=document.getElementById("duration-type-4");
-      var price4=document.getElementById("price-type-4");
-      
-      //plus to add training type button
-      var TrainingTypebt=document.getElementById("addTrainingTypebt");
-      //add or remove training type functions
-      function addTrainingType(){
-        
-        if(document.getElementById("training-type-2").style.display=="" || document.getElementById("training-type-2").style.display=="none")
-        {
-          document.getElementById("training-type-2").style.display="block";
-          document.getElementById("training-name-2").setAttribute("required","");
-          document.getElementById("duration-type-2").setAttribute("required","");
-          document.getElementById("price-type-2").setAttribute("required","");
-
-          MaxTrainingType();
+          <!-- training types -->
+          <div class="flex">
+            <div class="v-card v-sheet theme--light">
+              <div class="v-card__title">
+                <div class="flex md-headline">אימונים</div>
+                <div><button type="button" id="addType" class="no-shadow no-opacity v-btn theme--light primary">
+                    <div class="v-btn__content">+ אימון</div>
+                  </button>
+                </div>
+              </div>
+              <hr class="v-divider theme--light">
+              <div footer="" class=" ">
+                <div class="v-table__overflow">
           
-          return;
-        } 
-        if(document.getElementById("training-type-3").style.display==""|| document.getElementById("training-type-3").style.display=="none"){
-          document.getElementById("training-type-3").style.display="block";
-          document.getElementById("training-name-3").setAttribute("required","");
-          document.getElementById("duration-type-3").setAttribute("required","");
-          document.getElementById("price-type-3").setAttribute("required","");
-          MaxTrainingType();
-          return;
-        }
-        if(document.getElementById("training-type-4").style.display==""|| document.getElementById("training-type-4").style.display=="none"){
-          document.getElementById("training-type-4").style.display="block";
-          document.getElementById("training-name-4").setAttribute("required","");
-          document.getElementById("duration-type-4").setAttribute("required","");
-          document.getElementById("price-type-4").setAttribute("required","");
-          MaxTrainingType();
-          return;
-        }
-        return;
-      }
-      function MaxTrainingType()
-      {
-        if(document.getElementById("training-type-4").style.display=="block" && document.getElementById("training-type-3").style.display=="block" && document.getElementById("training-type-2").style.display=="block"){
-          
-          TrainingTypebt.style.display='none';
-        }
-      }
+                  <table class="v-datatable v-table theme--light">
+                    <thead>
+                      <tr>
+                        <th role="columnheader" scope="col" aria-label="training type: Not sorted." aria-sort="none"
+                          class="column text-xs-right">Training type</th>
+                        <th role="columnheader" scope="col" aria-label="price: Not sorted." aria-sort="none"
+                          class="column text-xs-right">Price </th>
+                        <th role="columnheader" scope="col" aria-label="duration: Not sorted." aria-sort="none"
+                          class="column text-xs-right">duration </th>
+                        <th role="columnheader" scope="col" aria-label=" : Not sorted." aria-sort="none"
+                          class="column text-xs-left"> </th>
+                        
+                      </tr>
+                      <tr class="v-datatable__progress">
+                        <th colspan="4" class="column"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% if(typeof user !="undefined" ) { %>
+                        <% user.trainingTypes.forEach(type=> { %>
+                          <tr>
+                            <form id="rowForm" method=POST action="/deleteTrainingType">
+                            <td nowrap="nowrap">
+                              <span class="bgColor"
+                                style="margin-top: -10px; background: rgb(234, 221, 255); border-color: rgb(151, 122, 205); color: rgb(97, 61, 164);"
+                                id =trainingName></span>
+                              <%= type.name %>
+                            </td>
+                            <td nowrap="nowrap" class="text-xs-right">
+                              <%= type.price %>
+                            </td>
+                            <td class="text-xs-right">
+                              <%= type.duration %>
+                            </td>
+                            <td nowrap="nowrap" class="text-xs-left">
+                              <button type="button"
+                                class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
+                                style="font-size: 22px;">
+                                <div class="v-btn__content"><i class="ion-edit">
+                                  </i>
+                                </div>
+                              </button>
+                              <button type="submit" 
+                                class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light error--text"
+                                style="font-size: 22px;" >
+                                <div class="v-btn__content">
+                                  <i class="ion-trash-a">
+                                  </i>
+                                </div>
+                              </button>
+                            </td>
+                          </form>
+                          </tr>
+                          <% }); %>
+                            <% } %>
+                              <tr>
+                                <td nowrap="nowrap"><span class="bgColor"
+                                    style="margin-top: -10px; background: rgb(234, 79, 79); border-color: rgb(95, 14, 14); color: rgb(255, 255, 255);"></span>
+                                  כושר
+                                </td>
+                                <td nowrap="nowrap" class="text-xs-right">קיקבוקסינג</td>
+                                <td class="text-xs-right">45</td>
+                                <td nowrap="nowrap" class="text-xs-left"><button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-edit"></i></div>
+                                  </button> <button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light error--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-trash-a"></i></div>
+                                  </button></td>
+                              </tr>
+                              <tr>
+                                <td nowrap="nowrap"><span class="bgColor"
+                                    style="margin-top: -10px; background: rgb(144, 115, 106); border-color: rgb(29, 20, 17); color: rgb(255, 255, 255);"></span>
+                                  כושר
+                                </td>
+                                <td nowrap="nowrap" class="text-xs-right">שריפת שומנים מדרגה </td>
+                                <td class="text-xs-right">45</td>
+                                <td nowrap="nowrap" class="text-xs-left"><button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-edit"></i></div>
+                                  </button> <button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light error--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-trash-a"></i></div>
+                                  </button></td>
+                              </tr>
+                              <tr>
+                                <td nowrap="nowrap"><span class="bgColor"
+                                    style="margin-top: -10px; background: rgb(255, 132, 51); border-color: rgb(128, 45, 0); color: rgb(255, 255, 255);"></span>
+                                  כושר
+                                </td>
+                                <td nowrap="nowrap" class="text-xs-right">סטרונג זומבה </td>
+                                <td class="text-xs-right">45</td>
+                                <td nowrap="nowrap" class="text-xs-left"><button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-edit"></i></div>
+                                  </button> <button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light error--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-trash-a"></i></div>
+                                  </button></td>
+                              </tr>
+                              <tr>
+                                <td nowrap="nowrap"><span class="bgColor"
+                                    style="margin-top: -10px; background: rgb(100, 78, 197); border-color: rgb(20, 11, 60); color: rgb(255, 255, 255);"></span>
+                                  כושר
+                                </td>
+                                <td nowrap="nowrap" class="text-xs-right">פילאטיס בונה עצם</td>
+                                <td class="text-xs-right">45</td>
+                                <td nowrap="nowrap" class="text-xs-left"><button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-edit"></i></div>
+                                  </button> <button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light error--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-trash-a"></i></div>
+                                  </button></td>
+                              </tr>
+                              <tr>
+                                <td nowrap="nowrap"><span class="bgColor"
+                                    style="margin-top: -10px; background: rgb(250, 215, 255); border-color: rgb(191, 115, 203); color: rgb(144, 59, 158);"></span>
+                                  כושר
+                                </td>
+                                <td nowrap="nowrap" class="text-xs-right">אימון אישי </td>
+                                <td class="text-xs-right">60</td>
+                                <td nowrap="nowrap" class="text-xs-left"><button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-edit"></i></div>
+                                  </button> <button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light error--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-trash-a"></i></div>
+                                  </button></td>
+                              </tr>
+                              <tr>
+                                <td nowrap="nowrap"><span class="bgColor"
+                                    style="margin-top: -10px; background: rgb(102, 233, 250); border-color: rgb(29, 155, 171); color: rgb(14, 76, 84);"></span>
+                                  כושר
+                                </td>
+                                <td nowrap="nowrap" class="text-xs-right">יוגה</td>
+                                <td class="text-xs-right">45</td>
+                                <td nowrap="nowrap" class="text-xs-left"><button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-edit"></i></div>
+                                  </button> <button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light error--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-trash-a"></i></div>
+                                  </button></td>
+                              </tr>
+                              <tr>
+                                <td nowrap="nowrap"><span class="bgColor"
+                                    style="margin-top: -10px; background: rgb(255, 230, 235); border-color: rgb(255, 103, 118); color: rgb(255, 1, 26);"></span>
+                                  כושר
+                                </td>
+                                <td nowrap="nowrap" class="text-xs-right">ריקודי בטן</td>
+                                <td class="text-xs-right">45</td>
+                                <td nowrap="nowrap" class="text-xs-left">
+                                  <button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-edit"></i></div>
+                                  </button> <button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light error--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-trash-a"></i></div>
+                                  </button>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td nowrap="nowrap"><span class="bgColor"
+                                    style="margin-top: -10px; background: rgb(255, 185, 25); border-color: rgb(153, 96, 0); color: rgb(51, 32, 0);"></span>
+                                  כושר
+                                </td>
+                                <td nowrap="nowrap" class="text-xs-right">פילאטיס מכשירים</td>
+                                <td class="text-xs-right">45</td>
+                                <td nowrap="nowrap" class="text-xs-left"><button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-edit"></i></div>
+                                  </button> <button type="button"
+                                    class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light error--text"
+                                    style="font-size: 22px;">
+                                    <div class="v-btn__content"><i class="ion-trash-a"></i></div>
+                                  </button></td>
+                              </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="6">
+                          <div class="text-xs-cent2er pa-2">
+                            <ul class="v-pagination theme--light">
+                              <li><button type="button"
+                                  class="v-pagination__navigation v-pagination__navigation--disabled"><i
+                                    aria-hidden="true"
+                                    class="v-icon material-icons theme--light">chevron_right</i></button>
+                              </li>
+                              <li><button type="button"
+                                  class="v-pagination__item v-pagination__item--active primary">1</button>
+                              </li>
+                              <li><button type="button"
+                                  class="v-pagination__navigation v-pagination__navigation--disabled"><i
+                                    aria-hidden="true"
+                                    class="v-icon material-icons theme--light">chevron_left</i></button>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="v-dialog v-dialog--persistent" style="max-width: 290px; display: none;">
+              <div class="v-card v-sheet theme--light">
+                <div class="v-card__title headline text-center pa-2 pt-3" style="display: flow-root;"><span>
+                    אישור פעולה
+                  </span>
+                </div>
+                <div class="v-card__text text-center pa-2">האם למחוק את האימון שנבחר ?</div>
+                <div class="v-card__actions text-center pa-3" style="display: block;"><button type="button"
+                    class="v-btn theme--light black" style="color: rgb(255, 255, 255);">
+                    <div class="v-btn__content">לא</div>
+                  </button>
+                   <button type="button" class="v-btn theme--light red" fl2at=""
+                    style="color: rgb(255, 255, 255);">
+                    <div class="v-btn__content">כן</div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div data-app="true" class="application application--is-rtl theme--light" id="app">
+              <div class="v-menu__content theme--light "
+                style="min-width: 0px; top: 12px; left: 0px; transform-origin: left top; z-index: 0; display: none;">
+                <div class="v-picker v-card v-picker--date repeatEndsMenuDatePicker theme--light" format="24hr">
+                  <div class="v-picker__body theme--light" style="width: 290px;">
+                    <div>
+                      <div class="v-date-picker-header theme--light"><button type="button"
+                          class="v-btn v-btn--icon theme--light">
+                          <div class="v-btn__content"><i aria-hidden="true"
+                              class="v-icon material-icons theme--light">chevron_right</i></div>
+                        </button>
+                        <div class="v-date-picker-header__value">
+                          <div class="secondary--text"><button type="button">מאי 2022</button></div>
+                        </div><button type="button" class="v-btn v-btn--icon theme--light">
+                          <div class="v-btn__content"><i aria-hidden="true"
+                              class="v-icon material-icons theme--light">chevron_left</i></div>
+                        </button>
+                      </div>
+                      <div class="v-date-picker-table v-date-picker-table--date theme--light">
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>א׳</th>
+                              <th>ב׳</th>
+                              <th>ג׳</th>
+                              <th>ד׳</th>
+                              <th>ה׳</th>
+                              <th>ו׳</th>
+                              <th>ש׳</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">1</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">2</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">3</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">4</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">5</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">6</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">7</div>
+                                </button></td>
+                            </tr>
+                            <tr>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">8</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">9</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">10</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">11</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">12</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">13</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">14</div>
+                                </button></td>
+                            </tr>
+                            <tr>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">15</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">16</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">17</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">18</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">19</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">20</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">21</div>
+                                </button></td>
+                            </tr>
+                            <tr>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">22</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">23</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">24</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">25</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">26</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">27</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">28</div>
+                                </button></td>
+                            </tr>
+                            <tr>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">29</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">30</div>
+                                </button></td>
+                              <td><button type="button" class="v-btn v-btn--flat v-btn--floating theme--light">
+                                  <div class="v-btn__content">31</div>
+                                </button></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="v-menu__content theme--light v-autocomplete__content"
+                style="max-height: 300px; min-width: 0px; top: 12px; left: 0px; transform-origin: left top; z-index: 0; display: none;">
+                <div class="v-select-list v-card theme--light">
+                  <div role="list" class="v-list theme--light">
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר 2 חזרות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר 3 חזרות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר 4 חזרות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem" class="primary--text"><a
+                        class="v-list__tile v-list__tile--link v-list__tile--active theme--light primary--text">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר 5 חזרות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר 6 חזרות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר 7 חזרות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר 8 חזרות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר 9 חזרות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר 10 חזרות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר 11 חזרות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר 12 חזרות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר 13 חזרות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר 14 חזרות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר 15 חזרות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר 20 חזרות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לאחר חצי שנה</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">לפי תאריך</div>
+                        </div>
+                      </a></div>
+                  </div>
+                </div>
+              </div>
+              <div class="v-menu__content theme--light "
+                style="max-height: 300px; min-width: 0px; top: 12px; left: 0px; transform-origin: left top; z-index: 0; display: none;">
+                <div class="v-select-list v-card theme--light">
+                  <div role="list" class="v-list theme--light">
+                    <div role="listitem" class="primary--text"><a
+                        class="v-list__tile v-list__tile--link v-list__tile--active theme--light primary--text">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">חד פעמית</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">יומית</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">שבועית</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">פעם בשבועיים</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">חודשית</div>
+                        </div>
+                      </a></div>
+                  </div>
+                </div>
+              </div>
+              <div class="v-menu__content theme--light "
+                style="max-height: 300px; min-width: 0px; top: 12px; left: 0px; transform-origin: left top; z-index: 0; display: none;">
+                <div class="v-select-list v-card theme--light">
+                  <div role="list" class="v-list theme--light">
+                    <div role="listitem" class="primary--text"><a
+                        class="v-list__tile v-list__tile--link v-list__tile--active theme--light primary--text">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">רגיל</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">אימון לייב</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">אימון וידאו</div>
+                        </div>
+                      </a></div>
+                  </div>
+                </div>
+              </div>
+              <div class="v-menu__content theme--light "
+                style="max-height: 300px; min-width: 0px; top: 12px; left: 0px; transform-origin: left top; z-index: 0; display: none;">
+                <div class="v-select-list v-card theme--light">
+                  <div role="list" class="v-list theme--light">
+                    <div disabled="disabled" role="listitem" class="v-list--disabled">
+                      <div class="v-list__tile v-list__tile--disabled theme--light">לא נמצאו תוצאות</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="v-menu__content theme--light "
+                style="max-height: 300px; min-width: 0px; top: 12px; left: 0px; transform-origin: left top; z-index: 0; display: none;">
+                <div class="v-select-list v-card theme--light">
+                  <div role="list" class="v-list theme--light">
+                    <div role="listitem" class="primary--text"><a
+                        class="v-list__tile v-list__tile--link v-list__tile--active theme--light primary--text">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">5 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">10 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">15 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">20 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">25 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">30 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">35 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">40 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">45 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">50 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">55 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">שעה</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">שעה ו 5 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">שעה ו 10 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">שעה ו 15 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">שעה ו 20 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">שעה ו 25 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">שעה ו 30 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">שעה ו 35 דקות</div>
+                        </div>
+                      </a></div>
+                    <div role="listitem"><a class="v-list__tile v-list__tile--link theme--light">
+                        <div class="v-list__tile__content">
+                          <div class="v-list__tile__title">שעה ו 40 דקות</div>
+                        </div>
+                      </a></div>
+                  </div>
+                </div>
+              </div>
 
-      function delTrainingType(trainingTypeId, nameId,durationId,priceId){
-        
-        document.getElementById(nameId).value="";
-        document.getElementById(durationId).value="";
-        document.getElementById(priceId).value="";
-        document.getElementById(trainingTypeId).style.display='none';
+  </main>
+  <div class="v-dialog__container" style="display: block;"></div>
+  <div class="v-dialog__container" style="display: block;"></div>
 
-        document.getElementById(nameId).removeAttribute("required");
-        document.getElementById(durationId).removeAttribute("required");
-        document.getElementById(priceId).removeAttribute("required");
-        
-        TrainingTypebt.style.display='block';
-      }
+  <script>
+   function deleteType(){
 
-    </script>
-  </body>
+   }
+  </script>
+
+  <script src="https://localhost:12719/browser-sync/browser-sync-client.js?v=2.26.7" async=""></script>
+</body>
+
 </html>

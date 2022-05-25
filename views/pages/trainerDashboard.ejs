@@ -95,25 +95,22 @@
               </div>
             </div>
             <% if(typeof user != "undefined" ) { %>
-
-              
+              <% if(typeof user.trainings != "undefined" ) { %>
+                <% user.trainings.forEach(t => { %>
+  
               <div class="trainer-profile">
                     <div class="trainer-info">
-                      
                       <ul class="list-group">
-                        <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Training Type:</strong> &nbsp; <%= user.trainings[0].trainingType %></li>
-                        <li class="list-item"><strong class="text-dark">Date:</strong> &nbsp; <%= user.trainings[0].trainingDate %></li>
-                        <li class="list-item"><strong class="text-dark">Start Hour:</strong> &nbsp; <%= user.trainings[0].startHour %></li>
-                        <li class="list-item"><strong class="text-dark">Duration:</strong> &nbsp; <%= user.trainings[0].duration %></li>
-                        <li class="list-item"><strong class="text-dark">Price:</strong> &nbsp; <%= user.trainings[0].price %></li>
-
-                        
-                       
+                        <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Training Type:</strong> &nbsp; <%= t.name %></li>
+                        <li class="list-item"><strong class="text-dark">Date:</strong> &nbsp; <%= t.trainingDate %></li>
+                        <li class="list-item"><strong class="text-dark">Start Hour:</strong> &nbsp; <%= t.startHour %></li>
+                        <li class="list-item"><strong class="text-dark">Duration:</strong> &nbsp; <%= t.duration %></li>
+                        <li class="list-item"><strong class="text-dark">Price:</strong> &nbsp; <%= t.price %></li>
                       </ul>
-                  <!-- <button class="btn">Book </button> -->
                 </div>
               </div>
-              
+              <% }); %>
+              <% } %> 
               <% } %> 
             <div class="chat-box">
               

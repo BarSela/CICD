@@ -26,7 +26,16 @@ const traineeUser = new mongoose.Schema(
       type: String,
       required: true,
     },
-    
+    trainings:[
+      {
+        trainingType:String,
+        trainingDate: String,
+        startHour:String,
+        pass: Boolean,
+        duration:Number,
+        price:Number,
+      },]
+
 });    
 
 module.exports = mongoose.model("Trainee", traineeUser);

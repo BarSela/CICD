@@ -698,18 +698,19 @@ module.exports = {
   
       },
       deleteTrainingType: async(userEmail,typeID) => {
-      
+        let trainingName = req.body.trainingName;
+        console.log(trainingName);
         let types;
         Trainer.findOne({email:userEmail}).then((trainer) => {
             if (!trainer) {
                 return false;    
             }
             else{
-              if(trainer.trainingTypes){
+              if(trainer.trainingTypes != null){
                 types = trainer.trainingTypes;
-                for( var i = 0; i < trainings.length; i++){ 
+                for( var i = 0; i < types.length; i++){ 
                   
-                  if(types[i]._id.toString() == trainingID)
+                  if(types[i].name == trainingName)
                   { 
                     types.splice(i, 1); 
                   }

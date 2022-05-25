@@ -58,35 +58,28 @@ app.get("/", (req, res) => {
   res.render("pages/homePage", { userEmail: userEmail });
 });
 app.get("/QNA",async (req, res) => {
-  const mytrainer = await Trainer.findOneAndUpdate(
-    { email: "lihi@gmail.com" },
+  
+  const mytrainee = await Trainee.findOneAndUpdate(
+    { email: "bbb@gmail.com" },
     {
       $set: {
-
      
       trainings:[{
-        trainingType:"627b5b7068494c494be48d7f",
-        trainingDate: new Date().getDate(),
-        available: true,
+        trainingType:"yoga",
+        trainingDate: new Date().getDate().toString(),
+        startHour:"15:00",
+        pass: false,
+        duration:60,
+        price:100,
 
       },
-      {
-        trainingType:"627b5b7068494c494be48d7e",
-        trainingDate: new Date().getDate(),
-        available: true,
-
-      }]
+      ]
         
       },
     }
   );
-  let t ={
-    name:"Zuzuzu",
-    duration:50,
-    price:60
-
-  }
-    console.log(addTrainingType("newTrainer@gmail.com",t));
+  
+    console.log(addTrainingType("newTrainer@gmail.com"));
   res.render("pages/QNA", { userEmail: userEmail });
 });
 
@@ -263,6 +256,24 @@ app.get("/findTrainer", (req, res) => {
     res.render("pages/findTrainer", { userEmail: userEmail, trainers });
   });
 });
+app.post("/selectTrainer",async (req, res) => {
+  let email = req.body.email;
+  let trainings;
+  console.log(email);
+  let trainer = await Trainer.findOne({ email: email });
+  if(trainer != null){
+    
+    // trainings = trainer.trainings;
+    res.render("pages/viewSchedual", { userEmail: email, user:userObj,trainer:trainer });
+  }
+  else{
+    res.render("pages/findTrainer", { userEmail:userEmail, user:userObj });
+
+  }
+  
+
+});
+
 app.post("/searchTrainer", (req, res) => {
   let traineeInput = req.body.traineeInput;
   let filter = req.body.filterInput;
@@ -392,12 +403,16 @@ app.get("/calendar", (req, res) => {
       res.render("pages/calendar", {
         userEmail: userEmail,
         user: userObj,
-        types,
       });
     
   });
   
-
+  app.get("/viewSchedual", (req, res) => {
+    let email = req.body.email;
+    console.log("hiii");
+    res.render("pages/viewSchedual", { userEmail: email, user:userObj,trainer:"lll" });
+  
+});
 
 app.get("/homePage", (req, res) => {
   res.render("pages/homePage", { userEmail: userEmail });
@@ -425,14 +440,56 @@ app.get("/logout", (req, res) => {
   userEmail = "";
   res.render("pages/homePage", { userEmail: userEmail });
 });
-
+app.post("/editTrainingType", );
 app.post("/login", login);
 app.post("/signUp", signup);
 app.post("/editPersonalprofile", editPersonalprofile);
 app.post("/createBusinessP", createBusinessP);
 app.post("/editBusinessP", editBusinessP);
 app.post("/editPassword", editPassword);
-
+app.post("/editPassword", editPassword);
+app.post("/TrainingReg",async (req, res) => {
+    
+    let date = req.body.date;
+    let time = req.body.time;
+    let trainingName = req.body.type;
+    let duration = 80;
+    let price = 60;
+    let trainee;
+    console.log(date.type);
+    console.log(time.type);
+    console.log(trainingName);
+   
+        console.log("isTrainee");
+        trainee = await Trainee.findOneAndUpdate(
+          { email:
+            "bbb@gmail.com" },
+          {
+            $set: {
+              
+            trainings:[{
+              trainingType:trainingName,
+              trainingDate: date,
+              startHour: time,
+              pass: false,
+              duration:duration,
+              price:price
+      
+            }],
+            
+            },
+          }
+          
+        );
+      
+    
+    res.render("pages/traineeDashboard", {
+      userEmail: userEmail,
+      user: userObj,
+    });
+    
+  
+  });
 app.post("/newTraining",async (req, res) => {
   let traineeInput = req.body.Type;
   let date = req.body.date;
@@ -482,4 +539,4 @@ app.post("/newTraining",async (req, res) => {
 
 });
 app.post("/deleteAccount", deleteAccount);
-app.post("/editTrainingTypes", editTrainingTypes);
+app.post("/deleteTrainingType", deleteTrainingType);
