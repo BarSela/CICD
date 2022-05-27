@@ -3,10 +3,9 @@ const Trainee = require("../model/trainee");
 const Trainer = require("../model/trainer");
 const User = require("../model/user");
 
-
-
 var userEmail = "";
 var userType = "";
+
 module.exports = {
   signup: async (req, res, next) => {
     let status = "false";
@@ -189,83 +188,83 @@ module.exports = {
     let russian = req.body.russian;
     let arabic = req.body.arabic;
 
-    let typeName1 = req.body.typeName1;
-    let typeName2 = req.body.typeName2;
-    let typeName3 = req.body.typeName3;
-    let typeName4 = req.body.typeName4;
+    // let typeName1 = req.body.typeName1;
+    // let typeName2 = req.body.typeName2;
+    // let typeName3 = req.body.typeName3;
+    // let typeName4 = req.body.typeName4;
 
-    let typeDuration1 = parseInt(req.body.typeDuration1);
-    let typeDuration2 = parseInt(req.body.typeDuration2);
-    let typeDuration3 = parseInt(req.body.typeDuration3);
-    let typeDuration4 = parseInt(req.body.typeDuration4);
+    // let typeDuration1 = parseInt(req.body.typeDuration1);
+    // let typeDuration2 = parseInt(req.body.typeDuration2);
+    // let typeDuration3 = parseInt(req.body.typeDuration3);
+    // let typeDuration4 = parseInt(req.body.typeDuration4);
 
-    let typePrice1 = parseInt(req.body.typePrice1);
-    let typePrice2 = parseInt(req.body.typePrice2);
-    let typePrice3 = parseInt(req.body.typePrice3);
-    let typePrice4 = parseInt(req.body.typePrice4);
+    // let typePrice1 = parseInt(req.body.typePrice1);
+    // let typePrice2 = parseInt(req.body.typePrice2);
+    // let typePrice3 = parseInt(req.body.typePrice3);
+    // let typePrice4 = parseInt(req.body.typePrice4);
 
-    let typeId1 = "";
-    let typeId2 = "";
-    let typeId3 = "";
-    let typeId4 = "";
-    let trainingType1;
-    let trainingType2;
-    let trainingType3;
-    let trainingType4;
-    let trainer;
-     trainingType1 ={
-      name: typeName1.toString(),
-      duration: typeDuration1,
-      price: typePrice1,
-    }
+    // let typeId1 = "";
+    // let typeId2 = "";
+    // let typeId3 = "";
+    // let typeId4 = "";
+    // let trainingType1;
+    // let trainingType2;
+    // let trainingType3;
+    // let trainingType4;
+    // let trainer;
+    //  trainingType1 ={
+    //   name: typeName1.toString(),
+    //   duration: typeDuration1,
+    //   price: typePrice1,
+    // }
 
-    console.log("trainingtype:" + trainingType1);
-    
-    if (typeName2) {
-        trainingType2 ={
-        name: typeName2.toString(),
-        duration: typeDuration2,
-        price: typePrice2,
-      }
-      
-    }
-    else{
-      trainingType2 ={
-        name:"empty"
-      }
-    }   
-    console.log("trainingtype:" + trainingType2);
-      
-    if (typeName3) {
-      trainingType3 ={
-        name: typeName3.toString(),
-        duration: typeDuration3,
-        price: typePrice3,
-      }
-      
-    }
-    else{
-      trainingType3 ={
-        name:"empty"
-      }
-    }
-    if (typeName4) {
-      trainingType4 ={
-        name: typeName4.toString(),
-        duration: typeDuration4,
-        price: typePrice4,
-      }
-    }
-    else{
-      trainingType4 ={
-        name:"empty"
-      }
-    }
-    console.log(trainingType4);
-    console.log(typeId1);
-    console.log(typeId2);
-    console.log(typeId3);
-    console.log(typeId4);
+    // console.log("trainingtype:" + trainingType1);
+
+    // if (typeName2) {
+    //     trainingType2 ={
+    //     name: typeName2.toString(),
+    //     duration: typeDuration2,
+    //     price: typePrice2,
+    //   }
+
+    // }
+    // else{
+    //   trainingType2 ={
+    //     name:"empty"
+    //   }
+    // }
+    // console.log("trainingtype:" + trainingType2);
+
+    // if (typeName3) {
+    //   trainingType3 ={
+    //     name: typeName3.toString(),
+    //     duration: typeDuration3,
+    //     price: typePrice3,
+    //   }
+
+    // }
+    // else{
+    //   trainingType3 ={
+    //     name:"empty"
+    //   }
+    // }
+    // if (typeName4) {
+    //   trainingType4 ={
+    //     name: typeName4.toString(),
+    //     duration: typeDuration4,
+    //     price: typePrice4,
+    //   }
+    // }
+    // else{
+    //   trainingType4 ={
+    //     name:"empty"
+    //   }
+    // }
+    // console.log(trainingType4);
+    // console.log(typeId1);
+    // console.log(typeId2);
+    // console.log(typeId3);
+    // console.log(typeId4);
 
     trainer = await Trainer.findOneAndUpdate(
       { email: userEmail },
@@ -283,23 +282,19 @@ module.exports = {
           spanish: spanish,
           russian: russian,
           arabic: arabic,
-          trainingTypes:[trainingType1,trainingType2,trainingType3,trainingType4]
-    
-          },
-          
+          // trainingTypes:[trainingType1,trainingType2,trainingType3,trainingType4]
         },
-      
+      }
     );
 
     if (trainer) {
       console.log(trainer);
       console.log("1");
-      
-      return res.redirect("/businessProfile");
+
+      return res.redirect("/createTrainingTypes");
+    } else {
+      res.redirect("/");
     }
-      else{
-        res.redirect("/");
-      }
   },
   editBusinessP: async (req, res, next) => {
     let businassName = req.body.BusinessName;
@@ -428,9 +423,14 @@ module.exports = {
     }
   },
   editPassword: async (req, res) => {
+    //param
     let currPassword = req.body.currPassword;
     let newPassword = req.body.newPassword;
+
+    //login status
     let status = "false";
+
+    //--find user--
     User.find({ email: userEmail }).then((users) => {
       //If the user list is empty
       if (users.length === 0) {
@@ -439,78 +439,99 @@ module.exports = {
           user: userEmail,
         });
       }
-
       const [user] = users;
+
       //Checking the password
       bcrypt.compare(currPassword, user.password, async (error, result) => {
         if (error) {
+          //wrong password
           return res.render("pages/editPersonalProfile", {
             loginStatus: loginStatus,
             user: userEmail,
           });
         }
         if (result) {
+          //good password
           if (user.userType == "trainer") {
-            const userU = await User.findOneAndUpdate(
-              { email: userEmail },
-              {
-                $set: {
-                  password: newPassword,
-                },
+            //--if trainer
+            bcrypt.hash(newPassword, 10, async (error, hash) => {
+              if (error) {
+                //bad bcrypt
+                return res.status(500).json({
+                  error,
+                });
               }
-            );
-            if (userU) {
-              const trainer = await Trainer.findOneAndUpdate(
+              const userU = await User.findOneAndUpdate(
                 { email: userEmail },
                 {
                   $set: {
-                    password: newPassword,
+                    password: hash,
                   },
                 }
               );
-              if (trainer) {
-                return res.redirect("/personalProfile");
-              } else {
-                console("Error to find trainer");
+              if (userU) {
+                //success
+                const trainer = await Trainer.findOneAndUpdate(
+                  { email: userEmail },
+                  {
+                    $set: {
+                      password: hash,
+                    },
+                  }
+                );
+                if (trainer) {
+                  return res.redirect("/personalProfile");
+                } else {
+                  console("Error to find trainer");
+                  return res.render("/");
+                }
+              } //error! traainer not found
+              else {
+                console("Error to find user");
                 return res.render("/");
               }
-            } else {
-              console("Error to find user");
-              return res.render("/");
-            }
+            });
           } else if (user.userType == "trainee") {
-            console.log("okkkkkkkkkkkk trainer");
-            const userU = await User.findOneAndUpdate(
-              { email: userEmail },
-              {
-                $set: {
-                  password: newPassword,
-                },
+            //----if trainee
+            bcrypt.hash(newPassword, 10, async (error, hash) => {
+              if (error) {
+                //bad bcrypt
+                return res.status(500).json({
+                  error,
+                });
               }
-            );
-            console.log("update1");
-            if (userU) {
-              const trainee = await Trainee.findOneAndUpdate(
+              const userU = await User.findOneAndUpdate(
                 { email: userEmail },
                 {
                   $set: {
-                    password: newPassword,
+                    password: hash,
                   },
                 }
               );
-              console.log("update2");
-              if (trainee) {
-                return res.redirect("/personalProfile");
+              console.log("update1");
+              if (userU) {
+                const trainee = await Trainee.findOneAndUpdate(
+                  { email: userEmail },
+                  {
+                    $set: {
+                      password: hash,
+                    },
+                  }
+                );
+                if (trainee) {
+                  return res.redirect("/personalProfile");
+                } else {
+                  console("Error to find trainee");
+                  res.render("/");
+                }
               } else {
-                console("Error to find trainee");
+                console("Error to find user");
                 res.render("/");
               }
-            } else {
-              console("Error to find user");
-              res.render("/");
-            }
+            });
           }
         }
+
         //If the password is incorrect
         return res.render("pages/editPersonalProfile", {
           status: status,
@@ -544,213 +565,180 @@ module.exports = {
   },
 
   editTrainingTypes: async (req, res) => {
-    let typeName1 = req.body.typeName1;
-    let typeName2 = req.body.typeName2;
-    let typeName3 = req.body.typeName3;
-    let typeName4 = req.body.typeName4;
+    let typeName = req.body.trainingTypeName;
+    let newTypeName = req.body.newTrainingTypeName;
+    let typeDuration = parseInt(req.body.trainingTypeDuration);
+    let typePrice = parseInt(req.body.trainingTypePrice);
+    let action = req.body.action;
+    let page = req.body.page;
 
-    let typeDuration1 = parseInt(req.body.typeDuration1);
-    let typeDuration2 = parseInt(req.body.typeDuration2);
-    let typeDuration3 = parseInt(req.body.typeDuration3);
-    let typeDuration4 = parseInt(req.body.typeDuration4);
-
-    let typePrice1 = parseInt(req.body.typePrice1);
-    let typePrice2 = parseInt(req.body.typePrice2);
-    let typePrice3 = parseInt(req.body.typePrice3);
-    let typePrice4 = parseInt(req.body.typePrice4);
-
-    let trainingType1;
-    let trainingType2;
-    let trainingType3;
-    let trainingType4;
-    let trainer;
-    const currtrainer = await Trainer.findOne({ email: userEmail });
-
-    trainingType1 = {
-      name: typeName1.toString(),
-      duration: typeDuration1,
-      price: typePrice1,
-    };
-    currtrainer = await Trainer.findOneAndUpdate(
-      { email: userEmail },
-      {
-        $set: {
-          trainingTypes: [trainingType1],
-        },
-      }
-    );
-    console.log("trainingtype:" + trainingType1);
-
-    if (typeName2) {
-      trainingType2 = {
-        name: typeName2.toString(),
-        duration: typeDuration2,
-        price: typePrice2,
-      };
-      currtrainer = await Trainer.findOneAndUpdate(
-        { email: userEmail },
-        {
-          $set: {
-            trainingTypes: [trainingType2],
-          },
+    if (action == "edit") {
+      let types;
+      Trainer.findOne({ email: userEmail }).then((trainer) => {
+        if (!trainer) {
+          return false;
+        } else {
+          if (trainer.trainingTypes != null) {
+            types = trainer.trainingTypes;
+            for (let i = 0; i < types.length; i++) {
+              if (types[i].name == typeName) {
+                types[i].name = newTypeName;
+                types[i].price = typeDuration;
+                types[i].duration = typePrice;
+              }
+            }
+          }
         }
-      );
-    }
-    console.log("trainingtype:" + trainingType2);
-
-    if (typeName3) {
-      trainingType3 = {
-        name: typeName3.toString(),
-        duration: typeDuration3,
-        price: typePrice3,
-      };
-      currtrainer = await Trainer.findOneAndUpdate(
-        { email: userEmail },
-        {
-          $set: {
-            trainingTypes: [trainingType3],
-          },
+        Trainer.updateOne({ _id: trainer._id }, { trainingTypes: types })
+          .then(() => {
+            if (page == "edit") {
+              return res.redirect("/editTrainingTypes");
+            } else {
+              return res.redirect("/createTrainingTypes");
+            }
+          })
+          .catch((error) => {
+            return res.redirect("/businessProfile");
+          });
+      });
+    } //delete
+    else {
+      let types;
+      Trainer.findOne({ email: userEmail }).then((trainer) => {
+        if (!trainer) {
+          return false;
+        } else {
+          if (trainer.trainingTypes != null) {
+            types = trainer.trainingTypes;
+            for (let i = 0; i < types.length; i++) {
+              if (types[i].name == typeName) {
+                types.splice(i, 1);
+              }
+            }
+          }
         }
-      );
+        Trainer.updateOne({ _id: trainer._id }, { trainingTypes: types })
+          .then(() => {
+            console.log("true");
+            if (page == "edit") {
+              return res.redirect("/editTrainingTypes");
+            } else {
+              return res.redirect("/createTrainingTypes");
+            }
+          })
+          .catch((error) => {
+            console.log("false");
+            return res.redirect("/businessProfile");
+          });
+      });
     }
-    if (typeName4) {
-      trainingType4 = {
-        name: typeName4.toString(),
-        duration: typeDuration4,
-        price: typePrice4,
-      };
-      currtrainer = await Trainer.findOneAndUpdate(
-        { email: userEmail },
-        {
-          $set: {
-            trainingTypes: [trainingType4],
-          },
-        }
-      );
-    }
-    console.log("111");
-    return res.redirect("/businessProfile");
   },
   getAllTrainers: () => {
-    Trainer.find().then((trainers) => {
+    Trainer.find()
+      .then((trainers) => {
         return trainers;
-    }).catch(error => {
+      })
+      .catch((error) => {
         return null;
-        
-    });
+      });
   },
   getAllTrainings: (userEmail) => {
-      Trainer.findOne({email:userEmail}).then((trainer) => {
-          return trainer.trainings;
-      }).catch(error => {
-          return null;
-          
+    Trainer.findOne({ email: userEmail })
+      .then((trainer) => {
+        return trainer.trainings;
+      })
+      .catch((error) => {
+        return null;
       });
-    },
+  },
   getAllTrainingTypes: (userEmail) => {
-      Trainer.findOne({email:userEmail}).then((trainer) => {
-          return trainer.trainingTypes;
-      }).catch(error => {
-          return null;
-          
+    Trainer.findOne({ email: userEmail })
+      .then((trainer) => {
+        return trainer.trainingTypes;
+      })
+      .catch((error) => {
+        return null;
       });
-    },
-  addTraining:async(userEmail,training) => {
+  },
+  addTraining: async (userEmail, training) => {
     let trainings;
-      Trainer.findOne({email:userEmail}).then((trainer) => {
-          if (!trainer) {
-              return false;    
-          }
-          else{
-            if(trainer.trainings){
-              trainings = trainer.trainings;
-              trainings[trainings.length] = training;
-              }
-            
-          }
-          Trainer.updateOne({ _id: trainer._id }, {trainings:trainings}).then(() => {
-            return true;
-        }).catch(error => {
-            return false;
-            }); 
-    })   
+    Trainer.findOne({ email: userEmail }).then((trainer) => {
+      if (!trainer) {
+        return false;
+      } else {
+        if (trainer.trainings) {
+          trainings = trainer.trainings;
+          trainings[trainings.length] = training;
+        }
+      }
+      Trainer.updateOne({ _id: trainer._id }, { trainings: trainings })
+        .then(() => {
+          return true;
+        })
+        .catch((error) => {
+          return false;
+        });
+    });
+  },
+  addTrainingType: async (req, res) => {
+    let newTrainingTypeName = req.body.trainingTypeName;
+    let newTrainingTypeDuration = req.body.trainingTypeDuration;
+    let newTrainingTypePrice = req.body.trainingTypePrice;
+    let page = req.body.page;
+    let types;
 
-    },
-    addTrainingType:async(userEmail,type) => {
-      let types;
-        Trainer.findOne({email:userEmail}).then((trainer) => {
-            if (!trainer) {
-                return false;    
-            }
-            else{
-              if(trainer.trainingTypes){
-                types = trainer.trainingTypes;
-                types[types.length] = type;
-                }
-              
-            }
-            Trainer.updateOne({ _id: trainer._id }, {trainingTypes:types}).then(() => {
-              return true;
-          }).catch(error => {
-              return false;
-              }); 
-      })   
-  
-      },
-      deleteTrainingType: async(userEmail,typeID) => {
-        let trainingName = req.body.trainingName;
-        console.log(trainingName);
-        let types;
-        Trainer.findOne({email:userEmail}).then((trainer) => {
-            if (!trainer) {
-                return false;    
-            }
-            else{
-              if(trainer.trainingTypes != null){
-                types = trainer.trainingTypes;
-                for( var i = 0; i < types.length; i++){ 
-                  
-                  if(types[i].name == trainingName)
-                  { 
-                    types.splice(i, 1); 
-                  }
-                
-                }
-              } 
-            }
-            Trainer.updateOne({ _id: trainer._id }, {trainingTypes:types}).then(() => {
-              return true;
-          }).catch(error => {
-              return false;
-              }); 
-      })   
-      },
-    deleteTraining: async(userEmail,trainingID) => {
-      
-      let trainings;
-      Trainer.findOne({email:userEmail}).then((trainer) => {
-          if (!trainer) {
-              return false;    
+    let trainingType = {
+      name: newTrainingTypeName.toString(),
+      duration: newTrainingTypeDuration,
+      price: newTrainingTypePrice,
+    };
+
+    Trainer.findOne({ email: userEmail }).then((trainer) => {
+      if (!trainer) {
+        return false;
+      } else {
+        if (trainer.trainingTypes != null) {
+          types = trainer.trainingTypes;
+          types.push(trainingType);
+        }
+      }
+      Trainer.updateOne({ _id: trainer._id }, { trainingTypes: types })
+        .then(() => {
+          if (page == "edit") {
+            return res.redirect("/editTrainingTypes");
+          } else {
+            return res.redirect("/createTrainingTypes");
           }
-          else{
-            if(trainer.trainings){
-              trainings = trainer.trainings;
-              for( var i = 0; i < trainings.length; i++){ 
-                
-                if(trainings[i]._id.toString() == trainingID)
-                { 
-                  trainings.splice(i, 1); 
-                }
-              
-              }
-            } 
+        })
+        .catch((error) => {
+          console.log(error);
+          return res.redirect("/businessProfile");
+        });
+    });
+  },
+
+  deleteTraining: async (userEmail, trainingID) => {
+    let trainings;
+    Trainer.findOne({ email: userEmail }).then((trainer) => {
+      if (!trainer) {
+        return false;
+      } else {
+        if (trainer.trainings) {
+          trainings = trainer.trainings;
+          for (var i = 0; i < trainings.length; i++) {
+            if (trainings[i]._id.toString() == trainingID) {
+              trainings.splice(i, 1);
+            }
           }
-          Trainer.updateOne({ _id: trainer._id }, {trainings:trainings}).then(() => {
-            return true;
-        }).catch(error => {
-            return false;
-            }); 
-    })   
-    },
- 
+        }
+      }
+      Trainer.updateOne({ _id: trainer._id }, { trainings: trainings })
+        .then(() => {
+          return true;
+        })
+        .catch((error) => {
+          return false;
+        });
+    });
+  },
 };

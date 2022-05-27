@@ -126,7 +126,7 @@
 
                               <!-- >Training Types section -->
 
-                              <label class="w3-text-grey" id="Training-Types"><b>Training Types</br></label>
+                              <!-- <label class="w3-text-grey" id="Training-Types"><b>Training Types</br></label>
                                 <label class="w3-text-grey"><br>Please enter training types (at least 1) </b></label>
                                 <label class="w3-text-grey"><br>To add more then one click'+' </br></label>
                               <label class="w3-text-teal"><br> Name of Training type:</b></label>
@@ -165,7 +165,7 @@
                                 </div>
                               <b></br>
                               <button class="w3-button w3-circle w3-teal" type="button" style="margin-left: 10cm;" id="addTrainingTypebt" onclick="addTrainingType()" >+</button>
-                              
+                               -->
 
                               
                     <p>
@@ -211,84 +211,84 @@
     
 
       
-      //training type1
-      var trainingType1=document.getElementById("training-name-1");
-      var duration1=document.getElementById("duration-type-1");
-      var price1=document.getElementById("price-type-1");
+      // //training type1
+      // var trainingType1=document.getElementById("training-name-1");
+      // var duration1=document.getElementById("duration-type-1");
+      // var price1=document.getElementById("price-type-1");
       
         
-      //training type2
-      var trainingTypeName2=document.getElementById("training-name-2");
-      var duration2=document.getElementById("duration-type-2");
-      var price2=document.getElementById("price-type-2");
+      // //training type2
+      // var trainingTypeName2=document.getElementById("training-name-2");
+      // var duration2=document.getElementById("duration-type-2");
+      // var price2=document.getElementById("price-type-2");
       
       
-      //training type3
-      var trainingTypeName3=document.getElementById("training-name-3");
-      var duration3=document.getElementById("duration-type-3");
-      var price3=document.getElementById("price-type-3");
+      // //training type3
+      // var trainingTypeName3=document.getElementById("training-name-3");
+      // var duration3=document.getElementById("duration-type-3");
+      // var price3=document.getElementById("price-type-3");
       
       
-      //training type4
-      var trainingTypeName4=document.getElementById("training-name-4");
-      var duration4=document.getElementById("duration-type-4");
-      var price4=document.getElementById("price-type-4");
+      // //training type4
+      // var trainingTypeName4=document.getElementById("training-name-4");
+      // var duration4=document.getElementById("duration-type-4");
+      // var price4=document.getElementById("price-type-4");
       
-      //plus to add training type button
-      var TrainingTypebt=document.getElementById("addTrainingTypebt");
-      //add or remove training type functions
-      function addTrainingType(){
+      // //plus to add training type button
+      // var TrainingTypebt=document.getElementById("addTrainingTypebt");
+      // //add or remove training type functions
+      // function addTrainingType(){
         
-        if(document.getElementById("training-type-2").style.display=="" || document.getElementById("training-type-2").style.display=="none")
-        {
-          document.getElementById("training-type-2").style.display="block";
-          document.getElementById("training-name-2").setAttribute("required","");
-          document.getElementById("duration-type-2").setAttribute("required","");
-          document.getElementById("price-type-2").setAttribute("required","");
+      //   if(document.getElementById("training-type-2").style.display=="" || document.getElementById("training-type-2").style.display=="none")
+      //   {
+      //     document.getElementById("training-type-2").style.display="block";
+      //     document.getElementById("training-name-2").setAttribute("required","");
+      //     document.getElementById("duration-type-2").setAttribute("required","");
+      //     document.getElementById("price-type-2").setAttribute("required","");
 
-          MaxTrainingType();
+      //     MaxTrainingType();
           
-          return;
-        } 
-        if(document.getElementById("training-type-3").style.display==""|| document.getElementById("training-type-3").style.display=="none"){
-          document.getElementById("training-type-3").style.display="block";
-          document.getElementById("training-name-3").setAttribute("required","");
-          document.getElementById("duration-type-3").setAttribute("required","");
-          document.getElementById("price-type-3").setAttribute("required","");
-          MaxTrainingType();
-          return;
-        }
-        if(document.getElementById("training-type-4").style.display==""|| document.getElementById("training-type-4").style.display=="none"){
-          document.getElementById("training-type-4").style.display="block";
-          document.getElementById("training-name-4").setAttribute("required","");
-          document.getElementById("duration-type-4").setAttribute("required","");
-          document.getElementById("price-type-4").setAttribute("required","");
-          MaxTrainingType();
-          return;
-        }
-        return;
-      }
-      function MaxTrainingType()
-      {
-        if(document.getElementById("training-type-4").style.display=="block" && document.getElementById("training-type-3").style.display=="block" && document.getElementById("training-type-2").style.display=="block"){
+      //     return;
+      //   } 
+      //   if(document.getElementById("training-type-3").style.display==""|| document.getElementById("training-type-3").style.display=="none"){
+      //     document.getElementById("training-type-3").style.display="block";
+      //     document.getElementById("training-name-3").setAttribute("required","");
+      //     document.getElementById("duration-type-3").setAttribute("required","");
+      //     document.getElementById("price-type-3").setAttribute("required","");
+      //     MaxTrainingType();
+      //     return;
+      //   }
+      //   if(document.getElementById("training-type-4").style.display==""|| document.getElementById("training-type-4").style.display=="none"){
+      //     document.getElementById("training-type-4").style.display="block";
+      //     document.getElementById("training-name-4").setAttribute("required","");
+      //     document.getElementById("duration-type-4").setAttribute("required","");
+      //     document.getElementById("price-type-4").setAttribute("required","");
+      //     MaxTrainingType();
+      //     return;
+      //   }
+      //   return;
+      // }
+      // function MaxTrainingType()
+      // {
+      //   if(document.getElementById("training-type-4").style.display=="block" && document.getElementById("training-type-3").style.display=="block" && document.getElementById("training-type-2").style.display=="block"){
           
-          TrainingTypebt.style.display='none';
-        }
-      }
+      //     TrainingTypebt.style.display='none';
+      //   }
+      // }
 
-      function delTrainingType(trainingTypeId, nameId,durationId,priceId){
+      // function delTrainingType(trainingTypeId, nameId,durationId,priceId){
         
-        document.getElementById(nameId).value="";
-        document.getElementById(durationId).value="";
-        document.getElementById(priceId).value="";
-        document.getElementById(trainingTypeId).style.display='none';
+      //   document.getElementById(nameId).value="";
+      //   document.getElementById(durationId).value="";
+      //   document.getElementById(priceId).value="";
+      //   document.getElementById(trainingTypeId).style.display='none';
 
-        document.getElementById(nameId).removeAttribute("required");
-        document.getElementById(durationId).removeAttribute("required");
-        document.getElementById(priceId).removeAttribute("required");
+      //   document.getElementById(nameId).removeAttribute("required");
+      //   document.getElementById(durationId).removeAttribute("required");
+      //   document.getElementById(priceId).removeAttribute("required");
         
-        TrainingTypebt.style.display='block';
-      }
+      //   TrainingTypebt.style.display='block';
+      // }
       function onlyLetters(str) {
         return /^[a-zA-Z]+$/.test(str);
       }

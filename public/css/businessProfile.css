@@ -67,7 +67,8 @@ main #name {
 main #schedule-bt {
   font-family: "Roboto", sans-serif;
   width: 5cm;
-  margin-left: 100px;
+  margin-top: 7px;
+  margin-left:60px;
 }
 main #delete-acc-bt {
   font-family: "Roboto", sans-serif;
@@ -77,8 +78,8 @@ main #delete-acc-bt {
 
 main #edit-profile-bt {
   font-family: "Roboto", sans-serif;
-  width: 3.5cm;
-  margin-left: 35px;
+  width: 3.2cm;
+  margin-left: 20px;
   margin-top: 10px;
 }
 main #edit-training-bt {

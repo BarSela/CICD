@@ -70,7 +70,8 @@
                                 style="margin-top: -10px; background: rgb(234, 221, 255); border-color: rgb(151, 122, 205); color: rgb(97, 61, 164);"
                                 id =trainingName></span>
                                 <input type="text" name="trainingTypeName" value="<%= type.name %>" hidden>
-                                <input type="text" name="page" value="edit" hidden>
+                                <input type="text" name="page" value="create" hidden>
+
                               <input type="text" name="newTrainingTypeName" value="<%= type.name %>" required>
                             </td>
                             <td nowrap="nowrap" class="text-xs-left" name="trainingTypePrice">
@@ -101,11 +102,13 @@
                           </tr>
                           <% }); %>
                             <% } %>
-                            
                     </tbody>
-                    <tfoot>
-                      <tr>
-                        <td colspan="6">
+                    <tfoot> 
+                        
+                        <tr> 
+
+
+                         <td colspan="6">
                           <div class="text-xs-cent2er pa-2" >
                             
                             <!-- <ul class="v-pagination theme--light">
@@ -122,15 +125,18 @@
                                     aria-hidden="true"
                                     class="v-icon material-icons theme--light">chevron_left</i></button>
                               </li>
-                            </ul> -->
-                          </div>
-                        </td>
+                            </ul>  -->
+                        </td> 
                         
-                      </tr>
+                      </tr> 
                     </tfoot>
                   </table>
+
                 </div>
               </div>
+              <button type="button" id="continueBT" onclick="continueValidate()" class="no-shadow no-opacity v-btn theme--light primary" style="margin-left: 1100px;">
+                <div class="v-btn__content"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+              </button>
             </div>
             
             </div>
@@ -140,7 +146,7 @@
                 <h2>Schedule New Training</h2>
                <form  class="form-container"  action="/addTrainingType" method="POST" >
                   <div class="txt_field"> <input id="title" type="text"name="trainingTypeName" required/>
-                    <input type="text" name="page" value="edit" hidden>
+                    <input type="text" name="page" value="create" hidden>
                   <span></span>
                   <label>Training Type name</label>
                   </div>
@@ -172,6 +178,16 @@
  
 
   <script>
+    function continueValidate() {
+            if(document.getElementById("trainingTable").rows.length==0)
+            {
+                errorMsg.style.display = "block";
+            }
+            else
+            {
+                window.location.href = "/businessProfile";
+            }
+    }
     document.getElementById("duration").addEventListener('change', (event) => {
       document.getElementById("d").innerHTML=document.getElementById("duration").value;
     });

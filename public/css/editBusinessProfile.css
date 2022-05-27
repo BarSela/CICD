@@ -49,24 +49,19 @@ h6 {
   margin-left: 10px;
   margin-top: 10px;
 }
-#schedule-bt {
-  font-family: "Roboto", sans-serif;
-  width: 5cm;
-  margin-left: 100px;
-}
-#delete-acc-bt {
+main #delete-acc-bt {
   font-family: "Roboto", sans-serif;
   width: 3.5cm;
   margin-left: 100px;
 }
-#edit-profile-bt {
-  background-color: #6c9da4;
+
+main #edit-profile-bt {
   font-family: "Roboto", sans-serif;
-  width: 3.5cm;
-  margin-left: 35px;
+  width: 3.2cm;
+  margin-left: 20px;
   margin-top: 10px;
 }
-#edit-training-bt {
+main #edit-training-bt {
   font-family: "Roboto", sans-serif;
   width: 3.8cm;
   margin-top: 10px;

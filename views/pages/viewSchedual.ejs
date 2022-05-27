@@ -1,162 +1,177 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset='utf-8' />
-    <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet'>
-    <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Muli:300,400,600,800,900' />
-  
-    <link href='/main.css' rel='stylesheet' />
-    <script src='/main.js'></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <title>Shape</title>
+    <link rel="icon" href="/assets/shape-tab-icon.png" type="image/png" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Muli:300,400,600,800,900"
+    />
+
+    <link href="/main.css" rel="stylesheet" />
+    <script src="/main.js"></script>
     <script>
       let trainer;
       let date;
       let dateStr;
       let time;
-      let type = "<%= trainer.trainingTypes[0].name %>" 
-      var trainings; 
+      let type = "<%= trainer.trainingTypes[0].name %>";
+      var trainings;
       var calendarEl;
-      var calendar ;
+      var calendar;
       // Loading the calendar
       var el = document.getElementById("newTrainingForm");
-      document.addEventListener('DOMContentLoaded', function() {
-         calendarEl = document.getElementById('calendar');
-         calendar = new FullCalendar.Calendar(calendarEl, {
+      document.addEventListener("DOMContentLoaded", function () {
+        calendarEl = document.getElementById("calendar");
+        calendar = new FullCalendar.Calendar(calendarEl, {
           // themeSystem: 'bootstrap',
-          initialView: 'dayGridMonth',
+          initialView: "dayGridMonth",
           aspectRatio: 1.5,
-          height:800,
-          selectable: true,  
-        headerToolbar: {
-            
-            left:  'today',
-            center: 'prev,title,next',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay' 
-          
-        },
-        
-        eventClick: function(info,el) {
-      
-        info.el.style.borderColor = 'red';
-        info.el.addEventListener("click", function() {
-          let form = document.getElementById("newTrainingForm");
-          document.getElementById("type").innerHTML = info.event.title;
-          document.getElementById("typeIn").value = info.event.title;
+          height: 800,
+          selectable: true,
+          headerToolbar: {
+            left: "today",
+            center: "prev,title,next",
+            right: "dayGridMonth,timeGridWeek,timeGridDay",
+          },
 
-          document.getElementById("date").innerHTML = info.event.start.toString();
-          document.getElementById("dateIn").value =  info.event.start.toString();
+          eventClick: function (info, el) {
+            info.el.style.borderColor = "red";
+            info.el.addEventListener("click", function () {
+              let form = document.getElementById("newTrainingForm");
+              document.getElementById("type").innerHTML = info.event.title;
+              document.getElementById("typeIn").value = info.event.title;
 
-          document.getElementById("duration").innerHTML = info.event.extendedProps.duration;
-          document.getElementById("durationIn").value =  info.event.extendedProps.duration;
+              document.getElementById("date").innerHTML =
+                info.event.start.toString();
+              document.getElementById("dateIn").value =
+                info.event.start.toString();
 
-          document.getElementById("start").innerHTML = info.event.extendedProps.startHour;
-          document.getElementById("startIn").value =  info.event.extendedProps.startHour;
+              document.getElementById("duration").innerHTML =
+                info.event.extendedProps.duration;
+              document.getElementById("durationIn").value =
+                info.event.extendedProps.duration;
 
-          document.getElementById("price").innerHTML = info.event.extendedProps.price;
-          document.getElementById("priceIn").value = info.event.extendedProps.price;
+              document.getElementById("start").innerHTML =
+                info.event.extendedProps.startHour;
+              document.getElementById("startIn").value =
+                info.event.extendedProps.startHour;
 
-          document.getElementById("cover").style.display = "block";;
-          form.style.position = "absolute";
-          form.style.left = info.jsEvent.pageX +'px';
-          form.style.top = info.jsEvent.pageY+'px';      
-          }
-          )
-  }
-    
-        
-      });
-        len = "<%= trainer.trainings.length %>"
-        type = "<%= trainer.trainings[0].trainingType %>"
-        dateStr = "<%= trainer.trainings[0].trainingDate %>"
-        time = "<%= trainer.trainings[0].startHour %>"
-        duration = "<%= trainer.trainings[0].duration %>"
-        price = "<%= trainer.trainings[0].price %>"
+              document.getElementById("price").innerHTML =
+                info.event.extendedProps.price;
+              document.getElementById("priceIn").value =
+                info.event.extendedProps.price;
+
+              document.getElementById("cover").style.display = "block";
+              form.style.position = "absolute";
+              form.style.left = info.jsEvent.pageX + "px";
+              form.style.top = info.jsEvent.pageY + "px";
+            });
+          },
+        });
+        len = "<%= trainer.trainings.length %>";
+        type = "<%= trainer.trainings[0].trainingType %>";
+        dateStr = "<%= trainer.trainings[0].trainingDate %>";
+        time = "<%= trainer.trainings[0].startHour %>";
+        duration = "<%= trainer.trainings[0].duration %>";
+        price = "<%= trainer.trainings[0].price %>";
         date = new Date(dateStr);
-        
-        if (!isNaN(date.valueOf())) { // valid?
-                calendar.addEvent({
-                    title: type,
-                    start: date,
-                    allDay:true,
-                    extendedProps: {
-                    startHour:time,
-                    duration: duration,
-                    price: price
-                    },
-                  });
-            }
-        calendar.render(); 
-        
+
+        if (!isNaN(date.valueOf())) {
+          // valid?
+          calendar.addEvent({
+            title: type,
+            start: date,
+            allDay: true,
+            extendedProps: {
+              startHour: time,
+              duration: duration,
+              price: price,
+            },
+          });
+        }
+        calendar.render();
       });
     </script>
   </head>
   <body>
+    <main>
+      <div id="calendar"></div>
 
-  <main>
-    
-         
-            <div id='calendar' ></div>
-         
-              <div id="cover" >
-             
-            <!-- registration to training - form -->
-            <div class="form-wrapper" id="newTrainingForm">
-             <form  class="form-container"  action="/TrainingReg" method="POST" >
-              <ul class="list-group">
-                <strong class="text-dark">Training Type:</strong><li class="list-item"  name="type" id="type"> &nbsp; </li><input id="typeIn"  name="typeIn" style="display: none;" />
-                <strong class="text-dark">Date:</strong><li class="list-item" id="date"> &nbsp; </li><input name="dateIn" id="dateIn" style="display: none;" />
-                <strong class="text-dark">Start Hour:</strong><li class="list-item" id="start"> &nbsp; </li><input id="startIn"  name="startIn" style="display: none;" />
-                <strong class="text-dark">Duration:</strong><li class="list-item" id="duration"> </li><input id="durationIn"  name="durationIn" style="display: none;" />
-                <strong class="text-dark">Price:</strong><li class="list-item" id="price"> &nbsp; </li><input id="priceIn"  name="priceIn" style="display: none;" />
-              </ul>
-                <div class="btn-group">
-                  <button type="submit" id="create-btn" >Regristration</button>
-                  <button type="button"  onclick="closeForm()">Close</button>
-                </div>
-             </form>
-           </div>
-          </div>
-          
-            
+      <div id="cover">
+        <!-- registration to training - form -->
+        <div class="form-wrapper" id="newTrainingForm">
+          <form class="form-container" action="/TrainingReg" method="POST">
+            <ul class="list-group">
+              <strong class="text-dark">Training Type:</strong>
+              <li class="list-item" name="type" id="type">&nbsp;</li>
+              <input id="typeIn" name="typeIn" style="display: none" />
+              <strong class="text-dark">Date:</strong>
+              <li class="list-item" id="date">&nbsp;</li>
+              <input name="dateIn" id="dateIn" style="display: none" />
+              <strong class="text-dark">Start Hour:</strong>
+              <li class="list-item" id="start">&nbsp;</li>
+              <input id="startIn" name="startIn" style="display: none" />
+              <strong class="text-dark">Duration:</strong>
+              <li class="list-item" id="duration"></li>
+              <input id="durationIn" name="durationIn" style="display: none" />
+              <strong class="text-dark">Price:</strong>
+              <li class="list-item" id="price">&nbsp;</li>
+              <input id="priceIn" name="priceIn" style="display: none" />
+            </ul>
+            <div class="btn-group">
+              <button type="submit" id="create-btn">Regristration</button>
+              <button type="button" onclick="closeForm()">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </main>
     <script>
-        function openForm() {
-          document.getElementById("cover").style.display = "block";
+      function openForm() {
+        document.getElementById("cover").style.display = "block";
 
-  // document.getElementById("newTrainingForm").style.display = "block";
-}
+        // document.getElementById("newTrainingForm").style.display = "block";
+      }
 
-function closeForm() {
-  // document.getElementById("newTrainingForm").style.display = "none";
-  document.getElementById("cover").style.display = "none";
+      function closeForm() {
+        // document.getElementById("newTrainingForm").style.display = "none";
+        document.getElementById("cover").style.display = "none";
+      }
 
-}
+      function update({ calendar: mycalendar }) {
+        len = "<%= trainer.trainings.length %>";
+        type = "<%= trainer.trainings[0].trainingType %>";
+        dateStr = "<%= trainer.trainings[0].trainingDate %>";
+        time = "<%= trainer.trainings[0].startHour %>";
+        date = new Date(dateStr + "T" + time);
 
-        function update({calendar:mycalendar}){
-        len = "<%= trainer.trainings.length %>"
-        type = "<%= trainer.trainings[0].trainingType %>"
-        dateStr = "<%= trainer.trainings[0].trainingDate %>"
-        time = "<%= trainer.trainings[0].startHour %>"
-        date = new Date(dateStr +'T'+time);
-        
-        if (!isNaN(date.valueOf())) { // valid?
-                console.log(" ifYESS")
-                calendar.addEvent({
-                    title: type,
-                    start: date,
-                    allDay: true
-                  });
-            }
-            calendar.render();
-            // for( let i=0 ; i<1; i++){
-            // dateStr = trainings[i].trainingDate;
-            // time = trainings[i].startHour;
-            // date = new Date(dateStr +'T'+time); // will be in local time
-            // }
-            }
-     </script> 
+        if (!isNaN(date.valueOf())) {
+          // valid?
+          console.log(" ifYESS");
+          calendar.addEvent({
+            title: type,
+            start: date,
+            allDay: true,
+          });
+        }
+        calendar.render();
+        // for( let i=0 ; i<1; i++){
+        // dateStr = trainings[i].trainingDate;
+        // time = trainings[i].startHour;
+        // date = new Date(dateStr +'T'+time); // will be in local time
+        // }
+      }
+    </script>
   </body>
 </html>
-
-

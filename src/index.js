@@ -8,7 +8,7 @@ const {
   editBusinessP,
   editPassword,
   deleteAccount,
-  editTrainingTypes,deleteTraining,addTraining,addTrainingType,deleteTrainingType
+  editTrainingTypes,deleteTraining,addTraining,addTrainingType,
 } = require("../controllers/user");
 const bcrypt = require("bcrypt");
 const User = require("../model/user");
@@ -58,28 +58,6 @@ app.get("/", (req, res) => {
   res.render("pages/homePage", { userEmail: userEmail });
 });
 app.get("/QNA",async (req, res) => {
-  
-  const mytrainee = await Trainee.findOneAndUpdate(
-    { email: "bbb@gmail.com" },
-    {
-      $set: {
-     
-      trainings:[{
-        trainingType:"yoga",
-        trainingDate: new Date().getDate().toString(),
-        startHour:"15:00",
-        pass: false,
-        duration:60,
-        price:100,
-
-      },
-      ]
-        
-      },
-    }
-  );
-  
-    console.log(addTrainingType("newTrainer@gmail.com"));
   res.render("pages/QNA", { userEmail: userEmail });
 });
 
@@ -362,8 +340,6 @@ app.get("/deleteAccount", (req, res) => {
   res.render("pages/deleteAccount"), { userEmail: userEmail };
 });
 app.get("/businessProfile", (req, res) => {
-  
-
   Trainer.find({ email: userEmail }).then((users) => {
     //If the user list is empty
     if (users.length === 0) {
@@ -375,6 +351,24 @@ app.get("/businessProfile", (req, res) => {
       
       console.log(userObj);
       res.render("pages/businessProfile", {
+        userEmail: userEmail,
+        user: userObj,
+      });
+    }
+  });
+});
+app.get("/createTrainingTypes", (req, res) => {
+  Trainer.find({ email: userEmail }).then((users) => {
+    //If the user list is empty
+    if (users.length === 0) {
+      console.log("user Error");
+      res.redirect("/");
+    } else {
+      const [user] = users;
+      userObj = user;
+
+      console.log(userObj);
+      res.render("pages/createTrainingTypes", {
         userEmail: userEmail,
         user: userObj,
       });
@@ -434,7 +428,7 @@ app.get("/logout", (req, res) => {
   userEmail = "";
   res.render("pages/homePage", { userEmail: userEmail });
 });
-app.post("/editTrainingType", );
+app.post("/editTrainingTypes",editTrainingTypes );
 app.post("/login", login);
 app.post("/signUp", signup);
 app.post("/editPersonalprofile", editPersonalprofile);
@@ -536,4 +530,4 @@ app.post("/newTraining",async (req, res) => {
 
 });
 app.post("/deleteAccount", deleteAccount);
-app.post("/deleteTrainingType", deleteTrainingType);
+app.post("/addTrainingType", addTrainingType);

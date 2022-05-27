@@ -1,61 +1,73 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Bootstrap Example</title>
+    <meta charset="UTF-8" />
+    <title>Shape</title>
+    <link rel="icon" href="/assets/shape-tab-icon.png" type="image/png" />
+    <link rel="stylesheet" href="css/condNterms.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
   </head>
+  <header><%- include('../partials/header') %></header>
   <body>
-
-    <!-- Example Code -->
-    
-    <form class="row g-3">
-      <div class="col-md-6">
-        <label for="inputEmail4" class="form-label">Email</label>
-        <input type="email" class="form-control" id="inputEmail4">
-      </div>
-      <div class="col-md-6">
-        <label for="inputPassword4" class="form-label">Password</label>
-        <input type="password" class="form-control" id="inputPassword4">
-      </div>
-      <div class="col-12">
-        <label for="inputAddress" class="form-label">Address</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-      </div>
-      <div class="col-12">
-        <label for="inputAddress2" class="form-label">Address 2</label>
-        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-      </div>
-      <div class="col-md-6">
-        <label for="inputCity" class="form-label">City</label>
-        <input type="text" class="form-control" id="inputCity">
-      </div>
-      <div class="col-md-4">
-        <label for="inputState" class="form-label">State</label>
-        <select id="inputState" class="form-select">
-          <option selected="">Choose...</option>
-          <option>...</option>
-        </select>
-      </div>
-      <div class="col-md-2">
-        <label for="inputZip" class="form-label">Zip</label>
-        <input type="text" class="form-control" id="inputZip">
-      </div>
-      <div class="col-12">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="gridCheck">
-          <label class="form-check-label" for="gridCheck">
-            Check me out
-          </label>
+    <section class="about">
+      <div class="main">
+        <div class="condNterms-text">
+          <h5>Terms<span> & Conditions</span></h5>
+          <p>
+            Effective as of February 20, 2022<br>
+            Shape Company welcome you. Thank you for choosing to access and use our service (the "Service") made available to you through our website.
+            We provide access to and use of our Service subject to the following terms of service (the "Terms of Service"),<br>
+            which are effective as of the date stated above.<br>
+            By using the Service, you acknowledge that you have read, understood, and agree to be legally bound by the terms and conditions of these Terms of Service<br>
+            and the terms and conditions of our Privacy Policy, which is hereby incorporated by reference.<br>
+            Please take the time to review our Privacy Policy. If you do not agree to any terms in these Terms of Service or the Privacy Policy,<br>
+            then please do not use our Service.<br>
+            <ol>
+              <li><a style="text-decoration: underline;font-weight: bold;">Registration: </a>
+                <ul>Prior to using the Service, Subscriber will be required to register for an account. <br>
+                  During the registration process, Subscriber will select logon credentials for each Authorized User.<br>
+                  Logon credentials can only be used by the Authorized User to whom they are assigned and cannot be shared among Authorized Users or with third parties.During the registration process, <br>
+                  the subscriber must to agree the terms by clicking the checkbox in the sign-up page and he will be committed to the terms <br>
+                  as long he has a account in Shape website. Subscriber will be required to select user type from the user types that Shape offers: trainee or trainer.<br>
+                  Subscriber can register only once to our website with a unique email address and he must choose one of the types.<br>
+                  <li style="text-decoration: underline;">Trainee</li>
+                  At time a trainee user is register to Shape site he must declare that he healthy and provide a medical certificate. In addition, the trainee must be above 18 years old.
+                  <li style="text-decoration: underline;">Trainer </li>
+                  At time a trainer user is register to Shape site he must declare that he healthy and provide a medical certificate. In addition, the trainer must be above 18 years old.
+                  During the registration process the trainer provide a certification that confirm he certified coach and can legal training others.
+                </ul>
+              </li>
+              <li><a style="text-decoration: underline;font-weight: bold;">Fees and Payment:</a>
+                <ul>
+                  <li style="text-decoration: underline;">Trainee</li>
+                  You shall pay trainer the fees determined according to the payment plan that the trainer had selected. You must provide accurate information regarding your credit card or other payment instrument, and you must promptly update your payment information if such information changes. All amounts paid are non-refundable.
+                  The payment procedure will be directly in front the trainer. 
+                  The payment will be provided by "bit" application and transferred at least one hour before the workout. Otherwise, by trainer decision.
+                  <li style="text-decoration: underline;">Trainer</li>
+                  The trainer can choose the training sum by his desire and by his consideration.
+                  In addition, the trainer reserves the right to change our prices at any point.
+                </ul>
+              </li>
+              <li style="text-decoration: underline;font-weight: bold;">Ethical use:
+                <ul>
+                  <li style="text-decoration: underline;">Trainee</li>
+                  When a trainee scheduling a training, he knows he must to accept our ethical use in Shape and by scheduling the training he committed to this and must arrive to the workout.
+                  A trainee can cancel an appointment in case he decided that he can arrive to the class. 
+                  <li style="text-decoration: underline;">Trainer</li>
+                  Once the training has been determined the coach is responsible for providing the service promised to the trainee by having the training carried out as prescribed in the system.
+                  A coach who is unable to perform the requested service will cancel the training at a reasonable and reasonable time in order to maintain high professionalism and reciprocity between the coach and his trainees.
+                  A coach can mark times when training cannot be scheduled by being in "unavailable" status at the times he chooses to be displayed in the calendar.
+                </ul>
+              </li>
+              <li style="text-decoration: underline;font-weight: bold;">Term and Termination:</li>
+              Shape may suspend or terminate your access to and use of the Service, in whole or in part, at any time and for any reason provided, however, that if you have purchased a subscription for the Service, 
+              Shape’s right to suspend or terminate your access to and use of the Service will be limited to cases where you have failed to pay the applicable subscription fees or have otherwise breached these Terms of Service, 
+              and have not cured such payment failure or other breach.<br><br><br>
+            </ol>
+          </p>
         </div>
       </div>
-      <div class="col-12">
-        <button type="submit" class="btn btn-primary">Sign in</button>
-      </div>
-    </form>
-    
-    <!-- End Example Code -->
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+      <div class="footerCond"><footer><%- include('../partials/footer') %></footer></div>
+    </section>
   </body>
-</html>
+  </html> 
