@@ -684,7 +684,7 @@ module.exports = {
     let newTrainingTypeName = req.body.trainingTypeName;
     let newTrainingTypeDuration = req.body.trainingTypeDuration;
     let newTrainingTypePrice = req.body.trainingTypePrice;
-    let page = req.body.page;
+    let page=req.body.page;
     let types;
 
     let trainingType = {

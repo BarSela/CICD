@@ -8,13 +8,16 @@ const {
   editBusinessP,
   editPassword,
   deleteAccount,
-  editTrainingTypes,deleteTraining,addTraining,addTrainingType,
+  editTrainingTypes,
+  deleteTraining,
+  addTraining,
+  addTrainingType,
 } = require("../controllers/user");
-const bcrypt = require("bcrypt");
+//const bcrypt = require("bcrypt");
 const User = require("../model/user");
 const Trainer = require("../model/trainer");
 const Trainee = require("../model/trainee");
-const { findByIdAndUpdate } = require("../model/trainee");
+//const { findByIdAndUpdate } = require("../model/trainee");
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -48,16 +51,14 @@ app.listen(port, () => {
 });
 
 //Routing for the GET request methods
-var userType = "";
+//var userType = "";
 var userEmail = "";
 var userObj;
 
 app.get("/", (req, res) => {
-
-  
   res.render("pages/homePage", { userEmail: userEmail });
 });
-app.get("/QNA",async (req, res) => {
+app.get("/QNA", async (req, res) => {
   res.render("pages/QNA", { userEmail: userEmail });
 });
 
@@ -234,21 +235,19 @@ app.get("/findTrainer", (req, res) => {
     res.render("pages/findTrainer", { userEmail: userEmail, trainers });
   });
 });
-app.post("/selectTrainer",async (req, res) => {
+app.post("/selectTrainer", async (req, res) => {
   let email = req.body.email;
   console.log(email);
   let trainer = await Trainer.findOne({ email: email });
-  if(trainer != null){
-    
-    // trainings = trainer.trainings;
-    res.render("pages/viewSchedual", { userEmail: email, user:userObj,trainer:trainer });
+  if (trainer != null) {
+    res.render("pages/viewSchedual", {
+      userEmail: email,
+      user: userObj,
+      trainer: trainer,
+    });
+  } else {
+    res.render("pages/findTrainer", { userEmail: userEmail, user: userObj });
   }
-  else{
-    res.render("pages/findTrainer", { userEmail:userEmail, user:userObj });
-
-  }
-  
-
 });
 
 app.post("/searchTrainer", (req, res) => {
@@ -283,21 +282,19 @@ app.post("/searchTrainer", (req, res) => {
   }
 });
 
-app.get("/trainerDashboard/:email",async (req, res) => {
+app.get("/trainerDashboard/:email", async (req, res) => {
   userEmail = req.params.email;
   let trainer = await Trainer.findOne({ email: userEmail });
   console.log(trainer);
-  if(trainer){
+  if (trainer) {
     userObj = trainer;
     res.render("pages/trainerDashboard", {
-            userEmail: userEmail,
-            user: userObj,
-          });
-  }
-  else{
+      userEmail: userEmail,
+      user: userObj,
+    });
+  } else {
     res.redirect("/");
   }
-
 });
 
 app.get("/traineeDashboard/:email", async (req, res) => {
@@ -310,7 +307,6 @@ app.get("/traineeDashboard/:email", async (req, res) => {
     } else {
       const [trainee] = trainees;
       userObj = trainee;
-      
     }
     res.render("pages/traineeDashboard", {
       userEmail: userEmail,
@@ -348,7 +344,7 @@ app.get("/businessProfile", (req, res) => {
     } else {
       const [user] = users;
       userObj = user;
-      
+
       console.log(userObj);
       res.render("pages/businessProfile", {
         userEmail: userEmail,
@@ -387,19 +383,20 @@ app.get("/login", (req, res) => {
   res.render("pages/login", { loginStatus: loginStatus, userEmail: userEmail });
 });
 app.get("/calendar", (req, res) => {
-  
-      res.render("pages/calendar", {
-        userEmail: userEmail,
-        user: userObj,
-      });
-    
+  res.render("pages/calendar", {
+    userEmail: userEmail,
+    user: userObj,
   });
-  
-  app.get("/viewSchedual", (req, res) => {
-    let email = req.body.email;
-    console.log("hiii");
-    res.render("pages/viewSchedual", { userEmail: email, user:userObj,trainer:"lll" });
-  
+});
+
+app.get("/viewSchedual", (req, res) => {
+  let email = req.body.email;
+  console.log("hiii");
+  res.render("pages/viewSchedual", {
+    userEmail: email,
+    user: userObj,
+    trainer: "lll",
+  });
 });
 
 app.get("/homePage", (req, res) => {
@@ -428,7 +425,7 @@ app.get("/logout", (req, res) => {
   userEmail = "";
   res.render("pages/homePage", { userEmail: userEmail });
 });
-app.post("/editTrainingTypes",editTrainingTypes );
+app.post("/editTrainingTypes", editTrainingTypes);
 app.post("/login", login);
 app.post("/signUp", signup);
 app.post("/editPersonalprofile", editPersonalprofile);
@@ -436,98 +433,85 @@ app.post("/createBusinessP", createBusinessP);
 app.post("/editBusinessP", editBusinessP);
 app.post("/editPassword", editPassword);
 app.post("/editPassword", editPassword);
-app.post("/TrainingReg",async (req, res) => {
-    
-    let date = req.body.dateIn;
-    let time = req.body.startIn;
-    let trainingName = req.body.typeIn;
-    let duration = req.body.durationIn;
-    let price = req.body.priceIn;
-    let trainee;
- 
-    console.log(userEmail);
-    console.log(date);
-    console.log(time);
+app.post("/TrainingReg", async (req, res) => {
+  let date = req.body.dateIn;
+  let time = req.body.startIn;
+  let trainingName = req.body.typeIn;
+  let duration = req.body.durationIn;
+  let price = req.body.priceIn;
+  console.log(userEmail);
+  console.log(date);
+  console.log(time);
 
-        console.log("isTrainee");
-        trainee = await Trainee.findOneAndUpdate(
-          { email:
-            userEmail },
+  console.log("isTrainee");
+  let trainee = await Trainee.findOneAndUpdate(
+    { email: userEmail },
+    {
+      $set: {
+        trainings: [
           {
-            $set: {
-              
-            trainings:[{
-              trainingType:trainingName,
-              trainingDate: date.toString,
-              startHour: time,
-              pass: false,
-              duration:duration,
-              price:price
-      
-            }],
-            
-            },
-          }
-          
-        );
-      
-    
-    res.render("pages/traineeDashboard", {
-      userEmail: userEmail,
-      user: userObj,
-    });
-    
-  
+            trainingType: trainingName,
+            trainingDate: date.toString,
+            startHour: time,
+            pass: false,
+            duration: duration,
+            price: price,
+          },
+        ],
+      },
+    }
+  );
+
+  res.render("pages/traineeDashboard", {
+    userEmail: userEmail,
+    user: userObj,
   });
-app.post("/newTraining",async (req, res) => {
+});
+app.post("/newTraining", async (req, res) => {
   let traineeInput = req.body.Type;
   let date = req.body.date;
   let time = req.body.time;
   let trainingName;
   let duration;
   let price;
-  
-  console.log("traineeInput"+traineeInput);
+
+  console.log("traineeInput" + traineeInput);
   console.log(userObj);
 
-  if(userObj instanceof Trainer){
-    
-    userObj.trainingTypes.forEach(type => {
-      if(type.name == traineeInput){
+  if (userObj instanceof Trainer) {
+    userObj.trainingTypes.forEach((type) => {
+      if (type.name == traineeInput) {
         console.log("YESS");
         trainingName = type.name;
         duration = type.duration;
         price = type.price;
         console.log(trainingName);
-      }});
-      trainings =userObj.trainings;
-      console.log(trainings);
-      userObj =await Trainer.findOneAndUpdate(
-        { email: userObj.email },
-        {
-          $set: {
-    
-          trainings:[{
-            trainingType:trainingName,
-            trainingDate: date,
-            startHour:time.toString(),
-            available: true,
-            duration:duration,
-            price:price
-    
-          }],
-          
-          },
-        }
-        
-      );
-    
+      }
+    });
+    trainings = userObj.trainings;
+    console.log(trainings);
+    userObj = await Trainer.findOneAndUpdate(
+      { email: userObj.email },
+      {
+        $set: {
+          trainings: [
+            {
+              trainingType: trainingName,
+              trainingDate: date,
+              startHour: time.toString(),
+              available: true,
+              duration: duration,
+              price: price,
+            },
+          ],
+        },
+      }
+    );
   }
   res.render("pages/trainerDashboard", {
     userEmail: userEmail,
     user: userObj,
   });
-
 });
 app.post("/deleteAccount", deleteAccount);
 app.post("/addTrainingType", addTrainingType);
