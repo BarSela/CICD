@@ -110,48 +110,49 @@
               <% } %> 
             <div class="chat-box">
           </div>
-          <div class="content-data">
-            <div class="head">
-              <h3>Future training</h3>
-              <div class="menu">
-                <i class='bx bx-dots-horizontal-rounded icon'></i>
-                <ul class="menu-link">
-                  <li><a href="#">Edit</a></li>
-                  <li><a href="#">Save</a></li>
-                  <li><a href="#">Remove</a></li>
-                </ul>
-              </div>
-            </div>
-            <% if(typeof user != "undefined" ) { %>
-              <% if(typeof user.trainings != "undefined" ) { %>
-                <% user.trainings.forEach(t => { %>
-                  <% if(t.trainingDate >= today() ) { %>
-  
-              <div class="trainer-profile">
-                    <div class="trainer-info">
-                      <ul class="list-group">
-                        <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Training Type:</strong> &nbsp; <%= t.name %></li>
-                        <li class="list-item"><strong class="text-dark">Date:</strong> &nbsp; <%= t.trainingDate %></li>
-                        <li class="list-item"><strong class="text-dark">Start Hour:</strong> &nbsp; <%= t.startHour %></li>
-                        <li class="list-item"><strong class="text-dark">Duration:</strong> &nbsp; <%= t.duration %></li>
-                        <li class="list-item"><strong class="text-dark">Price:</strong> &nbsp; <%= t.price %></li>
-                      </ul>
-                </div>
-                <button type="button"
-                class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
-                style="font-size: 22px;">
-                <div class="v-btn__content"><i class="ion-edit">
-                  </i>
-                </div>
-              </button>
-              </div>
-              <% } %> 
-              <% }); %>
-              <% } %> 
-              <% } %> 
-            <div class="chat-box">
-          </div>
+
 			</div>
+      <div class="content-data">
+        <div class="head">
+          <h3>Future training</h3>
+          <div class="menu">
+            <i class='bx bx-dots-horizontal-rounded icon'></i>
+            <ul class="menu-link">
+              <li><a href="#">Edit</a></li>
+              <li><a href="#">Save</a></li>
+              <li><a href="#">Remove</a></li>
+            </ul>
+          </div>
+        </div>
+        <% if(typeof user != "undefined" ) { %>
+          <% if(typeof user.trainings != "undefined" ) { %>
+            <% user.trainings.forEach(t => { %>
+              <% if(t.trainingDate >= today() ) { %>
+
+          <div class="trainer-profile">
+                <div class="trainer-info">
+                  <ul class="list-group">
+                    <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Training Type:</strong> &nbsp; <%= t.name %></li>
+                    <li class="list-item"><strong class="text-dark">Date:</strong> &nbsp; <%= t.trainingDate %></li>
+                    <li class="list-item"><strong class="text-dark">Start Hour:</strong> &nbsp; <%= t.startHour %></li>
+                    <li class="list-item"><strong class="text-dark">Duration:</strong> &nbsp; <%= t.duration %></li>
+                    <li class="list-item"><strong class="text-dark">Price:</strong> &nbsp; <%= t.price %></li>
+                  </ul>
+            </div>
+            <button type="button"
+            class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
+            style="font-size: 22px;">
+            <div class="v-btn__content"><i class="ion-edit">
+              </i>
+            </div>
+          </button>
+          </div>
+          <% } %>
+          <% }); %>
+          <% } %> 
+          <% } %> 
+        <div class="chat-box">
+      </div>
 		</main>
 	</section>
   <script>
@@ -196,8 +197,8 @@ tooltip: {
 },
 };
 
-var chart = new ApexCharts(document.querySelector("#chart"), options);
-chart.render();
+//var chart = new ApexCharts(document.querySelector("#chart"), options);
+//chart.render();
   </script>
 </body>
 </html>
