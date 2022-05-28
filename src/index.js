@@ -12,6 +12,7 @@ const {
   deleteTraining,
   addTraining,
   addTrainingType,
+  cancelTrainingRegistration,
 } = require("../controllers/user");
 //const bcrypt = require("bcrypt");
 const User = require("../model/user");
@@ -314,6 +315,12 @@ app.get("/traineeDashboard/:email", async (req, res) => {
     });
   });
 });
+app.get("/traineeDashboard", async (req, res) => {
+  res.render("pages/traineeDashboard", {
+    userEmail: userEmail,
+    user: userObj,
+  });
+});
 
 app.get("/createBusinessProfile/:email", (req, res) => {
   userEmail = req.params.email;
@@ -515,3 +522,4 @@ app.post("/newTraining", async (req, res) => {
 });
 app.post("/deleteAccount", deleteAccount);
 app.post("/addTrainingType", addTrainingType);
+app.post("/cancelTrainingRegistration", cancelTrainingRegistration);

@@ -160,6 +160,26 @@ module.exports = {
           } else if (user.userType == "trainee") {
             userEmail = user.email;
             userType = "trainee";
+
+            //update 'pass' field for all trainings:
+            var today = new Date();
+            Trainee.findOne({ email: userEmail }).then((trainee) => {
+              if (!trainee) {
+                return false;
+              } else {
+                if (trainee.trainings) {
+                  trainings = trainee.trainings;
+                  for (var i = 0; i < trainings.length; i++) {
+                    if (trainings[i].trainingDate < today) {
+                      trainings[i].pass = true;
+                      console.log("found passed trainings");
+                    }
+                  }
+                }
+              }
+              Trainee.updateOne({ _id: trainee._id }, { trainings: trainings });
+            });
+
             console.log("trainee");
             console.log("Auth successful");
             return res.redirect("/traineeDashboard/" + user.email);
@@ -684,7 +704,7 @@ module.exports = {
     let newTrainingTypeName = req.body.trainingTypeName;
     let newTrainingTypeDuration = req.body.trainingTypeDuration;
     let newTrainingTypePrice = req.body.trainingTypePrice;
-    let page=req.body.page;
+    let page = req.body.page;
     let types;
 
     let trainingType = {
@@ -738,6 +758,40 @@ module.exports = {
         })
         .catch((error) => {
           return false;
+        });
+    });
+  },
+  cancelTrainingRegistration: async (req, res) => {
+    let trainingDateToDelete = req.body.trainingDate;
+    let trainingHourToDelete = req.body.trainingHour;
+    console.log(trainingDateToDelete);
+    console.log(trainingHourToDelete);
+    let trainings;
+    Trainee.findOne({ email: userEmail }).then((trainee) => {
+      if (!trainee) {
+        return false;
+      } else {
+        if (trainee.trainings) {
+          trainings = trainee.trainings;
+          for (var i = 0; i < trainings.length; i++) {
+            console.log(trainings[i].trainingDate);
+            console.log(trainings[i].startHour);
+            if (
+              trainings[i].trainingDate == trainingDateToDelete &&
+              trainings[i].startHour == trainingHourToDelete
+            ) {
+              trainings.splice(i, 1);
+              console.log("found");
+            }
+          }
+        }
+      }
+      Trainee.updateOne({ _id: trainee._id }, { trainings: trainings })
+        .then(() => {
+          return res.redirect("/traineeDashboard");
+        })
+        .catch((error) => {
+          return res.redirect("/");
         });
     });
   },

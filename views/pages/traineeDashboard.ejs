@@ -7,6 +7,10 @@
 	<link rel="stylesheet" href="/css/style_Dashboard.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
   <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
 
   <title>Shape</title>
   <link rel="icon" href="/assets/shape-tab-icon.png" type="image/png" />
@@ -84,25 +88,18 @@
             <% if(typeof user != "undefined" ) { %>
               <% if(typeof user.trainings != "undefined" ) { %>
                 <% user.trainings.forEach(t => { %>
-                  <% if(t.trainingDate < today() ) { %>
+                  <% if(t.pass) { %>
   
               <div class="trainer-profile">
                     <div class="trainer-info">
                       <ul class="list-group">
-                        <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Training Type:</strong> &nbsp; <%= t.name %></li>
+                        <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Training Type:</strong> &nbsp; <%= t.trainingType %></li>
                         <li class="list-item"><strong class="text-dark">Date:</strong> &nbsp; <%= t.trainingDate %></li>
                         <li class="list-item"><strong class="text-dark">Start Hour:</strong> &nbsp; <%= t.startHour %></li>
-                        <li class="list-item"><strong class="text-dark">Duration:</strong> &nbsp; <%= t.duration %></li>
-                        <li class="list-item"><strong class="text-dark">Price:</strong> &nbsp; <%= t.price %></li>
+                        <li class="list-item"><strong class="text-dark">Duration:</strong> &nbsp; <%= t.duration %> Minutes</li>
+                        <li class="list-item"><strong class="text-dark">Price:</strong> &nbsp; <%= t.price %> ILS</li>
                       </ul>
                 </div>
-                <button type="button"
-                class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
-                style="font-size: 22px;">
-                <div class="v-btn__content"><i class="ion-edit">
-                  </i>
-                </div>
-              </button>
               </div>
               <% } %> 
               <% }); %>
@@ -127,25 +124,29 @@
         <% if(typeof user != "undefined" ) { %>
           <% if(typeof user.trainings != "undefined" ) { %>
             <% user.trainings.forEach(t => { %>
-              <% if(t.trainingDate >= today() ) { %>
+              <% if(!t.pass) { %>
 
           <div class="trainer-profile">
                 <div class="trainer-info">
                   <ul class="list-group">
-                    <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Training Type:</strong> &nbsp; <%= t.name %></li>
+                    <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Training Type:</strong> &nbsp; <%= t.trainingType %></li>
                     <li class="list-item"><strong class="text-dark">Date:</strong> &nbsp; <%= t.trainingDate %></li>
                     <li class="list-item"><strong class="text-dark">Start Hour:</strong> &nbsp; <%= t.startHour %></li>
-                    <li class="list-item"><strong class="text-dark">Duration:</strong> &nbsp; <%= t.duration %></li>
-                    <li class="list-item"><strong class="text-dark">Price:</strong> &nbsp; <%= t.price %></li>
+                    <li class="list-item"><strong class="text-dark">Duration:</strong> &nbsp; <%= t.duration %> Minutes </li>
+                    <li class="list-item"><strong class="text-dark">Price:</strong> &nbsp; <%= t.price %> ILS </li>
                   </ul>
             </div>
-            <button type="button"
-            class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
-            style="font-size: 22px;">
-            <div class="v-btn__content"><i class="ion-edit">
-              </i>
-            </div>
-          </button>
+            <form id="rowForm" method=POST action="/cancelTrainingRegistration">
+              <input type="text" name="trainingDate" value="<%= t.trainingDate %>" hidden>
+              <input type="text" name="trainingHour" value="<%= t.startHour %>" hidden>
+              <button class="btn" type="submit" 
+              class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
+              style="font-size: 22px;">
+              <div class="v-btn__content"><i class="fa fa-times" aria-hidden="true"></i>
+              </div>
+            </button>
+            </form>
+            
           </div>
           <% } %>
           <% }); %>
