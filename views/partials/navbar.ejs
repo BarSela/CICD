@@ -1,81 +1,104 @@
-<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-<link rel="stylesheet" href="/css/style_Dashboard.css">
-    <!-- NAVBAR -->
-		<nav>
-			<form action="#">	
-			</form>
-			<a href="#" class="nav-link">
-				<i class='bx bxs-bell icon' ></i>
-				<span class="badge">5</span>
-			</a>
-			<a href="#" class="nav-link">
-				<i class='bx bxs-message-square-dots icon' ></i>
-				<span class="badge">8</span>
-			</a>
-			<span class="divider"></span>
-            <div class="profile">
-				<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
-				<ul class="profile-link" id ="pro">
-					<li><a href="/personalProfile"><i class='bx bxs-user-circle icon' ></i> Profile</a></li>
-					<li><a href="#"><i class='bx bxs-cog' ></i> Settings</a></li>
-					<li><a href="/logout"><i class='bx bxs-log-out-circle' ></i> Logout</a></li>
-				</ul>
-			</div>
-		</nav>
-		<!-- NAVBAR -->
-  
-    <script>
-   // PROFILE DROPDOWN
-const profile = document.querySelector('nav .profile');
-const imgProfile = profile.querySelector('img');
-const dropdownProfile = profile.querySelector('.profile-link');
+<link
+  href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+  rel="stylesheet"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+<link rel="stylesheet" href="/css/style_Dashboard.css" />
+<!-- NAVBAR -->
+<nav>
+  <form action="#"></form>
+  <a href="#" class="nav-link">
+    <i class="bx bxs-bell icon"></i>
+    <span class="badge">5</span>
+  </a>
+  <a href="/QNA" class="nav-link">
+    <i
+      class="fa fa-question"
+      aria-hidden="true"
+      style="color: black; font-size: 20px"
+    ></i>
+  </a>
+  <a href="/aboutUs" class="nav-link">
+    <i class="bx bxs-info-circle icon"></i>
+  </a>
+  <span class="divider" style="color: black; font-size: 20px"></span>
+  <a
+    href="/logout"
+    class="nav-link"
+    style="color: black; font-size: 20px; font-weight: bolder"
+  >
+    <!-- <i class="bx bxs-log-out-circle"></i> -->
+    Logout
+  </a>
 
-imgProfile.addEventListener('click', function () {
-	dropdownProfile.classList.toggle('show');
-})
+  <!-- <div class="profile">
+    <img
+      src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+      alt=""
+    />
+    <ul class="profile-link" id="pro">
+      <li>
+        <a href="/personalProfile"
+          ><i class="bx bxs-user-circle icon"></i> Profile</a
+        >
+      </li>
+      <li>
+        <a href="#"><i class="bx bxs-cog"></i> Settings</a>
+      </li>
+      <li>
+        <a href="/logout"><i class="bx bxs-log-out-circle"></i> Logout</a>
+      </li>
+    </ul>
+  </div> -->
+</nav>
+<!-- NAVBAR -->
 
+<script>
+  // PROFILE DROPDOWN
+  const profile = document.querySelector("nav .profile");
+  const imgProfile = profile.querySelector("img");
+  const dropdownProfile = profile.querySelector(".profile-link");
 
+  imgProfile.addEventListener("click", function () {
+    dropdownProfile.classList.toggle("show");
+  });
 
+  // MENU
+  const allMenu = document.querySelectorAll("main .content-data .head .menu");
 
-// MENU
-const allMenu = document.querySelectorAll('main .content-data .head .menu');
+  allMenu.forEach((item) => {
+    const icon = item.querySelector(".icon");
+    const menuLink = item.querySelector(".menu-link");
 
-allMenu.forEach(item=> {
-	const icon = item.querySelector('.icon');
-	const menuLink = item.querySelector('.menu-link');
+    icon.addEventListener("click", function () {
+      menuLink.classList.toggle("show");
+    });
+  });
 
-	icon.addEventListener('click', function () {
-		menuLink.classList.toggle('show');
-	})
-})
+  window.addEventListener("click", function (e) {
+    if (e.target !== imgProfile) {
+      if (e.target !== dropdownProfile) {
+        if (dropdownProfile.classList.contains("show")) {
+          dropdownProfile.classList.remove("show");
+        }
+      }
+    }
 
-window.addEventListener('click', function (e) {
-	if(e.target !== imgProfile) {
-		if(e.target !== dropdownProfile) {
-			if(dropdownProfile.classList.contains('show')) {
-				dropdownProfile.classList.remove('show');
-			}
-		}
-	}
+    allMenu.forEach((item) => {
+      const icon = item.querySelector(".icon");
+      const menuLink = item.querySelector(".menu-link");
 
-	allMenu.forEach(item=> {
-		const icon = item.querySelector('.icon');
-		const menuLink = item.querySelector('.menu-link');
-
-		if(e.target !== icon) {
-			if(e.target !== menuLink) {
-				if (menuLink.classList.contains('show')) {
-					menuLink.classList.remove('show')
-				}
-			}
-		}
-	})
-})
-
-
-
-
-
-      </script>
-	<!-- NAVBAR -->
-   
+      if (e.target !== icon) {
+        if (e.target !== menuLink) {
+          if (menuLink.classList.contains("show")) {
+            menuLink.classList.remove("show");
+          }
+        }
+      }
+    });
+  });
+</script>
+<!-- NAVBAR -->

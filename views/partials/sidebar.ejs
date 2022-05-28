@@ -1,96 +1,100 @@
-<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-<link rel="stylesheet" href="/css/style_Dashboard.css">
+<link
+  href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="/css/style_Dashboard.css" />
 <!-- SIDEBAR -->
 <section id="sidebar">
-    <a class="brand">SHAPE</a> 
-       <ul class="side-menu">
-           <li><a href="/trainerdashboard/<%= userEmail %>" class="active"><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
-           <li class="divider" data-text="main">Main</li>
-           <li><a href="/businessProfile"><i class='bx bxs-chart icon' ></i> Business Profile</a></li>
-           <li><a href="/calendar"><i class='bx bxs-widget icon' ></i> calendar</a></li>
-     <li><a href="#"><i class='bx bxs-widget icon' ></i> Reports</a></li>
-       </ul>
-   
-   </section>
-   <!-- SIDEBAR -->
-   <script>
-   // SIDEBAR DROPDOWN
-const allDropdown = document.querySelectorAll('#sidebar .side-dropdown');
-const sidebar = document.getElementById('sidebar');
+  <a class="brand">SHAPE</a>
+  <ul class="side-menu">
+    <li>
+      <a href="/trainerdashboard/<%= userEmail %>" class="active"
+        ><i class="bx bxs-dashboard icon"></i> Dashboard</a
+      >
+    </li>
+    <li class="divider" data-text="main">Main</li>
+    <li>
+      <a href="/businessProfile"
+        ><i class="bx bxs-chart icon"></i> Business Profile</a
+      >
+    </li>
+    <li>
+      <a href="/calendar"><i class="bx bxs-widget icon"></i> calendar</a>
+    </li>
+    <li>
+      <a href="/personalProfile"
+        ><i class="bx bxs-user-circle icon"></i>Personal Profile</a
+      >
+    </li>
+  </ul>
+</section>
+<!-- SIDEBAR -->
+<script>
+  // SIDEBAR DROPDOWN
+  const allDropdown = document.querySelectorAll("#sidebar .side-dropdown");
+  const sidebar = document.getElementById("sidebar");
 
-allDropdown.forEach(item=> {
-	const a = item.parentElement.querySelector('a:first-child');
-	a.addEventListener('click', function (e) {
-		e.preventDefault();
+  allDropdown.forEach((item) => {
+    const a = item.parentElement.querySelector("a:first-child");
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
 
-		if(!this.classList.contains('active')) {
-			allDropdown.forEach(i=> {
-				const aLink = i.parentElement.querySelector('a:first-child');
+      if (!this.classList.contains("active")) {
+        allDropdown.forEach((i) => {
+          const aLink = i.parentElement.querySelector("a:first-child");
 
-				aLink.classList.remove('active');
-				i.classList.remove('show');
-			})
-		}
+          aLink.classList.remove("active");
+          i.classList.remove("show");
+        });
+      }
 
-		this.classList.toggle('active');
-		item.classList.toggle('show');
-	})
-})
+      this.classList.toggle("active");
+      item.classList.toggle("show");
+    });
+  });
 
+  // SIDEBAR COLLAPSE
+  const toggleSidebar = document.querySelector("nav .toggle-sidebar");
+  const allSideDivider = document.querySelectorAll("#sidebar .divider");
 
+  if (sidebar.classList.contains("hide")) {
+    allSideDivider.forEach((item) => {
+      item.textContent = "-";
+    });
+    allDropdown.forEach((item) => {
+      const a = item.parentElement.querySelector("a:first-child");
+      a.classList.remove("active");
+      item.classList.remove("show");
+    });
+  } else {
+    allSideDivider.forEach((item) => {
+      item.textContent = item.dataset.text;
+    });
+  }
 
+  sidebar.addEventListener("mouseleave", function () {
+    if (this.classList.contains("hide")) {
+      allDropdown.forEach((item) => {
+        const a = item.parentElement.querySelector("a:first-child");
+        a.classList.remove("active");
+        item.classList.remove("show");
+      });
+      allSideDivider.forEach((item) => {
+        item.textContent = "-";
+      });
+    }
+  });
 
-
-// SIDEBAR COLLAPSE
-const toggleSidebar = document.querySelector('nav .toggle-sidebar');
-const allSideDivider = document.querySelectorAll('#sidebar .divider');
-
-if(sidebar.classList.contains('hide')) {
-	allSideDivider.forEach(item=> {
-		item.textContent = '-'
-	})
-	allDropdown.forEach(item=> {
-		const a = item.parentElement.querySelector('a:first-child');
-		a.classList.remove('active');
-		item.classList.remove('show');
-	})
-} else {
-	allSideDivider.forEach(item=> {
-		item.textContent = item.dataset.text;
-	})
-}
-
-
-
-
-sidebar.addEventListener('mouseleave', function () {
-	if(this.classList.contains('hide')) {
-		allDropdown.forEach(item=> {
-			const a = item.parentElement.querySelector('a:first-child');
-			a.classList.remove('active');
-			item.classList.remove('show');
-		})
-		allSideDivider.forEach(item=> {
-			item.textContent = '-'
-		})
-	}
-})
-
-
-
-sidebar.addEventListener('mouseenter', function () {
-	if(this.classList.contains('hide')) {
-		allDropdown.forEach(item=> {
-			const a = item.parentElement.querySelector('a:first-child');
-			a.classList.remove('active');
-			item.classList.remove('show');
-		})
-		allSideDivider.forEach(item=> {
-			item.textContent = item.dataset.text;
-		})
-	}
-})
-
+  sidebar.addEventListener("mouseenter", function () {
+    if (this.classList.contains("hide")) {
+      allDropdown.forEach((item) => {
+        const a = item.parentElement.querySelector("a:first-child");
+        a.classList.remove("active");
+        item.classList.remove("show");
+      });
+      allSideDivider.forEach((item) => {
+        item.textContent = item.dataset.text;
+      });
+    }
+  });
 </script>
-
-
