@@ -175,9 +175,12 @@ module.exports = {
                       console.log("found passed trainings");
                     }
                   }
+                  Trainee.updateOne(
+                    { _id: trainee._id },
+                    { trainings: trainings }
+                  );
                 }
               }
-              Trainee.updateOne({ _id: trainee._id }, { trainings: trainings });
             });
 
             console.log("trainee");
@@ -591,6 +594,11 @@ module.exports = {
     let typePrice = parseInt(req.body.trainingTypePrice);
     let action = req.body.action;
     let page = req.body.page;
+
+    console.log("type name");
+    console.log(typeName);
+    console.log("action");
+    console.log(action);
 
     if (action == "edit") {
       let types;
