@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/BarSela/CICD#readme",
   "dependencies": {
+    "@creative-tim-official/argon-dashboard-free": "^1.2.0",
+    "express-ejs-layouts": "^2.5.1",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.0",
