@@ -18,6 +18,9 @@ const {
 const User = require("../model/user");
 const Trainer = require("../model/trainer");
 const Trainee = require("../model/trainee");
+const expressLayouts = require('express-ejs-layouts');
+const path = require('path');
+
 //const { findByIdAndUpdate } = require("../model/trainee");
 const app = express();
 const port = process.env.PORT || 5000;
@@ -236,19 +239,22 @@ app.get("/findTrainer", (req, res) => {
     res.render("pages/findTrainer", { userEmail: userEmail, trainers });
   });
 });
-app.post("/selectTrainer", async (req, res) => {
+app.post("/selectTrainer",async (req, res) => {
   let email = req.body.email;
   console.log(email);
+  let trainings;
   let trainer = await Trainer.findOne({ email: email });
-  if (trainer != null) {
-    res.render("pages/viewSchedual", {
-      userEmail: email,
-      user: userObj,
-      trainer: trainer,
-    });
-  } else {
-    res.render("pages/findTrainer", { userEmail: userEmail, user: userObj });
+  if(trainer != null){
+    console.log("trainer selected: "+trainer);
+     trainings = trainer.trainings;
+    // trainings = trainer.trainings;
+    res.render("pages/viewSchedual", { userEmail: email, user:userObj,trainer:trainer });
   }
+  else{
+    res.render("pages/findTrainer", { userEmail:userEmail, user:userObj });
+
+  }
+ 
 });
 
 app.post("/searchTrainer", (req, res) => {
@@ -396,14 +402,11 @@ app.get("/calendar", (req, res) => {
   });
 });
 
-app.get("/viewSchedual", (req, res) => {
-  let email = req.body.email;
-  console.log("hiii");
-  res.render("pages/viewSchedual", {
-    userEmail: email,
-    user: userObj,
-    trainer: "lll",
-  });
+  app.get("/viewSchedual", (req, res) => {
+    let email = req.body.email;
+    console.log("view user: " +req.user);
+    res.render("pages/viewSchedual", { userEmail: email, user:userObj,trainer:"lll" });
+  
 });
 
 app.get("/homePage", (req, res) => {
@@ -440,85 +443,87 @@ app.post("/createBusinessP", createBusinessP);
 app.post("/editBusinessP", editBusinessP);
 app.post("/editPassword", editPassword);
 app.post("/editPassword", editPassword);
-app.post("/TrainingReg", async (req, res) => {
-  let date = req.body.dateIn;
-  let time = req.body.startIn;
-  let trainingName = req.body.typeIn;
-  let duration = req.body.durationIn;
-  let price = req.body.priceIn;
-  console.log(userEmail);
-  console.log(date);
-  console.log(time);
+app.post("/TrainingReg",async (req, res) => {
+    
+    let date = req.body.dateIn;
+    let time = req.body.startIn;
+    let trainingName = req.body.typeIn;
+    let duration = req.body.durationIn;
+    let price = req.body.priceIn;
+    let trainee;
+ 
+    console.log(userEmail);
+    console.log(date);
+    console.log(time);
 
-  console.log("isTrainee");
-  let trainee = await Trainee.findOneAndUpdate(
-    { email: userEmail },
-    {
-      $set: {
-        trainings: [
+        console.log("isTrainee");
+        trainee = await Trainee.findOneAndUpdate(
+          { email:
+            userEmail },
           {
-            trainingType: trainingName,
-            trainingDate: date.toString,
-            startHour: time,
-            pass: false,
-            duration: duration,
-            price: price,
-          },
-        ],
-      },
-    }
-  );
-
-  res.render("pages/traineeDashboard", {
-    userEmail: userEmail,
-    user: userObj,
+            $set: {
+              
+            trainings:[{
+              trainingType:trainingName,
+              trainingDate: date.toString(),
+              startHour: time,
+              pass: false,
+              duration:duration,
+              price:price
+      
+            }],
+            
+            },
+          }
+          
+        );
+      
+    
+    res.render("pages/traineeDashboard", {
+      userEmail: userEmail,
+      user: userObj,
+    });
+    
+  
   });
-});
-app.post("/newTraining", async (req, res) => {
+app.post("/newTraining",async (req, res) => {
   let traineeInput = req.body.Type;
   let date = req.body.date;
   let time = req.body.time;
   let trainingName;
   let duration;
   let price;
-
-  console.log("traineeInput" + traineeInput);
+  
+  console.log("traineeInput"+traineeInput);
   console.log(userObj);
 
-  if (userObj instanceof Trainer) {
-    userObj.trainingTypes.forEach((type) => {
-      if (type.name == traineeInput) {
+  if(userObj instanceof Trainer){
+    
+    userObj.trainingTypes.forEach(type => {
+      if(type.name == traineeInput){
         console.log("YESS");
         trainingName = type.name;
         duration = type.duration;
         price = type.price;
         console.log(trainingName);
+      }});
+      training = {
+        trainingType:trainingName,
+        trainingDate: date,
+        startHour:time.toString(),
+        available: true,
+        duration:duration,
+        price:price
+
       }
-    });
-    trainings = userObj.trainings;
-    console.log(trainings);
-    userObj = await Trainer.findOneAndUpdate(
-      { email: userObj.email },
-      {
-        $set: {
-          trainings: [
-            {
-              trainingType: trainingName,
-              trainingDate: date,
-              startHour: time.toString(),
-              available: true,
-              duration: duration,
-              price: price,
-            },
-          ],
-        },
-      }
-    );
+      addTraining(userObj.email,training);
+    
   }
-  res.render("pages/trainerDashboard", {
+  res.render("pages/calendar", {
     userEmail: userEmail,
     user: userObj,
   });
+
 });
 app.post("/deleteAccount", deleteAccount);
 app.post("/addTrainingType", addTrainingType);
