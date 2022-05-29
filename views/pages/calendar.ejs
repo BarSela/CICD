@@ -1,176 +1,452 @@
 <!DOCTYPE html>
 <html lang='en'>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset='utf-8' />
-    <title>Shape</title>
-    <link rel="icon" href="/assets/shape-tab-icon.png" type="image/png" />
-    <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet'>
-    <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Muli:300,400,600,800,900' />
 
-  
-    <link href='/main.css' rel='stylesheet' />
-    <script src='/main.js'></script>
-    <script>
-      
-      // Loading the calendar
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          // themeSystem: 'bootstrap',
-          initialView: 'dayGridMonth',
-          aspectRatio: 1.5,
-          height:800,
-          selectable: true,
-        
-          customButtons:
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset='utf-8' />
+  <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet'>
+  <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Muli:300,400,600,800,900' />
+  <script src="https://kit.fontawesome.com/3533a4f1e6.js" crossorigin="anonymous"></script>
+
+  <link href='/main.css' rel='stylesheet' />
+  <script src='/main.js'></script>
+  <script>
+
+    // Loading the calendar
+    document.addEventListener('DOMContentLoaded', function () {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        // themeSystem: 'bootstrap',
+        initialView: 'dayGridMonth',
+        aspectRatio: 1.5,
+        height: 800,
+        selectable: true,
+
+        customButtons:
         {
           addEventButton: {
             text: 'add event',
-            click: function() {
-              document.getElementById("newTrainingForm").style.display = "block";
-              var btn =document.getElementById("create-btn");
-              btn.addEventListener("click",function() {
+            click: function () {
+              document.getElementById("cover").style.display = "block";
+              var btn = document.getElementById("create-btn");
+              btn.addEventListener("click", function () {
                 var dateStr = document.getElementById("date").value;
                 var trainingType = document.getElementById("Type").value;
                 // var duration = document.getElementById("Duration");
                 // var price = document.getElementById("Price");
                 var time = document.getElementById("start-time").value;
                 console.log(time);
-                var date = new Date(dateStr +'T'+time); // will be in local time
+                var date = new Date(dateStr + 'T' + time); // will be in local time
                 if (!isNaN(date.valueOf())) { // valid?
-                  
+
                   calendar.addEvent({
                     title: trainingType,
                     start: date,
                     allDay: true
                   });
                   alert('Great. new training added to your schedual');
-                
+
                 } else {
                   alert('Invalid date.');
                 }
-              
+
               });
             }
-          }
+          },
+          
+
         },
         headerToolbar: {
-            
-            left:  'today,addEventButton',
-            center: 'prev,title,next',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay' 
-          
-        }
-      });
-        calendar.render(); 
-        calendar.display.allDay();
-        var event= {title: 'Event1',start: '2022-04-04'};
-          
-      });
-    </script>
-  </head>
-  <body>
-    
-  <%- include('../partials/sidebar') %>
-  
-  <%- include('../partials/navbar') %>
-    
-  <main>
-    
-        <div class="split left">
-           <div class="form-wrapper" id="newTrainingForm" style="display: none;">
-              <h2>Schedule New Training</h2>
-             <form  class="form-container"  action="/newTraining" method="POST" >
-                <div class="txt_field">
-                
-                <select id="Type" name="Type">
-                <% if(typeof user != "undefined" ) { %>
-                <% if(typeof user.trainingTypes[0].name != "empty" ) { %>
-                <option value="<%= user.trainingTypes[0].name %>"><%= user.trainingTypes[0].name %></option>
-                <% } %>
-                <% if(typeof user.trainingTypes[1].name != "empty" ) { %>
-                <option value="<%= user.trainingTypes[1].name %>"><%= user.trainingTypes[1].name %></option>
-                <% } %>
-                <% if(typeof user.trainingTypes[2].name != "empty" ) { %>
-                <option value="<%= user.trainingTypes[2].name %>"><%= user.trainingTypes[2].name %></option>
-                <% } %>
-                <% if(typeof user.trainingTypes[3].name != "empty" ) { %>
-                <option value="<%= user.trainingTypes[3].name %>"><%= user.trainingTypes[3].name %></option>
-                <% } %>
-                <% } %>
-                </select>
-                
-                <span></span>
-                <label>Training Type</label>
-                </div>
-                <div class="txt_field"> <input id="title" type="text"name="training title" required/>
-                <span></span>
-                <label>training description</label>
-                </div>
-                <div class="date_fields">
-                  <div class="txt_field"><input id="date" name="date" type="date"required />
-                    <span></span>
-                  </div>
-                  <div class="txt_field">
-                    <input
-                    id="time"
-                    name="time"
-                    type="time"
-                    required
-                    />
-                    <span></span>
-                  </div>
-                </div>
-                <div class="label-group">
-                  
-                   
-                  <label id="Duration"><a>Duration: </a></label>
-                  <label id="Price"><a>Price: </a></label>
-                </div>
-         
-                <div class="btn-group">
-                  <button type="submit" id="create-btn" >Create</button>
-                  <button type="button"  onclick="closeForm()">Close</button>
-                </div>
-             </form>
-           </div>
-        </div>
 
-        <div class="split right">
-         
-            <div id='calendar' ></div>
-       
-        </div>
+          left: 'today,addEventButton',
+          center: 'prev,title,next',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+
+        },
+        eventClick: function (info) {
+
+
+  info.el.addEventListener("click", function () {
+    let form = document.getElementById("editForm");
+    document.getElementById("viewType").value = info.event.title;
+    document.getElementById("viewDate").valueAsDate = info.event.start;
+    document.getElementById("viewStart").value = info.event.extendedProps.startHour;
+    document.getElementById("viewDuration").placeholder = "Duration: "+info.event.extendedProps.duration;
+    document.getElementById("viewPrice").placeholder = "Price: "+info.event.extendedProps.price +" ₪";    
+    document.getElementById("editCover").style.display = "block";;
+  // form.style.position = "absolute";
+
+}
+)
+}
+      });
+      
+      "<% user.trainings.forEach(t => { %>"
+          type = "<%= t.trainingType %>"
+          dateStr = "<%= t.trainingDate %>"
+          time = "<%= t.startHour %>"
+          duration = "<%= t.duration %>"
+          price = "<%= t.price %>"
+          date = new Date(dateStr);
+
+            calendar.addEvent({
+              title: type,
+              start: date,
+              allDay: true,
+              extendedProps: {
+                startHour: time,
+                duration: duration,
+                price: price
+              },
+            });
+        "<% }); %>"
+      calendar.render();
      
-    </main>
+    });
+    
+  </script>
+</head>
 
+<body>
 
-<script>
-update();
-       function update() {
-				var select = document.getElementById("Type");
-				var option = select.options[select.selectedIndex];
-				select.value = option.value;
-      
+  <%- include('../partials/sidebar') %>
+
+    <%- include('../partials/navbar') %>
+
+      <main>
+        <!-- add new training -->
+        <div id="cover" style="display: none;">
+          <div class="modal fade show" id="addEventToCalendarModal" tabindex="-1" role="dialog"
+            style=" padding-top: 100px; display: block;" aria-modal="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-close">
+                  <button type="button" class="btn btn-icon btn-sm btn-ghost-secondary" data-dismiss="modal"
+                    aria-label="Close">
+                    <i class="tio-clear tio-lg"></i>
+                  </button>
+                </div>
+                <!-- End Header -->
+
+                <!-- Body -->
+                <div class="modal-body">
+                  <div class="media">
+                    <textarea id="eventTitleLabel" class="form-control form-control-title"
+                      placeholder="ADD NEW TRAINING" style="height: 47px; margin-top: 0px; margin-bottom: 0px;"
+                      readonly></textarea>
+                  </div>
+                  <form class="form-container" action="/viewTraining" method="POST">
+                    <!-- End Media -->
+                    <div class="row form-group" data-select2-id="25">
+                      <div class="col-sm-3 mb-2 mb-sm-0">
+                        <div class="media align-items-center mt-2">
+                          <i class="tio-format-points nav-icon"></i>
+                          <div class="media-body">Training type</div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm" data-select2-id="24">
+                        <!-- Select training type-->
+                        <% if(typeof user != "undefined" && typeof user.trainingTypes != "undefined" ) { %>
+                        <select class="js-select2-custom custom-select " size="1" id="Type" name="Type">
+                              <% user.trainingTypes.forEach(t => { %>
+                                <option value="<%= t.name %>"><%= t.name %></option>
+                                <% }); %>
+                                </select>
+                                <% } %> 
+                      </div>
+                    </div>
+
+                    <!-- End Row -->
+                    <div class="row form-group">
+                      <div class="col-sm-3 mb-2 mb-sm-0">
+                        <div class="media align-items-center mt-2">
+                          <i class="tio-event nav-icon"></i>
+
+                          <div class="media-body">Date</div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm">
+                        <label for="eventDateRangeLabel" class="sr-only">Date</label>
+                        <input id="date" name="date" type="date" style="width: 0px;"
+                          class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" required />
+
+                      </div>
+                      <div class="col-sm">
+                        <label for="eventDateRangeLabel" class="sr-only">Start Hour</label>
+                        <input id="time" name="time" type="time" style="width: 0px;"
+                          class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" required />
+
+                      </div>
+                    </div>
+
+                    <!-- End Row -->
+                    <div class="row form-group">
+                      <div class="col-sm-3 mb-2 mb-sm-0">
+                        <div class="media align-items-center mt-2">
+                          <i class="tio-event nav-icon"></i>
+
+                          <div class="media-body">Training details</div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm">
+                        <label for="eventDateRangeLabel" class="sr-only">Duration</label>
+                        <input id="duration" name="duration" type="duration" style="width: 0px;"
+                          class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" placeholder="Duration: " readonly/>
+                      </div>
+                      <div class="col-sm">
+                        <label for="eventDateRangeLabel" class="sr-only">Price</label>
+                        <input id="price" name="price" type="text" style="width: 0px;"
+                          class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" placeholder="Price: " readonly />
+                      </div>
+                    </div>
+                    <!-- End Row -->
+                    <div class="row form-group">
+                      <div class="col-sm-3 mb-2 mb-sm-0">
+                        <div class="media align-items-center mt-2">
+                          <i class="tio-poi nav-icon"></i>
+                          <div class="media-body">Location</div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm">
+                        <label for="eventLocationLabel" class="sr-only">Add location</label>
+
+                        <input type="text" class="form-control" id="eventLocationLabel" placeholder="Add location"
+                          aria-label="Add location">
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <div class="col-sm-3 mb-2 mb-sm-0">
+                        <div class="media align-items-center mt-2">
+                          <i class="tio-text-left nav-icon"></i>
+
+                          <div class="media-body">Description</div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm">
+                        <label for="eventDescriptionLabel" class="sr-only">Add description</label>
+
+                        <textarea id="eventDescriptionLabel" class="form-control"
+                          placeholder="Add description"></textarea>
+                      </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" id="discardFormt" class="btn btn-white" onclick="closeForm()">Discard</button>
+                  <button type="submit" id="processEvent" class="btn btn-primary">Create Training</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+<!-- edit training -->
+<div id="editCover" style="display: none;">
+  <div class="modal fade show" id="addEventToCalendarModal" tabindex="-1" role="dialog"
+  style=" padding-top: 100px; display: block;" aria-modal="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <!-- Header -->
+      <div class="modal-close">
+        <button type="button" class="btn btn-icon btn-sm btn-ghost-secondary" onclick="closeEditForm()" data-dismiss="modal"
+          aria-label="Close">
+          <i class="fa-regular fa-xmark"></i>
+        </button>
+      </div>
+      <!-- End Header -->
+
+      <!-- Body -->
+      <div class="modal-body">
+        <div class="media">
+          <textarea id="eventTitleLabel" class="form-control form-control-title"
+            placeholder="VIEW TRAINING DETAILS" style="height: 47px; margin-top: 0px; margin-bottom: 0px;"
+            readonly></textarea>
+        </div>
+        <form class="form-container" id="editForm" action="/viewTraining" method="POST">
+          <div class="row form-group" data-select2-id="25">
+            <div class="col-sm-3 mb-2 mb-sm-0">
+              <div class="media align-items-center mt-2">
+                <i class="tio-format-points nav-icon"></i>
+                <div class="media-body">Training type</div>
+              </div>
+            </div>
+
+            <div class="col-sm" data-select2-id="24">
+              <!-- Select training type-->
+              <% if(typeof user != "undefined" && typeof user.trainingTypes != "undefined" ) { %>
+              <select class="js-select2-custom custom-select " size="1" id="viewType" name="Type"  onChange="updatePriceNDuration()" disabled>
+                    <% user.trainingTypes.forEach(t => { %>
+                      <option value="<%= t.name %>"><%= t.name %></option>
+                      <% }); %>
+                      </select>
+                      <% } %> 
+            </div>
+          </div>
+
+          <!-- End Row -->
+          <div class="row form-group">
+            <div class="col-sm-3 mb-2 mb-sm-0">
+              <div class="media align-items-center mt-2">
+                <i class="tio-event nav-icon"></i>
+                <div class="media-body">Date</div>
+              </div>
+            </div>
+
+            <div class="col-sm">
+              <label for="eventDateRangeLabel" class="sr-only">Date</label>
+              <input id="viewDate" name="date" type="date" style="width: 0px;"
+                class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" readonly />
+            </div>
+            <div class="col-sm">
+              <label for="eventDateRangeLabel" class="sr-only">Start Hour</label>
+              <input id="viewStart" name="time" type="time" style="width: 0px;"
+                class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" readonly />
+
+            </div>
+          </div>
+
+          <!-- End Row -->
+          <div class="row form-group">
+            <div class="col-sm-3 mb-2 mb-sm-0">
+              <div class="media align-items-center mt-2">
+                <i class="tio-event nav-icon"></i>
+
+                <div class="media-body">Training details</div>
+              </div>
+            </div>
+
+            <div class="col-sm">
+              <label for="eventDateRangeLabel" class="sr-only">Duration</label>
+              <input id="viewDuration" name="duration" type="duration" style="width: 0px;"
+                class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" readonly/>
+            </div>
+            <div class="col-sm">
+              <label for="eventDateRangeLabel" class="sr-only">Price</label>
+              <input id="viewPrice" name="price" type="text" style="width: 0px;"
+                class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input"  readonly />
+            </div>
+          </div>
+          <!-- End Row -->
+          <div class="row form-group">
+            <div class="col-sm-3 mb-2 mb-sm-0">
+              <div class="media align-items-center mt-2">
+                <i class="tio-poi nav-icon"></i>
+                <div class="media-body">Location</div>
+              </div>
+            </div>
+
+            <div class="col-sm">
+              <label for="eventLocationLabel" class="sr-only"></label>
+
+              <input type="text" class="form-control" id="eventLocationLabel" readonly
+                aria-label="Add location">
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-3 mb-2 mb-sm-0">
+              <div class="media align-items-center mt-2">
+                <i class="tio-text-left nav-icon"></i>
+
+                <div class="media-body">Description</div>
+              </div>
+            </div>
+
+            <div class="col-sm">
+              <label for="eventDescriptionLabel"  class="sr-only">Add description</label>
+
+              <textarea id="eventDescriptionLabel" class="form-control"
+                placeholder="Add description"></textarea>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="discardFormt" class="btn btn-white" onclick="closeForm()">Discard</button>
+        <button type="button" id="editBtn" class="btn btn-primary" onclick="editForm()">Edit Training</button>
+        <button type="submit" id="saveBtn" class="btn btn-primary" style="display: none;">Save Change</button>
+
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+        <div class="calendar-container">
+          <div id='calendar'></div>
+        </div>
+      </main>
+
+      <script>
+        updatePriceNDuration(){
+
+        }
+        function editForm() {
+          document.getElementById("editBtn").style.display ="none";
+          document.getElementById("saveBtn").style.display ="block";
+          document.getElementById("viewType").disabled  = false;
+          document.getElementById("viewDate").readOnly = false;
+
+          document.getElementById("viewStart").readOnly = false;
+          document.getElementById("viewDuration").readOnly = false;
+          document.getElementById("viewPrice").readOnly = false;
+        }
+        function closeForm() {
+          document.getElementById("cover").style.display = "none";
+
+        }
+ 
+        function closeEditForm() {
+          document.getElementById("editCover").style.display = "none";
+
+        }
+        update();
+        function update() {
+          var select = document.getElementById("Type");
+          var option = select.options[select.selectedIndex];
+          select.value = option.value;
+          updateDurationAndPrice();
+        }
+        function updateDurationAndPrice() {
+        var select = document.getElementById("Type").value;
+       
+        console.log(len);
+        console.log(select);
+        for(var i =0;i<len;i++){
+          if(types[i].name == select)
+          {
+            //TODO
+          }
+        }
+			
 			}
-function openForm() {
-  document.getElementById("newTrainingForm").style.display = "block";
-}
-function closeForm() {
-  document.getElementById("newTrainingForm").style.display = "none";
-}
-function validateTrainingForm(){
-        var trainingType = document.getElementById("Type");
-        var duration = document.getElementById("Duration");
-        var price = document.getElementById("Price");
-        var time = document.getElementById("start_time");
-        var event= {title: 'Event1',start: '2022-04-04'};
-        console.log("LLL");
-        
-      }
-      
-</script>
-  </body>
+
+        function openForm() {
+          document.getElementById("cover").style.display = "block";
+
+        }
+
+        function closeForm() {
+          document.getElementById("cover").style.display = "none";
+
+        }
+        function validateTrainingForm() {
+          var trainingType = document.getElementById("Type");
+          var duration = document.getElementById("Duration");
+          var price = document.getElementById("Price");
+          var time = document.getElementById("start_time");
+          var event = { title: 'Event1', start: '2022-04-04' };
+          console.log("LLL");
+
+        }
+
+      </script>
+</body>
+
 </html>
