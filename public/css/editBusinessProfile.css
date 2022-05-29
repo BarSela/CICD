@@ -147,8 +147,9 @@ main #edit-training-bt {
   display: none;
 }
 #savebt {
-  margin-left: 19cm;
-  margin-top: 3px;
+  margin-left: 12cm;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .w3-row-padding > .w3-twothird {
   padding-top: 8px;

@@ -12,8 +12,9 @@ const {
   deleteTraining,
   addTraining,
   addTrainingType,
-  cancelTrainingRegistration,
+  cancelTrainingRegistration,deleteTrainingTypes,forgotPasseord,resetPassword,
 } = require("../controllers/user");
+
 //const bcrypt = require("bcrypt");
 const User = require("../model/user");
 const Trainer = require("../model/trainer");
@@ -435,6 +436,16 @@ app.get("/logout", (req, res) => {
   userEmail = "";
   res.render("pages/homePage", { userEmail: userEmail });
 });
+app.get("/resetPassword", (req, res) => {
+  var loginStatus = "true";
+  res.render("pages/resetPassword", { loginStatus: loginStatus, userEmail: userEmail });
+});
+app.get("/forgotPassword", (req, res) => {
+  var loginStatus = "true";
+  res.render("pages/forgotPassword", { loginStatus: loginStatus, userEmail: userEmail });
+});
+
+//post:
 app.post("/editTrainingTypes", editTrainingTypes);
 app.post("/login", login);
 app.post("/signUp", signup);
@@ -528,3 +539,7 @@ app.post("/newTraining",async (req, res) => {
 app.post("/deleteAccount", deleteAccount);
 app.post("/addTrainingType", addTrainingType);
 app.post("/cancelTrainingRegistration", cancelTrainingRegistration);
+app.post("/deleteTrainingTypes", deleteTrainingTypes);
+
+app.post("/forgotPassword" , forgotPasseord);
+app.post("/resetPassword", resetPassword);

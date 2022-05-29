@@ -64,7 +64,7 @@
                       <% if(typeof user !="undefined" ) { %>
                         <% user.trainingTypes.forEach(type=> { %>
                           <tr>
-                            <form id="rowForm" method=POST action="/editTrainingTypes" >
+                          <form id="rowForm" method=POST action="/editTrainingTypes" >
                             <td nowrap="nowrap" >
                               <span class="bgColor"
                                 style="margin-top: -10px; background: rgb(234, 221, 255); border-color: rgb(151, 122, 205); color: rgb(97, 61, 164);"
@@ -80,15 +80,20 @@
                             <td class="text-xs-left" name="trainingTypeDuration">
                               <input type="number" name="trainingTypeDuration" value="<%= type.duration %>" required>
                             </td>
-                            <input name="action" id="selectedAction" type="text" value="edit" hidden>
                             <td nowrap="nowrap" class="text-xs-left">
-                              <button type="submit" onclick="submitEdit()"
+                              <button type="submit" 
                                 class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
                                 style="font-size: 22px;">
                                 <div class="v-btn__content"><i class="fa fa-floppy-o" aria-hidden="true"></i>
                                 </div>
                               </button>
-                              <button type="button" onclick="submitDelete()"
+                            </form>
+                              <form id="rowForm" method=POST action="/deleteTrainingTypes" >
+                                <input type="text" name="trainingTypeName" value="<%= type.name %>" hidden>
+                                <input type="text" name="page" value="edit" hidden>
+                                <input type="number" name="TrainingTypePrice" value="<%= type.price %>"  hidden>
+                                <input type="number" name="trainingTypeDuration" value="<%= type.duration %>"  hidden>
+                                <button type="submit" 
                                 class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light error--text"
                                 style="font-size: 22px;" >
                                 <div class="v-btn__content">
@@ -96,6 +101,8 @@
                                   </i>
                                 </div>
                               </button>
+                            
+
                             </td>
                           </form>
                           </tr>
@@ -172,6 +179,9 @@
  
 
   <script>
+
+
+
     document.getElementById("duration").addEventListener('change', (event) => {
       document.getElementById("d").innerHTML=document.getElementById("duration").value;
     });
@@ -187,25 +197,7 @@ function closeForm() {
   document.getElementById("cover").style.display = "none";
 }
     
-   function submitEdit()
-   {
-     document.getElementById('selectedAction').value='edit';
-     document.getElementById("rowForm").submit();
-
-   }
-   function submitDelete()
-   {
-    document.getElementById('selectedAction').value='delete';
-    if(document.getElementById("trainingTable").rows.length==1)
-      {
-        errorMsg.style.display = "block";
-      }
-      else
-      {
-        document.getElementById("rowForm").submit();
-      }
-    
-  }
+   
   </script>
 
   <script src="https://localhost:12719/browser-sync/browser-sync-client.js?v=2.26.7" async=""></script>

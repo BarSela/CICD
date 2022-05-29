@@ -592,74 +592,79 @@ module.exports = {
     let newTypeName = req.body.newTrainingTypeName;
     let typeDuration = parseInt(req.body.trainingTypeDuration);
     let typePrice = parseInt(req.body.trainingTypePrice);
-    let action = req.body.action;
     let page = req.body.page;
 
     console.log("type name");
     console.log(typeName);
-    console.log("action");
-    console.log(action);
+    console.log("type name");
+    console.log(page);
 
-    if (action == "edit") {
-      let types;
-      Trainer.findOne({ email: userEmail }).then((trainer) => {
-        if (!trainer) {
-          return false;
-        } else {
-          if (trainer.trainingTypes != null) {
-            types = trainer.trainingTypes;
-            for (let i = 0; i < types.length; i++) {
-              if (types[i].name == typeName) {
-                types[i].name = newTypeName;
-                types[i].price = typeDuration;
-                types[i].duration = typePrice;
-              }
+    let types;
+    Trainer.findOne({ email: userEmail }).then((trainer) => {
+      if (!trainer) {
+        return false;
+      } else {
+        if (trainer.trainingTypes != null) {
+          types = trainer.trainingTypes;
+          for (let i = 0; i < types.length; i++) {
+            if (types[i].name == typeName) {
+              types[i].name = newTypeName;
+              types[i].price = typeDuration;
+              types[i].duration = typePrice;
             }
           }
         }
-        Trainer.updateOne({ _id: trainer._id }, { trainingTypes: types })
-          .then(() => {
-            if (page == "edit") {
-              return res.redirect("/editTrainingTypes");
-            } else {
-              return res.redirect("/createTrainingTypes");
-            }
-          })
-          .catch((error) => {
-            return res.redirect("/businessProfile");
-          });
-      });
-    } //delete
-    else {
-      let types;
-      Trainer.findOne({ email: userEmail }).then((trainer) => {
-        if (!trainer) {
-          return false;
-        } else {
-          if (trainer.trainingTypes != null) {
-            types = trainer.trainingTypes;
-            for (let i = 0; i < types.length; i++) {
-              if (types[i].name == typeName) {
-                types.splice(i, 1);
-              }
+      }
+      Trainer.updateOne({ _id: trainer._id }, { trainingTypes: types })
+        .then(() => {
+          if (page == "edit") {
+            return res.redirect("/editTrainingTypes");
+          } else {
+            return res.redirect("/createTrainingTypes");
+          }
+        })
+        .catch((error) => {
+          return res.redirect("/businessProfile");
+        });
+    });
+  },
+  deleteTrainingTypes: async (req, res) => {
+    let typeName = req.body.trainingTypeName;
+    let typeDuration = parseInt(req.body.trainingTypeDuration);
+    let typePrice = parseInt(req.body.trainingTypePrice);
+    let page = req.body.page;
+
+    console.log("type name");
+    console.log(typeName);
+
+    let types;
+    Trainer.findOne({ email: userEmail }).then((trainer) => {
+      if (!trainer) {
+        return false;
+      } else {
+        if (trainer.trainingTypes != null) {
+          types = trainer.trainingTypes;
+          for (let i = 0; i < types.length; i++) {
+            if (types[i].name == typeName) {
+              types.splice(i, 1);
             }
           }
         }
-        Trainer.updateOne({ _id: trainer._id }, { trainingTypes: types })
-          .then(() => {
-            console.log("true");
-            if (page == "edit") {
-              return res.redirect("/editTrainingTypes");
-            } else {
-              return res.redirect("/createTrainingTypes");
-            }
-          })
-          .catch((error) => {
-            console.log("false");
-            return res.redirect("/businessProfile");
-          });
-      });
-    }
+      }
+      Trainer.updateOne({ _id: trainer._id }, { trainingTypes: types })
+        .then(() => {
+          console.log("true");
+          if (page == "edit") {
+            return res.redirect("/editTrainingTypes");
+          } else {
+            return res.redirect("/createTrainingTypes");
+          }
+        })
+        .catch((error) => {
+          console.log("false");
+          return res.redirect("/businessProfile");
+        });
+    });
   },
   getAllTrainers: () => {
     Trainer.find()
@@ -806,5 +811,144 @@ module.exports = {
           return res.redirect("/");
         });
     });
+  },
+  forgotPasseord: async (req, res) => {
+    var nodemailer = require ('nodemailer');
+    email = req.body.email;
+    var loginStatus = "false";
+    console.log("email1 : " + email);
+    User.find({ email: email }).then((users) => {
+      //If the user list is empty
+      if (users.length === 0) {
+        return res.render("pages/forgotPassword", {
+          loginStatus: loginStatus,
+          userEmail: userEmail,
+        });
+      }
+      process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+      var link = "http://localhost:5000/resetPassword";
+      var transporter = nodemailer.createTransport ({ 
+          service: 'gmail', 
+          auth: { 
+                  user: 'ShapeComp@gmail.com', 
+                  pass: 'Noa123456'
+              } 
+          });
+        const mailOptions = { 
+          from: 'ShapeComp@gmail.com',  
+          to: email,  
+          subject: 'Reset Password mail', 
+          text: 'Hi , Please reset your password by clicking the link: ',
+          html: `<a href='`+link +`'>Click On this link to Reset your password now!</a>
+                  <p>Shape Tech Team</p>`
+        };
+        transporter.sendMail (mailOptions, function (err, info) { 
+          if (err) 
+            console.log (err) 
+          else 
+            console.log (info); 
+          });
+      });
+  },
+  resetPassword: async(req, res, next) =>{
+    let newPassword = req.body.password;
+    let email  = req.body.userEmail;
+    let loginStatus = "false";
+    userEmail = "";
+    console.log("emaaaaaaaail :" + email);
+    User.find({ email: email }).then((users) => {
+      //If the user list is empty
+      if (users.length === 0) {
+        console.log("emaaaaaaaail :" + email +" does not exist");
+        console.log("loginStatus:" + loginStatus)
+        return res.render("pages/resetPassword", {
+          loginStatus: loginStatus,
+          userEmail: userEmail,
+        });
+      }
+      const [user] = users;
+      //Checking the password
+      userEmail = user.email;
+      console.log("emaaaaaaaail :" + email);
+      bcrypt.hash(newPassword, 10, async (error, result) => {
+        if (error) {
+          return res.render("pages/resetPassword", {
+            loginStatus: loginStatus,
+            userEmail: userEmail ,
+          });
+        }
+        if (result) {
+          if (user.userType == "trainer") {
+            userEmail = user.email;
+            const userU = await User.findOneAndUpdate(
+              { email: userEmail  },
+              {
+                $set: {
+                  password: newPassword,
+                },
+              }
+            );
+            console.log("The new pass: " + newPassword);
+            if (userU) {
+              userEmail = user.email;
+              const trainer = await Trainer.findOneAndUpdate(
+                { email: userEmail  },
+                {
+                  $set: {
+                    password: newPassword,
+                  },
+                }
+              );
+              if (trainer) {
+                return res.redirect("/login");
+              } else {
+                console.log("Error to find trainer");
+                return res.render("/");
+              }
+            } else {
+              console.log("Error to find user");
+              return res.render("/");
+            }
+          } else if (user.userType == "trainee") {
+            console.log("okkkkkkkkkkkk trainer");
+            const userU = await User.findOneAndUpdate(
+              { email: userEmail  },
+              {
+                $set: {
+                  password: newPassword,
+                },
+              }
+            );
+            console.log("update1");
+            if (userU) {
+              const trainee = await Trainee.findOneAndUpdate(
+                { email: userEmail  },
+                {
+                  $set: {
+                    password: newPassword,
+                  },
+                }
+              );
+              console.log("update2");
+              if (trainee) {
+                return res.redirect("/login");
+              } else {
+                console.log("Error to find trainee");
+                res.render("/");
+              }
+            } else {
+              console.log("Error to find user");
+              res.render("/");
+            }
+          }
+        }
+        return res.render("pages/login", {
+          status: status,
+          user: userEmail,
+          userEmail: userEmail,
+        });
+      }); //end bcrypt
+    }); //end User.find
+    console.log("okkkkkkkkkkkk");   
   },
 };
