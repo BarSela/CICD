@@ -688,26 +688,30 @@ module.exports = {
         return null;
       });
   },
-  addTraining: async (userEmail, training) => {
-    let trainings;
-    Trainer.findOne({ email: userEmail }).then((trainer) => {
-      if (!trainer) {
-        return false;
-      } else {
-        if (trainer.trainings) {
-          trainings = trainer.trainings;
-          trainings[trainings.length] = training;
-        }
-      }
-      Trainer.updateOne({ _id: trainer._id }, { trainings: trainings })
-        .then(() => {
-          return true;
-        })
-        .catch((error) => {
-          return false;
-        });
-    });
-  },
+    addTraining:async(userEmail,training) => {
+    let trainings = [];
+      Trainer.findOne({email:userEmail}).then((trainer) => {
+          if (!trainer) {
+              return false;    
+          }
+          else{
+            if(trainer.trainings){
+              trainings = trainer.trainings;
+              trainings.push(training);
+              console.log("new training: " + training);
+
+              console.log("trainings list: " + trainings);
+              }
+            
+          }
+          Trainer.updateOne({ _id: trainer._id }, {trainings:trainings}).then(() => {
+            return true;
+        }).catch(error => {
+            return false;
+            }); 
+    })   
+
+    },
   addTrainingType: async (req, res) => {
     let newTrainingTypeName = req.body.trainingTypeName;
     let newTrainingTypeDuration = req.body.trainingTypeDuration;
