@@ -23,27 +23,28 @@
         </h3>
         <div class="btn-group">
           <div class="btn-group">
-          <button
-            type="button"
-            id="get-started-btn"
-            onclick="location.href='/signUp'"
-          >
-          Get Started
-          </button>
-          <button
-            type="button"
-            id="dashboard"
-            onclick="location.href='/traineedashboard/<%= userEmail %>'"
-            style="display: none;">
-            dashboard
-          </button>
-        </div>
+            <button
+              type="button"
+              id="get-started-btn"
+              onclick="location.href='/signUp'"
+            >
+              Get Started
+            </button>
+            <button
+              type="button"
+              id="dashboard"
+              onclick="location.href='/dashboard'"
+              style="display: none"
+            >
+              dashboard
+            </button>
+          </div>
           <button
             type="button"
             id="about-btn"
             onclick="location.href='/aboutUs'"
           >
-          About Us
+            About Us
           </button>
         </div>
       </div>
@@ -159,18 +160,14 @@
     <footer><%- include('../partials/footer') %></footer>
   </body>
   <script>
-    
     if ("<%= userEmail %>" != "") {
-      document.getElementById("get-started-btn").style.display="none";
+      document.getElementById("get-started-btn").style.display = "none";
       document.getElementById("dashboard").style.display = "block";
     } else {
-
-      document.getElementById("get-started-btn").style.display="block";
-      document.getElementById("dashboard").style.display="none";
-      
-      
+      document.getElementById("get-started-btn").style.display = "block";
+      document.getElementById("dashboard").style.display = "none";
     }
-    
+
     let slideIndex = 1;
     showSlides(slideIndex);
     // Next/previous controls

@@ -16,6 +16,7 @@ const {
   deleteTrainingTypes,
   forgotPasseord,
   resetPassword,
+  statistics,
 } = require("../controllers/user");
 
 //const bcrypt = require("bcrypt");
@@ -397,10 +398,24 @@ app.get("/traineeDashboard/:email", async (req, res) => {
     });
   });
 });
-app.get("/traineeDashboard", async (req, res) => {
-  res.render("pages/traineeDashboard", {
-    userEmail: userEmail,
-    user: userObj,
+app.get("/dashboard", async (req, res) => {
+  //add to fix the dashboard botton in home page
+  Trainer.find({ email: userEmail }).then((users) => {
+    //If the user list is empty-trainer
+    if (users.length === 0) {
+      res.render("pages/trainerDashboard", {
+        userEmail: userEmail,
+        user: userObj,
+      });
+    } else {
+      const [user] = users;
+      userObj = user;
+
+      res.render("pages/traineeDashboard", {
+        userEmail: userEmail,
+        user: userObj,
+      });
+    }
   });
 });
 
@@ -478,6 +493,30 @@ app.get("/calendar", (req, res) => {
   });
 });
 
+app.get("/calendar", (req, res) => {
+  res.render("pages/calendar", {
+    userEmail: userEmail,
+    user: userObj,
+  });
+});
+app.get("/statistics", (req, res) => {
+  let month = req.body.month;
+  let info = req.body.info;
+
+  let type;
+  Trainer.find({ email: userEmail }).then((trainers) => {
+    const [user] = trainers;
+    userObj = user;
+    type = "trainer";
+
+    console.log(userObj);
+    res.render("pages/statisticsResults", {
+      userEmail: userEmail,
+      user: userObj,
+      userType: type,
+    });
+  });
+});
 app.get("/viewSchedual", (req, res) => {
   let email = req.body.email;
   console.log("view user: " + req.user);
@@ -543,15 +582,14 @@ app.post("/TrainingReg", async (req, res) => {
   let time = req.body.startIn;
   let trainingName = req.body.typeIn;
   let duration = req.body.durationIn;
-  let price = req.body.priceIn;
-  let trainee;
+  let price = req.body.priceIn;;
 
   console.log(userEmail);
   console.log(date);
   console.log(time);
 
   console.log("isTrainee");
-  trainee = await Trainee.findOneAndUpdate(
+  let trainee = await Trainee.findOneAndUpdate(
     { email: userEmail },
     {
       $set: {
@@ -617,3 +655,4 @@ app.post("/deleteTrainingTypes", deleteTrainingTypes);
 
 app.post("/forgotPassword", forgotPasseord);
 app.post("/resetPassword", resetPassword);
+//app.post("/statistics", statistics);

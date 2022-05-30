@@ -627,3 +627,98 @@ main .btn-send:hover {
 		display: none;
 	}
 }
+.profile-details .input-box {
+	height: 48px;
+	margin: 20px 0;
+  }
+ .input-box {
+	height: 48px;
+	margin: 20px 0;
+  }
+  .profile-details .input-box select {
+	height: 90%;
+	width: 40%;
+	outline: none;
+	padding: 0 15px;
+	font-size: 17px;
+	font-weight: 400;
+	color: #333;
+	border: 1.5px solid #c7bebe;
+	border-bottom-width: 2.5px;
+	border-radius: 6px;
+	transition: all 0.3s ease;
+  }
+  .input-box select:focus, .input-box select:valid {
+	border-color: #6c9da4;
+  }
+.input-box input {
+	height: 90%;
+	width: 40%;
+	outline: none;
+	padding: 0 15px;
+	font-size: 17px;
+	font-weight: 400;
+	color: #333;
+	border: 1.5px solid #c7bebe;
+	border-bottom-width: 2.5px;
+	border-radius: 6px;
+	transition: all 0.3s ease;
+  }
+  .input-box label {
+	margin: 20px;
+	color: #555;
+	flex-direction: row;
+	display: inline-block;
+	text-align: right;
+	width: 120px;
+	margin-top: 0px;
+	justify-content: flex-end;
+  }
+.input-box input {
+	height: 90%;
+	width: 40%;
+	outline: none;
+	padding: 0 15px;
+	font-size: 17px;
+	font-weight: 400;
+	color: #333;
+	border: 1.5px solid #c7bebe;
+	border-bottom-width: 2.5px;
+	border-radius: 6px;
+	transition: all 0.3s ease;
+  }
+  .input-box input:focus,
+  .input-box input:valid {
+	border-color: #6c9da4;
+  }
+ .input-box {
+	height: 48px;
+	margin: 20px 0;
+  }
+  .input-box label {
+	margin: 20px;
+	color: #555;
+	flex-direction: row;
+	display: inline-block;
+	text-align: right;
+	width: 140px;
+	margin-top: 0px;
+	justify-content: flex-end;
+  }
+  .input-box input {
+	height: 90%;
+	width: 40%;
+	outline: none;
+	padding: 0 15px;
+	font-size: 17px;
+	font-weight: 400;
+	color: #333;
+	border: 1.5px solid #c7bebe;
+	border-bottom-width: 2.5px;
+	border-radius: 6px;
+	transition: all 0.3s ease;
+  }
+  .input-box input:focus,
+  .input-box input:valid {
+	border-color: #6c9da4;
+  }
