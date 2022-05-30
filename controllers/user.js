@@ -100,6 +100,7 @@ module.exports = {
               });
               console.log("post error ");
             });
+
           const trainer = new Trainer({
             fullName,
             businessName,
@@ -111,6 +112,36 @@ module.exports = {
             .save()
             .then((result) => {
               console.log("new trainer created");
+              //monthStatistics:
+              let statList = [];
+              let monthStatistic = {
+                scheduled: 15,
+                canceled: 9,
+                preformed: 6,
+              };
+              console.log("monthStatistic");
+
+              console.log(monthStatistic);
+              console.log("for");
+
+              for (let i = 0; i < 12; i++) {
+                console.log(monthStatistic);
+                statList.push(monthStatistic);
+              }
+              console.log("statisticlist");
+              console.log(statList);
+
+              Trainer.updateOne(
+                { _id: trainer._id },
+                { monthStatistics: statList }
+              )
+                .then(() => {
+                  return true;
+                })
+                .catch((error) => {
+                  return false;
+                });
+
               userEmail = trainer.email;
               userType = trainer.userType;
               return res.redirect("/createBusinessProfile/" + trainer.email);

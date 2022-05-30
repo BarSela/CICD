@@ -36,7 +36,8 @@ body {
   border-radius: 6px;
   transition: all 0.3s ease;
 }
-.input-box select:focus, .input-box select:valid {
+.input-box select:focus,
+.input-box select:valid {
   border-color: #6c9da4;
 }
 .form-container .input-box input {
@@ -324,7 +325,6 @@ input[type="submit"]:hover {
 .profile-details .form-container .input-box {
   height: 48px;
   margin: 20px 0;
-  
 }
 .input-box label {
   margin: 20px;
@@ -354,3 +354,9 @@ input[type="submit"]:hover {
   border-color: #6c9da4;
 }
 /* Add styles to the form container */
+
+/* chart */
+canvas {
+  width: 1000px !important;
+  height: 500px !important;
+}

@@ -89,27 +89,31 @@ const trainerUser = new mongoose.Schema({
     type: String,
     required: false,
   },
-  trainingTypes:[
+  trainingTypes: [
     {
       myid: String,
       name: String,
       duration: Number,
-      price:Number,
+      price: Number,
     },
   ],
-  trainings:[
+  trainings: [
     {
-      trainingType:String,
+      trainingType: String,
       trainingDate: String,
-      startHour:String,
+      startHour: String,
       available: Boolean,
-      duration:Number,
-      price:Number,
-    },]
+      duration: Number,
+      price: Number,
+    },
+  ],
+  monthStatistics: [
+    {
+      scheduled: Number,
+      canceled: Number,
+      preformed: Number,
+    },
+  ],
 });
 
 module.exports = mongoose.model("Trainer", trainerUser);
-
-
-
-

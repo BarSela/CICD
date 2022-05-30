@@ -503,6 +503,7 @@ app.get("/statistics", (req, res) => {
   let month = req.body.month;
   let info = req.body.info;
 
+  let fullData=[12, 19, 3, 5, 0, 3,12, 19, 3, 5, 0, 3];//all year
   let type;
   Trainer.find({ email: userEmail }).then((trainers) => {
     const [user] = trainers;
@@ -514,6 +515,8 @@ app.get("/statistics", (req, res) => {
       userEmail: userEmail,
       user: userObj,
       userType: type,
+      fullData:fullData,
+
     });
   });
 });
