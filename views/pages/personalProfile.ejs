@@ -16,10 +16,10 @@
   <link rel="stylesheet" href="/css/personalProfile.css" />
 
   <body>
-    <% if(user.userType == "trainee" ) { %>
+    <% if(userType == "trainee" ) { %>
       <%- include('../partials/traineeSidebar') %>
       <% } %>
-      <%  if(user.userType == "trainer" ) { %>
+      <%  if(userType == "trainer" ) { %>
         <%- include('../partials/sidebar') %>
         <% } %>
 

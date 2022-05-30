@@ -12,15 +12,18 @@ const {
   deleteTraining,
   addTraining,
   addTrainingType,
-  cancelTrainingRegistration,deleteTrainingTypes,forgotPasseord,resetPassword,
+  cancelTrainingRegistration,
+  deleteTrainingTypes,
+  forgotPasseord,
+  resetPassword,
 } = require("../controllers/user");
 
 //const bcrypt = require("bcrypt");
 const User = require("../model/user");
 const Trainer = require("../model/trainer");
 const Trainee = require("../model/trainee");
-const expressLayouts = require('express-ejs-layouts');
-const path = require('path');
+const expressLayouts = require("express-ejs-layouts");
+const path = require("path");
 
 //const { findByIdAndUpdate } = require("../model/trainee");
 const app = express();
@@ -78,7 +81,61 @@ app.get("/condNterms", (req, res) => {
   res.render("pages/condNterms", { userEmail: userEmail });
 });
 
+// app.get("/personalProfile", async (req, res) => {
+//   User.find({ email: userEmail }).then((users) => {
+//     //If the user list is empty
+//     if (users.length === 0) {
+//       console.log("user Error");
+//       res.redirect("/");
+//     } else {
+//       const [user] = users;
+//       var userObjInfo = user;
+
+//       if (userObjInfo.userType == "trainee") {
+//         Trainee.find({ email: userEmail }).then((trainees) => {
+//           //If the user list is empty
+//           if (users.length === 0) {
+//             console.log("trainee Error");
+//             res.redirect("/");
+//           } else {
+//             const [user] = trainees;
+//             userObj = user;
+
+//             console.log(userObj);
+//             res.render("pages/personalProfile", {
+//               userEmail: userEmail,
+//               user: userObj,
+//               info: userObjInfo,
+//             });
+//           }
+//         });
+//       } else {
+//         Trainer.find({ email: userEmail }).then((trainers) => {
+//           //If the user list is empty
+//           if (users.length === 0) {
+//             console.log("user Error");
+//             res.redirect("/");
+//           } else {
+//             const [user] = trainers;
+//             userObj = user;
+
+//             console.log(userObj);
+//             res.render("pages/personalProfile", {
+//               userEmail: userEmail,
+//               user: userObj,
+//               info: userObjInfo,
+//             });
+//           }
+//         });
+//       }
+//     }
+//   });
+// });
+
 app.get("/personalProfile", async (req, res) => {
+  console.log("2222222222222222222222222222222222");
+
+  let type;
   User.find({ email: userEmail }).then((users) => {
     //If the user list is empty
     if (users.length === 0) {
@@ -97,12 +154,13 @@ app.get("/personalProfile", async (req, res) => {
           } else {
             const [user] = trainees;
             userObj = user;
-
+            type = "trainee";
             console.log(userObj);
             res.render("pages/personalProfile", {
               userEmail: userEmail,
               user: userObj,
               info: userObjInfo,
+              userType: type,
             });
           }
         });
@@ -115,12 +173,14 @@ app.get("/personalProfile", async (req, res) => {
           } else {
             const [user] = trainers;
             userObj = user;
+            type = "trainer";
 
             console.log(userObj);
             res.render("pages/personalProfile", {
               userEmail: userEmail,
               user: userObj,
               info: userObjInfo,
+              userType: type,
             });
           }
         });
@@ -131,6 +191,7 @@ app.get("/personalProfile", async (req, res) => {
 
 app.get("/personalProfile/:email", async (req, res) => {
   userEmail = req.params.email;
+  let type;
   User.find({ email: userEmail }).then((users) => {
     //If the user list is empty
     if (users.length === 0) {
@@ -149,12 +210,14 @@ app.get("/personalProfile/:email", async (req, res) => {
           } else {
             const [user] = trainees;
             userObj = user;
+            type = "trainee";
 
             console.log(userObj);
             res.render("pages/personalProfile", {
               userEmail: userEmail,
               user: userObj,
               info: userObjInfo,
+              userType: type,
             });
           }
         });
@@ -167,12 +230,14 @@ app.get("/personalProfile/:email", async (req, res) => {
           } else {
             const [user] = trainers;
             userObj = user;
+            type = "trainer";
 
             console.log(userObj);
             res.render("pages/personalProfile", {
               userEmail: userEmail,
               user: userObj,
               info: userObjInfo,
+              userType: type,
             });
           }
         });
@@ -180,9 +245,14 @@ app.get("/personalProfile/:email", async (req, res) => {
     }
   });
 });
+
+////
+
 app.get("/editPersonalProfile", async (req, res) => {
   var status = "true";
   console.log(status);
+  let type;
+
   User.find({ email: userEmail }).then((users) => {
     //If the user list is empty
     if (users.length === 0) {
@@ -199,6 +269,7 @@ app.get("/editPersonalProfile", async (req, res) => {
             console.log("trainee Error");
             res.redirect("/");
           } else {
+            type = "trainee";
             const [user] = trainees;
             userObj = user;
 
@@ -208,6 +279,7 @@ app.get("/editPersonalProfile", async (req, res) => {
               user: userObj,
               info: userObjInfo,
               status: status,
+              userType: type,
             });
           }
         });
@@ -218,6 +290,7 @@ app.get("/editPersonalProfile", async (req, res) => {
             console.log("user Error");
             res.redirect("/");
           } else {
+            type = "trainer";
             const [user] = trainers;
             userObj = user;
 
@@ -227,6 +300,7 @@ app.get("/editPersonalProfile", async (req, res) => {
               user: userObj,
               info: userObjInfo,
               status: status,
+              userType: type,
             });
           }
         });
@@ -240,22 +314,23 @@ app.get("/findTrainer", (req, res) => {
     res.render("pages/findTrainer", { userEmail: userEmail, trainers });
   });
 });
-app.post("/selectTrainer",async (req, res) => {
+app.post("/selectTrainer", async (req, res) => {
   let email = req.body.email;
   console.log(email);
   let trainings;
   let trainer = await Trainer.findOne({ email: email });
-  if(trainer != null){
-    console.log("trainer selected: "+trainer);
-     trainings = trainer.trainings;
+  if (trainer != null) {
+    console.log("trainer selected: " + trainer);
+    trainings = trainer.trainings;
     // trainings = trainer.trainings;
-    res.render("pages/viewSchedual", { userEmail: email, user:userObj,trainer:trainer });
+    res.render("pages/viewSchedual", {
+      userEmail: email,
+      user: userObj,
+      trainer: trainer,
+    });
+  } else {
+    res.render("pages/findTrainer", { userEmail: userEmail, user: userObj });
   }
-  else{
-    res.render("pages/findTrainer", { userEmail:userEmail, user:userObj });
-
-  }
- 
 });
 
 app.post("/searchTrainer", (req, res) => {
@@ -403,11 +478,14 @@ app.get("/calendar", (req, res) => {
   });
 });
 
-  app.get("/viewSchedual", (req, res) => {
-    let email = req.body.email;
-    console.log("view user: " +req.user);
-    res.render("pages/viewSchedual", { userEmail: email, user:userObj,trainer:"lll" });
-  
+app.get("/viewSchedual", (req, res) => {
+  let email = req.body.email;
+  console.log("view user: " + req.user);
+  res.render("pages/viewSchedual", {
+    userEmail: email,
+    user: userObj,
+    trainer: "lll",
+  });
 });
 
 app.get("/homePage", (req, res) => {
@@ -438,11 +516,17 @@ app.get("/logout", (req, res) => {
 });
 app.get("/resetPassword", (req, res) => {
   var loginStatus = "true";
-  res.render("pages/resetPassword", { loginStatus: loginStatus, userEmail: userEmail });
+  res.render("pages/resetPassword", {
+    loginStatus: loginStatus,
+    userEmail: userEmail,
+  });
 });
 app.get("/forgotPassword", (req, res) => {
   var loginStatus = "true";
-  res.render("pages/forgotPassword", { loginStatus: loginStatus, userEmail: userEmail });
+  res.render("pages/forgotPassword", {
+    loginStatus: loginStatus,
+    userEmail: userEmail,
+  });
 });
 
 //post:
@@ -454,92 +538,82 @@ app.post("/createBusinessP", createBusinessP);
 app.post("/editBusinessP", editBusinessP);
 app.post("/editPassword", editPassword);
 app.post("/editPassword", editPassword);
-app.post("/TrainingReg",async (req, res) => {
-    
-    let date = req.body.dateIn;
-    let time = req.body.startIn;
-    let trainingName = req.body.typeIn;
-    let duration = req.body.durationIn;
-    let price = req.body.priceIn;
-    let trainee;
- 
-    console.log(userEmail);
-    console.log(date);
-    console.log(time);
+app.post("/TrainingReg", async (req, res) => {
+  let date = req.body.dateIn;
+  let time = req.body.startIn;
+  let trainingName = req.body.typeIn;
+  let duration = req.body.durationIn;
+  let price = req.body.priceIn;
+  let trainee;
 
-        console.log("isTrainee");
-        trainee = await Trainee.findOneAndUpdate(
-          { email:
-            userEmail },
+  console.log(userEmail);
+  console.log(date);
+  console.log(time);
+
+  console.log("isTrainee");
+  trainee = await Trainee.findOneAndUpdate(
+    { email: userEmail },
+    {
+      $set: {
+        trainings: [
           {
-            $set: {
-              
-            trainings:[{
-              trainingType:trainingName,
-              trainingDate: date.toString(),
-              startHour: time,
-              pass: false,
-              duration:duration,
-              price:price
-      
-            }],
-            
-            },
-          }
-          
-        );
-      
-    
-    res.render("pages/traineeDashboard", {
-      userEmail: userEmail,
-      user: userObj,
-    });
-    
-  
+            trainingType: trainingName,
+            trainingDate: date.toString(),
+            startHour: time,
+            pass: false,
+            duration: duration,
+            price: price,
+          },
+        ],
+      },
+    }
+  );
+
+  res.render("pages/traineeDashboard", {
+    userEmail: userEmail,
+    user: userObj,
   });
-app.post("/newTraining",async (req, res) => {
+});
+app.post("/newTraining", async (req, res) => {
   let traineeInput = req.body.Type;
   let date = req.body.date;
   let time = req.body.time;
   let trainingName;
   let duration;
   let price;
-  
-  console.log("traineeInput"+traineeInput);
+
+  console.log("traineeInput" + traineeInput);
   console.log(userObj);
 
-  if(userObj instanceof Trainer){
-    
-    userObj.trainingTypes.forEach(type => {
-      if(type.name == traineeInput){
+  if (userObj instanceof Trainer) {
+    userObj.trainingTypes.forEach((type) => {
+      if (type.name == traineeInput) {
         console.log("YESS");
         trainingName = type.name;
         duration = type.duration;
         price = type.price;
         console.log(trainingName);
-      }});
-      training = {
-        trainingType:trainingName,
-        trainingDate: date,
-        startHour:time.toString(),
-        available: true,
-        duration:duration,
-        price:price
-
       }
-      addTraining(userObj.email,training);
-    
+    });
+    training = {
+      trainingType: trainingName,
+      trainingDate: date,
+      startHour: time.toString(),
+      available: true,
+      duration: duration,
+      price: price,
+    };
+    addTraining(userObj.email, training);
   }
   res.render("pages/calendar", {
     userEmail: userEmail,
     user: userObj,
   });
-
 });
 app.post("/deleteAccount", deleteAccount);
 app.post("/addTrainingType", addTrainingType);
 app.post("/cancelTrainingRegistration", cancelTrainingRegistration);
 app.post("/deleteTrainingTypes", deleteTrainingTypes);
 
-app.post("/forgotPassword" , forgotPasseord);
+app.post("/forgotPassword", forgotPasseord);
 app.post("/resetPassword", resetPassword);

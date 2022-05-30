@@ -16,7 +16,12 @@
   <link rel="stylesheet" href="/css/personalProfile.css" />
 
   <body>
-    <%- include('../partials/traineeSidebar') %>
+    <% if(userType == "trainee" ) { %>
+      <%- include('../partials/traineeSidebar') %>
+      <% } %>
+      <%  if(userType == "trainer" ) { %>
+        <%- include('../partials/sidebar') %>
+        <% } %>
     <section id="content">
       <%- include('../partials/navbar') %>
       <div class="container">

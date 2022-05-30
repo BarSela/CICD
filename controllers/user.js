@@ -370,7 +370,7 @@ module.exports = {
     var gender = req.body.gender;
     var status = "false";
     const currUser = await User.findOne({ email: userEmail });
-
+    let type = currUser.userType;
     //check if the new email already exsits in the DB
     let user = await User.findOne({ email: newEmail });
     console.log(user);
@@ -382,6 +382,7 @@ module.exports = {
         userEmail: userEmail,
         user: currUser,
         status: status,
+        userType: type,
       });
     }
     let userT = currUser.userType;
@@ -446,7 +447,10 @@ module.exports = {
     }
   },
   editPassword: async (req, res) => {
+    console.log("editpassword");
+
     //param
+    let type;
     let currPassword = req.body.currPassword;
     let newPassword = req.body.newPassword;
 
@@ -463,7 +467,7 @@ module.exports = {
         });
       }
       const [user] = users;
-
+      type = user.userType;
       //Checking the password
       bcrypt.compare(currPassword, user.password, async (error, result) => {
         if (error) {
@@ -471,10 +475,13 @@ module.exports = {
           return res.render("pages/editPersonalProfile", {
             loginStatus: loginStatus,
             user: userEmail,
+            userType: type,
           });
         }
         if (result) {
           //good password
+          console.log("good password");
+
           if (user.userType == "trainer") {
             //--if trainer
             bcrypt.hash(newPassword, 10, async (error, hash) => {
@@ -505,16 +512,17 @@ module.exports = {
                 if (trainer) {
                   return res.redirect("/personalProfile");
                 } else {
-                  console("Error to find trainer");
+                  console.log("Error to find trainer");
                   return res.render("/");
                 }
               } //error! traainer not found
               else {
-                console("Error to find user");
+                console.log("Error to find user");
                 return res.render("/");
               }
             });
           } else if (user.userType == "trainee") {
+            console.log("trainee--------------");
             //----if trainee
             bcrypt.hash(newPassword, 10, async (error, hash) => {
               if (error) {
@@ -533,6 +541,7 @@ module.exports = {
               );
               console.log("update1");
               if (userU) {
+                console.log("userU ok");
                 const trainee = await Trainee.findOneAndUpdate(
                   { email: userEmail },
                   {
@@ -542,25 +551,30 @@ module.exports = {
                   }
                 );
                 if (trainee) {
+                  console.log("trainee redirect");
                   return res.redirect("/personalProfile");
                 } else {
-                  console("Error to find trainee");
+                  console.log("Error to find trainee");
                   res.render("/");
                 }
               } else {
-                console("Error to find user");
+                console.log("Error to find user");
                 res.render("/");
               }
             });
           }
-        }
+        } else {
+          //If the password is incorrect
 
-        //If the password is incorrect
-        return res.render("pages/editPersonalProfile", {
-          status: status,
-          user: userEmail,
-          userEmail: userEmail,
-        });
+          console.log("bad password");
+
+          return res.render("pages/editPersonalProfile", {
+            status: status,
+            user: userEmail,
+            userEmail: userEmail,
+            userType: type,
+          });
+        }
       }); //end bcrypt
     }); //end User.find
 
@@ -693,30 +707,29 @@ module.exports = {
         return null;
       });
   },
-    addTraining:async(userEmail,training) => {
+  addTraining: async (userEmail, training) => {
     let trainings = [];
-      Trainer.findOne({email:userEmail}).then((trainer) => {
-          if (!trainer) {
-              return false;    
-          }
-          else{
-            if(trainer.trainings){
-              trainings = trainer.trainings;
-              trainings.push(training);
-              console.log("new training: " + training);
+    Trainer.findOne({ email: userEmail }).then((trainer) => {
+      if (!trainer) {
+        return false;
+      } else {
+        if (trainer.trainings) {
+          trainings = trainer.trainings;
+          trainings.push(training);
+          console.log("new training: " + training);
 
-              console.log("trainings list: " + trainings);
-              }
-            
-          }
-          Trainer.updateOne({ _id: trainer._id }, {trainings:trainings}).then(() => {
-            return true;
-        }).catch(error => {
-            return false;
-            }); 
-    })   
-
-    },
+          console.log("trainings list: " + trainings);
+        }
+      }
+      Trainer.updateOne({ _id: trainer._id }, { trainings: trainings })
+        .then(() => {
+          return true;
+        })
+        .catch((error) => {
+          return false;
+        });
+    });
+  },
   addTrainingType: async (req, res) => {
     let newTrainingTypeName = req.body.trainingTypeName;
     let newTrainingTypeDuration = req.body.trainingTypeDuration;
@@ -813,7 +826,7 @@ module.exports = {
     });
   },
   forgotPasseord: async (req, res) => {
-    var nodemailer = require ('nodemailer');
+    var nodemailer = require("nodemailer");
     email = req.body.email;
     var loginStatus = "false";
     console.log("email1 : " + email);
@@ -827,40 +840,41 @@ module.exports = {
       }
       process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
       var link = "http://localhost:5000/resetPassword";
-      var transporter = nodemailer.createTransport ({ 
-          service: 'gmail', 
-          auth: { 
-                  user: 'ShapeComp@gmail.com', 
-                  pass: 'Noa123456'
-              } 
-          });
-        const mailOptions = { 
-          from: 'ShapeComp@gmail.com',  
-          to: email,  
-          subject: 'Reset Password mail', 
-          text: 'Hi , Please reset your password by clicking the link: ',
-          html: `<a href='`+link +`'>Click On this link to Reset your password now!</a>
-                  <p>Shape Tech Team</p>`
-        };
-        transporter.sendMail (mailOptions, function (err, info) { 
-          if (err) 
-            console.log (err) 
-          else 
-            console.log (info); 
-          });
+      var transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "ShapeComp@gmail.com",
+          pass: "Noa123456",
+        },
       });
+      const mailOptions = {
+        from: "ShapeComp@gmail.com",
+        to: email,
+        subject: "Reset Password mail",
+        text: "Hi , Please reset your password by clicking the link: ",
+        html:
+          `<a href='` +
+          link +
+          `'>Click On this link to Reset your password now!</a>
+                  <p>Shape Tech Team</p>`,
+      };
+      transporter.sendMail(mailOptions, function (err, info) {
+        if (err) console.log(err);
+        else console.log(info);
+      });
+    });
   },
-  resetPassword: async(req, res, next) =>{
+  resetPassword: async (req, res, next) => {
     let newPassword = req.body.password;
-    let email  = req.body.userEmail;
+    let email = req.body.userEmail;
     let loginStatus = "false";
     userEmail = "";
     console.log("emaaaaaaaail :" + email);
     User.find({ email: email }).then((users) => {
       //If the user list is empty
       if (users.length === 0) {
-        console.log("emaaaaaaaail :" + email +" does not exist");
-        console.log("loginStatus:" + loginStatus)
+        console.log("emaaaaaaaail :" + email + " does not exist");
+        console.log("loginStatus:" + loginStatus);
         return res.render("pages/resetPassword", {
           loginStatus: loginStatus,
           userEmail: userEmail,
@@ -874,14 +888,14 @@ module.exports = {
         if (error) {
           return res.render("pages/resetPassword", {
             loginStatus: loginStatus,
-            userEmail: userEmail ,
+            userEmail: userEmail,
           });
         }
         if (result) {
           if (user.userType == "trainer") {
             userEmail = user.email;
             const userU = await User.findOneAndUpdate(
-              { email: userEmail  },
+              { email: userEmail },
               {
                 $set: {
                   password: newPassword,
@@ -892,7 +906,7 @@ module.exports = {
             if (userU) {
               userEmail = user.email;
               const trainer = await Trainer.findOneAndUpdate(
-                { email: userEmail  },
+                { email: userEmail },
                 {
                   $set: {
                     password: newPassword,
@@ -912,7 +926,7 @@ module.exports = {
           } else if (user.userType == "trainee") {
             console.log("okkkkkkkkkkkk trainer");
             const userU = await User.findOneAndUpdate(
-              { email: userEmail  },
+              { email: userEmail },
               {
                 $set: {
                   password: newPassword,
@@ -922,7 +936,7 @@ module.exports = {
             console.log("update1");
             if (userU) {
               const trainee = await Trainee.findOneAndUpdate(
-                { email: userEmail  },
+                { email: userEmail },
                 {
                   $set: {
                     password: newPassword,
@@ -949,6 +963,6 @@ module.exports = {
         });
       }); //end bcrypt
     }); //end User.find
-    console.log("okkkkkkkkkkkk");   
+    console.log("okkkkkkkkkkkk");
   },
 };
