@@ -315,18 +315,14 @@ app.get("/editPersonalProfile", async (req, res) => {
 
 app.get("/findTrainer", (req, res) => {
   Trainer.find({}).then((trainers) => {
-    res.render("pages/findTrainer", { userEmail: userEmail, trainers });
+    res.render("pages/findTrainer", { userEmail: userEmail,user:userObj, trainers });
   });
 });
 app.post("/selectTrainer", async (req, res) => {
   let email = req.body.email;
   console.log(email);
-  let trainings;
   let trainer = await Trainer.findOne({ email: email });
   if (trainer != null) {
-    console.log("trainer selected: " + trainer);
-    trainings = trainer.trainings;
-    // trainings = trainer.trainings;
     res.render("pages/viewSchedual", {
       userEmail: email,
       user: userObj,
@@ -335,7 +331,7 @@ app.post("/selectTrainer", async (req, res) => {
   } else {
     res.render("pages/findTrainer", { userEmail: userEmail, user: userObj });
   }
-});
+});;
 
 app.post("/searchTrainer", (req, res) => {
   let traineeInput = req.body.traineeInput;
@@ -709,7 +705,7 @@ app.post("/deleteTrainingTypes", deleteTrainingTypes);
 app.post("/forgotPassword", forgotPasseord);
 app.post("/resetPassword", resetPassword);
 app.post("/statistics", statistics);
-app.post("/editTraining", async (req, res) => {
+app.post("/editTraining",async (req, res) => {
   let action = req.body.editAction;
   let date = req.body.newDate;
   let time = req.body.newTime;
@@ -717,49 +713,93 @@ app.post("/editTraining", async (req, res) => {
   let trainingName = req.body.viewType;
   let duration;
   let price;
-  console.log("actionnnn:" + action);
-  if (userObj instanceof Trainer) {
-    if (action == "save") {
-      userObj.trainingTypes.forEach((type) => {
-        if (type.name == trainingName) {
-          duration = type.duration;
-          price = type.price;
-          console.log(trainingName);
-        }
-      });
+  console.log("actionnnn:"+action);
+  if(userObj instanceof Trainer){
+    if(action == "save"){
+    userObj.trainingTypes.forEach(type => {
+      if(type.name == trainingName){
+        duration = type.duration;
+        price = type.price;
+        console.log(trainingName);
+      }});
       training = {
-        trainingType: trainingName,
+        trainingType:trainingName,
         trainingDate: date.toString(),
-        startHour: time.toString(),
+        startHour:time.toString(),
         available: true,
-        duration: duration,
-        price: price,
-      };
-      editTraining(userObj.email, training, id);
-    } else if (action == "delete") {
-      deleteTraining(userObj, id);
+        duration:duration,
+        price:price
+
+      }
+     editTraining(userObj.email,training,id);
     }
+    else if(action == "delete"){
+      deleteTraining(userObj,id);
+
+    }
+    
   }
   res.render("pages/calendar", {
     userEmail: userEmail,
     user: userObj,
   });
 });
-app.post("/markUnavailable", async (req, res) => {
+app.post("/markUnavailable",async (req, res) => {
   let action = req.body.action;
-  if (action == "save") {
-    if (markUnavailable(userObj, req)) {
-      console.log("Error to load the trainer from DB");
-      res.redirect("/");
-    } else {
-      res.render("pages/calendar", { userEmail: userEmail, user: userObj });
+      if(action == "save"){
+        if(markUnavailable(userObj,req)){
+          console.log("Error to load the trainer from DB");
+          res.redirect("/");
+        }
+        else{
+          res.render("pages/calendar", {userEmail: userEmail,user: userObj,});
+        }
+      }
+      else if(action == "delete"){
+        if(!deleteUnavailable(userObj,req)){
+          console.log("Error to load the trainer from DB");
+          res.redirect("/");
+        }
+        else{
+          res.render("pages/calendar", {userEmail: userEmail,user: userObj,});
+        }
+      }
+        
+      
+    
+  });
+app.post("/TrainingReg", async (req, res) => {
+  let date = req.body.dateIn;
+  let time = req.body.startIn;
+  let trainingName = req.body.typeIn;
+  let duration = req.body.durationIn;
+  let price = req.body.priceIn;
+
+  console.log(userEmail);
+  console.log(date);
+  console.log(time);
+
+  console.log("isTrainee");
+  let trainee = await Trainee.findOneAndUpdate(
+    { email: userEmail },
+    {
+      $set: {
+        trainings: [
+          {
+            trainingType: trainingName,
+            trainingDate: date.toString(),
+            startHour: time,
+            pass: false,
+            duration: duration,
+            price: price,
+          },
+        ],
+      },
     }
-  } else if (action == "delete") {
-    if (!deleteUnavailable(userObj, req)) {
-      console.log("Error to load the trainer from DB");
-      res.redirect("/");
-    } else {
-      res.render("pages/calendar", { userEmail: userEmail, user: userObj });
-    }
-  }
+  );
+
+  res.render("pages/traineeDashboard", {
+    userEmail: userEmail,
+    user: userObj,
+  });
 });
