@@ -350,9 +350,3 @@ input[type="submit"]:hover {
   border-color: #6c9da4;
 }
 /* Add styles to the form container */
-
-/* chart */
-canvas #myChart {
-  width: 1000px !important;
-  height: 200px !important;
-}

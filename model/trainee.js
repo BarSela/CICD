@@ -34,7 +34,17 @@ const traineeUser = new mongoose.Schema(
         pass: Boolean,
         duration:Number,
         price:Number,
-      },]
+        trainerEmail: String,
+      },],
+      notifications: [
+        {
+          read: Boolean,
+          trainerName: String,
+          trainingType: String,
+          trainingDate: String,
+          startHour: String,
+        },
+      ],
 
 });    
 

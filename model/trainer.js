@@ -105,6 +105,7 @@ const trainerUser = new mongoose.Schema({
       available: Boolean,
       duration: Number,
       price: Number,
+      traineeEmail: String,
     },
   ],
   monthStatistics: [
@@ -114,13 +115,22 @@ const trainerUser = new mongoose.Schema({
       preformed: Number,
     },
   ],
-  unAvailable:[
-      {
-        date:{type:String,require:true} ,
-        allDay:Boolean,
-        startHour:{type:String,require:false},
-        endHour:{type:String,require:false},
-      },]
+  unAvailable: [
+    {
+      date: { type: String, require: true },
+      allDay: Boolean,
+      startHour: { type: String, require: false },
+      endHour: { type: String, require: false },
+    },
+  ],
+  notifications: [
+    {
+      read: Boolean,
+      trainingType: String,
+      trainingDate: String,
+      startHour: String,
+    },
+  ],
 });
 
 module.exports = mongoose.model("Trainer", trainerUser);
