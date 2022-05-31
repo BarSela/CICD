@@ -815,6 +815,87 @@ module.exports = {
         });
     });
   },
+  editTraining: async (trainerEmail, newTraining, id) => {
+    Trainer.findOne({ email: trainerEmail }).then((trainer) => {
+      if (!trainer) {
+        return false;
+      } else {
+        if (trainer.trainings != null) {
+          trainings = trainer.trainings;
+          for (let i = 0; i < trainings.length; i++) {
+            if (trainings[i]._id.toString() == id) {
+              // trainings.splice(i);
+              trainings[i] = newTraining;
+
+            }
+          }
+        }
+      }
+      Trainer.updateOne({ _id: trainer._id }, { trainings: trainings })
+        .then((trainer) => {
+          if (!trainer) {
+            return false;
+          } else {
+            return true;
+          }
+        });
+
+    });
+  },
+  markUnavailable: (trainerObj,req) => {
+    let date = req.body.markDate;
+    let option = req.body.markOptions;
+    console.log("option "+option);
+    let start;
+    let end;
+    let old = [];
+    if (option == "hour") {
+      start = req.body.startHour;
+      end = req.body.endHour;
+      mark = { date: date, startHour: start, endHour: end, allDay: false };
+    }
+    else {//all day
+      mark = { date: date, allDay: true };
+       }
+
+    if (trainerObj instanceof Trainer) {
+      old = trainerObj.unAvailable;
+      old.push(mark);
+      Trainer.updateOne({ email: trainerObj.email }, { unAvailable: old })
+        .then((trainer) => {
+          if (!trainer) {
+            return false;
+          }
+          else {
+            return true;
+          }
+        });
+    }
+    return false;
+  },
+  deleteUnavailable:async (trainerObj,req) => {
+    let id = req.body.uID;
+    console.log("id: "+id);
+    console.log("trainerObj: "+trainerObj.email);
+    unAvailableList = trainerObj.unAvailable;
+    for (let i = 0; i < unAvailableList.length; i++) {
+      if(unAvailableList[i]._id.toString() == id){
+        console.log("found");
+        unAvailableList.splice(i);
+      }
+    }
+    Trainer.updateOne({ email: trainerObj.email }, { unAvailable: unAvailableList })
+        .then((trainer) => {
+          if (!trainer) {
+            return false;
+          }
+          else {
+            return true;
+          }
+        });
+  },
+
+
   cancelTrainingRegistration: async (req, res) => {
     let trainingDateToDelete = req.body.trainingDate;
     let trainingHourToDelete = req.body.trainingHour;
