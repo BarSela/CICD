@@ -16,7 +16,7 @@ const {
   deleteTrainingTypes,
   forgotPasseord,
   resetPassword,
-  statistics,
+  statistics,editTraining, markUnavailable, deleteUnavailable
 } = require("../controllers/user");
 
 //const bcrypt = require("bcrypt");
@@ -493,12 +493,7 @@ app.get("/calendar", (req, res) => {
   });
 });
 
-app.get("/calendar", (req, res) => {
-  res.render("pages/calendar", {
-    userEmail: userEmail,
-    user: userObj,
-  });
-});
+
 app.get("/statistics/:month", (req, res) => {
   let month = parseInt(req.params.month);
   console.log(month);
@@ -673,3 +668,66 @@ app.post("/deleteTrainingTypes", deleteTrainingTypes);
 app.post("/forgotPassword", forgotPasseord);
 app.post("/resetPassword", resetPassword);
 app.post("/statistics", statistics);
+app.post("/editTraining",async (req, res) => {
+  // let traineeInput = req.body.Type;
+  let date = req.body.newDate;
+  let time = req.body.newTime;
+  let id = req.body.trainingID;
+  console.log("id: "+id);
+  let trainingName = req.body.viewType;
+  let duration;
+  let price;
+  
+  console.log("training name "+ trainingName);
+
+  if(userObj instanceof Trainer){
+    
+    userObj.trainingTypes.forEach(type => {
+      if(type.name == trainingName){
+        console.log("YESS");
+        duration = type.duration;
+        price = type.price;
+        console.log(trainingName);
+      }});
+      training = {
+        trainingType:trainingName,
+        trainingDate: date.toString(),
+        startHour:time.toString(),
+        available: true,
+        duration:duration,
+        price:price
+
+      }
+     editTraining(userObj.email,training,id);
+    
+  }
+  res.render("pages/calendar", {
+    userEmail: userEmail,
+    user: userObj,
+  });
+});
+app.post("/markUnavailable",async (req, res) => {
+  let action = req.body.action;
+      if(action == "save"){
+        if(markUnavailable(userObj,req)){
+          console.log("Error to load the trainer from DB");
+          res.redirect("/");
+        }
+        else{
+          res.render("pages/calendar", {userEmail: userEmail,user: userObj,});
+        }
+      }
+      else if(action == "delete"){
+        if(!deleteUnavailable(userObj,req)){
+          console.log("Error to load the trainer from DB");
+          res.redirect("/");
+        }
+        else{
+          res.render("pages/calendar", {userEmail: userEmail,user: userObj,});
+        }
+      }
+        
+      
+    
+  });
+    
