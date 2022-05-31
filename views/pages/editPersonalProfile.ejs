@@ -16,12 +16,9 @@
   <link rel="stylesheet" href="/css/personalProfile.css" />
 
   <body>
-    <% if(userType == "trainee" ) { %>
-      <%- include('../partials/traineeSidebar') %>
-      <% } %>
-      <%  if(userType == "trainer" ) { %>
-        <%- include('../partials/sidebar') %>
-        <% } %>
+    <% if(userType == "trainee" ) { %> <%- include('../partials/traineeSidebar')
+    %> <% } %> <% if(userType == "trainer" ) { %> <%-
+    include('../partials/sidebar') %> <% } %>
     <section id="content">
       <%- include('../partials/navbar') %>
       <div class="container">
@@ -44,7 +41,7 @@
             id="pic2"
           />
         </div>
-  
+
         <h2>Edit Personal Profile</h2>
         <div class="btn-group">
           <button
@@ -54,6 +51,9 @@
           >
             change password
           </button>
+        </div>
+
+        <div class="btn-group">
           <button
             type="button"
             id="Edit-profile-bt"
@@ -171,10 +171,12 @@
     <script>
       errorMsg.style.display = "none";
       function openPasswordForm() {
-
         document.getElementById("profile-form").style.display = "none";
         document.getElementById("change-pass-form").style.display = "block";
         document.getElementById("change-pass-btn").style.display = "none";
+        document.getElementById("change-pass-btn").style.marginLeft = "480px";
+
+        document;
       }
       function closePasswordForm() {
         document.getElementById("change-pass-form").style.display = "none";
@@ -203,7 +205,8 @@
       var editStatus = true;
       console.log("<%= status %>");
       if ("<%= status %>" == "false") {
-        errorMsg.innerHTML = "This email is already exists or password not match";
+        errorMsg.innerHTML =
+          "This email is already exists or password not match";
         errorMsg.style.display = "block";
         editStatus = false;
       }
@@ -220,8 +223,7 @@
           errorMsg.style.display = "block";
           return false;
         }
-        if(!onlyLetters(fullName))
-        {
+        if (!onlyLetters(fullName)) {
           errorMsg.innerHTML = "You have entered an invalid full name!";
           errorMsg.style.display = "block";
           return false;
