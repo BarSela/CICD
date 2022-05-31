@@ -43,43 +43,68 @@
         <h2>Notifications</h2>
         <label id="empty" hidden>You don't have notifications yet</label>
         <!-- <div class="btn-group"></div> -->
-        <% if(empty !="true" ) { %>
-            <% if(userType =="trainee" ) { %>
-            <% notificationObjList.forEach(n=> { %>
+        <% if(empty !="true" ) { %> <% if(userType =="trainee" ) { %> <%
+        notificationObjList.forEach(n=> { %>
         <div class="card-body text-center">
-            <div class="card-body text-center" style="background-color: rgb(194, 194, 194); padding-bottom: 20px;border-radius: 20%;">
-          <h3 class="mb-1">
-            <a class="text-dark" style="text-decoration: underline;">Cancelation:</a><br>
-            <a class="text-dark" >Trainer canceled training you were registered for</a><br>
-            <a class="text-dark"><strong>Training Type:</strong> <%= n.trainingType %> </a><br>
-            <a class="text-dark"><strong>Training Date:</strong> <%= n.trainingDate %> </a><br>
-            <a class="text-dark"><strong>Start Hour:</strong> <%= n.startHour %> </a><br>
-            <a class="text-dark"><strong>Trainer Name:</strong> <%= n.trainerName %> </a>
-          </h3>
+          <div
+            class="card-body text-center"
+            style="
+              background-color: rgb(194, 194, 194);
+              padding-bottom: 20px;
+              border-radius: 20%;
+            "
+          >
+            <h3 class="mb-1">
+              <a class="text-dark" style="text-decoration: underline"
+                >Cancelation:</a
+              ><br />
+              <a class="text-dark"
+                >Trainer canceled training you were registered for</a
+              ><br />
+              <a class="text-dark"
+                ><strong>Training Type:</strong> <%= n.trainingType %> </a
+              ><br />
+              <a class="text-dark"
+                ><strong>Training Date:</strong> <%= n.trainingDate %> </a
+              ><br />
+              <!-- <a class="text-dark"><strong>Start Hour:</strong> <%= n.startHour %> </a><br> -->
+              <a class="text-dark"
+                ><strong>Trainer Name:</strong> <%= n.trainerName %>
+              </a>
+            </h3>
+          </div>
         </div>
-        </div>
-        <% }); %>
-        <% } %>
-        <% } %>
-
-        <% if(empty !="true" ) { %>
-            <% if(userType =="trainer" ) { %>
-            <% notificationObjList.forEach(n=> { %>
+        <% }); %> <% } %> <% } %> <% if(empty !="true" ) { %> <% if(userType
+        =="trainer" ) { %> <% notificationObjList.forEach(n=> { %>
         <div class="card-body text-center">
-            <div class="card-body text-center" style="background-color: rgb(194, 194, 194); padding-bottom: 20px;border-radius: 20%;">
-          <h3 class="mb-1">
-            <a class="text-dark" style="text-decoration: underline;">Cancelation:</a><br>
-            <a class="text-dark">Trainee canceled a training he were registered </a><br>
-            <a class="text-dark"><strong>Training Type:</strong> <%= n.trainingType %> </a><br>
-            <a class="text-dark"><strong>Training Date:</strong> <%= n.trainingDate %> </a><br>
-            <a class="text-dark"><strong>Start Hour:</strong> <%= n.startHour %> </a><br>
-          </h3>
+          <div
+            class="card-body text-center"
+            style="
+              background-color: rgb(194, 194, 194);
+              padding-bottom: 20px;
+              border-radius: 20%;
+            "
+          >
+            <h3 class="mb-1">
+              <a class="text-dark" style="text-decoration: underline"
+                >Cancelation:</a
+              ><br />
+              <a class="text-dark"
+                >Trainee canceled a training he were registered </a
+              ><br />
+              <a class="text-dark"
+                ><strong>Training Type:</strong> <%= n.trainingType %> </a
+              ><br />
+              <a class="text-dark"
+                ><strong>Training Date:</strong> <%= n.trainingDate %> </a
+              ><br />
+              <a class="text-dark"
+                ><strong>Start Hour:</strong> <%= n.startHour %> </a
+              ><br />
+            </h3>
+          </div>
         </div>
-        </div>
-        <% }); %>
-        <% } %>
-        <% } %>
-
+        <% }); %> <% } %> <% } %>
       </div>
     </section>
     <script>

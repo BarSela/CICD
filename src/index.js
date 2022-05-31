@@ -715,15 +715,30 @@ app.post("/TrainingReg", async (req, res) => {
   //     },
   //   }
   // );
+  console.log(trainerEmail);
   Trainer.findOne({ email: trainerEmail }).then((trainer) => {
     if (!trainer) {
       return false;
     } else {
+      console.log("trainerEm               ail");
       if (trainer.trainings != null) {
         let trainingT = trainer.trainings;
+
         for (let i = 0; i < trainingT.length; i++) {
-          if (trainingT[i].trainingDate == date && startHour == time) {
+          // console.log('trainingT[i].trainingDate');
+          // console.log(trainingT[i].trainingDate);
+          // console.log('trainingT[i].trainingDate.toString()');
+          // console.log(trainingT[i].trainingDate.toString());
+          // console.log('date');
+          // console.log(date);
+          // console.log('trainingT[i].startHour');
+          // console.log(trainingT[i].startHour);
+          // console.log('time');
+          // console.log(time);
+          if (trainingT[i].startHour == time) {
+            console.log("yes");
             trainingT[i].available = false;
+            trainingT[i].traineeEmail = userEmail;
           }
         }
         Trainer.updateOne(
@@ -892,6 +907,7 @@ app.post("/editTraining", async (req, res) => {
         if (!trainer) {
           return false;
         } else {
+          console.log("1");
           if (trainer.monthStatistics != null) {
             let statistics = trainer.monthStatistics;
             statistics[month - 1].canceled += 1;
@@ -915,20 +931,25 @@ app.post("/editTraining", async (req, res) => {
             for (let i = 0; i < trainer.trainings.length; i++) {
               if (trainer.trainings[i]._id.toString() == id) {
                 if (trainer.trainings[i].available == false) {
+                  console.log("false............");
                   traineeEmail = trainer.trainings[i].traineeEmail;
+                  console.log(traineeEmail);
                   trainingDate = trainer.trainings[i].trainingDate;
                   trainingType = trainer.trainings[i].trainingType;
                   startTime = trainer.trainings[i].startTime;
+                  console.log(startTime);
                 }
               }
             }
+            console.log("2");
             console.log(traineeEmail);
             if (traineeEmail) {
+              console.log("3");
               Trainee.findOne({ email: traineeEmail }).then((trainee) => {
                 if (!trainee) {
                   return false;
                 } else {
-                  let notifications;
+                  let notifications = trainee.notifications;
                   let notifi = {
                     read: false,
                     trainerName: userObj.fullName,
