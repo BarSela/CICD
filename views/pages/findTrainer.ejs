@@ -14,13 +14,11 @@
 
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/vendor/icon-set/style.css">
 
   <!-- CSS Implementing Plugins -->
   <link rel="stylesheet" href="./css/theme.min.css">
 
   <link rel="stylesheet" href="./css/vendor.min.css">
-  <link rel="stylesheet" href="./css/icons.css">
 
 
 
@@ -31,7 +29,6 @@
 
 <body class="   footer-offset">
 
-  <script src="./assets/vendor/hs-navbar-vertical-aside/hs-navbar-vertical-aside-mini-cache.js"></script>
 
   <%- include('../partials/traineesidebar') %>
 
@@ -54,392 +51,151 @@
                   <img class="avatar-img" src="./assets/team-4-800x800.jpg" alt="Image Description">
                   <span class="avatar-status avatar-status-success"></span>
                 </div>
-                <h1 class="page-header-title">Ella Lauda </h1>
-                </divc>
+                <h1 class="page-header-title">
+                  <%= user.fullName %>
+                </h1>
+              </div>
 
-                <!-- Filter -->
-                <div class="row align-items-center mb-5">
-                  <div class="col">
-                    <!-- <h3 class="mb-0">Find a Trainer</h3> -->
-                  </div>
-                  <div class="col-auto">
-                    <!-- Nav -->
-                    <ul class="nav nav-segment" id="connectionsTab" role="tablist">
-                      <li class="nav-item">
-                        <a class="nav-link active" id="grid-tab" data-toggle="tab" onClick="displayGrid()" role="tab"
-                          aria-controls="grid" aria-selected="true" title="Column view">
-                          <i class="fa-solid fa-list-ul"></i> </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="list-tab" data-toggle="tab" onClick="displayList()" role="tab"
-                          aria-controls="list" aria-selected="false" title="List view">
-                          <i class="fa-solid fa-list-ul"></i> </a>
-                      </li>
-                    </ul>
-                    <!-- End Nav -->
-                  </div>
+              <!-- Filter -->
+              <div class="row align-items-center mb-5">
+                <div class="col">
+                  <!-- <h3 class="mb-0">Find a Trainer</h3> -->
                 </div>
-                <div class="wrapper">
-                  <form id="myForm" action="searchTrainer" method="POST">
-                    <div id="search-container">
-
-                      <input type="text" name="traineeInput" id="traineeInput" placeholder="Search training  here.." />
-                      <button type="submit" id="search" class="btn btn-soft-primary">Search</button>
-
-                      <select class="filter" id="filterInput" name="filterInput" onChange="update()">
-                        <option value="fullName">trainer name</option>
-                        <option value="businessName">business name</option>
-                        <option value="speciality">speciality</option>
-                        <option value="city">location</option>
-                      </select>
-                    </div>
-                  </form>
-                  <div class="row align-items-center mb-5">
-            
-                    <div class="col-auto">
-
-                      <!-- search form -->
-                      <div class="tab-content" id="connectionsTabContent">
-                        <div class="tab-pane fade show active" id="grid" role="tabpanel" aria-labelledby="grid-tab">
-
-                          <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3">
-                            <div class="col mb-3 mb-lg-5">
-                              <!-- grid card -->
-                              <% if(typeof trainers !="undefined" ) { %>
-                                <% trainers.forEach(trainer=> { %>
-                                  <div class="card h-100" id="gridCard" style="display:none ;">
-                                    <!-- Unfold -->
-                                    <div class="card-pinned">
-                                      <div class="hs-unfold">
-                                        <a class="js-hs-unfold-invoker btn btn-icon btn-sm btn-ghost-secondary rounded-circle"
-                                          href="javascript:;" data-hs-unfold-options="{
-                               &quot;target&quot;: &quot;#connectionsDropdown5&quot;,
-                               &quot;type&quot;: &quot;css-animation&quot;
-                             }" data-hs-unfold-target="#connectionsDropdown5" data-hs-unfold-invoker="">
-                                          <i class="tio-more-vertical"></i>
-                                        </a>
-
-                                      </div>
-                                    </div>
-                                    <!-- End Unfold -->
-                                    <div class="card-body text-center">
-                                      <div
-                                        class="avatar avatar-xl avatar-soft-primary avatar-circle avatar-border-lg avatar-centered mb-3">
-                                        <span class="avatar-initials">R</span>
-                                        <span class="avatar-status avatar-sm-status avatar-status-warning"></span>
-                                      </div>
-                                      <h3 class="mb-1">
-                                        <a class="text-dark" href="#">
-                                          <%= trainer.businessName %>
-                                        </a>
-                                      </h3>
-
-                                      <div class="mb-3">
-                                        <i class="tio-city mr-1"></i>
-                                        <span> trainer.fullName %></span>
-                                      </div>
-
-                                      <ul class="list-inline list-inline-m-1 mb-0">
-                                        <li class="list-inline-item"><a class="badge badge-soft-secondary p-2"
-                                            href="#">UI/UX</a></li>
-                                        <li class="list-inline-item"><a class="badge badge-soft-secondary p-2"
-                                            href="#">Sketch</a></li>
-                                        <li class="list-inline-item"><a class="badge badge-soft-secondary p-2"
-                                            href="#">Figma</a></li>
-                                      </ul>
-                                    </div>
-                                    <!-- End Body -->
-
-                                    <!-- Footer -->
-                                    <div class="card-footer">
-                                      <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto py-1">
-                                          <a class="font-size-sm text-body" href="#">25 connections</a>
-                                        </div>
-                                        <div class="col-auto py-1">
-                                          <div class="custom-control custom-checkbox-switch">
-                                            <input type="checkbox" id="connectionsCheckbox7"
-                                              class="custom-control-input custom-checkbox-switch-input" checked="">
-                                            <label class="custom-checkbox-switch-label btn-sm"
-                                              for="connectionsCheckbox7">
-                                              <span class="custom-checkbox-switch-default">
-                                                <i class="tio-user-add mr-1"></i> Connect
-                                              </span>
-                                              <span class="custom-checkbox-switch-active">
-                                                <i class="tio-done mr-1"></i> Connected
-                                              </span>
-                                            </label>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <!-- End Footer -->
-                                  </div>
-                                  <% }); %>
-                                    <% } %>
-                            </div>
-                          </div>
-                        </div>
-                        <% if(typeof trainers !="undefined" ) { %>
-                          <% trainers.forEach(trainer=> { %>
-                            <div class="col mb-3">
-                              <form action="/selectTrainer" method="POST">
-                                <input type="text" value="<%= trainer.email %>" name="email" hidden>
-                                <!-- Card -->
-                                <div class="card card-body">
-                                  <div class="media align-items-md-center">
-                                    <!-- Avatar -->
-                                    <div class="avatar avatar-lg avatar-circle avatar-border-lg mr-3">
-                                      <img class="avatar-img" src="./assets/team-4-800x800.jpg"
-                                        alt="Image Description">
-                                      <span class="avatar-status avatar-sm-status avatar-status-success"></span>
-                                    </div>
-                                    <!-- End Avatar -->
-                                    <div class="media-body">
-                                      <div class="row align-items-md-center">
-                                        <div class="col-9 col-md-4 col-lg-3 mb-2 mb-md-0">
-                                          <h4 class="mb-1">
-                                            <a class="text-dark" href="#">
-                                              <%= trainer.businessName %>
-                                            </a>
-                                          </h4>
-                                          <li class="list-item"><strong class="text-dark">Name:</strong> &nbsp; <%=
-                                              trainer.fullName %>
-                                          </li>
-                                          <li class="list-item"><strong class="text-dark">Mobile:</strong> &nbsp; <%=
-                                              trainer.phone %>
-                                          </li>
-                                          <li class="list-item"><strong class="text-dark">Email:</strong> &nbsp; <%=
-                                              trainer.email %>
-                                          </li>
-                                          <li class="list-item"><strong class="text-dark">Location:</strong> &nbsp; <%=
-                                              trainer.city %>
-                                          </li>
-                                          <li class="list-item"><strong class="text-dark">Specialty:</strong> &nbsp; <%=
-                                              trainer.specialty %>
-                                          </li>
-                                        </div>
-                                        <div class="col-sm mb-3 mb-sm-0">
-                                          <div class="mb-4">
-                                            <li class="list-item"><strong class="text-dark">about me:</strong> </li>
-                                            &nbsp; <%= trainer.about %>
-                                          </div>
-                                        </div>
-
-                                        <div class="col-sm-auto">
-                                          <button class="btn" type="submit">Book </button>
-                                          <button class=" btn"type=button onClick="displayProfile()">Buisness
-                                            Profile</button>
-                                        </div>
-                                      </div>
-                                      <!-- End Row -->
-                                    </div>
-                               
-                                  </div>
-                                </div>
-                                <!-- End Card -->
-                              </form>
-                            </div>
-                            <% }); %>
-                              <% } %>
-
-                      </div>
-                      <!-- End Row -->
-                    </div>
-                  </div>
-                  <!-- End Tab Content -->
+                <div class="col-auto">
+                  <!-- Nav -->
+                  <ul class="nav nav-segment" id="connectionsTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="grid-tab" data-toggle="tab" onClick="displayGrid()" role="tab"
+                        aria-controls="grid" aria-selected="true" title="Column view">
+                        <i class="fa-solid fa-list-ul"></i> </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="list-tab" data-toggle="tab" onClick="displayList()" role="tab"
+                        aria-controls="list" aria-selected="false" title="List view">
+                        <i class="fa-solid fa-list-ul"></i> </a>
+                    </li>
+                  </ul>
+                  <!-- End Nav -->
                 </div>
               </div>
-              <!-- End Row -->
-                   <!-- trainer buisness profile -->
-                   <div id="cover" >
-                   <div class="col-md-4" id="profileCard" style="display: none;" >
-                    <div class="row justify-content-lg-center">
-                    <div class="card card-profile">
-                      <img data-cfsrc="../assets/img/bg-profile.jpg" alt="Image placeholder" class="card-img-top"
-                        src="https://demos.creative-tim.com/argon-dashboard/assets/img/bg-profile.jpg">
-                      <div class="row justify-content-center">
-                        <div class="col-4 col-lg-4 order-lg-2">
-                          <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
-                            <a href="javascript:;">
-                              <img data-cfsrc="../assets/img/team-2.jpg"
-                                class="rounded-circle img-fluid border border-2 border-white"
-                                src="https://demos.creative-tim.com/argon-dashboard/assets/img/team-2.jpg">
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
-                        <div class="d-flex justify-content-between">
-                          <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Connect</a>
-                          <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none"><i
-                              class="ni ni-collection"></i></a>
-                          <a href="javascript:;"
-                            class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Message</a>
-                          <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"><i
-                              class="ni ni-email-83"></i></a>
-                        </div>
-                      </div>
-                      <div class="card-body pt-0">
-                        <div class="row">
-                          <div class="col">
-                            <div class="d-flex justify-content-center">
-                              <div class="d-grid text-center">
-                                <span class="text-lg font-weight-bolder">22</span>
-                                <span class="text-sm opacity-8">Friends</span>
-                              </div>
-                              <div class="d-grid text-center mx-4">
-                                <span class="text-lg font-weight-bolder">10</span>
-                                <span class="text-sm opacity-8">Photos</span>
-                              </div>
-                              <div class="d-grid text-center">
-                                <span class="text-lg font-weight-bolder">89</span>
-                                <span class="text-sm opacity-8">Comments</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="text-center mt-4">
-                          <h5>
-                            Mark Davis<span class="font-weight-light">, 35</span>
-                          </h5>
-                          <div class="h6 font-weight-300">
-                            <i class="ni location_pin mr-2"></i>Bucharest, Romania
-                          </div>
-                          <div class="h6 mt-4">
-                            <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
-                          </div>
-                          <div>
-                            <i class="ni education_hat mr-2"></i>University of Computer Science
+              <div class="wrapper">
+                <form id="myForm" action="searchTrainer" method="POST">
+                  <div id="search-container">
+
+                    <input type="text" name="traineeInput" id="traineeInput" placeholder="Search training  here.." />
+                    <button type="submit" id="search" class="btn btn-soft-primary">Search</button>
+
+                    <select class="filter" id="filterInput" name="filterInput" onChange="update()">
+                      <option value="fullName">trainer name</option>
+                      <option value="businessName">business name</option>
+                      <option value="speciality">speciality</option>
+                      <option value="city">location</option>
+                    </select>
+                  </div>
+                </form>
+
+                <div class="row align-items-center mb-5">
+
+                  <div class="col-auto">
+
+                    <!-- search form -->
+                    <div class="tab-content" id="connectionsTabContent">
+                      <div class="tab-content" id="connectionsTabContent">
+
+
+                        <div class="tab-pane fade active show" id="list" role="tabpanel" aria-labelledby="list-tab">
+                          <div class="row row-cols-1">
+                            <% if(typeof trainers !="undefined" ) { %>
+                              <% trainers.forEach(trainer=> { %>
+                                <div class="col mb-3">
+                                  <form action="/selectTrainer" method="POST">
+                                    <input type="text" value="<%= trainer.email %>" name="email" hidden>
+                                    <!-- Card -->
+                                    <div class="card card-body">
+                                      <div class="media align-items-md-center">
+                                        <!-- Avatar -->
+                                        <div class="avatar avatar-lg avatar-circle avatar-border-lg mr-3">
+                                          <img class="avatar-img" src="./assets/team-4-800x800.jpg"
+                                            alt="Image Description">
+                                          <span class="avatar-status avatar-sm-status avatar-status-success"></span>
+                                        </div>
+                                        <!-- End Avatar -->
+                                        <div class="media-body">
+                                          <div class="row align-items-md-center">
+                                            <div class="col-9 col-md-4 col-lg-3 mb-2 mb-md-0">
+                                              <h4 class="mb-1">
+                                                <a class="text-dark" href="#">
+                                                  <%= trainer.businessName %>
+                                                </a>
+                                              </h4>
+                                              <li class="list-item"><strong class="text-dark">Name:</strong> &nbsp; <%=
+                                                  trainer.fullName %>
+                                              </li>
+                                              <li class="list-item"><strong class="text-dark">Mobile:</strong> &nbsp;
+                                                <%= trainer.phone %>
+                                              </li>
+                                              <li class="list-item"><strong class="text-dark">Email:</strong> &nbsp; <%=
+                                                  trainer.email %>
+                                              </li>
+                                              <li class="list-item"><strong class="text-dark">Location:</strong> &nbsp;
+                                                <%= trainer.city %>
+                                              </li>
+                                              <li class="list-item"><strong class="text-dark">Specialty:</strong> &nbsp;
+                                                <%= trainer.specialty %>
+                                              </li>
+                                            </div>
+                                            <div class="col-sm mb-3 mb-sm-0">
+                                              <div class="mb-4">
+                                                <li class="list-item"><strong class="text-dark">about me:</strong> </li>
+                                                &nbsp; <%= trainer.about %>
+                                              </div>
+                                            </div>
+
+                                            <div class="col-sm-auto">
+                                              <button class="btn" type="submit">Book </button>
+                                              <button class=" btn" type=button onClick="displayProfile()">Buisness
+                                                Profile</button>
+                                            </div>
+                                          </div>
+                                          <!-- End Row -->
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                    <!-- End Card -->
+                                  </form>
+                                </div>
+                                <% }); %>
+                                  <% } %>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  </div>
                 </div>
+              </div>
+              <!-- End Tab Content -->
             </div>
+          </div>
+        </div>
+
+
     </section>
-    <!-- JS Implementing Plugins -->
-    <script src="./js/vendor.min.js"></script>
 
-
-
-    <!-- JS Front -->
-    <script src="./js/theme.min.js"></script>
     <script>
       update();
-      function displayProfile(){
-     
-        document.getElementById("profileCard").style.display = "block";
-        document.getElementById("cover").style.display = "block";
 
-      }
       function update() {
         var select = document.getElementById("filterInput");
         var option = select.options[select.selectedIndex];
         var value = option.value;
-        console.log("value:" + value);
       }
-      function displayList() {
-        // document.getElementById("listCard").style.display = "block";
-        document.getElementById("gridCard").style.display = "none";
-
-      }
-      function displayGrid() {
-        document.getElementById("gridCard").style.display = "block";
-        // document.getElementById("listCard").style.display = "none";
-
-      }
-
-
+ 
 
     </script>
-    <!-- JS Plugins Init. -->
-    <script>
-      $(document).on('ready', function () {
-        // ONLY DEV
-        // =======================================================
-
-        if (window.localStorage.getItem('hs-builder-popover') === null) {
-          $('#builderPopover').popover('show')
-            .on('shown.bs.popover', function () {
-              $('.popover').last().addClass('popover-dark')
-            });
-
-          $(document).on('click', '#closeBuilderPopover', function () {
-            window.localStorage.setItem('hs-builder-popover', true);
-            $('#builderPopover').popover('dispose');
-          });
-        } else {
-          $('#builderPopover').on('show.bs.popover', function () {
-            return false
-          });
-        }
-
-        // END ONLY DEV
-        // =======================================================
-
-
-        // BUILDER TOGGLE INVOKER
-        // =======================================================
-        $('.js-navbar-vertical-aside-toggle-invoker').click(function () {
-          $('.js-navbar-vertical-aside-toggle-invoker i').tooltip('hide');
-        });
-
-
-        // INITIALIZATION OF MEGA MENU
-        // =======================================================
-        var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
-          desktop: {
-            position: 'left'
-          }
-        }).init();
 
 
 
-        // INITIALIZATION OF NAVBAR VERTICAL NAVIGATION
-        // =======================================================
-        var sidebar = $('.js-navbar-vertical-aside').hsSideNav();
-
-
-        // INITIALIZATION OF TOOLTIP IN NAVBAR VERTICAL MENU
-        // =======================================================
-        $('.js-nav-tooltip-link').tooltip({ boundary: 'window' })
-
-        $(".js-nav-tooltip-link").on("show.bs.tooltip", function (e) {
-          if (!$("body").hasClass("navbar-vertical-aside-mini-mode")) {
-            return false;
-          }
-        });
-
-
-        // INITIALIZATION OF UNFOLD
-        // =======================================================
-        $('.js-hs-unfold-invoker').each(function () {
-          var unfold = new HSUnfold($(this)).init();
-        });
-
-
-        // INITIALIZATION OF FORM SEARCH
-        // =======================================================
-        $('.js-form-search').each(function () {
-          new HSFormSearch($(this)).init()
-        });
-
-
-        // INITIALIZATION OF NAV SCROLLER
-        // =======================================================
-        $('.js-nav-scroller').each(function () {
-          new HsNavScroller($(this)).init()
-        });
-      });
-    </script>
-
-    <!-- IE Support -->
-    <script>
-      if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="./assets/vendor/babel-polyfill/polyfill.min.js"><\/script>');
-    </script>
 </body>
 
 </html>
