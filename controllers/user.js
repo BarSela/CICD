@@ -632,9 +632,11 @@ module.exports = {
     let typePrice = parseInt(req.body.trainingTypePrice);
     let page = req.body.page;
 
+    console.log("type price");
+    console.log(req.body.trainingTypePrice);
+
     console.log("type name");
     console.log(typeName);
-    console.log("type name");
     console.log(page);
 
     let types;
@@ -647,8 +649,8 @@ module.exports = {
           for (let i = 0; i < types.length; i++) {
             if (types[i].name == typeName) {
               types[i].name = newTypeName;
-              types[i].price = typeDuration;
-              types[i].duration = typePrice;
+              types[i].price = typePrice;
+              types[i].duration = typeDuration;
             }
           }
         }
