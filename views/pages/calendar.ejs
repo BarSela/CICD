@@ -12,7 +12,7 @@
   <link href='/main.css' rel='stylesheet' />
   <script src='/main.js'></script>
   <script>
-
+  
     // Loading the calendar
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -37,23 +37,23 @@
               btn.addEventListener("click", function () {
                 dateStr = document.getElementById("date").value;
                 trainingType = document.getElementById("Type").value;
-                time = document.getElementById("start-time").value;
+                time = document.getElementById("time").value;
                 date = new Date(dateStr + 'T' + time); // will be in local time
-                console.log(trainingType);
-                console.log(time);
-                console.log(date);
-
 
                 if (!isNaN(date.valueOf())) { // valid?
-
+                  console.log("succ");
                   calendar.addEvent({
+
                     title: trainingType,
                     start: date,
-                    end:date,
-                    startTime:time,
-                    allDay: true
+                    end: endDate,
+                    allDay: false,
+                    extendedProps: {
+                      startHour: time,
+                      duration: duration,
+                      price: price
+                    }
                   });
-                  alert('Great. new training added to your schedual');
 
                 } else {
                   alert('Invalid date.');
@@ -74,7 +74,7 @@
                 document.getElementById("action").value = "save";
                 var select = document.getElementById("markOptions").value;
                 let start = "";
-                let end ="";
+                let end = "";
                 start = document.getElementById("startHour").value;
                 end = document.getElementById("endHour").value;
                 let dateStr = document.getElementById("markDate").value;
@@ -111,8 +111,8 @@
                 document.getElementById("unavailableCover").style.display = "block";
 
               });
-              
-       
+
+
             }
           },
 
@@ -138,9 +138,9 @@
               document.getElementById("markDate").disabled = true;
               document.getElementById("markOptions").value = "allDay";
               document.getElementById("uID").value = info.event.id;
-              
+
               if (!info.event.allDay) {
-                
+
                 document.getElementById("startHour").style.display = "block";
                 document.getElementById("endHour").style.display = "block";
                 document.getElementById("to").style.display = "block";
@@ -165,8 +165,35 @@
               document.getElementById("viewDuration").placeholder = "Duration: " + info.event.extendedProps.duration;
               document.getElementById("viewPrice").placeholder = "Price: " + info.event.extendedProps.price + " ₪";
               document.getElementById("editCover").style.display = "block";
+              editBtn = document.getElementById("editBtn");
+              editBtn.addEventListener("click", function () {
+                document.getElementById("editBtn").style.display = "none";
+                document.getElementById("deleteBtn").style.display = "block";
+                document.getElementById("saveBtn").style.display = "block";
+                document.getElementById("viewType").disabled = false;
+                document.getElementById("viewDate").readOnly = false;
+                document.getElementById("viewStart").readOnly = false;
+                saveBtn = document.getElementById("saveBtn");
+                deleteBtn = document.getElementById("deleteBtn");
+                saveBtn.addEventListener("click", function () {
+                  document.getElementById("editAction").value = "save";
+                });
+                deleteBtn.addEventListener("click", function () {
+                  if (confirm("Are you sure you want to delete this training?")) {
+                    document.getElementById("editAction").value = "delete";
+                    document.getElementById("editForm").submit();
+
+
+                  }
+                  else {
+
+
+                  }
+                });
+
+              });
             }
-           
+
           })
 
         }
@@ -176,47 +203,47 @@
       // =======================================================
 
       "<% user.trainings.forEach(t => { %>"
-        type = "<%= t.trainingType %>"
-        dateStr = "<%= t.trainingDate %>"
-        time = "<%= t.startHour %>"
-        duration = "<%= t.duration %>"
-        price = "<%= t.price %>"
-        id = "<%= t._id %>"
-        date = new Date(dateStr + 'T' + time); // will be in local time
-        endTime = calculateEndTime(time,duration);
-        console.log(endTime);
-        endDate = new Date(dateStr + 'T' + endTime);
-        calendar.addEvent({
-          id: id,
-          title: type,
-          start: date,
-          end:endDate,
-          allDay: false,
-          extendedProps: {
-            startHour: time,
-            duration: duration,
-            price: price
-          }
-        });
+      type = "<%= t.trainingType %>"
+      dateStr = "<%= t.trainingDate %>"
+      time = "<%= t.startHour %>"
+      duration = "<%= t.duration %>"
+      price = "<%= t.price %>"
+      id = "<%= t._id %>"
+      date = new Date(dateStr + 'T' + time); // will be in local time
+      endTime = calculateEndTime(time, duration);
+      console.log(endTime);
+      endDate = new Date(dateStr + 'T' + endTime);
+      calendar.addEvent({
+        id: id,
+        title: type,
+        start: date,
+        end: endDate,
+        allDay: false,
+        extendedProps: {
+          startHour: time,
+          duration: duration,
+          price: price
+        }
+      });
       "<% }); %>"
 
       //UNAVALIABLE
       "<% user.unAvailable.forEach(u => { %>"
-        uID = "<%= u._id %>"
-        uDate = "<%= u.date %>"
-        uStart = ""
-        uEnd = "";
-        allDay = "<%= u.allDay %>"
-        date = new Date(uDate ); // will be in local time
-        if (allDay == "false") {
-          uStart = "<%= u.startHour %>"
-          uEnd = "<%= u.endHour %>"
-          date = new Date(uDate + 'T' + uStart); // will be in local time
-          calendar.addEvent({
+      uID = "<%= u._id %>"
+      uDate = "<%= u.date %>"
+      uStart = ""
+      uEnd = "";
+      allDay = "<%= u.allDay %>"
+      date = new Date(uDate); // will be in local time
+      if (allDay == "false") {
+        uStart = "<%= u.startHour %>"
+        uEnd = "<%= u.endHour %>"
+        date = new Date(uDate + 'T' + uStart); // will be in local time
+        calendar.addEvent({
           id: uID,
           title: "unavailable",
           start: date,
-          end:date,
+          end: date,
           allDay: false,
           extendedProps: {
             startHour: uStart,
@@ -224,60 +251,60 @@
           },
 
         });
-        }
-        else{
-          calendar.addEvent({
+      }
+      else {
+        calendar.addEvent({
           id: uID,
           title: "unavailable",
           start: date,
-          end:date,
+          end: date,
           allDay: true,
           display: 'background'
 
         });
-        }
-        
+      }
+
       "<% }); %>"
-      function calculateEndTime(start,duration){
-      let hour = parseInt(start.slice(0,2));
-      let minutes = parseInt(start.slice(3));
-      let hourToAdd = 0;
-      let minutesToAdd = 0;
-      if(duration >= 60){
-        hourToAdd = parseInt(duration /60);
-        minutesToAdd = duration % 60;
-      }
-      else{
-        minutesToAdd = duration;
-        if(minutesToAdd + minutes >= 60){
-          hourToAdd ++;
-          minutesToAdd = (minutesToAdd + minutes) -60;
-          minutes=0;
-          
+      function calculateEndTime(start, duration) {
+        let hour = parseInt(start.slice(0, 2));
+        let minutes = parseInt(start.slice(3));
+        let hourToAdd = 0;
+        let minutesToAdd = 0;
+        if (duration >= 60) {
+          hourToAdd = parseInt(duration / 60);
+          minutesToAdd = duration % 60;
         }
+        else {
+          minutesToAdd = duration;
+          if (minutesToAdd + minutes >= 60) {
+            hourToAdd++;
+            minutesToAdd = (minutesToAdd + minutes) - 60;
+            minutes = 0;
+
+          }
+        }
+        if (hour + hourToAdd <= 23) {
+          hour += hourToAdd;
+        }
+        else {
+          hour = (hour + hourToAdd) % 24;
+        }
+        if (minutes + minutesToAdd <= 60) {
+          minutes += minutesToAdd;
+        }
+        else {
+          hour++;
+          minutes = minutes + minutesToAdd - 60;
+        }
+        return hour.toString() + ":" + minutes.toString();
       }
-      if(hour + hourToAdd <= 23){
-        hour += hourToAdd;
-      }
-      else{
-        hour = (hour + hourToAdd) % 24 ;
-      }
-      if(minutes + minutesToAdd  <= 60){
-        minutes += minutesToAdd;
-      }
-      else{
-        hour++;
-        minutes = minutes + minutesToAdd -60;
-      }
-      return hour.toString()+":"+minutes.toString() ;
-    }
       calendar.render();
 
     });
 
-    
-   
-    
+
+  
+
   </script>
 </head>
 
@@ -444,7 +471,7 @@
                     <input id="uID" name="uID" type="text" style="width: 0px; display: none;">
 
                     <div class="modal-close">
-                      <button type="button" id="disBtn" >
+                      <button type="button" id="disBtn">
                         <i class="fa-regular fa-xmark"></i>
                       </button>
                     </div>
@@ -544,8 +571,8 @@
               <div class="modal-content">
                 <!-- Header -->
                 <div class="modal-close">
-                  <button type="button" id="disBtn" class="btn btn-icon btn-sm btn-ghost-secondary" onclick="closeEditForm()"
-                    data-dismiss="modal" aria-label="Close">
+                  <button type="button" id="disBtn" class="btn btn-icon btn-sm btn-ghost-secondary"
+                    onclick="closeEditForm()" data-dismiss="modal" aria-label="Close">
                     <i class="fa-regular fa-xmark"></i>
                   </button>
                 </div>
@@ -664,10 +691,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                  <input id="editAction" name="editAction" type="text" style="width: 0px; display: none;">
                   <button type="button" id="discardFormt" class="btn btn-white" onclick="closeForm()">Discard</button>
-                  <button type="button" id="editBtn" class="btn btn-primary" onclick="editForm()">Edit Training</button>
+                  <button type="button" id="editBtn" class="btn btn-primary">Edit Training</button>
                   <button type="submit" id="saveBtn" class="btn btn-primary" style="display: none;">Save Change</button>
-
+                  <button type="button" id="deleteBtn" class="btn btn-primary" style="display: none;">Delete
+                    Training</button>
                 </div>
                 </form>
               </div>
@@ -716,7 +745,7 @@
           document.getElementById("endHour").min = min;
         }
 
-   
+
 
         function updateForm() {
           var select = document.getElementById("markOptions");
@@ -743,9 +772,9 @@
           "<% user.trainingTypes.forEach(type => { %>"
           trainingType = "<%= type.name %>"
           if (trainingType == select) {
-            document.getElementById("duration").value ="Duration: " + "<%= type.duration %>";
-            document.getElementById("price").value = "Price: "+ "<%= type.price %>" + " ₪";
-            
+            document.getElementById("duration").value = "Duration: " + "<%= type.duration %>";
+            document.getElementById("price").value = "Price: " + "<%= type.price %>" + " ₪";
+
           }
           "<% }); %>"
 
@@ -756,6 +785,7 @@
 
         function editForm() {
           document.getElementById("editBtn").style.display = "none";
+          document.getElementById("deleteBtn").style.display = "block";
           document.getElementById("saveBtn").style.display = "block";
           document.getElementById("viewType").disabled = false;
           document.getElementById("viewDate").readOnly = false;
@@ -788,9 +818,9 @@
           "<% user.trainingTypes.forEach(type => { %>"
           trainingType = "<%= type.name %>"
           if (trainingType == select) {
-            
-            document.getElementById("viewDuration").value ="Duration: " + "<%= type.duration %>";
-            document.getElementById("viewPrice").value = "Price: "+ "<%= type.price %>" + " ₪";
+
+            document.getElementById("viewDuration").value = "Duration: " + "<%= type.duration %>";
+            document.getElementById("viewPrice").value = "Price: " + "<%= type.price %>" + " ₪";
           }
           "<% }); %>"
 
@@ -806,7 +836,7 @@
 
         }
 
-
+    
       </script>
 </body>
 

@@ -9,14 +9,13 @@ const {
   editPassword,
   deleteAccount,
   editTrainingTypes,
-  deleteTraining,
   addTraining,
   addTrainingType,
   cancelTrainingRegistration,
   deleteTrainingTypes,
   forgotPasseord,
   resetPassword,
-  statistics,editTraining, markUnavailable, deleteUnavailable
+  statistics,editTraining, markUnavailable, deleteUnavailable,deleteTraining
 } = require("../controllers/user");
 
 //const bcrypt = require("bcrypt");
@@ -669,22 +668,18 @@ app.post("/forgotPassword", forgotPasseord);
 app.post("/resetPassword", resetPassword);
 app.post("/statistics", statistics);
 app.post("/editTraining",async (req, res) => {
-  // let traineeInput = req.body.Type;
+  let action = req.body.editAction;
   let date = req.body.newDate;
   let time = req.body.newTime;
   let id = req.body.trainingID;
-  console.log("id: "+id);
   let trainingName = req.body.viewType;
   let duration;
   let price;
-  
-  console.log("training name "+ trainingName);
-
+  console.log("actionnnn:"+action);
   if(userObj instanceof Trainer){
-    
+    if(action == "save"){
     userObj.trainingTypes.forEach(type => {
       if(type.name == trainingName){
-        console.log("YESS");
         duration = type.duration;
         price = type.price;
         console.log(trainingName);
@@ -699,6 +694,11 @@ app.post("/editTraining",async (req, res) => {
 
       }
      editTraining(userObj.email,training,id);
+    }
+    else if(action == "delete"){
+      deleteTraining(userObj,id);
+
+    }
     
   }
   res.render("pages/calendar", {

@@ -791,31 +791,9 @@ module.exports = {
     });
   },
 
-  deleteTraining: async (userEmail, trainingID) => {
-    let trainings;
-    Trainer.findOne({ email: userEmail }).then((trainer) => {
-      if (!trainer) {
-        return false;
-      } else {
-        if (trainer.trainings) {
-          trainings = trainer.trainings;
-          for (var i = 0; i < trainings.length; i++) {
-            if (trainings[i]._id.toString() == trainingID) {
-              trainings.splice(i, 1);
-            }
-          }
-        }
-      }
-      Trainer.updateOne({ _id: trainer._id }, { trainings: trainings })
-        .then(() => {
-          return true;
-        })
-        .catch((error) => {
-          return false;
-        });
-    });
-  },
+
   editTraining: async (trainerEmail, newTraining, id) => {
+
     Trainer.findOne({ email: trainerEmail }).then((trainer) => {
       if (!trainer) {
         return false;
@@ -841,6 +819,25 @@ module.exports = {
         });
 
     });
+  },
+  deleteTraining:async (trainerObj,trainingID) => {
+
+    trainingsList = trainerObj.trainings;
+    for (let i = 0; i < trainingsList.length; i++) {
+      if(trainingsList[i]._id.toString() == trainingID){
+        console.log("found");
+        trainingsList.splice(i);
+      }
+    }
+    Trainer.updateOne({ email: trainerObj.email }, { trainings: trainingsList })
+        .then((trainer) => {
+          if (!trainer) {
+            return false;
+          }
+          else {
+            return true;
+          }
+        });
   },
   markUnavailable: (trainerObj,req) => {
     let date = req.body.markDate;
