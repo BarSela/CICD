@@ -114,6 +114,13 @@ const trainerUser = new mongoose.Schema({
       preformed: Number,
     },
   ],
+  unAvailable:[
+      {
+        date:{type:String,require:true} ,
+        allDay:Boolean,
+        startHour:{type:String,require:false},
+        endHour:{type:String,require:false},
+      },]
 });
 
 module.exports = mongoose.model("Trainer", trainerUser);
