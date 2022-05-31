@@ -31,15 +31,18 @@
           addEventButton: {
             text: 'add event',
             click: function () {
-
               document.getElementById("cover").style.display = "block";
               btn = document.getElementById("create-btn");
               btn.addEventListener("click", function () {
                 dateStr = document.getElementById("date").value;
                 trainingType = document.getElementById("Type").value;
                 time = document.getElementById("time").value;
+                durValue = document.getElementById("durValue").value;
+                duration = document.getElementById("duration").value;
+                price = document.getElementById("price").value;
                 date = new Date(dateStr + 'T' + time); // will be in local time
-
+                endTime = calculateEndTime(time,durValue);
+                endDate = newDate(dateStr+'T' + endTime);
                 if (!isNaN(date.valueOf())) { // valid?
                   console.log("succ");
                   calendar.addEvent({
@@ -50,8 +53,9 @@
                     allDay: false,
                     extendedProps: {
                       startHour: time,
-                      duration: duration,
-                      price: price
+                      duration:duration,
+                      price:price
+                      
                     }
                   });
 
@@ -162,8 +166,8 @@
               document.getElementById("viewType").value = info.event.title;
               document.getElementById("viewDate").valueAsDate = info.event.start;
               document.getElementById("viewStart").value = info.event.extendedProps.startHour;
-              document.getElementById("viewDuration").placeholder = "Duration: " + info.event.extendedProps.duration;
-              document.getElementById("viewPrice").placeholder = "Price: " + info.event.extendedProps.price + " ₪";
+              document.getElementById("viewDuration").value = "Duration: " + info.event.extendedProps.duration;
+              document.getElementById("viewPrice").value = "Price: " + info.event.extendedProps.price + " ₪";
               document.getElementById("editCover").style.display = "block";
               editBtn = document.getElementById("editBtn");
               editBtn.addEventListener("click", function () {
@@ -210,7 +214,7 @@
       price = "<%= t.price %>"
       id = "<%= t._id %>"
       date = new Date(dateStr + 'T' + time); // will be in local time
-      endTime = calculateEndTime(time, duration);
+      endTime = calculateEndTime(time, parseInt(duration));
       console.log(endTime);
       endDate = new Date(dateStr + 'T' + endTime);
       calendar.addEvent({
@@ -252,7 +256,7 @@
 
         });
       }
-      else {
+      else {//allDay = true
         calendar.addEvent({
           id: uID,
           title: "unavailable",
@@ -260,7 +264,6 @@
           end: date,
           allDay: true,
           display: 'background'
-
         });
       }
 
@@ -270,9 +273,12 @@
         let minutes = parseInt(start.slice(3));
         let hourToAdd = 0;
         let minutesToAdd = 0;
+        console.log("duration = " +duration);
+
         if (duration >= 60) {
           hourToAdd = parseInt(duration / 60);
           minutesToAdd = duration % 60;
+
         }
         else {
           minutesToAdd = duration;
@@ -291,12 +297,20 @@
         }
         if (minutes + minutesToAdd <= 60) {
           minutes += minutesToAdd;
+
+
         }
         else {
           hour++;
           minutes = minutes + minutesToAdd - 60;
         }
-        return hour.toString() + ":" + minutes.toString();
+        minStr = minutes.toString();
+        if(minStr.length  > 2){
+          len = minStr.length;
+          minStr.slice(0, len);
+
+        }
+        return hour.toString() + ":" + minStr;
       }
       calendar.render();
 
@@ -399,7 +413,8 @@
 
                       <div class="col-sm">
                         <label for="eventDateRangeLabel" class="sr-only">Duration</label>
-                        <input id="duration" name="duration" type="duration" style="width: 0px;"
+                        <input type="number"  id="durValue" style="display: none;">
+                        <input id="duration" name="duration" type="text" style="width: 0px;"
                           class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input"
                           placeholder="Duration: " readonly />
                       </div>
@@ -772,6 +787,7 @@
           "<% user.trainingTypes.forEach(type => { %>"
           trainingType = "<%= type.name %>"
           if (trainingType == select) {
+            document.getElementById("durValue").value =parseInt("<%= type.duration %>");
             document.getElementById("duration").value = "Duration: " + "<%= type.duration %>";
             document.getElementById("price").value = "Price: " + "<%= type.price %>" + " ₪";
 
