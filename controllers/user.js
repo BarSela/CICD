@@ -1055,73 +1055,84 @@ module.exports = {
         if (result) {
           if (user.userType == "trainer") {
             userEmail = user.email;
-            const userU = await User.findOneAndUpdate(
-              { email: userEmail },
-              {
-                $set: {
-                  password: newPassword,
-                },
+            bcrypt.hash(newPassword, 10, async (error, hash) => {
+              if (error) {
+                //bad bcrypt
+                return res.status(500).json({
+                  error,
+                });
               }
-            );
-            console.log("The new pass: " + newPassword);
-            if (userU) {
-              userEmail = user.email;
-              const trainer = await Trainer.findOneAndUpdate(
+              const userU = await User.findOneAndUpdate(
                 { email: userEmail },
                 {
                   $set: {
-                    password: newPassword,
+                    password: hash,
                   },
                 }
               );
-              if (trainer) {
-                return res.redirect("/login");
-              } else {
-                console.log("Error to find trainer");
+              if (userU) {
+                //success
+                const trainer = await Trainer.findOneAndUpdate(
+                  { email: userEmail },
+                  {
+                    $set: {
+                      password: hash,
+                    },
+                  }
+                );
+                if (trainer) {
+                  return res.redirect("/login");
+                } else {
+                  console.log("Error to find trainer");
+                  return res.render("/");
+                }
+              } //error! traainer not found
+              else {
+                console.log("Error to find user");
                 return res.render("/");
               }
-            } else {
-              console.log("Error to find user");
-              return res.render("/");
-            }
+            });
           } else if (user.userType == "trainee") {
-            console.log("okkkkkkkkkkkk trainer");
-            const userU = await User.findOneAndUpdate(
-              { email: userEmail },
-              {
-                $set: {
-                  password: newPassword,
-                },
+            bcrypt.hash(newPassword, 10, async (error, hash) => {
+              if (error) {
+                //bad bcrypt
+                return res.status(500).json({
+                  error,
+                });
               }
-            );
-            console.log("update1");
-            if (userU) {
-              const trainee = await Trainee.findOneAndUpdate(
+              const userU = await User.findOneAndUpdate(
                 { email: userEmail },
                 {
                   $set: {
-                    password: newPassword,
+                    password: hash,
                   },
                 }
               );
-              console.log("update2");
-              if (trainee) {
-                return res.redirect("/login");
+              console.log("update1");
+              if (userU) {
+                console.log("userU ok");
+                const trainee = await Trainee.findOneAndUpdate(
+                  { email: userEmail },
+                  {
+                    $set: {
+                      password: hash,
+                    },
+                  }
+                );
+                if (trainee) {
+                  console.log("trainee redirect");
+                  return res.redirect("/login");
+                } else {
+                  console.log("Error to find trainee");
+                  res.render("/");
+                }
               } else {
-                console.log("Error to find trainee");
+                console.log("Error to find user");
                 res.render("/");
               }
-            } else {
-              console.log("Error to find user");
-              res.render("/");
-            }
+            });
           }
         }
-        return res.render("pages/login", {
-          status: status,
-          user: userEmail,
-          userEmail: userEmail,
-        });
       }); //end bcrypt
     }); //end User.find
     console.log("okkkkkkkkkkkk");
