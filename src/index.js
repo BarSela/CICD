@@ -315,7 +315,11 @@ app.get("/editPersonalProfile", async (req, res) => {
 
 app.get("/findTrainer", (req, res) => {
   Trainer.find({}).then((trainers) => {
-    res.render("pages/findTrainer", { userEmail: userEmail,user:userObj, trainers });
+    res.render("pages/findTrainer", {
+      userEmail: userEmail,
+      user: userObj,
+      trainers,
+    });
   });
 });
 app.post("/selectTrainer", async (req, res) => {
@@ -331,7 +335,7 @@ app.post("/selectTrainer", async (req, res) => {
   } else {
     res.render("pages/findTrainer", { userEmail: userEmail, user: userObj });
   }
-});;
+});
 
 app.post("/searchTrainer", (req, res) => {
   let traineeInput = req.body.traineeInput;
@@ -366,11 +370,36 @@ app.post("/searchTrainer", (req, res) => {
 });
 
 app.get("/trainerDashboard/:email", async (req, res) => {
+  let today = new Date();
+
   userEmail = req.params.email;
   let trainer = await Trainer.findOne({ email: userEmail });
+  let statistics = trainer.monthStatistics;
   console.log(trainer);
   if (trainer) {
     userObj = trainer;
+
+    for (let i = 0; i < trainer.trainings.length; i++) {
+      if (
+        trainer.trainings[i].trainingDate < today &&
+        !trainer.trainings[i].available
+      ) {
+        let date = trainer.trainings[i].trainingDate;
+        let dateList = date.split("-");
+        let month = parseInt(dateList[1]);
+        statistics[month - 1].preformed += 1;
+      }
+    }
+    Trainer.updateOne(
+      { _id: trainer._id },
+      { monthStatistics: statistics }
+    ).then((trainer) => {
+      if (!trainer) {
+        return false;
+      } else {
+        return true;
+      }
+    });
     res.render("pages/trainerDashboard", {
       userEmail: userEmail,
       user: userObj,
@@ -390,11 +419,11 @@ app.get("/traineeDashboard/:email", async (req, res) => {
     } else {
       const [trainee] = trainees;
       userObj = trainee;
+      res.render("pages/traineeDashboard", {
+        userEmail: userEmail,
+        user: userObj,
+      });
     }
-    res.render("pages/traineeDashboard", {
-      userEmail: userEmail,
-      user: userObj,
-    });
   });
 });
 app.get("/dashboard", async (req, res) => {
@@ -632,29 +661,84 @@ app.post("/TrainingReg", async (req, res) => {
   let trainingName = req.body.typeIn;
   let duration = req.body.durationIn;
   let price = req.body.priceIn;
+  let trainerEmail = req.body.trainerEmail;
 
   console.log(userEmail);
   console.log(date);
   console.log(time);
 
   console.log("isTrainee");
-  let trainee = await Trainee.findOneAndUpdate(
-    { email: userEmail },
-    {
-      $set: {
-        trainings: [
-          {
-            trainingType: trainingName,
-            trainingDate: date.toString(),
-            startHour: time,
-            pass: false,
-            duration: duration,
-            price: price,
-          },
-        ],
-      },
+
+  Trainee.findOne({ email: userEmail }).then((trainee) => {
+    if (!trainee) {
+      return false;
+    } else {
+      let trainingN = trainee.trainings;
+      let training = {
+        trainingType: trainingName,
+        trainingDate: date,
+        startHour: time,
+        pass: false,
+        duration: duration,
+        price: price,
+        trainerEmail: trainerEmail,
+      };
+
+      trainingN.push(training);
+      Trainee.updateOne({ email: userEmail }, { trainings: trainingN }).then(
+        (trainee) => {
+          if (!trainee) {
+            return false;
+          } else {
+            return true;
+          }
+        }
+      );
     }
-  );
+  });
+
+  // let trainee = await Trainee.findOneAndUpdate(
+  //   { email: userEmail },
+  //   {
+  //     $set: {
+  //       trainings: [
+  //         {
+  //           trainingType: trainingName,
+  //           trainingDate: date,
+  //           startHour: time,
+  //           pass: false,
+  //           duration: duration,
+  //           price: price,
+  //           trainerEmail: trainerEmail,
+  //         },
+  //       ],
+  //     },
+  //   }
+  // );
+  Trainer.findOne({ email: trainerEmail }).then((trainer) => {
+    if (!trainer) {
+      return false;
+    } else {
+      if (trainer.trainings != null) {
+        let trainingT = trainer.trainings;
+        for (let i = 0; i < trainingT.length; i++) {
+          if (trainingT[i].trainingDate == date && startHour == time) {
+            trainingT[i].available = false;
+          }
+        }
+        Trainer.updateOne(
+          { email: trainerEmail },
+          { trainings: trainingT }
+        ).then((trainer) => {
+          if (!trainer) {
+            return false;
+          } else {
+            return true;
+          }
+        });
+      }
+    }
+  });
 
   res.render("pages/traineeDashboard", {
     userEmail: userEmail,
@@ -690,6 +774,31 @@ app.post("/newTraining", async (req, res) => {
       duration: duration,
       price: price,
     };
+    let dateList = date.split("-");
+    let month = parseInt(dateList[1]);
+
+    Trainer.findOne({ email: userEmail }).then((trainer) => {
+      if (!trainer) {
+        return false;
+      } else {
+        if (trainer.monthStatistics != null) {
+          let statistics = trainer.monthStatistics;
+          statistics[month - 1].scheduled += 1;
+
+          Trainer.updateOne(
+            { _id: trainer._id },
+            { monthStatistics: statistics }
+          ).then((trainer) => {
+            if (!trainer) {
+              return false;
+            } else {
+              return true;
+            }
+          });
+        }
+      }
+    });
+
     addTraining(userObj.email, training);
   }
   res.render("pages/calendar", {
@@ -705,7 +814,7 @@ app.post("/deleteTrainingTypes", deleteTrainingTypes);
 app.post("/forgotPassword", forgotPasseord);
 app.post("/resetPassword", resetPassword);
 app.post("/statistics", statistics);
-app.post("/editTraining",async (req, res) => {
+app.post("/editTraining", async (req, res) => {
   let action = req.body.editAction;
   let date = req.body.newDate;
   let time = req.body.newTime;
@@ -713,61 +822,171 @@ app.post("/editTraining",async (req, res) => {
   let trainingName = req.body.viewType;
   let duration;
   let price;
-  console.log("actionnnn:"+action);
-  if(userObj instanceof Trainer){
-    if(action == "save"){
-    userObj.trainingTypes.forEach(type => {
-      if(type.name == trainingName){
-        duration = type.duration;
-        price = type.price;
-        console.log(trainingName);
-      }});
+  console.log("actionnnn:" + action);
+  if (userObj instanceof Trainer) {
+    if (action == "save") {
+      userObj.trainingTypes.forEach((type) => {
+        if (type.name == trainingName) {
+          duration = type.duration;
+          price = type.price;
+          console.log(trainingName);
+        }
+      });
       training = {
-        trainingType:trainingName,
+        trainingType: trainingName,
         trainingDate: date.toString(),
-        startHour:time.toString(),
+        startHour: time.toString(),
         available: true,
-        duration:duration,
-        price:price
-
+        duration: duration,
+        price: price,
+      };
+      let oldDate;
+      let trainingsList = userObj.trainings;
+      for (let i = 0; i < trainingsList.length; i++) {
+        if (trainingsList[i]._id.toString() == id) {
+          console.log("found");
+          oldDate = trainingsList[i].trainingDate;
+        }
       }
-     editTraining(userObj.email,training,id);
-    }
-    else if(action == "delete"){
-      deleteTraining(userObj,id);
+      let dateList = oldDate.split("-");
+      let oldMonth = parseInt(dateList[1]);
+      let dateList2 = date.split("-");
+      let newMonth = parseInt(dateList2[1]);
 
+      Trainer.findOne({ email: userEmail }).then((trainer) => {
+        if (!trainer) {
+          return false;
+        } else {
+          if (trainer.monthStatistics != null) {
+            let statistics = trainer.monthStatistics;
+            statistics[oldMonth - 1].scheduled -= 1;
+            statistics[newMonth - 1].scheduled += 1;
+
+            Trainer.updateOne(
+              { email: userEmail },
+              { monthStatistics: statistics }
+            ).then((trainer) => {
+              if (!trainer) {
+                return false;
+              } else {
+                return true;
+              }
+            });
+          }
+        }
+      });
+      editTraining(userObj.email, training, id);
+    } else if (action == "delete") {
+      let oldDate;
+      let trainingsList = userObj.trainings;
+      for (let i = 0; i < trainingsList.length; i++) {
+        if (trainingsList[i]._id.toString() == id) {
+          console.log("found");
+          oldDate = trainingsList[i].trainingDate;
+        }
+      }
+      let dateList = oldDate.split("-");
+      let month = parseInt(dateList[1]);
+
+      Trainer.findOne({ email: userEmail }).then((trainer) => {
+        if (!trainer) {
+          return false;
+        } else {
+          if (trainer.monthStatistics != null) {
+            let statistics = trainer.monthStatistics;
+            statistics[month - 1].canceled += 1;
+
+            Trainer.updateOne(
+              { email: userEmail },
+              { monthStatistics: statistics }
+            ).then((trainer) => {
+              if (!trainer) {
+                return false;
+              } else {
+                return true;
+              }
+            });
+          }
+          if (trainer.trainings != null) {
+            let traineeEmail;
+            let trainingDate;
+            let trainingType;
+            let startTime;
+            for (let i = 0; i < trainer.trainings.length; i++) {
+              if (trainer.trainings[i]._id.toString() == id) {
+                if (trainer.trainings[i].available == false) {
+                  traineeEmail = trainer.trainings[i].traineeEmail;
+                  trainingDate = trainer.trainings[i].trainingDate;
+                  trainingType = trainer.trainings[i].trainingType;
+                  startTime = trainer.trainings[i].startTime;
+                }
+              }
+            }
+            console.log(traineeEmail);
+            if (traineeEmail) {
+              Trainee.findOne({ email: traineeEmail }).then((trainee) => {
+                if (!trainee) {
+                  return false;
+                } else {
+                  let notifications;
+                  let notifi = {
+                    read: false,
+                    trainerName: userObj.fullName,
+                    trainingType: trainingType,
+                    trainingDate: trainingDate,
+                    startHour: startTime,
+                  };
+                  console.log("trainerEmail");
+
+                  console.log("notifi....................................");
+                  console.log(notifi);
+                  console.log("notifi....................................");
+                  notifications.push(notifi);
+                  Trainee.updateOne(
+                    { email: traineeEmail },
+                    { notifications: notifications }
+                  )
+                    .then(() => {
+                      console.log("true");
+                      return true;
+                    })
+                    .catch((error) => {
+                      console.log("true");
+
+                      return false;
+                    });
+                }
+              });
+            }
+          }
+        }
+      });
+      deleteTraining(userObj, id);
     }
-    
   }
   res.render("pages/calendar", {
     userEmail: userEmail,
     user: userObj,
   });
 });
-app.post("/markUnavailable",async (req, res) => {
+app.post("/markUnavailable", async (req, res) => {
   let action = req.body.action;
-      if(action == "save"){
-        if(markUnavailable(userObj,req)){
-          console.log("Error to load the trainer from DB");
-          res.redirect("/");
-        }
-        else{
-          res.render("pages/calendar", {userEmail: userEmail,user: userObj,});
-        }
-      }
-      else if(action == "delete"){
-        if(!deleteUnavailable(userObj,req)){
-          console.log("Error to load the trainer from DB");
-          res.redirect("/");
-        }
-        else{
-          res.render("pages/calendar", {userEmail: userEmail,user: userObj,});
-        }
-      }
-        
-      
-    
-  });
+  if (action == "save") {
+    if (markUnavailable(userObj, req)) {
+      console.log("Error to load the trainer from DB");
+      res.redirect("/");
+    } else {
+      res.render("pages/calendar", { userEmail: userEmail, user: userObj });
+    }
+  } else if (action == "delete") {
+    if (!deleteUnavailable(userObj, req)) {
+      console.log("Error to load the trainer from DB");
+      res.redirect("/");
+    } else {
+      res.render("pages/calendar", { userEmail: userEmail, user: userObj });
+    }
+  }
+});
 app.post("/TrainingReg", async (req, res) => {
   let date = req.body.dateIn;
   let time = req.body.startIn;

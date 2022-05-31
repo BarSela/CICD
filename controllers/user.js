@@ -115,9 +115,9 @@ module.exports = {
               //monthStatistics:
               let statList = [];
               let monthStatistic = {
-                scheduled: 15,
-                canceled: 9,
-                preformed: 6,
+                scheduled: 0,
+                canceled: 0,
+                preformed: 0,
               };
 
               for (let i = 0; i < 12; i++) {
@@ -791,9 +791,7 @@ module.exports = {
     });
   },
 
-
   editTraining: async (trainerEmail, newTraining, id) => {
-
     Trainer.findOne({ email: trainerEmail }).then((trainer) => {
       if (!trainer) {
         return false;
@@ -804,45 +802,44 @@ module.exports = {
             if (trainings[i]._id.toString() == id) {
               // trainings.splice(i);
               trainings[i] = newTraining;
-
             }
           }
         }
       }
-      Trainer.updateOne({ _id: trainer._id }, { trainings: trainings })
-        .then((trainer) => {
+      Trainer.updateOne({ _id: trainer._id }, { trainings: trainings }).then(
+        (trainer) => {
           if (!trainer) {
             return false;
           } else {
             return true;
           }
-        });
-
+        }
+      );
     });
   },
-  deleteTraining:async (trainerObj,trainingID) => {
-
+  deleteTraining: async (trainerObj, trainingID) => {
     trainingsList = trainerObj.trainings;
     for (let i = 0; i < trainingsList.length; i++) {
-      if(trainingsList[i]._id.toString() == trainingID){
+      if (trainingsList[i]._id.toString() == trainingID) {
         console.log("found");
         trainingsList.splice(i);
       }
     }
-    Trainer.updateOne({ email: trainerObj.email }, { trainings: trainingsList })
-        .then((trainer) => {
-          if (!trainer) {
-            return false;
-          }
-          else {
-            return true;
-          }
-        });
+    Trainer.updateOne(
+      { email: trainerObj.email },
+      { trainings: trainingsList }
+    ).then((trainer) => {
+      if (!trainer) {
+        return false;
+      } else {
+        return true;
+      }
+    });
   },
-  markUnavailable: (trainerObj,req) => {
+  markUnavailable: (trainerObj, req) => {
     let date = req.body.markDate;
     let option = req.body.markOptions;
-    console.log("option "+option);
+    console.log("option " + option);
     let start;
     let end;
     let old = [];
@@ -850,60 +847,69 @@ module.exports = {
       start = req.body.startHour;
       end = req.body.endHour;
       mark = { date: date, startHour: start, endHour: end, allDay: false };
-    }
-    else {//all day
+    } else {
+      //all day
       mark = { date: date, allDay: true };
-       }
+    }
 
     if (trainerObj instanceof Trainer) {
       old = trainerObj.unAvailable;
       old.push(mark);
-      Trainer.updateOne({ email: trainerObj.email }, { unAvailable: old })
-        .then((trainer) => {
+      Trainer.updateOne({ email: trainerObj.email }, { unAvailable: old }).then(
+        (trainer) => {
           if (!trainer) {
             return false;
-          }
-          else {
+          } else {
             return true;
           }
-        });
+        }
+      );
     }
     return false;
   },
-  deleteUnavailable:async (trainerObj,req) => {
+  deleteUnavailable: async (trainerObj, req) => {
     let id = req.body.uID;
-    console.log("id: "+id);
-    console.log("trainerObj: "+trainerObj.email);
+    console.log("id: " + id);
+    console.log("trainerObj: " + trainerObj.email);
     unAvailableList = trainerObj.unAvailable;
     for (let i = 0; i < unAvailableList.length; i++) {
-      if(unAvailableList[i]._id.toString() == id){
+      if (unAvailableList[i]._id.toString() == id) {
         console.log("found");
         unAvailableList.splice(i);
       }
     }
-    Trainer.updateOne({ email: trainerObj.email }, { unAvailable: unAvailableList })
-        .then((trainer) => {
-          if (!trainer) {
-            return false;
-          }
-          else {
-            return true;
-          }
-        });
+    Trainer.updateOne(
+      { email: trainerObj.email },
+      { unAvailable: unAvailableList }
+    ).then((trainer) => {
+      if (!trainer) {
+        return false;
+      } else {
+        return true;
+      }
+    });
   },
-
 
   cancelTrainingRegistration: async (req, res) => {
     let trainingDateToDelete = req.body.trainingDate;
     let trainingHourToDelete = req.body.trainingHour;
+    let trainingTypeToDelete = req.body.trainingType;
     console.log(trainingDateToDelete);
     console.log(trainingHourToDelete);
     let trainings;
+    let trainingsT;
+    let trainerEmail;
+
+    console.log("1");
+
     Trainee.findOne({ email: userEmail }).then((trainee) => {
       if (!trainee) {
+        console.log("2");
         return false;
       } else {
+        console.log("3");
         if (trainee.trainings) {
+          console.log("4");
           trainings = trainee.trainings;
           for (var i = 0; i < trainings.length; i++) {
             console.log(trainings[i].trainingDate);
@@ -912,15 +918,66 @@ module.exports = {
               trainings[i].trainingDate == trainingDateToDelete &&
               trainings[i].startHour == trainingHourToDelete
             ) {
+              trainerEmail = trainings[i].trainerEmail;
+              console.log("5");
               trainings.splice(i, 1);
               console.log("found");
+              console.log(trainerEmail);
+              Trainer.findOne({ email: trainerEmail }).then((trainer) => {
+                if (!trainer) {
+                  return false;
+                } else {
+                  if (trainer.trainings) {
+                    console.log("6");
+                    trainingsT = trainer.trainings;
+                    let notifications = trainer.notifications;
+
+                    for (var i = 0; i < trainingsT.length; i++) {
+                      if (
+                        trainingsT[i].trainingDate == trainingDateToDelete &&
+                        trainingsT[i].startHour == trainingHourToDelete
+                      ) {
+                        trainingsT[i].available = true;
+                        console.log("found");
+                      }
+                    }
+                    let notifi = {
+                      read: false,
+                      //trainerName: trainer.fullName,
+                      trainingType: trainingTypeToDelete,
+                      trainingDate: trainingDateToDelete,
+                      startHour: trainingHourToDelete,
+                    };
+                    console.log("trainerEmail");
+
+                    console.log("notifi....................................");
+                    console.log(notifi);
+                    console.log("notifi....................................");
+                    notifications.push(notifi);
+                    Trainer.updateOne(
+                      { email: trainerEmail },
+                      { trainings: trainingsT, notifications: notifications }
+                    )
+                      .then(() => {
+                        console.log("true");
+                        return true;
+                      })
+                      .catch((error) => {
+                        console.log("true");
+
+                        return false;
+                      });
+                  }
+                }
+              });
             }
           }
         }
       }
       Trainee.updateOne({ _id: trainee._id }, { trainings: trainings })
         .then(() => {
-          return res.redirect("/traineeDashboard");
+          console.log("6");
+          return res.redirect("/traineeDashboard/" + userEmail);
         })
         .catch((error) => {
           return res.redirect("/");
