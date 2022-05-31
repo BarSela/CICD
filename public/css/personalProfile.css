@@ -356,7 +356,7 @@ input[type="submit"]:hover {
 /* Add styles to the form container */
 
 /* chart */
-canvas {
+canvas #myChart {
   width: 1000px !important;
-  height: 500px !important;
+  height: 200px !important;
 }

@@ -26,17 +26,17 @@
 
     <section id="content">
       <%- include('../partials/navbar') %>
-      <div class="container">
+      <div class="container" style="padding-bottom: 80px">
         <div class="avatar-flip">
           <img
-            src="/assets/you_can.jpg"
+            src="/assets/statistics.jpeg"
             height="150"
             width="150"
             style="cursor: zoom-in"
             id="pic1"
           />
           <img
-            src="/assets/you_can.jpg"
+            src="/assets/statistics.jpeg"
             height="150"
             width="150"
             style="cursor: zoom-in"
@@ -46,51 +46,145 @@
         <!-- <h2>Bar Sela</h2> -->
         <h2>Statistics</h2>
         <div class="btn-group"></div>
+        <h4>Scheduled:</h4>
         <canvas id="myChart"></canvas>
-        <div class="profile-details"></div>
+
+        <div
+          class="profile-details"
+          style="
+            width: 350px;
+            height: 350px;
+            margin-left: 350px;
+            margin-top: 50px;
+          "
+        >
+          <h4>preformed vs. canceled: (Month: <%=month%>)</h4>
+
+          <canvas id="myChart2"></canvas>
+        </div>
       </div>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
     <script>
-            let fullData='<%=fullData%>';
-            const ctx = document.getElementById("myChart").getContext("2d");
-            const myChart = new Chart(ctx, {
-              type: "bar",
-              data: {
-                labels: ["January","February","March","April","May","June","July","August","September","October","November","December"],
-                datasets: [
-                  {
-                    label: "# of Votes",
-                    data: [12, 19, 3, 5, 0, 3],
-                    backgroundColor: [
-                      "rgba(255, 99, 132, 0.2)",
-                      "rgba(54, 162, 235, 0.2)",
-                      "rgba(255, 206, 86, 0.2)",
-                      "rgba(75, 192, 192, 0.2)",
-                      "rgba(153, 102, 255, 0.2)",
-                      "rgba(255, 159, 64, 0.2)",
-                    ],
-                    borderColor: [
-                      "rgba(255, 99, 132, 1)",
-                      "rgba(54, 162, 235, 1)",
-                      "rgba(255, 206, 86, 1)",
-                      "rgba(75, 192, 192, 1)",
-                      "rgba(153, 102, 255, 1)",
-                      "rgba(255, 159, 64, 1)",
-                    ],
-                    borderWidth: 1,
-                  },
-                ],
-              },
-              options: {
-                scales: {
-                  y: {
-                    beginAtZero: true,
-                  },
+      let rgbPink = "rgba(255, 99, 132, 0.2)";
+      let max = 0;
+      let background = [
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+      ];
+      let monthc = "<%=month%>";
+      let month = parseInt(monthc, 10);
+      console.log(month);
+      background[month - 1] = rgbPink;
+
+      let scheduledDataNum = [];
+      let canceledDataNum = [];
+      let preformedDataNum = [];
+      let i = 0;
+      ("<% scheduledList.forEach(s => { %>");
+      scheduledDataNum.push(parseInt("<%= s %>"));
+      if (scheduledDataNum[i] > max) {
+        max = scheduledDataNum[i];
+      }
+      i++;
+      ("<% }); %>");
+      max += 5;
+      ("<% canceledList.forEach(s => { %>");
+      canceledDataNum.push(parseInt("<%= s %>"));
+      ("<% }); %>");
+      ("<% preformedList.forEach(s => { %>");
+      preformedDataNum.push(parseInt("<%= s %>"));
+      ("<% }); %>");
+
+      let monthListData = [canceledDataNum[month], preformedDataNum[month]];
+      console.log(monthListData);
+
+      const ctx = document.getElementById("myChart").getContext("2d");
+      const ctx2 = document.getElementById("myChart2").getContext("2d");
+
+      const myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ],
+          datasets: [
+            {
+              label: "All YEAR",
+              data: scheduledDataNum,
+              backgroundColor: background,
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+            xAxes: [
+              {
+                display: true,
+                scaleLabel: {
+                  display: true,
+                  labelString: "Month",
                 },
               },
-            });
+            ],
+            yAxes: [
+              {
+                display: true,
+                ticks: {
+                  beginAtZero: true,
+                  steps: 10,
+                  stepValue: 5,
+                  max: max,
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: "Scheduled",
+                },
+              },
+            ],
+          },
+        },
+      });
+      const myChart2 = new Chart(ctx2, {
+        type: "doughnut",
+        data: {
+          labels: ["Canceled", "Preformed"],
+          datasets: [
+            {
+              label: "# of Votes",
+              data: monthListData,
+              backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)"],
+              hoverOffset: 4,
+            },
+          ],
+        },
+      });
     </script>
   </body>
 </html>

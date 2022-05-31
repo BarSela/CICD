@@ -499,24 +499,38 @@ app.get("/calendar", (req, res) => {
     user: userObj,
   });
 });
-app.get("/statistics", (req, res) => {
-  let month = req.body.month;
-  let info = req.body.info;
+app.get("/statistics/:month", (req, res) => {
+  let month = parseInt(req.params.month);
+  console.log(month);
 
-  let fullData=[12, 19, 3, 5, 0, 3,12, 19, 3, 5, 0, 3];//all year
+  let fullDataScheduled = []; //all year
+  let fullDataCanceled = []; //all year
+  let fullDataPreformed = []; //all year
+
   let type;
   Trainer.find({ email: userEmail }).then((trainers) => {
     const [user] = trainers;
     userObj = user;
     type = "trainer";
+    let monthlist = userObj.monthStatistics;
+    console.log(monthlist.length);
+    for (let i = 0; i < 12; i++) {
+      fullDataScheduled.push(monthlist[i].scheduled);
+      fullDataCanceled.push(monthlist[i].canceled);
+      fullDataPreformed.push(monthlist[i].preformed);
+    }
+    console.log(fullDataScheduled.length);
 
+    console.log(typeof fullDataCanceled[0]);
     console.log(userObj);
     res.render("pages/statisticsResults", {
       userEmail: userEmail,
       user: userObj,
       userType: type,
-      fullData:fullData,
-
+      month: month,
+      scheduledList: fullDataScheduled,
+      canceledList: fullDataCanceled,
+      preformedList: fullDataPreformed,
     });
   });
 });
@@ -585,7 +599,7 @@ app.post("/TrainingReg", async (req, res) => {
   let time = req.body.startIn;
   let trainingName = req.body.typeIn;
   let duration = req.body.durationIn;
-  let price = req.body.priceIn;;
+  let price = req.body.priceIn;
 
   console.log(userEmail);
   console.log(date);
@@ -658,4 +672,4 @@ app.post("/deleteTrainingTypes", deleteTrainingTypes);
 
 app.post("/forgotPassword", forgotPasseord);
 app.post("/resetPassword", resetPassword);
-//app.post("/statistics", statistics);
+app.post("/statistics", statistics);

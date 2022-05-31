@@ -119,17 +119,10 @@ module.exports = {
                 canceled: 9,
                 preformed: 6,
               };
-              console.log("monthStatistic");
-
-              console.log(monthStatistic);
-              console.log("for");
 
               for (let i = 0; i < 12; i++) {
-                console.log(monthStatistic);
                 statList.push(monthStatistic);
               }
-              console.log("statisticlist");
-              console.log(statList);
 
               Trainer.updateOne(
                 { _id: trainer._id },
@@ -995,5 +988,9 @@ module.exports = {
       }); //end bcrypt
     }); //end User.find
     console.log("okkkkkkkkkkkk");
+  },
+  statistics: async (req, res) => {
+    let month = req.body.month;
+    return res.redirect("/statistics/" + month);
   },
 };

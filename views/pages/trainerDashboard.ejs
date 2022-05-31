@@ -32,7 +32,7 @@
               <div class="head">
                 <h3  style="margin-top: 20px;">Show your training statistics for the past year</h3>
               </div>
-              <form  id="myForm" action="/statistics" method="GET">
+              <form  id="myForm" action="/statistics" method="POST">
                 <div  id="statistic-container">
                   <select  class="w3-input w3-border w3-light-grey  input-box" class="filter" id="month" name="month">
                     <option value="1">January</option>
@@ -46,13 +46,13 @@
                     <option value="9">September</option>
                     <option value="10">October</option>
                     <option value="11">November</option>
-                    <option value="12">November</option>
+                    <option value="12">December</option>
                   </select>
-                  <select class="w3-input w3-border w3-light-grey  input-box" class="filter" id="info" name="info">
+                  <!-- <select class="w3-input w3-border w3-light-grey  input-box" class="filter" id="info" name="info">
                     <option value="scheduled">Scheduled trainings</option>
                     <option value="canceled">Canceled trainings</option>
                     <option value="preformed">Performed trainings</option>
-                  </select>
+                  </select> -->
                   <button class="w3-btn w3-blue w3-round-xlarge" type="submit" id="show" class="btn btn-soft-primary">Show</button>
 
                   <h3>note: </h3>
