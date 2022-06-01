@@ -19,6 +19,106 @@
         aspectRatio: 1.5,
         height: 800,
         selectable: false,
+
+        customButtons:
+        {
+          // ADD A TRAINING EVENT TO CALENDAR 
+          // =======================================================
+          addEventButton: {
+            text: 'add event',
+            click: function () {
+              document.getElementById("cover").style.display = "block";
+              btn = document.getElementById("create-btn");
+              btn.addEventListener("click", function () {
+                dateStr = document.getElementById("date").value;
+                trainingType = document.getElementById("Type").value;
+                time = document.getElementById("time").value;
+                durValue = document.getElementById("durValue").value;
+                duration = document.getElementById("duration").value;
+                price = document.getElementById("price").value;
+                date = new Date(dateStr + 'T' + time); // will be in local time
+                endTime = calculateEndTime(time,durValue);
+                endDate = newDate(dateStr+'T' + endTime);
+                if (!isNaN(date.valueOf())) { // valid?
+                  console.log("succ");
+                  calendar.addEvent({
+
+                    title: trainingType,
+                    start: date,
+                    end: endDate,
+                    allDay: false,
+                    extendedProps: {
+                      startHour: time,
+                      duration:duration,
+                      price:price
+                      
+                    }
+                  });
+
+                } else {
+                  alert('Invalid date.');
+                }
+
+              });
+            }
+          },
+          // ADD A UNAVAILABLE EVENT TO CALENDAR 
+          // =======================================================
+          markUnavailable: {
+            text: 'mark unavailable',
+            click: function () {
+              document.getElementById("unavailableCover").style.display = "block";
+              document.getElementById("save").style.display = "block";
+              let saveBtn = document.getElementById("save");
+              saveBtn.addEventListener("click", function () {
+                document.getElementById("action").value = "save";
+                var select = document.getElementById("markOptions").value;
+                let start = "";
+                let end = "";
+                start = document.getElementById("startHour").value;
+                end = document.getElementById("endHour").value;
+                let dateStr = document.getElementById("markDate").value;
+                let date = new Date(dateStr); // will be in local time
+                date = new Date(dateStr + 'T' + start); // will be in local time
+
+                let allDay = true;
+                if (select == "hour") {
+                  allDay = false;
+                  start = document.getElementById("startHour").value;
+                  end = document.getElementById("endHour").value;
+                  date = new Date(dateStr + 'T' + start); // will be in local time
+                }
+                if (!isNaN(date.valueOf())) { // valid?
+
+                  calendar.addEvent({
+                    title: "unavailable",
+                    start: date,
+                    // startTime:start,
+                    allDay: allDay,
+                    extendedProps: {
+                      startHour: start,
+                      endHour: end
+                    },
+                  });
+
+                } else {
+                  alert('Invalid date.');
+                }
+
+              });
+              let exsitBtn = document.getElementById("disBtn");
+              exsitBtn.addEventListener("click", function () {
+                document.getElementById("unavailableCover").style.display = "block";
+
+              });
+
+
+            }
+          },
+
+        },
+        // INITIALIZATION OF CALENDAR TOOLBAR VIEW  
+        // =======================================================
         headerToolbar: {
 
           left: 'today',
@@ -36,31 +136,40 @@
               alert("<%= trainer.fullName %>" + " is not available at this time");
             }
             else {
-              let form = document.getElementById("newTrainingForm");
-              if (info.event.extendedProps.available) {
-                document.getElementById("type").innerHTML = info.event.title;
-                document.getElementById("typeIn").value = info.event.title;
+              document.getElementById("trainingID").value = info.event.id;
+              document.getElementById("viewType").value = info.event.title;
+              document.getElementById("viewDate").valueAsDate = info.event.start;
+              document.getElementById("viewStart").value = info.event.extendedProps.startHour;
+              document.getElementById("viewDuration").value = "Duration: " + info.event.extendedProps.duration;
+              document.getElementById("viewPrice").value = "Price: " + info.event.extendedProps.price + " ₪";
+              document.getElementById("editCover").style.display = "block";
+              editBtn = document.getElementById("editBtn");
+              editBtn.addEventListener("click", function () {
+                document.getElementById("editBtn").style.display = "none";
+                document.getElementById("deleteBtn").style.display = "block";
+                document.getElementById("saveBtn").style.display = "block";
+                document.getElementById("viewType").disabled = false;
+                document.getElementById("viewDate").readOnly = false;
+                document.getElementById("viewStart").readOnly = false;
+                saveBtn = document.getElementById("saveBtn");
+                deleteBtn = document.getElementById("deleteBtn");
+                saveBtn.addEventListener("click", function () {
+                  document.getElementById("editAction").value = "save";
+                });
+                deleteBtn.addEventListener("click", function () {
+                  if (confirm("Are you sure you want to delete this training?")) {
+                    document.getElementById("editAction").value = "delete";
+                    document.getElementById("editForm").submit();
 
-                document.getElementById("date").innerHTML = info.event.start.toString();
-                document.getElementById("dateIn").value = info.event.start.toString();
 
-                document.getElementById("duration").innerHTML = info.event.extendedProps.duration;
-                document.getElementById("durationIn").value = info.event.extendedProps.duration;
+                  }
+                  else {
 
-                document.getElementById("start").innerHTML = info.event.extendedProps.startHour;
-                document.getElementById("startIn").value = info.event.extendedProps.startHour;
 
-                document.getElementById("price").innerHTML = info.event.extendedProps.price;
-                document.getElementById("priceIn").value = info.event.extendedProps.price;
-                document.getElementById("cover").style.display = "block";;
-              form.style.position = "absolute";
-              form.style.left = info.jsEvent.pageX + 'px';
-              form.style.top = info.jsEvent.pageY + 'px';
-              }
-              else{
-                alert( "This training is not available at this time");
-              }
-              
+                  }
+                });
+
+              });
             }
 
           }
@@ -139,7 +248,7 @@
         let minutes = parseInt(start.slice(3));
         let hourToAdd = 0;
         let minutesToAdd = 0;
-        console.log("duration = " + duration);
+        console.log("duration = " +duration);
 
         if (duration >= 60) {
           hourToAdd = parseInt(duration / 60);
@@ -171,7 +280,7 @@
           minutes = minutes + minutesToAdd - 60;
         }
         minStr = minutes.toString();
-        if (minStr.length > 2) {
+        if(minStr.length  > 2){
           len = minStr.length;
           minStr.slice(0, len);
 
@@ -191,8 +300,143 @@
 
     <%- include('../partials/traineeSidebar') %>
       <main>
-        <div class="calendar-container">
-          <div id='calendar'></div>
+        <!-- ADD NEW TRAINING FORM   -->
+        <!-- ======================================================= -->
+        <div id="cover" style="display: none;">
+          <div class="modal fade show" id="addEventToCalendarModal" tabindex="-1" role="dialog"
+            style=" padding-top: 100px; display: block;" aria-modal="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-close">
+                  <button type="button" class="btn btn-icon btn-sm btn-ghost-secondary" data-dismiss="modal"
+                    aria-label="Close">
+                    <i class="tio-clear tio-lg"></i>
+                  </button>
+                </div>
+                <!-- End Header -->
+
+                <!-- Body -->
+                <div class="modal-body">
+                  <div class="media">
+                    <textarea id="eventTitleLabel" class="form-control form-control-title"
+                      placeholder="ADD NEW TRAINING" style="height: 47px; margin-top: 0px; margin-bottom: 0px;"
+                      readonly></textarea>
+                  </div>
+                  <form class="form-container" action="/newTraining" method="POST">
+                    <!-- End Media -->
+                    <div class="row form-group" data-select2-id="25">
+                      <div class="col-sm-3 mb-2 mb-sm-0">
+                        <div class="media align-items-center mt-2">
+                          <i class="tio-format-points nav-icon"></i>
+                          <div class="media-body">Training type</div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm" data-select2-id="24">
+                        <!-- Select training type-->
+                        <% if(typeof user !="undefined" && typeof user.trainingTypes !="undefined" ) { %>
+                          <select class="js-select2-custom custom-select " size="1" id="Type" name="Type"
+                            onChange=updateEdit()>
+                            <% user.trainingTypes.forEach(t=> { %>
+                              <option value="<%= t.name %>">
+                                <%= t.name %>
+                              </option>
+                              <% }); %>
+                          </select>
+                          <% } %>
+                      </div>
+                    </div>
+
+                    <!-- End Row -->
+                    <div class="row form-group">
+                      <div class="col-sm-3 mb-2 mb-sm-0">
+                        <div class="media align-items-center mt-2">
+                          <i class="tio-event nav-icon"></i>
+
+                          <div class="media-body">Date</div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm">
+                        <label for="eventDateRangeLabel" class="sr-only">Date</label>
+                        <input id="date" name="date" type="date" style="width: 0px;"
+                          class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" required />
+
+                      </div>
+                      <div class="col-sm">
+                        <label for="eventDateRangeLabel" class="sr-only">Start Hour</label>
+                        <input id="time" name="time" type="time" style="width: 0px;"
+                          class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" required />
+
+                      </div>
+                    </div>
+
+                    <!-- End Row -->
+                    <div class="row form-group">
+                      <div class="col-sm-3 mb-2 mb-sm-0">
+                        <div class="media align-items-center mt-2">
+                          <i class="tio-event nav-icon"></i>
+
+                          <div class="media-body">Training details</div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm">
+                        <label for="eventDateRangeLabel" class="sr-only">Duration</label>
+                        <input type="number"  id="durValue" style="display: none;">
+                        <input id="duration" name="duration" type="text" style="width: 0px;"
+                          class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input"
+                          placeholder="Duration: " readonly />
+                      </div>
+                      <div class="col-sm">
+                        <label for="eventDateRangeLabel" class="sr-only">Price</label>
+                        <input id="price" name="price" type="text" style="width: 0px;"
+                          class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" placeholder="Price: "
+                          readonly />
+                      </div>
+                    </div>
+                    <!-- End Row -->
+                    <div class="row form-group">
+                      <div class="col-sm-3 mb-2 mb-sm-0">
+                        <div class="media align-items-center mt-2">
+                          <i class="tio-poi nav-icon"></i>
+                          <div class="media-body">Location</div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm">
+                        <label for="eventLocationLabel" class="sr-only">Add location</label>
+
+                        <input type="text" class="form-control" id="eventLocationLabel" placeholder="Add location"
+                          aria-label="Add location">
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <div class="col-sm-3 mb-2 mb-sm-0">
+                        <div class="media align-items-center mt-2">
+                          <i class="tio-text-left nav-icon"></i>
+
+                          <div class="media-body">Description</div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm">
+                        <label for="eventDescriptionLabel" class="sr-only">Add description</label>
+
+                        <textarea id="eventDescriptionLabel" class="form-control"
+                          placeholder="Add description"></textarea>
+                      </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" id="discardFormt" class="btn btn-white" onclick="closeForm()">Discard</button>
+                  <button type="submit" id="create-btn" class="btn btn-primary">Create Training</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
         <div id="cover">
           <!-- registration form -->
@@ -234,6 +478,120 @@
 
       </main>
       <script>
+        updateForm();
+        function close() {
+          document.getElementById("unavailableCover").style.display = "none";
+
+        }
+        update();
+        updateEdit();
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        today = yyyy + '-' + mm + '-' + dd;
+        document.getElementById("viewDate").min = today;
+        document.getElementById("date").min = today;
+        document.getElementById("markDate").min = today;
+
+        // ADD NEW TRAINING FUNCTIONS
+        //=======================================================
+
+        function closeForm() {
+          document.getElementById("cover").style.display = "none";
+
+        }
+
+        // ADD UNAVAILABLE FUNCTIONS
+        //======================================================= 
+
+        function updateEndHour() {
+          let min = document.getElementById("startHour").value;
+          document.getElementById("endHour").min = min;
+        }
+
+
+
+        function updateForm() {
+          var select = document.getElementById("markOptions");
+          var option = select.options[select.selectedIndex];
+          select.value = option.value;
+          if (option.value == "hour") {
+
+            document.getElementById("startHour").style.display = "block";
+            document.getElementById("endHour").style.display = "block";
+            document.getElementById("to").style.display = "block";
+            document.getElementById("from").style.display = "block";
+
+          }
+          else {
+            document.getElementById("startHour").style.display = "none";
+            document.getElementById("endHour").style.display = "none";
+            document.getElementById("to").style.display = "none";
+            document.getElementById("from").style.display = "none";
+          }
+        }
+
+        function updateNewDurationAndPrice() {
+          var select = document.getElementById("Type").value;
+          "<% user.trainingTypes.forEach(type => { %>"
+          trainingType = "<%= type.name %>"
+          if (trainingType == select) {
+            document.getElementById("durValue").value =parseInt("<%= type.duration %>");
+            document.getElementById("duration").value = "Duration: " + "<%= type.duration %>";
+            document.getElementById("price").value = "Price: " + "<%= type.price %>" + " ₪";
+
+          }
+          "<% }); %>"
+
+        }
+
+        // EDIT TRAINING FUNCTIONS
+        //======================================================= 
+
+        function editForm() {
+          document.getElementById("editBtn").style.display = "none";
+          document.getElementById("deleteBtn").style.display = "block";
+          document.getElementById("saveBtn").style.display = "block";
+          document.getElementById("viewType").disabled = false;
+          document.getElementById("viewDate").readOnly = false;
+          document.getElementById("viewStart").readOnly = false;
+
+        }
+
+        function closeEditForm() {
+          document.getElementById("editCover").style.display = "none";
+
+        }
+
+        function updateEdit() {
+          var select = document.getElementById("Type");
+          var option = select.options[select.selectedIndex];
+          select.value = option.value;
+          updateNewDurationAndPrice();
+        }
+
+
+        function update() {
+          var select = document.getElementById("viewType");
+          var option = select.options[select.selectedIndex];
+          select.value = option.value;
+          updateDurationAndPrice();
+        }
+        function updateDurationAndPrice() {
+          var select = document.getElementById("viewType").value;
+
+          "<% user.trainingTypes.forEach(type => { %>"
+          trainingType = "<%= type.name %>"
+          if (trainingType == select) {
+
+            document.getElementById("viewDuration").value = "Duration: " + "<%= type.duration %>";
+            document.getElementById("viewPrice").value = "Price: " + "<%= type.price %>" + " ₪";
+          }
+          "<% }); %>"
+
+        }
+
         function openForm() {
           document.getElementById("cover").style.display = "block";
 
