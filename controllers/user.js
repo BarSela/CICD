@@ -15,12 +15,22 @@ module.exports = {
     let email = req.body.email;
     let password = req.body.password;
     let gender = req.body.gender;
-
+    
+    function onlyLetters(str) {
+      return /^[a-zA-Z]+$/.test(str);
+    }
     //trainee user
     if (userType == "trainee") {
       //checks if the email already exists in the databases
       Trainee.find({ email }).then((trainees) => {
         if (trainees.length >= 1) {
+          return res.render("pages/signUp", {
+            status: status,
+            userEmail: userEmail,
+          });
+        }
+        if (!onlyLetters(fullName)) {
+
           return res.render("pages/signUp", {
             status: status,
             userEmail: userEmail,

@@ -219,9 +219,13 @@
       var errorMsg = document.getElementById("errorMsg");
       errorMsg.style.display = "none";
       if ("<%= status %>" == "false") {
-        errorMsg.innerHTML = "This email is already exixt";
+        errorMsg.innerHTML =
+          "Error! This email is already exist or one of your details invalid";
         errorMsg.style.display = "block";
         regStatus = false;
+      }
+      function onlyLetters(str) {
+        return /^[a-zA-Z]+$/.test(str);
       }
 
       function validateSignupForm() {
@@ -258,6 +262,11 @@
 
         if (password != passwordRepeat) {
           errorMsg.innerHTML = "please confirm your password";
+          errorMsg.style.display = "block";
+          return false;
+        }
+        if (!onlyLetters(fullName)) {
+          errorMsg.innerHTML = "You have entered an invalid full name!";
           errorMsg.style.display = "block";
           return false;
         }
