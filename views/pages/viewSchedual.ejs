@@ -29,34 +29,38 @@
 
         eventClick: function (info) {
 
-          
           info.el.addEventListener("click", function () {
-            
+
 
             if (info.event.title == "unavailable") {
-              alert("<%= trainer.fullName %>" +" is not available at this time");
+              alert("<%= trainer.fullName %>" + " is not available at this time");
             }
-            else{
+            else {
               let form = document.getElementById("newTrainingForm");
-            document.getElementById("type").innerHTML = info.event.title;
-            document.getElementById("typeIn").value = info.event.title;
+              if (info.event.extendedProps.available) {
+                document.getElementById("type").innerHTML = info.event.title;
+                document.getElementById("typeIn").value = info.event.title;
 
-            document.getElementById("date").innerHTML = info.event.start.toString();
-            document.getElementById("dateIn").value = info.event.start.toString();
+                document.getElementById("date").innerHTML = info.event.start.toString();
+                document.getElementById("dateIn").value = info.event.start.toString();
 
-            document.getElementById("duration").innerHTML = info.event.extendedProps.duration;
-            document.getElementById("durationIn").value = info.event.extendedProps.duration;
+                document.getElementById("duration").innerHTML = info.event.extendedProps.duration;
+                document.getElementById("durationIn").value = info.event.extendedProps.duration;
 
-            document.getElementById("start").innerHTML = info.event.extendedProps.startHour;
-            document.getElementById("startIn").value = info.event.extendedProps.startHour;
+                document.getElementById("start").innerHTML = info.event.extendedProps.startHour;
+                document.getElementById("startIn").value = info.event.extendedProps.startHour;
 
-            document.getElementById("price").innerHTML = info.event.extendedProps.price;
-            document.getElementById("priceIn").value = info.event.extendedProps.price;
-
-            document.getElementById("cover").style.display = "block";;
-            form.style.position = "absolute";
-            form.style.left = info.jsEvent.pageX + 'px';
-            form.style.top = info.jsEvent.pageY + 'px';
+                document.getElementById("price").innerHTML = info.event.extendedProps.price;
+                document.getElementById("priceIn").value = info.event.extendedProps.price;
+                document.getElementById("cover").style.display = "block";;
+              form.style.position = "absolute";
+              form.style.left = info.jsEvent.pageX + 'px';
+              form.style.top = info.jsEvent.pageY + 'px';
+              }
+              else{
+                alert( "This training is not available at this time");
+              }
+              
             }
 
           }
@@ -77,7 +81,7 @@
       endTime = calculateEndTime(time, parseInt(duration));
       console.log(endTime);
       endDate = new Date(dateStr + 'T' + endTime);
-      
+
       calendar.addEvent({
         id: id,
         title: type,
@@ -88,9 +92,10 @@
           startHour: time,
           duration: duration,
           price: price,
-          available:available
+          available: available
         }
       });
+      
       "<% }); %>"
       //UNAVALIABLE
       "<% trainer.unAvailable.forEach(u => { %>"
@@ -134,7 +139,7 @@
         let minutes = parseInt(start.slice(3));
         let hourToAdd = 0;
         let minutesToAdd = 0;
-        console.log("duration = " +duration);
+        console.log("duration = " + duration);
 
         if (duration >= 60) {
           hourToAdd = parseInt(duration / 60);
@@ -166,7 +171,7 @@
           minutes = minutes + minutesToAdd - 60;
         }
         minStr = minutes.toString();
-        if(minStr.length  > 2){
+        if (minStr.length > 2) {
           len = minStr.length;
           minStr.slice(0, len);
 
@@ -203,8 +208,9 @@
               <form class="form-container" action="/TrainingReg" method="POST">
                 <ul class="list-group">
                   <input id="trainerEmail" name="trainerEmail" value="<%= trainer.email %>" style="display: none;" />
-                  <span><strong class="text-dark">Trainier:"<%= trainer.fullName %>"</strong><span class="text-dark text-capitalize"
-                      id="trainerName"></span></span> <input id="typeIn" name="typeIn" style="display: none;" />
+                  <span><strong class="text-dark">Trainier:"<%= trainer.fullName %>"</strong><span
+                      class="text-dark text-capitalize" id="trainerName"></span></span> <input id="typeIn" name="typeIn"
+                    style="display: none;" />
                   <span><strong class="text-dark">Date:</strong> <span class="text-dark text-capitalize" id="date">
                       &nbsp; </span></span><input name="dateIn" id="dateIn" style="display: none;" />
                   <span><strong class="text-dark">Start Hour:</strong> <span class="text-dark text-capitalize"
