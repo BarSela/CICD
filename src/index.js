@@ -431,14 +431,17 @@ app.get("/traineeDashboard/:email", async (req, res) => {
 });
 app.get("/dashboard", async (req, res) => {
   //add to fix the dashboard botton in home page
-  Trainer.find({ email: userEmail }).then((users) => {
+  console.log(userEmail);
+  Trainee.find({ email: userEmail }).then((users) => {
     //If the user list is empty-trainer
     if (users.length === 0) {
+      console.log("trainer ---------------");
       res.render("pages/trainerDashboard", {
         userEmail: userEmail,
         user: userObj,
       });
     } else {
+      console.log("trainee-----------------------");
       const [user] = users;
       userObj = user;
 
