@@ -863,6 +863,67 @@ app.post("/deleteTrainingTypes", deleteTrainingTypes);
 app.post("/forgotPassword", forgotPasseord);
 app.post("/resetPassword", resetPassword);
 app.post("/statistics", statistics);
+
+/**
+ * Add two numbers.
+ * @param {number} date The first number.
+ * @returns {number} new date.
+ */
+function correctDate(date) {
+  let dateList = date.split(" ");
+  console.log(dateList);
+  console.log(dateList[3]);
+  console.log(dateList[1]);
+  console.log(dateList[2]);
+
+  let newDate = "";
+  newDate += dateList[3];
+  console.log(new_date);
+  newDate += "-";
+  let month;
+  switch (dateList[1]) {
+    case "Jan":
+      month = "01";
+      break;
+    case "Feb":
+      month = "02";
+      break;
+    case "Mar":
+      month = "03";
+      break;
+    case "Apr":
+      month = "04";
+      break;
+    case "May":
+      month = "05";
+      break;
+    case "Jun":
+      month = "06";
+      break;
+    case "Jul":
+      month = "07";
+      break;
+    case "Aug":
+      month = "08";
+      break;
+    case "Sep":
+      month = "09";
+      break;
+    case "Oct":
+      month = "10";
+      break;
+    case "Nov":
+      month = "11";
+      break;
+    case "Dec":
+      month = "12";
+      break;
+  }
+  newDate += month;
+  newDate += "-";
+  newDate += dateList[2];
+  return newDate;
+}
 app.post("/editTraining", async (req, res) => {
   let action = req.body.editAction;
   let date = req.body.newDate;
@@ -1040,66 +1101,6 @@ app.post("/editTraining", async (req, res) => {
     }
   }
 
- /**
- * Add two numbers.
- * @param {number} date The first number.
- * @returns {number} new date.
- */
-  function correctDate(date) {
-    let dateList = date.split(" ");
-    console.log(dateList);
-    console.log(dateList[3]);
-    console.log(dateList[1]);
-    console.log(dateList[2]);
-
-    let newDate = "";
-    newDate += dateList[3];
-    console.log(new_date);
-    newDate += "-";
-    let month;
-    switch (dateList[1]) {
-      case "Jan":
-        month = "01";
-        break;
-      case "Feb":
-        month = "02";
-        break;
-      case "Mar":
-        month = "03";
-        break;
-      case "Apr":
-        month = "04";
-        break;
-      case "May":
-        month = "05";
-        break;
-      case "Jun":
-        month = "06";
-        break;
-      case "Jul":
-        month = "07";
-        break;
-      case "Aug":
-        month = "08";
-        break;
-      case "Sep":
-        month = "09";
-        break;
-      case "Oct":
-        month = "10";
-        break;
-      case "Nov":
-        month = "11";
-        break;
-      case "Dec":
-        month = "12";
-        break;
-    }
-    newDate += month;
-    newDate += "-";
-    newDate += dateList[2];
-    return newDate;
-  }
   res.render("pages/calendar", {
     userEmail: userEmail,
     user: userObj,
