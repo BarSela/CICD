@@ -74,11 +74,11 @@
                                 <input type="text" name="newTrainingTypeName" value="<%= type.name %>" required>
                               </td>
                               <td nowrap="nowrap" class="text-xs-left" name="trainingTypePrice">
-                                <input type="number" name="TrainingTypePrice" value="<%= type.price %>" required>
+                                <input type="number" name="TrainingTypePrice" value="<%= type.price %>" min="10" max="500" required>
                                 
                               </td>
                               <td class="text-xs-left" name="trainingTypeDuration">
-                                <input type="number" name="trainingTypeDuration" value="<%= type.duration %>" required>
+                                <input type="number" name="trainingTypeDuration" value="<%= type.duration %>" min="10" max="120" required>
                               </td>
                               <td nowrap="nowrap" class="text-xs-left">
                                 <button type="submit" 
@@ -157,11 +157,11 @@
                   <label>Training Type name</label>
                   </div>
                   <div class="date_fields">
-                    <div class="txt_field"><input id="duration" name="trainingTypeDuration" type="number"required />
+                    <div class="txt_field"><input id="duration" name="trainingTypeDuration" type="number"   min="10" max="120" required />
                       <span></span>
                       <label>Duration</label>
                     </div>
-                    <div class="txt_field"><input id="price" name="trainingTypePrice" type="number"required />
+                    <div class="txt_field"><input id="price" name="trainingTypePrice" type="number"  min="10" max="500" required />
                       <span></span>
                       <label> Price</label>
                     </div>
