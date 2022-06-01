@@ -339,6 +339,26 @@ app.post("/selectTrainer", async (req, res) => {
     res.render("pages/findTrainer", { userEmail: userEmail, user: userObj });
   }
 });
+app.post("/filterTrainings", (req, res) => {
+  let filter = req.body.filterInput;
+  console.log("filter" + filter);
+
+  let results = [];
+  console.log("traineeeee:"+userObj);
+  if(userObj instanceof Trainee){
+    userObj.trainings.forEach(t=> {
+      date = new Date(t.trainingDate)
+      month = String(date.getMonth() + 1).padStart(2, '0')
+      if(month == filter){
+        results.push(t);
+      }
+    });
+  }
+  console.log("result: "+results);
+
+  res.render("pages/traineeDashboard", { userEmail: userEmail, user: userObj,trainings:results });
+});
+
 
 app.post("/searchTrainer", (req, res) => {
   let traineeInput = req.body.traineeInput;
@@ -424,7 +444,7 @@ app.get("/traineeDashboard/:email", async (req, res) => {
       userObj = trainee;
       res.render("pages/traineeDashboard", {
         userEmail: userEmail,
-        user: userObj,
+        user: userObj,trainings:userObj.trainings
       });
     }
   });
@@ -447,7 +467,7 @@ app.get("/dashboard", async (req, res) => {
 
       res.render("pages/traineeDashboard", {
         userEmail: userEmail,
-        user: userObj,
+        user: userObj,trainings:userObj.trainings
       });
     }
   });
@@ -765,7 +785,7 @@ app.post("/TrainingReg", async (req, res) => {
 
   res.render("pages/traineeDashboard", {
     userEmail: userEmail,
-    user: userObj,
+    user: userObj,trainings:userObj.trainings
   });
 });
 app.post("/newTraining", async (req, res) => {
@@ -1048,7 +1068,7 @@ app.post("/TrainingReg", async (req, res) => {
 
   res.render("pages/traineeDashboard", {
     userEmail: userEmail,
-    user: userObj,
+    user: userObj,trainings:userObj.trainings
   });
 });
 

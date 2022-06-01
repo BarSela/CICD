@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-	<link rel="stylesheet" href="/css/style_Dashboard.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="/css/style_Dashboard.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
   <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
   <title>Shape</title>
   <link rel="icon" href="/assets/shape-tab-icon.png" type="image/png" />
 </head>
+
 <body>
   <%- include('../partials/traineeSidebar') %>
-  <section id="content">
-    <%- include('../partials/navbar') %>
-		<main>
-			<h1 class="title">Hello <%= user.fullName %></h1>
-			<ul class="breadcrumbs">
-				<li><a href="/homePage">Home</a></li>
-				<li class="divider">/</li>
-				<li><a href="/traineedashboard/<%= userEmail %>" class="active">Dashboard</a></li>
-			</ul>
-			<!-- <div class="info-data">
+    <section id="content">
+      <%- include('../partials/navbar') %>
+        <main>
+          <h1 class="title">Hello <%= user.fullName %>
+          </h1>
+          <ul class="breadcrumbs">
+            <li><a href="/homePage">Home</a></li>
+            <li class="divider">/</li>
+            <li><a href="/traineedashboard/<%= userEmail %>" class="active">Dashboard</a></li>
+          </ul>
+          <!-- <div class="info-data">
           <div class="card">
             <div class="head">
               <div>
@@ -72,135 +72,317 @@
             <span class="label">80%</span>
           </div>
         </div> -->
-        <div class="data">
-          <div class="content-data">
-            <div class="head">
-              <h3>Training History</h3>
-              <div class="menu">
-                <i class='bx bx-dots-horizontal-rounded icon'></i>
-                <ul class="menu-link">
-                  <li><a href="#">Edit</a></li>
-                  <li><a href="#">Save</a></li>
-                  <li><a href="#">Remove</a></li>
-                </ul>
-              </div>
-            </div>
-            <% if(typeof user != "undefined" ) { %>
-              <% if(typeof user.trainings != "undefined" ) { %>
-                <% user.trainings.forEach(t => { %>
-                  <% if(t.pass) { %>
-  
-              <div class="trainer-profile">
-                    <div class="trainer-info">
-                      <ul class="list-group">
-                        <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Training Type:</strong> &nbsp; <%= t.trainingType %></li>
-                        <li class="list-item"><strong class="text-dark">Date:</strong> &nbsp; <%= t.trainingDate %></li>
-                        <li class="list-item"><strong class="text-dark">Start Hour:</strong> &nbsp; <%= t.startHour %></li>
-                        <li class="list-item"><strong class="text-dark">Duration:</strong> &nbsp; <%= t.duration %> Minutes</li>
-                        <li class="list-item"><strong class="text-dark">Price:</strong> &nbsp; <%= t.price %> ILS</li>
-                      </ul>
+          <div class="data">
+            <div class="content-data">
+              <div class="head">
+                <h3>Training History</h3>
+                <div class="menu">
+                  <i class='bx bx-dots-horizontal-rounded icon'></i>
+                  <ul class="menu-link">
+                    <li><a href="#">Edit</a></li>
+                    <li><a href="#">Save</a></li>
+                    <li><a href="#">Remove</a></li>
+                  </ul>
                 </div>
               </div>
-              <% } %> 
-              <% }); %>
-              <% } %> 
-              <% } %> 
-            <div class="chat-box">
-          </div>
+              <% if(typeof user !="undefined" ) { %>
+                <% if(typeof user.trainings !="undefined" ) { %>
+                  <% user.trainings.forEach(t=> { %>
+                    <% if(t.pass) { %>
 
-			</div>
-      <div class="content-data">
-        <div class="head">
-          <h3>Future training</h3>
-          <div class="menu">
-            <i class='bx bx-dots-horizontal-rounded icon'></i>
-            <ul class="menu-link">
-              <li><a href="#">Edit</a></li>
-              <li><a href="#">Save</a></li>
-              <li><a href="#">Remove</a></li>
-            </ul>
-          </div>
-        </div>
-        <% if(typeof user != "undefined" ) { %>
-          <% if(typeof user.trainings != "undefined" ) { %>
-            <% user.trainings.forEach(t => { %>
-              <% if(!t.pass) { %>
+                      <div class="trainer-profile">
+                        <div class="trainer-info">
+                          <ul class="list-group">
+                            <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Training
+                                Type:</strong> &nbsp; <%= t.trainingType %>
+                            </li>
+                            <li class="list-item"><strong class="text-dark">Date:</strong> &nbsp; <%= t.trainingDate %>
+                            </li>
+                            <li class="list-item"><strong class="text-dark">Start Hour:</strong> &nbsp; <%= t.startHour
+                                %>
+                            </li>
+                            <li class="list-item"><strong class="text-dark">Duration:</strong> &nbsp; <%= t.duration %>
+                                Minutes</li>
+                            <li class="list-item"><strong class="text-dark">Price:</strong> &nbsp; <%= t.price %> ILS
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <% } %>
+                        <% }); %>
+                          <% } %>
+                            <% } %>
+                              <div class="chat-box">
+                              </div>
 
-          <div class="trainer-profile">
-                <div class="trainer-info">
-                  <ul class="list-group">
-                    <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Training Type:</strong> &nbsp; <%= t.trainingType %></li>
-                    <li class="list-item"><strong class="text-dark">Date:</strong> &nbsp; <%= t.trainingDate %></li>
-                    <li class="list-item"><strong class="text-dark">Start Hour:</strong> &nbsp; <%= t.startHour %></li>
-                    <li class="list-item"><strong class="text-dark">Duration:</strong> &nbsp; <%= t.duration %> Minutes </li>
-                    <li class="list-item"><strong class="text-dark">Price:</strong> &nbsp; <%= t.price %> ILS </li>
-                  </ul>
             </div>
-            <form id="rowForm" method=POST action="/cancelTrainingRegistration">
-              <input type="text" name="trainingType" value="<%= t.trainingType %>" hidden>
-              <input type="text" name="trainingDate" value="<%= t.trainingDate %>" hidden>
-              <input type="text" name="trainingHour" value="<%= t.startHour %>" hidden>
-              <button class="btn" type="submit" 
-              class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
-              style="font-size: 22px;">
-              <div class="v-btn__content"><i class="fa fa-times" aria-hidden="true"></i>
+
+            <div class="content-data">
+              <div class="card">
+                <!-- Header -->
+                <div class="card-header">
+                  <div class="row justify-content-between align-items-center flex-grow-1">
+                    <div class="col-sm-6 col-md-4 mb-3 mb-sm-0">
+                      <form>
+                        <div class="input-group input-group-merge input-group-flush">
+                          <!-- Select -->
+                          <select class="filter" id="filterInput" name="filterInput" onChange="update()">
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                          </select>
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              <i class="tio-search"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Header -->
+
+                <!-- Table -->
+                <div class="table-responsive datatable-custom">
+                  <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                  
+                  
+                    <table id="datatable"
+                      class="table table-lg table-borderless table-thead-bordered table-nowrap table-align-middle card-table dataTable no-footer"
+           role="grid" aria-describedby="datatable_info">
+                      <thead class="thead-light">
+                        <tr role="row">
+                          <th class="table-column-pr-0 sorting_disabled" rowspan="1" colspan="1" aria-label="
+                        " style="width: 24px;">
+                            <div class="custom-control custom-checkbox">
+                              <input id="datatableCheckAll" type="checkbox" class="custom-control-input">
+                              <label class="custom-control-label" for="datatableCheckAll"></label>
+                            </div>
+                          </th>
+                          <th class="table-column-pl-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                            colspan="1" aria-label="Name: activate to sort column ascending" style="width: 201px;">Name
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                            aria-label="Position: activate to sort column ascending" style="width: 122px;">Position</th>
+                          <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                            aria-label="Country: activate to sort column ascending" style="width: 110px;">Country</th>
+                          <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                            aria-label="Status: activate to sort column ascending" style="width: 88px;">Status</th>
+                          <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                            aria-label="Portfolio: activate to sort column ascending" style="width: 122px;">Portfolio
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                            aria-label="Role: activate to sort column ascending" style="width: 64px;">Role</th>
+                          <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 65px;"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if(typeof user !="undefined" ) { %>
+                          <% if(typeof user.trainings !="undefined" ) { %>
+                            <% user.trainings.forEach(t=> { %>
+                              <% if(t.pass) { %>
+                                <tr role="row" class="even">
+                                  <td class="table-column-pr-0">
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" id="usersDataCheck16">
+                                      <label class="custom-control-label" for="usersDataCheck16"></label>
+                                    </div>
+                                  </td>
+                                  <td class="table-column-pl-0">
+                                    <a class="d-flex align-items-center" href="./user-profile.html">
+                                      <div class="avatar avatar-soft-primary avatar-circle">
+                                        <span class="avatar-initials">M</span>
+                                      </div>
+                                      <div class="ml-3">
+                                        <span class="d-block h5 text-hover-primary mb-0">
+                                          <%= t.trainingType %>
+                                        </span>
+                                        <span class="d-block font-size-sm text-body">
+                                          <%= t.duration %>
+                                        </span>
+                                      </div>
+                                    </a>
+                                  </td>
+                                  <td>
+                                    <span class="d-block h5 mb-0">
+                                      <%= t.startHour %>
+                                    </span>
+                                    <span class="d-block font-size-sm">Human resources</span>
+                                  </td>
+                                  <td>Canada <span class="text-hide">Code: CA</span></td>
+                                  <td>
+                                    <span class="legend-indicator bg-success"></span>Active
+                                  </td>
+                                  <td>
+                                    <div class="d-flex align-items-center">
+                                      <span class="font-size-sm mr-2">90%</span>
+                                      <div class="progress table-progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 90%"
+                                          aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td>Employee</td>
+                                  <td>
+                                    <a class="btn btn-sm btn-white" href="javascript:;" data-toggle="modal"
+                                      data-target="#editUserModal">
+                                      <i class="tio-edit"></i> Edit
+                                    </a>
+                                  </td>
+                                </tr>
+                                <% } %>
+                                  <% }); %>
+                                    <% } %>
+                                      <% } %>
+
+                      </tbody>
+                    </table>
+                    
+                  </div>
+                </div>
+                <!-- End Table -->
+
+                <!-- Footer -->
+                <div class="card-footer">
+   
+                  <!-- End Pagination -->
+                </div>
+                <!-- End Footer -->
               </div>
-            </button>
-            </form>
-            
-          </div>
-          <% } %>
-          <% }); %>
-          <% } %> 
-          <% } %> 
-        <div class="chat-box">
-      </div>
-		</main>
-	</section>
-  <script>
-    function  today(){
-      let today=new Date();
-      return today;
-    }
-    // PROGRESSBAR
-const allProgress = document.querySelectorAll('main .card .progress');
 
-allProgress.forEach(item=> {
-	item.style.setProperty('--value', item.dataset.value)
-})
+              <form class="form-container" action="/filterTrainings" method="POST">
+                <select class="filter" id="filterInput" name="filterInput" onChange="update()">
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
 
-// APEXCHART
-var options = {
-  series: [{
-  name: 'series1',
-  data: [31, 40, 28, 51, 42, 109, 100]
-}, {
-  name: 'series2',
-  data: [11, 32, 45, 32, 34, 52, 41]
-}],
-  chart: {
-  height: 350,
-  type: 'area'
-},
-dataLabels: {
-  enabled: false
-},
-stroke: {
-  curve: 'smooth'
-},
-xaxis: {
-  type: 'datetime',
-  categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-},
-tooltip: {
-  x: {
-    format: 'dd/MM/yy HH:mm'
-  },
-},
-};
+                </select>
+                <button class="btn" type="submit" style="font-size: 22px;">
+                  filter
+                </button>
+                <div class="head">
+                  <h3>Future training</h3>
+                  <div class="menu">
+                    <i class='bx bx-dots-horizontal-rounded icon'></i>
+                    <ul class="menu-link">
+                      <li><a href="#">Edit</a></li>
+                      <li><a href="#">Save</a></li>
+                      <li><a href="#">Remove</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <% if(typeof user !="undefined" ) { %>
+                  <% if(typeof trainings !="undefined" ) { %>
+                    <% trainings.forEach(t=> { %>
+                      <% if(!t.pass) { %>
+                        <div class="trainer-profile">
+                          <div class="trainer-info">
+                            <ul class="list-group">
+                              <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Training
+                                  Type:</strong> &nbsp; <%= t.trainingType %>
+                              </li>
+                              <li class="list-item"><strong class="text-dark">Date:</strong> &nbsp; <%= t.trainingDate
+                                  %>
+                              </li>
+                              <li class="list-item"><strong class="text-dark">Start Hour:</strong> &nbsp; <%=
+                                  t.startHour %>
+                              </li>
+                              <li class="list-item"><strong class="text-dark">Duration:</strong> &nbsp; <%= t.duration
+                                  %> Minutes </li>
+                              <li class="list-item"><strong class="text-dark">Price:</strong> &nbsp; <%= t.price %> ILS
+                              </li>
+                            </ul>
+                          </div>
+              </form>
+
+              <form id="rowForm" method=POST action="/cancelTrainingRegistration">
+                <input type="text" name="trainingType" value="<%= t.trainingType %>" hidden>
+                <input type="text" name="trainingDate" value="<%= t.trainingDate %>" hidden>
+                <input type="text" name="trainingHour" value="<%= t.startHour %>" hidden>
+                <button class="btn" type="submit"
+                  class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
+                  style="font-size: 22px;">
+                  <div class="v-btn__content"><i class="fa fa-times" aria-hidden="true"></i>
+                  </div>
+                </button>
+              </form>
+
+            </div>
+            <% } %>
+              <% }); %>
+                <% } %>
+                  <% } %>
+
+
+
+                    <div class="chat-box">
+                    </div>
+
+        </main>
+    </section>
+    <script>
+      update();
+
+      function update() {
+        var select = document.getElementById("filterInput");
+        var option = select.options[select.selectedIndex];
+        var value = option.value;
+      }
+      function today() {
+        let today = new Date();
+        return today;
+      }
+      // PROGRESSBAR
+      const allProgress = document.querySelectorAll('main .card .progress');
+
+      allProgress.forEach(item => {
+        item.style.setProperty('--value', item.dataset.value)
+      })
+
+      // APEXCHART
+      var options = {
+        series: [{
+          name: 'series1',
+          data: [31, 40, 28, 51, 42, 109, 100]
+        }, {
+          name: 'series2',
+          data: [11, 32, 45, 32, 34, 52, 41]
+        }],
+        chart: {
+          height: 350,
+          type: 'area'
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: 'smooth'
+        },
+        xaxis: {
+          type: 'datetime',
+          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+        },
+        tooltip: {
+          x: {
+            format: 'dd/MM/yy HH:mm'
+          },
+        },
+      };
 
 //var chart = new ApexCharts(document.querySelector("#chart"), options);
 //chart.render();
-  </script>
+    </script>
 </body>
+
 </html>

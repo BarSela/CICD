@@ -6,7 +6,7 @@
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
   <!-- CSS Implementing Plugins -->
 
-	<!-- <link rel="stylesheet" href="/css/style_Dashboard.css"> -->
+	<link rel="stylesheet" href="/css/style_Dashboard.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
   <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
  
@@ -326,11 +326,10 @@
                 </thead>
   
                 <tbody>
-                  
-              
-
-        
-                
+                  <% if(typeof user != "undefined" ) { %>
+                    <% if(typeof user.trainings != "undefined" ) { %>
+                      <% user.trainings.forEach(t => { %>
+                        <% if(t.pass) { %>
                   <tr role="row" class="even">
                     <td class="table-column-pr-0">
                       <div class="custom-control custom-checkbox">
@@ -345,12 +344,12 @@
                         </div>
                         <div class="ml-3">
                           <span class="d-block h5 text-hover-primary mb-0"><%= t.trainingType %></span>
-                          <span class="d-block font-size-sm text-body">mark@example.com</span>
+                          <span class="d-block font-size-sm text-body"><%= t.duration %></span>
                         </div>
                       </a>
                     </td>
                     <td>
-                      <span class="d-block h5 mb-0">Executive director</span>
+                      <span class="d-block h5 mb-0"><%= t.startHour %></span>
                       <span class="d-block font-size-sm">Human resources</span>
                     </td>
                     <td>Canada <span class="text-hide">Code: CA</span></td>
@@ -372,6 +371,10 @@
                       </a>
                     </td>
                   </tr>
+                  <% } %> 
+                  <% }); %>
+                  <% } %> 
+                  <% } %> 
                 
                   </tbody>
               </table><div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">Showing 1 to 15 of 24 entries</div></div>
