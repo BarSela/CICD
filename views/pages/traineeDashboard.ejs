@@ -118,13 +118,17 @@
             </div>
 
             <div class="content-data">
-              <div class="card">
+              
+                <div class="head">
+                  <h3>Future Trainings</h3>
+
+                </div>
                 <!-- Header -->
                 <div class="card-header">
                   <div class="row justify-content-between align-items-center flex-grow-1">
                     <div class="col-sm-6 col-md-4 mb-3 mb-sm-0">
-                      <form>
-                        <div class="input-group input-group-merge input-group-flush">
+                      <form class="form-container" id="filterForm" action="/filterTrainings" method="POST">
+                        <div class="row justify-content-between align-items-center">
                           <!-- Select -->
                           <select class="filter" id="filterInput" name="filterInput" onChange="update()">
                             <option value="01">01</option>
@@ -135,13 +139,27 @@
                             <option value="06">06</option>
                             <option value="07">07</option>
                             <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+
                           </select>
                           <div class="input-group-prepend">
                             <div class="input-group-text">
                               <i class="tio-search"></i>
                             </div>
                           </div>
-                        </div>
+                       
+                        <input id="action" name="action" type="text" style="width: 0px; display: none;">
+
+                        <button class="btn" type="button" onClick=filter() style="font-size: 22px;">
+                          filter
+                        </button>
+                        <button class="btn" id="all" type="button" onClick=allResult() style="font-size: 22px;">
+                          All
+                        </button>
+                      </div>
                       </form>
                     </div>
                   </div>
@@ -151,19 +169,19 @@
                 <!-- Table -->
                 <div class="table-responsive datatable-custom">
                   <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
-                  
-                  
+
+
                     <table id="datatable"
                       class="table table-lg table-borderless table-thead-bordered table-nowrap table-align-middle card-table dataTable no-footer"
-           role="grid" aria-describedby="datatable_info">
+                      role="grid" aria-describedby="datatable_info">
                       <thead class="thead-light">
                         <tr role="row">
-                   
+
                           <th class="table-column-pl-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1"
-                            colspan="1" aria-label="Name: activate to sort column ascending" style="width: 201px;"> Training Type
+                            colspan="1" aria-label="Name: activate to sort column ascending" style="width: 201px;">
+                            Training Type
                           </th>
-                          <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
-                            aria-label="Position: activate to sort column ascending" style="width: 122px;">Trainer </th>
+
                           <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
                             aria-label="Country: activate to sort column ascending" style="width: 110px;">Date</th>
                           <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
@@ -173,159 +191,88 @@
                           </th>
                           <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
                             aria-label="Role: activate to sort column ascending" style="width: 64px;">Price</th>
+                          <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                            aria-label="Role: activate to sort column ascending" style="width: 64px;"></th>
                         </tr>
                       </thead>
                       <tbody>
                         <% if(typeof user !="undefined" ) { %>
-                          <% if(typeof user.trainings !="undefined" ) { %>
-                            <% user.trainings.forEach(t=> { %>
-                              <% if(t.pass) { %>
-                                <tr role="row" class="even">
-                                  <td class="table-column-pr-0">
-                                    <div class="custom-control custom-checkbox">
-                                      <input type="checkbox" class="custom-control-input" id="usersDataCheck16">
-                                      <label class="custom-control-label" for="usersDataCheck16"></label>
-                                    </div>
-                                  </td>
-                                  <td class="table-column-pl-0">
-                                    <a class="d-flex align-items-center" href="./user-profile.html">
-                                      <div class="avatar avatar-soft-primary avatar-circle">
-                                        <span class="avatar-initials">M</span>
-                                      </div>
-                                      <div class="ml-3">
-                                        <span class="d-block h5 text-hover-primary mb-0">
-                                          <%= t.trainingType %>
-                                        </span>
-                                        <span class="d-block font-size-sm text-body">
-                                          <%= t.duration %>
-                                        </span>
-                                      </div>
-                                    </a>
+                          <% if(typeof trainings !="undefined" ) { %>
+                            <% trainings.forEach(t=> { %>
+                              <% if(!t.pass) { %>
+                                <tr id="trainingRow" role="row" class="even">
+                                  <td>
+                                    <%= t.trainingType %>
                                   </td>
                                   <td>
-                                    <span class="d-block h5 mb-0">
-                                      <%= t.startHour %>
-                                    </span>
-                                    <span class="d-block font-size-sm">Human resources</span>
-                                  </td>
-                                  <td>Canada <span class="text-hide">Code: CA</span></td>
-                                  <td>
-                                    <span class="legend-indicator bg-success"></span>Active
+                                    <%= t.trainingDate %>
                                   </td>
                                   <td>
-                                    <div class="d-flex align-items-center">
-                                      <span class="font-size-sm mr-2">90%</span>
-                                      <div class="progress table-progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 90%"
-                                          aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                      </div>
-                                    </div>
+                                    <%= t.startHour %>
                                   </td>
-                                  <td>Employee</td>
                                   <td>
-                                    <a class="btn btn-sm btn-white" href="javascript:;" data-toggle="modal"
-                                      data-target="#editUserModal">
-                                      <i class="tio-edit"></i> Edit
-                                    </a>
+                                    <%= t.duration %>
                                   </td>
+                                  <td>
+                                    <%= t.price %>
+                                  </td>
+
+
+
+                                  <form id="rowForm" method=POST action="/cancelTrainingRegistration">
+                                    <input type="text" name="trainingType" value="<%= t.trainingType %>" hidden>
+                                    <input type="text" name="trainingDate" value="<%= t.trainingDate %>" hidden>
+                                    <input type="text" name="trainingHour" value="<%= t.startHour %>" hidden>
+                                    <td>
+                                      <button id="cancelBtn"  type="button" href="javascript:;" data-toggle="modal" onclick="cancel()">
+                                        <i class="tio-edit"></i> cancel
+                                      </button>
+                                    </td>
+                                  </form>
                                 </tr>
                                 <% } %>
                                   <% }); %>
                                     <% } %>
                                       <% } %>
 
+
                       </tbody>
+
                     </table>
-                    
                   </div>
                 </div>
                 <!-- End Table -->
 
                 <!-- Footer -->
                 <div class="card-footer">
-   
-                  <!-- End Pagination -->
                 </div>
                 <!-- End Footer -->
-              </div>
-
-              <form class="form-container" action="/filterTrainings" method="POST">
-                <select class="filter" id="filterInput" name="filterInput" onChange="update()">
-                  <option value="01">01</option>
-                  <option value="02">02</option>
-                  <option value="03">03</option>
-                  <option value="04">04</option>
-                  <option value="05">05</option>
-                  <option value="06">06</option>
-                  <option value="07">07</option>
-                  <option value="08">08</option>
-                  <option value="08">08</option>
-
-                </select>
-                <button class="btn" type="submit" style="font-size: 22px;">
-                  filter
-                </button>
-                <div class="head">
-                  <h3>Future training</h3>
-                  <div class="menu">
-                    <i class='bx bx-dots-horizontal-rounded icon'></i>
-                    <ul class="menu-link">
-                      <li><a href="#">Edit</a></li>
-                      <li><a href="#">Save</a></li>
-                      <li><a href="#">Remove</a></li>
-                    </ul>
-                  </div>
+                <div class="chat-box"></div>
                 </div>
-                <% if(typeof user !="undefined" ) { %>
-                  <% if(typeof trainings !="undefined" ) { %>
-                    <% trainings.forEach(t=> { %>
-                      <% if(!t.pass) { %>
-                        <div class="trainer-profile">
-                          <div class="trainer-info">
-                            <ul class="list-group">
-                              <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Training
-                                  Type:</strong> &nbsp; <%= t.trainingType %>
-                              </li>
-                              <li class="list-item"><strong class="text-dark">Date:</strong> &nbsp; <%= t.trainingDate
-                                  %>
-                              </li>
-                              <li class="list-item"><strong class="text-dark">Start Hour:</strong> &nbsp; <%=
-                                  t.startHour %>
-                              </li>
-                              <li class="list-item"><strong class="text-dark">Duration:</strong> &nbsp; <%= t.duration
-                                  %> Minutes </li>
-                              <li class="list-item"><strong class="text-dark">Price:</strong> &nbsp; <%= t.price %> ILS
-                              </li>
-                            </ul>
-                          </div>
-              </form>
-
-              <form id="rowForm" method=POST action="/cancelTrainingRegistration">
-                <input type="text" name="trainingType" value="<%= t.trainingType %>" hidden>
-                <input type="text" name="trainingDate" value="<%= t.trainingDate %>" hidden>
-                <input type="text" name="trainingHour" value="<%= t.startHour %>" hidden>
-                <button class="btn" type="submit"
-                  class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
-                  style="font-size: 22px;">
-                  <div class="v-btn__content"><i class="fa fa-times" aria-hidden="true"></i>
-                  </div>
-                </button>
-              </form>
-
             </div>
-            <% } %>
-              <% }); %>
-                <% } %>
-                  <% } %>
-
-
-
-                    <div class="chat-box">
-                    </div>
-
+              
+          </div>
         </main>
     </section>
     <script>
+              document.getElementById("action").value = "";
+
+      function cancel(){
+        if (confirm("Are you sure you want to delete this training?")) {
+                    document.getElementById("rowForm").submit();
+                  }
+      }
+      function filter(){
+        document.getElementById("action").value = "filter";
+        document.getElementById("filterForm").submit();
+                  
+      }  
+      function allResult(){
+        console.log("all")
+        document.getElementById("action").value = "all";
+        document.getElementById("filterForm").submit();
+                  
+      }         
       update();
 
       function update() {
