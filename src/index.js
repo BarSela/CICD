@@ -633,9 +633,11 @@ app.get("/logout", (req, res) => {
 });
 app.get("/resetPassword", (req, res) => {
   var loginStatus = "true";
+  var status = "true";
   res.render("pages/resetPassword", {
     loginStatus: loginStatus,
     userEmail: userEmail,
+    status: status,
   });
 });
 app.get("/forgotPassword", (req, res) => {

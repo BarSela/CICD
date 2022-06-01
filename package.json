@@ -37,6 +37,7 @@
     "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
     "mongoose": "^6.2.7",
+    "nodemailer": "^6.7.5",
     "passport": "^0.5.2",
     "secret": "^1.2.0"
   },

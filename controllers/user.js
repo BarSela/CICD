@@ -15,22 +15,36 @@ module.exports = {
     let email = req.body.email;
     let password = req.body.password;
     let gender = req.body.gender;
-    
+    let passwordRepeat = req.body.passwordRepeat;
+
     function onlyLetters(str) {
       return /^[a-zA-Z]+$/.test(str);
     }
+
+    if (!onlyLetters(fullName)) {
+      return res.render("pages/signUp", {
+        status: status,
+        userEmail: userEmail,
+      });
+    }
+    if (password.length < 8) {
+      return res.render("pages/signUp", {
+        status: status,
+        userEmail: userEmail,
+      });
+    }
+    if (password != passwordRepeat) {
+      return res.render("pages/signUp", {
+        status: status,
+        userEmail: userEmail,
+      });
+    }
+    
     //trainee user
     if (userType == "trainee") {
       //checks if the email already exists in the databases
       Trainee.find({ email }).then((trainees) => {
         if (trainees.length >= 1) {
-          return res.render("pages/signUp", {
-            status: status,
-            userEmail: userEmail,
-          });
-        }
-        if (!onlyLetters(fullName)) {
-
           return res.render("pages/signUp", {
             status: status,
             userEmail: userEmail,
@@ -1036,26 +1050,40 @@ module.exports = {
     });
   },
   resetPassword: async (req, res, next) => {
-    let newPassword = req.body.password;
+    let password = req.body.password;
+    let passwordRepeat = req.body.passwordRepeat;
+    let status='true';
     let email = req.body.userEmail;
     let loginStatus = "false";
     userEmail = "";
     console.log("emaaaaaaaail :" + email);
+
+    if (password != passwordRepeat) {
+      status='false';
+      return res.render("pages/resetPassword", {
+        loginStatus: loginStatus,
+        status: status,
+        userEmail: userEmail,
+      });
+    }
     User.find({ email: email }).then((users) => {
       //If the user list is empty
       if (users.length === 0) {
         console.log("emaaaaaaaail :" + email + " does not exist");
         console.log("loginStatus:" + loginStatus);
+        status='false';
         return res.render("pages/resetPassword", {
+          
           loginStatus: loginStatus,
           userEmail: userEmail,
+          status:status,
         });
       }
       const [user] = users;
       //Checking the password
       userEmail = user.email;
       console.log("emaaaaaaaail :" + email);
-      bcrypt.hash(newPassword, 10, async (error, result) => {
+      bcrypt.hash(password, 10, async (error, result) => {
         if (error) {
           return res.render("pages/resetPassword", {
             loginStatus: loginStatus,
@@ -1065,7 +1093,7 @@ module.exports = {
         if (result) {
           if (user.userType == "trainer") {
             userEmail = user.email;
-            bcrypt.hash(newPassword, 10, async (error, hash) => {
+            bcrypt.hash(password, 10, async (error, hash) => {
               if (error) {
                 //bad bcrypt
                 return res.status(500).json({
@@ -1103,7 +1131,7 @@ module.exports = {
               }
             });
           } else if (user.userType == "trainee") {
-            bcrypt.hash(newPassword, 10, async (error, hash) => {
+            bcrypt.hash(password, 10, async (error, hash) => {
               if (error) {
                 //bad bcrypt
                 return res.status(500).json({
