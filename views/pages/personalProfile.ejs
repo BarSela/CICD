@@ -1,515 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-  <!-- CSS Implementing Plugins -->
-
-	<!-- <link rel="stylesheet" href="/css/style_Dashboard.css"> -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
-  <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
- 
+<html>
+  <title>Shape</title>
+  <link rel="icon" href="/assets/shape-tab-icon.png" type="image/png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto"
+  />
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
   />
-  <link rel="stylesheet" href="./css/theme.min.css" />
+  <link rel="stylesheet" href="/css/personalProfile.css" />
 
-  <title>Shape</title>
-  <link rel="icon" href="/assets/shape-tab-icon.png" type="image/png" />
-</head>
-<body>
-  <%- include('../partials/traineeSidebar') %>
-  <section id="content">
-    <%- include('../partials/navbar') %>
-		<main>
-			<h1 class="title">Hello <%= user.fullName %></h1>
-			<ul class="breadcrumbs">
-				<li><a href="/homePage">Home</a></li>
-				<li class="divider">/</li>
-				<li><a href="/traineedashboard/<%= userEmail %>" class="active">Dashboard</a></li>
-			</ul>
-			<!-- <div class="info-data">
-          <div class="card">
-            <div class="head">
-              <div>
-                <h2>1500</h2>
-                <p>Traffic</p>
-              </div>
-              <i class='bx bx-trending-up icon' ></i>
-            </div>
-            <span class="progress" data-value="40%"></span>
-            <span class="label">40%</span>
-          </div>
-          <div class="card">
-            <div class="head">
-              <div>
-                <h2>234</h2>
-                <p>Visitors</p>
-              </div>
-              <i class='bx bx-trending-down icon down' ></i>
-            </div>
-            <span class="progress" data-value="60%"></span>
-            <span class="label">60%</span>
-          </div>
-          <div class="card">
-            <div class="head">
-              <div>
-                <h2>35</h2>
-                <p>Amount of workouts this month</p>
-              </div>
-              <i class='bx bx-trending-up icon' ></i>
-            </div>
-            <span class="progress" data-value="30%"></span>
-            <span class="label">30%</span>
-          </div>
-          <div class="card">
-            <div class="head">
-              <div>
-                <h2>50</h2>
-                <p>target</p>
-              </div>
-              <i class='bx bx-trending-up icon' ></i>
-            </div>
-            <span class="progress" data-value="80%"></span>
-            <span class="label">80%</span>
-          </div>
-        </div> -->
-        <div class="data">
-          <div class="content-data">
-            <div class="head">
-              <h3>Training History</h3>
-              <div class="menu">
-                <i class='bx bx-dots-horizontal-rounded icon'></i>
-                <ul class="menu-link">
-                  <li><a href="#">Edit</a></li>
-                  <li><a href="#">Save</a></li>
-                  <li><a href="#">Remove</a></li>
-                </ul>
-              </div>
-            </div>
-            <% if(typeof user != "undefined" ) { %>
-              <% if(typeof user.trainings != "undefined" ) { %>
-                <% user.trainings.forEach(t => { %>
-                  <% if(t.pass) { %>
-  
-              <div class="trainer-profile">
-                    <div class="trainer-info">
-                      <ul class="list-group">
-                        <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Training Type:</strong> &nbsp; <%= t.trainingType %></li>
-                        <li class="list-item"><strong class="text-dark">Date:</strong> &nbsp; <%= t.trainingDate %></li>
-                        <li class="list-item"><strong class="text-dark">Start Hour:</strong> &nbsp; <%= t.startHour %></li>
-                        <li class="list-item"><strong class="text-dark">Duration:</strong> &nbsp; <%= t.duration %> Minutes</li>
-                        <li class="list-item"><strong class="text-dark">Price:</strong> &nbsp; <%= t.price %> ILS</li>
-                      </ul>
-                </div>
-              </div>
-              <% } %> 
-              <% }); %>
-              <% } %> 
-              <% } %> 
-            <div class="chat-box">
-          </div>
-          <div class="card">
-            <!-- Header -->
-            <div class="card-header">
-              <div class="row justify-content-between align-items-center flex-grow-1">
-                <div class="col-sm-6 col-md-4 mb-3 mb-sm-0">
-                  <form>
-                    <!-- Search -->
-                    <div class="input-group input-group-merge input-group-flush">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="tio-search"></i>
-                        </div>
-                      </div>
-                      <input id="datatableSearch" type="search" class="form-control" placeholder="Search users" aria-label="Search users">
-                    </div>
-                    <!-- End Search -->
-                  </form>
-                </div>
-  
-                <div class="col-sm-6">
-                  <div class="d-sm-flex justify-content-sm-end align-items-sm-center">
-                    <!-- Datatable Info -->
-                    <div id="datatableCounterInfo" class="mr-2 mb-2 mb-sm-0" style="display: none;">
-                      <div class="d-flex align-items-center">
-                        <span class="font-size-sm mr-3">
-                          <span id="datatableCounter">0</span>
-                          Selected
-                        </span>
-                        <a class="btn btn-sm btn-outline-danger" href="javascript:;">
-                          <i class="tio-delete-outlined"></i> Delete
-                        </a>
-                      </div>
-                    </div>
-                    <!-- End Datatable Info -->
-  
-                    <!-- Unfold -->
-                    <div class="hs-unfold mr-2">
-                      <a class="js-hs-unfold-invoker btn btn-sm btn-white dropdown-toggle" href="javascript:;" data-hs-unfold-options="{
-                           &quot;target&quot;: &quot;#usersExportDropdown&quot;,
-                           &quot;type&quot;: &quot;css-animation&quot;
-                         }" data-hs-unfold-target="#usersExportDropdown" data-hs-unfold-invoker="">
-                        <i class="tio-download-to mr-1"></i> Export
-                      </a>
-  
-                      <div id="usersExportDropdown" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-sm-right hs-unfold-hidden hs-unfold-content-initialized hs-unfold-css-animation animated" data-hs-target-height="275" data-hs-unfold-content="" data-hs-unfold-content-animation-in="slideInUp" data-hs-unfold-content-animation-out="fadeOut" style="animation-duration: 300ms;">
-                        <span class="dropdown-header">Options</span>
-                        <a id="export-copy" class="dropdown-item" href="javascript:;">
-                          <img class="avatar avatar-xss avatar-4by3 mr-2" src="./assets/svg/illustrations/copy.svg" alt="Image Description">
-                          Copy
-                        </a>
-                        <a id="export-print" class="dropdown-item" href="javascript:;">
-                          <img class="avatar avatar-xss avatar-4by3 mr-2" src="./assets/svg/illustrations/print.svg" alt="Image Description">
-                          Print
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <span class="dropdown-header">Download options</span>
-                        <a id="export-excel" class="dropdown-item" href="javascript:;">
-                          <img class="avatar avatar-xss avatar-4by3 mr-2" src="./assets/svg/brands/excel.svg" alt="Image Description">
-                          Excel
-                        </a>
-                        <a id="export-csv" class="dropdown-item" href="javascript:;">
-                          <img class="avatar avatar-xss avatar-4by3 mr-2" src="./assets/svg/components/placeholder-csv-format.svg" alt="Image Description">
-                          .CSV
-                        </a>
-                        <a id="export-pdf" class="dropdown-item" href="javascript:;">
-                          <img class="avatar avatar-xss avatar-4by3 mr-2" src="./assets/svg/brands/pdf.svg" alt="Image Description">
-                          PDF
-                        </a>
-                      </div>
-                    </div>
-                    <!-- End Unfold -->
-  
-                    <!-- Unfold -->
-                    <div class="hs-unfold">
-                      <a class="js-hs-unfold-invoker btn btn-sm btn-white" href="javascript:;" data-hs-unfold-options="{
-                           &quot;target&quot;: &quot;#usersFilterDropdown&quot;,
-                           &quot;type&quot;: &quot;css-animation&quot;,
-                           &quot;smartPositionOff&quot;: true
-                         }" data-hs-unfold-target="#usersFilterDropdown" data-hs-unfold-invoker="">
-                        <i class="tio-filter-list mr-1"></i> Filter <span class="badge badge-soft-dark rounded-circle ml-1">2</span>
-                      </a>
-  
-                      <div id="usersFilterDropdown" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-sm-right dropdown-card card-dropdown-filter-centered hs-unfold-hidden hs-unfold-content-initialized hs-unfold-css-animation animated" style="min-width: 22rem; animation-duration: 300ms;" data-hs-target-height="0" data-hs-unfold-content="" data-hs-unfold-content-animation-in="slideInUp" data-hs-unfold-content-animation-out="fadeOut">
-                        <!-- Card -->
-                        <div class="card">
-                          <div class="card-header">
-                            <h5 class="card-header-title">Filter users</h5>
-  
-                            <!-- Toggle Button -->
-                            <a class="js-hs-unfold-invoker btn btn-icon btn-xs btn-ghost-secondary ml-2" href="javascript:;" data-hs-unfold-options="{
-                                &quot;target&quot;: &quot;#usersFilterDropdown&quot;,
-                                &quot;type&quot;: &quot;css-animation&quot;,
-                                &quot;smartPositionOff&quot;: true
-                               }" data-hs-unfold-target="#usersFilterDropdown" data-hs-unfold-invoker="">
-                              <i class="tio-clear tio-lg"></i>
-                            </a>
-                            <!-- End Toggle Button -->
-                          </div>
-  
-                          <div class="card-body">
-                            <form>
-                              <div class="form-group">
-                                <small class="text-cap mb-2">Role</small>
-  
-                                <div class="form-row">
-                                  <div class="col">
-                                    <!-- Checkbox -->
-                                    <div class="custom-control custom-checkbox">
-                                      <input type="checkbox" class="custom-control-input" id="usersFilerCheck1" checked="">
-                                      <label class="custom-control-label" for="usersFilerCheck1">All</label>
-                                    </div>
-                                    <!-- End Checkbox -->
-                                  </div>
-  
-                                  <div class="col">
-                                    <!-- Checkbox -->
-                                    <div class="custom-control custom-checkbox">
-                                      <input type="checkbox" class="custom-control-input" id="usersFilerCheck2">
-                                      <label class="custom-control-label" for="usersFilerCheck2">Employee</label>
-                                    </div>
-                                    <!-- End Checkbox -->
-                                  </div>
-                                </div>
-                                <!-- End Row -->
-                              </div>
-  
-                              <div class="form-row">
-                                <div class="col-sm form-group">
-                                  <small class="text-cap mb-2">Position</small>
-  
-                                  <!-- Select -->
-                                  <select class="js-select2-custom js-datatable-filter custom-select select2-hidden-accessible" size="1" style="opacity: 0;" data-target-column-index="2" data-hs-select2-options="{
-                                            &quot;minimumResultsForSearch&quot;: &quot;Infinity&quot;
-                                          }" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                                    <option value="" data-select2-id="3">Any</option>
-                                    <option value="Accountant" data-select2-id="4">Accountant</option>
-                                    <option value="Co-founder" data-select2-id="5">Co-founder</option>
-                                    <option value="Designer" data-select2-id="6">Designer</option>
-                                    <option value="Developer" data-select2-id="7">Developer</option>
-                                    <option value="Director" data-select2-id="8">Director</option>
-                                  </select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;"><span class="selection"><span class="select2-selection custom-select" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-cqpy-container"><span class="select2-selection__rendered" id="select2-cqpy-container" role="textbox" aria-readonly="true" title="Any"><span>Any</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                  <!-- End Select -->
-                                </div>
-  
-                                <div class="col-sm form-group">
-                                  <small class="text-cap mb-2">Status</small>
-  
-                                  <!-- Select -->
-                                  <select class="js-select2-custom js-datatable-filter custom-select select2-hidden-accessible" size="1" style="opacity: 0;" data-target-column-index="4" data-hs-select2-options="{
-                                            &quot;minimumResultsForSearch&quot;: &quot;Infinity&quot;
-                                          }" data-select2-id="9" tabindex="-1" aria-hidden="true">
-                                    <option value="" data-select2-id="11">Any status</option>
-                                    <option value="Active" data-option-template="<span class=&quot;legend-indicator bg-success&quot;></span>Active" data-select2-id="12">Active</option>
-                                    <option value="Pending" data-option-template="<span class=&quot;legend-indicator bg-warning&quot;></span>Pending" data-select2-id="13">Pending</option>
-                                    <option value="Suspended" data-option-template="<span class=&quot;legend-indicator bg-danger&quot;></span>Suspended" data-select2-id="14">Suspended</option>
-                                  </select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="10" style="width: 100%;"><span class="selection"><span class="select2-selection custom-select" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-2119-container"><span class="select2-selection__rendered" id="select2-2119-container" role="textbox" aria-readonly="true" title="Any status"><span>Any status</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                  <!-- End Select -->
-                                </div>
-  
-                                
-                              </div>
-                              <!-- End Row -->
-  
-                              <a class="js-hs-unfold-invoker btn btn-block btn-primary" href="javascript:;" data-hs-unfold-options="{
-                                  &quot;target&quot;: &quot;#usersFilterDropdown&quot;,
-                                  &quot;type&quot;: &quot;css-animation&quot;,
-                                  &quot;smartPositionOff&quot;: true
-                                 }" data-hs-unfold-target="#usersFilterDropdown" data-hs-unfold-invoker="">Apply</a>
-                            </form>
-                          </div>
-                        </div>
-                        <!-- End Card -->
-                      </div>
-                    </div>
-                    <!-- End Unfold -->
-                  </div>
-                </div>
-              </div>
-              <!-- End Row -->
-            </div>
-            <!-- End Header -->
-  
-            <!-- Table -->
-            <div class="table-responsive datatable-custom">
-              <div id="datatable_wrapper" class="dataTables_wrapper no-footer"><div class="dt-buttons">          <button class="dt-button buttons-copy buttons-html5 d-none" tabindex="0" aria-controls="datatable" type="button"><span>Copy</span></button> <button class="dt-button buttons-excel buttons-html5 d-none" tabindex="0" aria-controls="datatable" type="button"><span>Excel</span></button> <button class="dt-button buttons-csv buttons-html5 d-none" tabindex="0" aria-controls="datatable" type="button"><span>CSV</span></button> <button class="dt-button buttons-pdf buttons-html5 d-none" tabindex="0" aria-controls="datatable" type="button"><span>PDF</span></button> <button class="dt-button buttons-print d-none" tabindex="0" aria-controls="datatable" type="button"><span>Print</span></button> </div><div id="datatable_filter" class="dataTables_filter"><label>Search:<input type="search" class="" placeholder="" aria-controls="datatable"></label></div><table id="datatable" class="table table-lg table-borderless table-thead-bordered table-nowrap table-align-middle card-table dataTable no-footer" data-hs-datatables-options="{
-                       &quot;columnDefs&quot;: [{
-                          &quot;targets&quot;: [0, 7],
-                          &quot;orderable&quot;: false
-                        }],
-                       &quot;order&quot;: [],
-                       &quot;info&quot;: {
-                         &quot;totalQty&quot;: &quot;#datatableWithPaginationInfoTotalQty&quot;
-                       },
-                       &quot;search&quot;: &quot;#datatableSearch&quot;,
-                       &quot;entries&quot;: &quot;#datatableEntries&quot;,
-                       &quot;pageLength&quot;: 15,
-                       &quot;isResponsive&quot;: false,
-                       &quot;isShowPaging&quot;: false,
-                       &quot;pagination&quot;: &quot;datatablePagination&quot;
-                     }" role="grid" aria-describedby="datatable_info">
-                <thead class="thead-light">
-                  <tr role="row"><th class="table-column-pr-0 sorting_disabled" rowspan="1" colspan="1" aria-label="
-                      
-                        
-                        
-                      
-                    " style="width: 24px;">
-                      <div class="custom-control custom-checkbox">
-                        <input id="datatableCheckAll" type="checkbox" class="custom-control-input">
-                        <label class="custom-control-label" for="datatableCheckAll"></label>
-                      </div>
-                    </th><th class="table-column-pl-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 201px;">Name</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 122px;">Position</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Country: activate to sort column ascending" style="width: 110px;">Country</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 88px;">Status</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Portfolio: activate to sort column ascending" style="width: 122px;">Portfolio</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending" style="width: 64px;">Role</th><th class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 65px;"></th></tr>
-                </thead>
-  
-                <tbody>
-                  
-              
+  <body>
+    <% if(userType == "trainee" ) { %>
+      <%- include('../partials/traineeSidebar') %>
+      <% } %>
+      <%  if(userType == "trainer" ) { %>
+        <%- include('../partials/sidebar') %>
+        <% } %>
 
-        
-                
-                  <tr role="row" class="even">
-                    <td class="table-column-pr-0">
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="usersDataCheck16">
-                        <label class="custom-control-label" for="usersDataCheck16"></label>
-                      </div>
-                    </td>
-                    <td class="table-column-pl-0">
-                      <a class="d-flex align-items-center" href="./user-profile.html">
-                        <div class="avatar avatar-soft-primary avatar-circle">
-                          <span class="avatar-initials">M</span>
-                        </div>
-                        <div class="ml-3">
-                          <span class="d-block h5 text-hover-primary mb-0"><%= t.trainingType %></span>
-                          <span class="d-block font-size-sm text-body">mark@example.com</span>
-                        </div>
-                      </a>
-                    </td>
-                    <td>
-                      <span class="d-block h5 mb-0">Executive director</span>
-                      <span class="d-block font-size-sm">Human resources</span>
-                    </td>
-                    <td>Canada <span class="text-hide">Code: CA</span></td>
-                    <td>
-                      <span class="legend-indicator bg-success"></span>Active
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="font-size-sm mr-2">90%</span>
-                        <div class="progress table-progress">
-                          <div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                      </div>
-                    </td>
-                    <td>Employee</td>
-                    <td>
-                      <a class="btn btn-sm btn-white" href="javascript:;" data-toggle="modal" data-target="#editUserModal">
-                        <i class="tio-edit"></i> Edit
-                      </a>
-                    </td>
-                  </tr>
-                
-                  </tbody>
-              </table><div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">Showing 1 to 15 of 24 entries</div></div>
-            </div>
-            <!-- End Table -->
-  
-            <!-- Footer -->
-            <div class="card-footer">
-              <!-- Pagination -->
-              <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
-                <div class="col-sm mb-2 mb-sm-0">
-                  <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
-                    <span class="mr-2">Showing:</span>
-  
-                    <!-- Select -->
-                    <select id="datatableEntries" class="js-select2-custom select2-hidden-accessible" data-hs-select2-options="{
-                              &quot;minimumResultsForSearch&quot;: &quot;Infinity&quot;,
-                              &quot;customClass&quot;: &quot;custom-select custom-select-sm custom-select-borderless&quot;,
-                              &quot;dropdownAutoWidth&quot;: true,
-                              &quot;width&quot;: true
-                            }" data-select2-id="datatableEntries" tabindex="-1" aria-hidden="true">
-                      <option value="10" data-select2-id="269">10</option>
-                      <option value="15" selected="" data-select2-id="270">15</option>
-                      <option value="20" data-select2-id="271">20</option>
-                    </select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="268"><span class="selection"><span class="select2-selection custom-select custom-select-sm custom-select-borderless" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-datatableEntries-container"><span class="select2-selection__rendered" id="select2-datatableEntries-container" role="textbox" aria-readonly="true" title="15"><span>15</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-                    <!-- End Select -->
-  
-                    <span class="text-secondary mr-2">of</span>
-  
-                    <!-- Pagination Quantity -->
-                    <span id="datatableWithPaginationInfoTotalQty">24</span>
-                  </div>
-                </div>
-  
-                <div class="col-sm-auto">
-                  <div class="d-flex justify-content-center justify-content-sm-end">
-                    <!-- Pagination -->
-                    <nav id="datatablePagination" aria-label="Activity pagination"><div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate"><ul id="datatable_pagination" class="pagination datatable-custom-pagination"><li class="paginate_item page-item disabled"><a class="paginate_button previous page-link" aria-controls="datatable" data-dt-idx="0" tabindex="0" id="datatable_previous"><span aria-hidden="true">Prev</span></a></li><li class="paginate_item page-item active"><a class="paginate_button page-link" aria-controls="datatable" data-dt-idx="1" tabindex="0">1</a></li><li class="paginate_item page-item"><a class="paginate_button page-link" aria-controls="datatable" data-dt-idx="2" tabindex="0">2</a></li><li class="paginate_item page-item"><a class="paginate_button next page-link" aria-controls="datatable" data-dt-idx="3" tabindex="0" id="datatable_next"><span aria-hidden="true">Next</span></a></li></ul></div></nav>
-                  </div>
-                </div>
-              </div>
-              <!-- End Pagination -->
-            </div>
-            <!-- End Footer -->
-          </div>
-			</div>
-      <div class="content-data">
-        <div class="head">
-          <h3>Future training</h3>
-          <div class="menu">
-            <i class='bx bx-dots-horizontal-rounded icon'></i>
-            <ul class="menu-link">
-              <li><a href="#">Edit</a></li>
-              <li><a href="#">Save</a></li>
-              <li><a href="#">Remove</a></li>
-            </ul>
-          </div>
+      
+    <section id="content">
+      <%- include('../partials/navbar') %>
+      <div class="container">
+        <div class="avatar-flip">
+          <img
+            src="/assets/you_can.jpg"
+            height="150"
+            width="150"
+            style="cursor: zoom-in"
+            id="pic1"
+          />
+          <img
+            src="/assets/you_can.jpg"
+            height="150"
+            width="150"
+            style="cursor: zoom-in"
+            id="pic2"
+          />
         </div>
-        <% if(typeof user != "undefined" ) { %>
-          <% if(typeof user.trainings != "undefined" ) { %>
-            <% user.trainings.forEach(t => { %>
-              <% if(!t.pass) { %>
-
-          <div class="trainer-profile">
-                <div class="trainer-info">
-                  <ul class="list-group">
-                    <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Training Type:</strong> &nbsp; <%= t.trainingType %></li>
-                    <li class="list-item"><strong class="text-dark">Date:</strong> &nbsp; <%= t.trainingDate %></li>
-                    <li class="list-item"><strong class="text-dark">Start Hour:</strong> &nbsp; <%= t.startHour %></li>
-                    <li class="list-item"><strong class="text-dark">Duration:</strong> &nbsp; <%= t.duration %> Minutes </li>
-                    <li class="list-item"><strong class="text-dark">Price:</strong> &nbsp; <%= t.price %> ILS </li>
-                  </ul>
+        <!-- <h2>Bar Sela</h2> -->
+        <h2>Personal Profile</h2>
+        <div class="btn-group">
+          <button type="button" id="Edit-profile-bt" onclick="editProfile()">
+            Edit Profile
+          </button>
+        </div>
+        <div class="profile-details">
+          <form class="profile" id="profile-form">
+            <div class="input-box">
+              <label for="fullName">FullName</label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="<%= user.fullName %>"
+                readonly
+              />
             </div>
-            <form id="rowForm" method=POST action="/cancelTrainingRegistration">
-              <input type="text" name="trainingType" value="<%= t.trainingType %>" hidden>
-              <input type="text" name="trainingDate" value="<%= t.trainingDate %>" hidden>
-              <input type="text" name="trainingHour" value="<%= t.startHour %>" hidden>
-              <button class="btn" type="submit" 
-              class="no-shadow no-opacity    text-center v-btn v-btn--flat v-btn--icon theme--light secondary--text"
-              style="font-size: 22px;">
-              <div class="v-btn__content"><i class="fa fa-times" aria-hidden="true"></i>
-              </div>
-            </button>
-            </form>
-            
-          </div>
-          <% } %>
-          <% }); %>
-          <% } %> 
-          <% } %> 
-        <div class="chat-box">
+            <div class="input-box">
+              <label for="email" style="padding-right: 10px">Email </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="<%= user.email %>"
+                style="padding-right: 10px"
+                readonly
+              />
+            </div>
+            <div class="input-box">
+              <label for="gender" style="padding-right: 10px">Gender </label>
+              <input
+                type="gender"
+                id="email"
+                name="gender"
+                placeholder="<%= user.gender %>"
+                style="padding-right: 10px"
+                readonly
+              />
+            </div>
+            <div class="input-box">
+              <label for="registration">registration date</label>
+              <input type="text" id="email" name="registration date"
+              placeholder="<%= info.Date_of_Registretion %>"" readonly />
+            </div>
+          </form>
+        </div>
       </div>
-		</main>
-	</section>
-  <script>
-    function  today(){
-      let today=new Date();
-      return today;
-    }
-    // PROGRESSBAR
-const allProgress = document.querySelectorAll('main .card .progress');
-
-allProgress.forEach(item=> {
-	item.style.setProperty('--value', item.dataset.value)
-})
-
-// APEXCHART
-var options = {
-  series: [{
-  name: 'series1',
-  data: [31, 40, 28, 51, 42, 109, 100]
-}, {
-  name: 'series2',
-  data: [11, 32, 45, 32, 34, 52, 41]
-}],
-  chart: {
-  height: 350,
-  type: 'area'
-},
-dataLabels: {
-  enabled: false
-},
-stroke: {
-  curve: 'smooth'
-},
-xaxis: {
-  type: 'datetime',
-  categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-},
-tooltip: {
-  x: {
-    format: 'dd/MM/yy HH:mm'
-  },
-},
-};
-
-//var chart = new ApexCharts(document.querySelector("#chart"), options);
-//chart.render();
-  </script>
-</body>
+    </section>
+    <script>
+      function editProfile() {
+        window.location.href = "/editPersonalProfile";
+      }
+    </script>
+  </body>
 </html>
