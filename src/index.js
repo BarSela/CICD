@@ -20,6 +20,7 @@ const {
   markUnavailable,
   deleteUnavailable,
   deleteTraining,
+  viewTrainer,
 } = require("../controllers/user");
 
 //const bcrypt = require("bcrypt");
@@ -326,6 +327,7 @@ app.post("/selectTrainer", async (req, res) => {
   let email = req.body.email;
   console.log(email);
   let trainer = await Trainer.findOne({ email: email });
+  console.log(trainer);
   if (trainer != null) {
     res.render("pages/viewSchedual", {
       userEmail: email,
@@ -333,6 +335,7 @@ app.post("/selectTrainer", async (req, res) => {
       trainer: trainer,
     });
   } else {
+    console.log("else");
     res.render("pages/findTrainer", { userEmail: userEmail, user: userObj });
   }
 });
@@ -1043,5 +1046,21 @@ app.post("/TrainingReg", async (req, res) => {
   res.render("pages/traineeDashboard", {
     userEmail: userEmail,
     user: userObj,
+  });
+});
+
+app.post("/viewTrainer", async (req, res) => {
+  let trainerEmail = req.body.email;
+  return res.redirect("/viewTrainer/" + trainerEmail);
+});
+
+app.get("/viewTrainer/:trainerEmail", async (req, res) => {
+  let trainerEmail = req.params.trainerEmail;
+  console.log(trainerEmail);
+  let trainer = await Trainer.findOne({ email: trainerEmail });
+  console.log(trainer);
+  res.render("pages/viewTrainer", {
+    userEmail: userEmail,
+    user: trainer, //trainer
   });
 });

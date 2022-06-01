@@ -12,7 +12,6 @@
   <form action="#"></form>
   <a href="/notifications" class="nav-link">
     <i class="bx bxs-bell icon"></i>
-    
   </a>
   <a href="/QNA" class="nav-link">
     <i
@@ -57,7 +56,6 @@
 <!-- NAVBAR -->
 
 <script>
-
   // MENU
   const allMenu = document.querySelectorAll("main .content-data .head .menu");
 
@@ -71,14 +69,6 @@
   });
 
   window.addEventListener("click", function (e) {
-    if (e.target !== imgProfile) {
-      if (e.target !== dropdownProfile) {
-        if (dropdownProfile.classList.contains("show")) {
-          dropdownProfile.classList.remove("show");
-        }
-      }
-    }
-
     allMenu.forEach((item) => {
       const icon = item.querySelector(".icon");
       const menuLink = item.querySelector(".menu-link");
