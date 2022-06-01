@@ -39,7 +39,7 @@ module.exports = {
         userEmail: userEmail,
       });
     }
-    
+
     //trainee user
     if (userType == "trainee") {
       //checks if the email already exists in the databases
@@ -818,6 +818,10 @@ module.exports = {
   },
 
   editTraining: async (trainerEmail, newTraining, id) => {
+    var trainingDate;
+    var startTime;
+    var traineeEmail;
+
     Trainer.findOne({ email: trainerEmail }).then((trainer) => {
       if (!trainer) {
         return false;
@@ -827,28 +831,74 @@ module.exports = {
           for (let i = 0; i < trainings.length; i++) {
             if (trainings[i]._id.toString() == id) {
               // trainings.splice(i);
+              traineeEmail = trainings[i].traineeEmail;
+              trainingDate = trainings[i].trainingDate;
+              startTime = trainings[i].startHour;
               trainings[i] = newTraining;
             }
           }
         }
       }
+      console.log(traineeEmail);
       Trainer.updateOne({ _id: trainer._id }, { trainings: trainings }).then(
         (trainer) => {
           if (!trainer) {
-            return false;
+            //return false;
           } else {
-            return true;
+            //return true;
           }
         }
       );
     });
+    console.log(
+      "good1000000000000000000000000000000000000000000000000000000000000000000000000"
+    );
+    console.log(traineeEmail);
+    Trainee.findOne({ email: traineeEmail }).then((trainee) => {
+      if (!trainee) {
+        return false;
+      } else {
+        console.log(
+          "good2222222000000000000000000000000000000000000000000000000000000000000000000000"
+        );
+
+        let trainingsTrainee = trainee.trainings;
+        for (var i = 0; i < trainingsTrainee.length; i++) {
+          let newDate = correctDate(trainingsTrainee[i].trainingDate);
+          if (
+            newDate == trainingDate &&
+            trainingsTrainee[i].startHour == startTime
+          ) {
+            console.log(
+              "yesssssss00000000000000000000000000000000000000000000000000000000000000000000"
+            );
+
+            trainingsTrainee[i] = newTraining;
+          }
+        }
+
+        Trainee.updateOne(
+          { email: traineeEmail },
+          { trainings: trainingsTrainee }
+        )
+          .then(() => {
+            console.log("true");
+            return true;
+          })
+          .catch((error) => {
+            console.log("true");
+
+            return false;
+          });
+      }
+    });
   },
   deleteTraining: async (trainerObj, trainingID) => {
-    trainingsList = trainerObj.trainings;
+    let trainingsList = trainerObj.trainings;
     for (let i = 0; i < trainingsList.length; i++) {
       if (trainingsList[i]._id.toString() == trainingID) {
         console.log("found");
-        trainingsList.splice(i);
+        trainingsList.splice(i, 1);
       }
     }
     Trainer.updateOne(
@@ -959,17 +1009,26 @@ module.exports = {
                     let notifications = trainer.notifications;
 
                     for (var i = 0; i < trainingsT.length; i++) {
+                      console.log("trainingsT[i].trainingDate");
+                      console.log(trainingsT[i].trainingDate);
+                      console.log("trainingDateToDelete");
+                      console.log(trainingDateToDelete);
+
+                      let newDate = correctDate(trainingDateToDelete);
+                      console.log("newDate");
+                      console.log(newDate);
+
                       if (
-                        trainingsT[i].trainingDate == trainingDateToDelete &&
+                        trainingsT[i].trainingDate == newDate &&
                         trainingsT[i].startHour == trainingHourToDelete
                       ) {
                         trainingsT[i].available = true;
+                        trainingsT[i].traineeEmail = "";
                         console.log("found");
                       }
                     }
                     let notifi = {
                       read: false,
-                      //trainerName: trainer.fullName,
                       trainingType: trainingTypeToDelete,
                       trainingDate: trainingDateToDelete,
                       startHour: trainingHourToDelete,
@@ -1052,14 +1111,14 @@ module.exports = {
   resetPassword: async (req, res, next) => {
     let password = req.body.password;
     let passwordRepeat = req.body.passwordRepeat;
-    let status='true';
+    let status = "true";
     let email = req.body.userEmail;
     let loginStatus = "false";
     userEmail = "";
     console.log("emaaaaaaaail :" + email);
 
     if (password != passwordRepeat) {
-      status='false';
+      status = "false";
       return res.render("pages/resetPassword", {
         loginStatus: loginStatus,
         status: status,
@@ -1071,12 +1130,11 @@ module.exports = {
       if (users.length === 0) {
         console.log("emaaaaaaaail :" + email + " does not exist");
         console.log("loginStatus:" + loginStatus);
-        status='false';
+        status = "false";
         return res.render("pages/resetPassword", {
-          
           loginStatus: loginStatus,
           userEmail: userEmail,
-          status:status,
+          status: status,
         });
       }
       const [user] = users;
@@ -1180,3 +1238,58 @@ module.exports = {
     return res.redirect("/statistics/" + month);
   },
 };
+function correctDate(date) {
+  let dateList = date.split(" ");
+  console.log(dateList);
+  console.log(dateList[3]);
+  console.log(dateList[1]);
+  console.log(dateList[2]);
+
+  let new_date = "";
+  new_date += dateList[3];
+  console.log(new_date);
+  new_date += "-";
+  let month;
+  switch (dateList[1]) {
+    case "Jan":
+      month = "01";
+      break;
+    case "Feb":
+      month = "02";
+      break;
+    case "Mar":
+      month = "03";
+      break;
+    case "Apr":
+      month = "04";
+      break;
+    case "May":
+      month = "05";
+      break;
+    case "Jun":
+      month = "06";
+      break;
+    case "Jul":
+      month = "07";
+      break;
+    case "Aug":
+      month = "08";
+      break;
+    case "Sep":
+      month = "09";
+      break;
+    case "Oct":
+      month = "10";
+      break;
+    case "Nov":
+      month = "11";
+      break;
+    case "Dec":
+      month = "12";
+      break;
+  }
+  new_date += month;
+  new_date += "-";
+  new_date += dateList[2];
+  return new_date;
+}
