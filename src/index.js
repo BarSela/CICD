@@ -944,7 +944,7 @@ app.post("/editTraining", async (req, res) => {
           console.log("1");
           if (trainer.monthStatistics != null) {
             let statistics = trainer.monthStatistics;
-            statistics[month - 1].canceled += 1;
+            statistics[month].canceled += 1;
 
             Trainer.updateOne(
               { email: userEmail },
@@ -1039,6 +1039,12 @@ app.post("/editTraining", async (req, res) => {
       deleteTraining(userObj, id);
     }
   }
+
+ /**
+ * Add two numbers.
+ * @param {number} date The first number.
+ * @returns {number} new date.
+ */
   function correctDate(date) {
     let dateList = date.split(" ");
     console.log(dateList);
@@ -1046,10 +1052,10 @@ app.post("/editTraining", async (req, res) => {
     console.log(dateList[1]);
     console.log(dateList[2]);
 
-    let new_date = "";
-    new_date += dateList[3];
+    let newDate = "";
+    newDate += dateList[3];
     console.log(new_date);
-    new_date += "-";
+    newDate += "-";
     let month;
     switch (dateList[1]) {
       case "Jan":
@@ -1089,10 +1095,10 @@ app.post("/editTraining", async (req, res) => {
         month = "12";
         break;
     }
-    new_date += month;
-    new_date += "-";
-    new_date += dateList[2];
-    return new_date;
+    newDate += month;
+    newDate += "-";
+    newDate += dateList[2];
+    return newDate;
   }
   res.render("pages/calendar", {
     userEmail: userEmail,
