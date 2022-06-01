@@ -7,18 +7,14 @@
   <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet'>
   <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Muli:300,400,600,800,900' />
-  <script src="https://kit.fontawesome.com/3533a4f1e6.js" crossorigin="anonymous"></script>
-
   <link href='/main.css' rel='stylesheet' />
   <script src='/main.js'></script>
   <script>
-  
+
     // Loading the calendar
     document.addEventListener('DOMContentLoaded', function () {
-
-      var calendarEl = document.getElementById('calendar');
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-
+      calendarEl = document.getElementById('calendar');
+      calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         aspectRatio: 1.5,
         height: 800,
@@ -124,43 +120,21 @@
         // INITIALIZATION OF CALENDAR TOOLBAR VIEW  
         // =======================================================
         headerToolbar: {
-          left: 'today,addEventButton,markUnavailable',
+
+          left: 'today',
           center: 'prev,title,next',
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
 
         },
-        // LISTENER FOR CLICK ON EVENT  
-        // =======================================================
+
         eventClick: function (info) {
+
           info.el.addEventListener("click", function () {
-            // LOAD "UNAVAILABLE" EVENT
+
+
             if (info.event.title == "unavailable") {
-              document.getElementById("unavailableCover").style.display = "block";
-              document.getElementById("delete").style.display = "block";
-              document.getElementById("action").value = "delete";
-              document.getElementById("markDate").value = info.event.startStr;
-              document.getElementById("markDate").disabled = true;
-              document.getElementById("markOptions").value = "allDay";
-              document.getElementById("uID").value = info.event.id;
-
-              if (!info.event.allDay) {
-
-                document.getElementById("startHour").style.display = "block";
-                document.getElementById("endHour").style.display = "block";
-                document.getElementById("to").style.display = "block";
-                document.getElementById("from").style.display = "block";
-                document.getElementById("markOptions").value == "hour";
-                document.getElementById("startHour").value = info.event.extendedProps.startHour;
-                document.getElementById("endHour").value = info.event.extendedProps.endHour;
-                document.getElementById("startHour").reaodnly = true;
-                document.getElementById("endHour").readonly = true;
-              }
-              document.getElementById("markOptions").disabled = true;
-
-
+              alert("<%= trainer.fullName %>" + " is not available at this time");
             }
-
-            // LOAD TRAINING EVENT
             else {
               document.getElementById("trainingID").value = info.event.id;
               document.getElementById("viewType").value = info.event.title;
@@ -198,25 +172,25 @@
               });
             }
 
-          })
-
+          }
+          )
         }
+
+
       });
-
-      // VIEW ALL CALENDAR EVENT  
-      // =======================================================
-
-      "<% user.trainings.forEach(t => { %>"
+      "<% trainer.trainings.forEach(t => { %>"
       type = "<%= t.trainingType %>"
       dateStr = "<%= t.trainingDate %>"
       time = "<%= t.startHour %>"
       duration = "<%= t.duration %>"
       price = "<%= t.price %>"
       id = "<%= t._id %>"
+      available = "<%= t.available %>"
       date = new Date(dateStr + 'T' + time); // will be in local time
       endTime = calculateEndTime(time, parseInt(duration));
       console.log(endTime);
       endDate = new Date(dateStr + 'T' + endTime);
+
       calendar.addEvent({
         id: id,
         title: type,
@@ -226,13 +200,14 @@
         extendedProps: {
           startHour: time,
           duration: duration,
-          price: price
+          price: price,
+          available: available
         }
       });
+      
       "<% }); %>"
-
       //UNAVALIABLE
-      "<% user.unAvailable.forEach(u => { %>"
+      "<% trainer.unAvailable.forEach(u => { %>"
       uID = "<%= u._id %>"
       uDate = "<%= u.date %>"
       uStart = ""
@@ -315,19 +290,15 @@
       calendar.render();
 
     });
-
-
-  
-
   </script>
 </head>
 
 <body>
 
-  <%- include('../partials/sidebar') %>
 
-    <%- include('../partials/navbar') %>
+  <%- include('../partials/navbar') %>
 
+    <%- include('../partials/traineeSidebar') %>
       <main>
         <!-- ADD NEW TRAINING FORM   -->
         <!-- ======================================================= -->
@@ -467,266 +438,45 @@
             </div>
           </div>
         </div>
-
-        <!-- MARK UNAVAILABLE FORM   -->
-        <!-- ======================================================= -->
-        <div id="unavailableCover" style="display: none;">
-          <div class="modal fade show" id="addEventToCalendarModal" tabindex="-1" role="dialog"
-            style=" padding-top: 100px; display: block;" aria-modal="true">
-            <div class="modal-dialog modal-lg" role="document">
-              <div class="modal-content">
-                <!-- Header -->
-                <div class="modal-body">
-                  <div class="media">
-                    <textarea id="eventTitleLabel" class="form-control form-control-title"
-                      placeholder="MARKING UNAVAILABLE" style="height: 47px; margin-top: 0px; margin-bottom: 0px;"
-                      readonly></textarea>
-                  </div>
-                  <form class="form-container" id="unavailableForm" action="/markUnavailable" method="POST">
-                    <input id="uID" name="uID" type="text" style="width: 0px; display: none;">
-
-                    <div class="modal-close">
-                      <button type="button" id="disBtn">
-                        <i class="fa-regular fa-xmark"></i>
-                      </button>
-                    </div>
-                    <!-- Select Row -->
-                    <div class="row form-group" data-select2-id="25">
-                      <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                          <i class="tio-format-points nav-icon"></i>
-                          <div class="media-body">options</div>
-                        </div>
-                      </div>
-                      <div class="col-sm" data-select2-id="24">
-                        <select class="js-select2-custom custom-select " size="1" id="markOptions" name="markOptions"
-                          onChange=updateForm()>
-                          <option value="allDay">All day</option>
-                          <option value="hour">specific hour</option>
-
-                        </select>
-                      </div>
-                    </div>
-                    <!-- Date Row -->
-                    <div class="row form-group">
-                      <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                          <i class="tio-event nav-icon"></i>
-                          <div class="media-body">Date</div>
-                        </div>
-                      </div>
-                      <div class="col-sm">
-                        <label for="eventDateRangeLabel" class="sr-only">Date</label>
-                        <input id="markDate" name="markDate" type="date" style="width: 0px;"
-                          class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" required />
-                      </div>
-                      <div class="media align-items-center mt-2">
-                        <i class="tio-event nav-icon"></i>
-                        <div class="media-body"></div>
-                      </div>
-                    </div>
-                    <!-- From To Row -->
-                    <div class="row form-group">
-                      <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                          <i class="tio-event nav-icon"></i>
-                          <div class="media-body" id="from" style="display: none;">From</div>
-                        </div>
-                      </div>
-                      <div class="col-sm">
-                        <label for="startHour" class="sr-only">start hour</label>
-                        <input id="startHour" name="startHour" type="time" value="14:00" title="start"
-                          style="width: 0px; display: none;"
-                          class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input"
-                          onchange="updateEndHour()" required />
-                      </div>
-                      <div class="media align-items-center mt-2">
-                        <i class="tio-event nav-icon" id="to" style="display: none;">To:</i>
-                        <div class="media-body"></div>
-                        <div class="media-body"></div>
-                      </div>
-                      <div class="col-sm">
-                        <label for="endHour" class="sr-only">End Hour</label>
-                        <input id="endHour" name="endHour" type="time" value="16:00" style="width: 0px; display: none;"
-                          class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" required />
-                      </div>
-                    </div>
-                    <div class="row form-group">
-                      <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                          <i class="tio-text-left nav-icon"></i>
-                          <div class="media-body">Description</div>
-                        </div>
-                      </div>
-                      <div class="col-sm">
-                        <label for="eventDescriptionLabel" class="sr-only">Add description</label>
-                        <textarea id="eventDescriptionLabel" class="form-control"
-                          placeholder="Add description"></textarea>
-                      </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                  <input id="action" name="action" type="text" style="width: 0px; display: none;">
-                  <button type="button" id="discardFormt" class="btn btn-white" onclick="close()">Discard</button>
-                  <button type="submit" id="save" class="btn btn-primary" style=" display: none;">Save</button>
-                  <button type="submit" id="delete" class="btn btn-primary" style=" display: none;">Delete</button>
-                </div>
-                </form>
-              </div>
+        <div id="cover">
+          <!-- registration form -->
+          <div class="popover fullcalendar-event-popover fade show bs-popover-left" role="tooltip" id="popover17030"
+            x-placement="left"
+            style="position: absolute;will-change: transform;top: 0px;left: 0px;transform: translate3d(425px, 168px, 0px);">
+            <div class="arrow" style="top: 186px;">
             </div>
-          </div>
-        </div>
-
-        <!-- EDIT TRAINING FORM   -->
-        <!-- ======================================================= -->
-        <div id="editCover" style="display: none;">
-          <div class="modal fade show" id="addEventToCalendarModal" tabindex="-1" role="dialog"
-            style=" padding-top: 100px; display: block;" aria-modal="true">
-            <div class="modal-dialog modal-lg" role="document">
-              <div class="modal-content">
-                <!-- Header -->
-                <div class="modal-close">
-                  <button type="button" id="disBtn" class="btn btn-icon btn-sm btn-ghost-secondary"
-                    onclick="closeEditForm()" data-dismiss="modal" aria-label="Close">
-                    <i class="fa-regular fa-xmark"></i>
+            <h3 class="popover-header">
+            </h3>
+            <div class="popover-body">
+              <h3 class="mb-4" id="type">Yoga</h3>
+              <form class="form-container" action="/TrainingReg" method="POST">
+                <ul class="list-group">
+                  <input id="trainerEmail" name="trainerEmail" value="<%= trainer.email %>" style="display: none;" />
+                  <span><strong class="text-dark">Trainier:"<%= trainer.fullName %>"</strong><span
+                      class="text-dark text-capitalize" id="trainerName"></span></span> <input id="typeIn" name="typeIn"
+                    style="display: none;" />
+                  <span><strong class="text-dark">Date:</strong> <span class="text-dark text-capitalize" id="date">
+                      &nbsp; </span></span><input name="dateIn" id="dateIn" style="display: none;" />
+                  <span><strong class="text-dark">Start Hour:</strong> <span class="text-dark text-capitalize"
+                      id="start"> &nbsp; </span></span><input id="startIn" name="startIn" style="display: none;" />
+                  <span><strong class="text-dark">Duration:</strong> <span class="text-dark text-capitalize"
+                      id="duration"> </span></span><input id="durationIn" name="durationIn" style="display: none;" />
+                  <span><strong class="text-dark">Price:</strong> <span class="text-dark text-capitalize" id="price">
+                      &nbsp; </span></span><input id="priceIn" name="priceIn" style="display: none;" />
+                </ul>
+                <!-- button group  -->
+                <div class="d-flex justify-content-end">
+                  <a id="closePopover" class="btn btn-sm btn-white mr-2" onclick="closeForm()">Close</a>
+                  <button class="btn btn-sm btn-primary" type="submit" id="reg-btn">
+                    registration
                   </button>
                 </div>
-                <!-- End Header -->
-
-                <!-- Body -->
-                <div class="modal-body">
-                  <div class="media">
-                    <textarea id="eventTitleLabel" class="form-control form-control-title"
-                      placeholder="VIEW TRAINING DETAILS" style="height: 47px; margin-top: 0px; margin-bottom: 0px;"
-                      readonly></textarea>
-                  </div>
-                  <form class="form-container" id="editForm" action="/editTraining" method="POST">
-
-                    <div class="row form-group" data-select2-id="25">
-                      <label id="errorMsg" style="font-size: 16px; color: red" hidden></label>
-
-                      <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                          <i class="tio-format-points nav-icon"></i>
-                          <div class="media-body">Training type</div>
-                        </div>
-                      </div>
-
-                      <div class="col-sm" data-select2-id="24">
-                        <!-- Select training type-->
-                        <% if(typeof user !="undefined" && typeof user.trainingTypes !="undefined" ) { %>
-
-                          <select class="js-select2-custom custom-select " size="1" id="viewType" name="viewType"
-                            onChange="update()" disabled>
-                            <% user.trainingTypes.forEach(t=> { %>
-                              <option value="<%= t.name %>">
-                                <%= t.name %>
-                              </option>
-                              <% }); %>
-                          </select>
-                          <% } %>
-                      </div>
-                    </div>
-
-                    <!-- End Row -->
-                    <div class="row form-group">
-                      <input id="trainingID" name="trainingID" type="text" style="display: none;" />
-                      <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                          <i class="tio-event nav-icon"></i>
-                          <div class="media-body">Date</div>
-                        </div>
-                      </div>
-
-                      <div class="col-sm">
-                        <label for="eventDateRangeLabel" class="sr-only">Date</label>
-                        <input id="viewDate" name="newDate" type="date" style="width: 0px;"
-                          class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" readonly />
-                      </div>
-                      <div class="col-sm">
-                        <label for="eventDateRangeLabel" class="sr-only">Start Hour</label>
-                        <input id="viewStart" name="newTime" type="time" style="width: 0px;"
-                          class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" readonly />
-
-                      </div>
-                    </div>
-
-                    <!-- End Row -->
-                    <div class="row form-group">
-                      <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                          <i class="tio-event nav-icon"></i>
-
-                          <div class="media-body">Training details</div>
-                        </div>
-                      </div>
-
-                      <div class="col-sm">
-                        <label for="eventDateRangeLabel" class="sr-only">Duration</label>
-                        <input id="viewDuration" name="newDuration" type="duration" style="width: 0px;"
-                          class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" readonly />
-                      </div>
-                      <div class="col-sm">
-                        <label for="eventDateRangeLabel" class="sr-only">Price</label>
-                        <input id="viewPrice" name="price" type="text" style="width: 0px;"
-                          class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" readonly />
-                      </div>
-                    </div>
-                    <!-- End Row -->
-                    <div class="row form-group">
-                      <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                          <i class="tio-poi nav-icon"></i>
-                          <div class="media-body">Location</div>
-                        </div>
-                      </div>
-
-                      <div class="col-sm">
-                        <label for="eventLocationLabel" class="sr-only"></label>
-
-                        <input type="text" class="form-control" id="eventLocationLabel" readonly
-                          aria-label="Add location">
-                      </div>
-                    </div>
-                    <div class="row form-group">
-                      <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                          <i class="tio-text-left nav-icon"></i>
-
-                          <div class="media-body">Description</div>
-                        </div>
-                      </div>
-
-                      <div class="col-sm">
-                        <label for="eventDescriptionLabel" class="sr-only">Add description</label>
-
-                        <textarea id="eventDescriptionLabel" class="form-control"
-                          placeholder="Add description"></textarea>
-                      </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                  <input id="editAction" name="editAction" type="text" style="width: 0px; display: none;">
-                  <button type="button" id="discardFormt" class="btn btn-white" onclick="closeForm()">Discard</button>
-                  <button type="button" id="editBtn" class="btn btn-primary">Edit Training</button>
-                  <button type="submit" id="saveBtn" class="btn btn-primary" style="display: none;">Save Change</button>
-                  <button type="button" id="deleteBtn" class="btn btn-primary" style="display: none;">Delete
-                    Training</button>
-                </div>
-                </form>
-              </div>
             </div>
           </div>
-        </div>
-
-        <!-- INITIALIZATION OF CALENDAR VIEW   -->
-        <!-- ======================================================= -->
-        <div class="calendar-container">
-          <div id='calendar'></div>
+          </form>
         </div>
 
       </main>
-
       <script>
         updateForm();
         function close() {
@@ -852,7 +602,7 @@
 
         }
 
-    
+
       </script>
 </body>
 
