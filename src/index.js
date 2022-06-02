@@ -63,6 +63,63 @@ app.listen(port, () => {
   console.log("server is up and running");
 });
 
+/**
+ * Add two numbers.
+ * @param {number} date The first number.
+ * @returns {number} new date.
+ */
+function correctDate(date) {
+  let dateList = date.split(" ");
+
+  let newDate = "";
+  newDate += dateList[3];
+
+  newDate += "-";
+  let month;
+  switch (dateList[1]) {
+    case "Jan":
+      month = "01";
+      break;
+    case "Feb":
+      month = "02";
+      break;
+    case "Mar":
+      month = "03";
+      break;
+    case "Apr":
+      month = "04";
+      break;
+    case "May":
+      month = "05";
+      break;
+    case "Jun":
+      month = "06";
+      break;
+    case "Jul":
+      month = "07";
+      break;
+    case "Aug":
+      month = "08";
+      break;
+    case "Sep":
+      month = "09";
+      break;
+    case "Oct":
+      month = "10";
+      break;
+    case "Nov":
+      month = "11";
+      break;
+    case "Dec":
+      month = "12";
+      break;
+  }
+  newDate += month;
+  newDate += "-";
+  newDate += dateList[2];
+  return newDate;
+}
+
 //Routing for the GET request methods
 //var userType = "";
 var userEmail = "";
@@ -343,30 +400,29 @@ app.post("/filterTrainings", (req, res) => {
   let filter = req.body.filterInput;
   let action = req.body.action;
   let results = [];
-  console.log("action:"+action);
+  console.log("action:" + action);
 
-  if(action == "filter"){
-  console.log("traineeeee:"+userObj);
-  if(userObj instanceof Trainee){
-    userObj.trainings.forEach(t=> {
-      date = new Date(t.trainingDate)
-      month = String(date.getMonth() + 1).padStart(2, '0')
-      if(month == filter){
-        results.push(t);
-      }
-    });
+  if (action == "filter") {
+    console.log("traineeeee:" + userObj);
+    if (userObj instanceof Trainee) {
+      userObj.trainings.forEach((t) => {
+        date = new Date(t.trainingDate);
+        month = String(date.getMonth() + 1).padStart(2, "0");
+        if (month == filter) {
+          results.push(t);
+        }
+      });
+    }
+  } else {
+    //all results
+    results = userObj.trainings;
   }
-  
-}
-else {//all results
-
-  results = userObj.trainings;
-  console.log("res: "+results)
-}
-
-  res.render("pages/traineeDashboard", { userEmail: userEmail, user: userObj,trainings:results });
+  res.render("pages/traineeDashboard", {
+    userEmail: userEmail,
+    user: userObj,
+    trainings: results,
+  });
 });
-
 
 app.post("/searchTrainer", (req, res) => {
   let traineeInput = req.body.traineeInput;
@@ -445,7 +501,7 @@ app.get("/traineeDashboard/:email", async (req, res) => {
   //update 'pass' field for all trainings:
   console.log("@@@@@@@@@@@@@@@@@@@@@@@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-  var flag = false;
+  let flag = false;
   let today = new Date();
   let Stoday = today.toString();
   console.log("today:" + today);
@@ -460,14 +516,14 @@ app.get("/traineeDashboard/:email", async (req, res) => {
       return false;
     } else {
       if (trainee.trainings) {
-        var trainings = trainee.trainings;
+        let trainings = trainee.trainings;
         let dateD;
         let dateM;
         let dateY;
-        for (var i = 0; i < trainings.length; i++) {
+        for (let i = 0; i < trainings.length; i++) {
           if (!trainings[i].trainingDate.includes("-")) {
-            var newdate = correctDate(trainings[i].trainingDate);
-            var dateList = newdate.split("-");
+            let newdate = correctDate(trainings[i].trainingDate);
+            let dateList = newdate.split("-");
             dateD = parseInt(dateList[2]);
             dateM = parseInt(dateList[1]);
             dateY = parseInt(dateList[0]);
@@ -482,12 +538,25 @@ app.get("/traineeDashboard/:email", async (req, res) => {
             (todayY == dateY && todayM > dateM) ||
             (todayY == dateY && todayM == dateM && todayD > dateD)
           ) {
-            console.log("1" + trainings[i].pass);
-            trainings[i].pass = true;
-            console.log("2" + trainings[i].pass);
-            console.log("!!!!!found passed trainings");
-            flag = true;
-            console.log("flag");
+            if (!trainings[i].pass) {
+              console.log("1" + trainings[i].pass);
+              trainings[i].pass = true;
+              console.log("2" + trainings[i].pass);
+              console.log("!!!!!found passed trainings");
+              console.log(trainings);
+              flag = true;
+              console.log("flag");
+              Trainee.updateOne({ email: userEmail }, { trainings: trainings }).then(
+                (trainee) => {
+                  if (!trainee) {
+                    return false;
+                  } else {
+                    return true;
+                  }
+                }
+              );
+              console.log(trainee);
+            }
           }
         }
       }
@@ -495,15 +564,17 @@ app.get("/traineeDashboard/:email", async (req, res) => {
     console.log("flag" + flag);
     if (flag) {
       console.log("yesssqq");
-      Trainee.updateOne({ email: userEmail }, { trainings: trainings }).then(
-        (trainer) => {
-          if (!trainer) {
-            return false;
-          } else {
-            return true;
-          }
-        }
-      );
+      console.log("userEmail");
+
+      // Trainee.updateOne({ email: userEmail }, { trainings: trainings }).then(
+      //   (trainee) => {
+      //     if (!trainee) {
+      //       return false;
+      //     } else {
+      //       return true;
+      //     }
+      //   }
+      // );
     }
   });
   Trainee.find({ email: userEmail }).then((trainees) => {
@@ -828,62 +899,6 @@ app.post("/forgotPassword", forgotPasseord);
 app.post("/resetPassword", resetPassword);
 app.post("/statistics", statistics);
 
-/**
- * Add two numbers.
- * @param {number} date The first number.
- * @returns {number} new date.
- */
- function correctDate(date) {
-  let dateList = date.split(" ");
-
-  let newDate = "";
-  newDate += dateList[3];
-
-  newDate += "-";
-  let month;
-  switch (dateList[1]) {
-    case "Jan":
-      month = "01";
-      break;
-    case "Feb":
-      month = "02";
-      break;
-    case "Mar":
-      month = "03";
-      break;
-    case "Apr":
-      month = "04";
-      break;
-    case "May":
-      month = "05";
-      break;
-    case "Jun":
-      month = "06";
-      break;
-    case "Jul":
-      month = "07";
-      break;
-    case "Aug":
-      month = "08";
-      break;
-    case "Sep":
-      month = "09";
-      break;
-    case "Oct":
-      month = "10";
-      break;
-    case "Nov":
-      month = "11";
-      break;
-    case "Dec":
-      month = "12";
-      break;
-  }
-  newDate += month;
-  newDate += "-";
-  newDate += dateList[2];
-  return newDate;
-}
 app.post("/editTraining", async (req, res) => {
   let action = req.body.editAction;
   let date = req.body.newDate;
@@ -892,7 +907,6 @@ app.post("/editTraining", async (req, res) => {
   let trainingName = req.body.viewType;
   let duration;
   let price;
-
 
   if (userObj instanceof Trainer) {
     if (action == "save") {
@@ -1093,13 +1107,12 @@ app.post("/TrainingReg", async (req, res) => {
   let price = req.body.priceValue;
   let trainerEmail = req.body.trainerEmail;
   let trainingID = req.body.trainingID;
- 
+
   // date = new Date (date);
   // String(date.getDate())
   console.log(date);
   console.log(duration);
   console.log(price);
-
 
   // console.log(time.toString());
 
@@ -1109,7 +1122,7 @@ app.post("/TrainingReg", async (req, res) => {
     } else {
       let trainingN = trainee.trainings;
       let training = {
-        _id:trainingID,
+        _id: trainingID,
         trainingType: trainingName,
         trainingDate: date,
         startHour: time.toString(),
@@ -1124,7 +1137,7 @@ app.post("/TrainingReg", async (req, res) => {
         (trainee) => {
           if (!trainee) {
             console.log("cannot find the trainee");
-          } 
+          }
         }
       );
     }
@@ -1134,12 +1147,11 @@ app.post("/TrainingReg", async (req, res) => {
     if (!trainer) {
       return false;
     } else {
-  
       if (trainer.trainings != null) {
         let trainingT = trainer.trainings;
-        
+
         for (let i = 0; i < trainingT.length; i++) {
-          if(trainingT[i]._id.toString() == trainingID){
+          if (trainingT[i]._id.toString() == trainingID) {
             console.log("yes");
             trainingT[i].available = false;
             trainingT[i].traineeEmail = userEmail;
@@ -1151,7 +1163,7 @@ app.post("/TrainingReg", async (req, res) => {
         ).then((trainer) => {
           if (!trainer) {
             console.log("cannot find the trainer");
-          } 
+          }
         });
       }
     }
@@ -1159,7 +1171,8 @@ app.post("/TrainingReg", async (req, res) => {
 
   res.render("pages/traineeDashboard", {
     userEmail: userEmail,
-    user: userObj,trainings:userObj.trainings
+    user: userObj,
+    trainings: userObj.trainings,
   });
 });
 app.post("/viewTrainer", async (req, res) => {
