@@ -12,7 +12,7 @@
   <link href='/main.css' rel='stylesheet' />
   <script src='/main.js'></script>
   <script>
-  
+
     // Loading the calendar
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -42,8 +42,8 @@
                 duration = document.getElementById("duration").value;
                 price = document.getElementById("price").value;
                 date = new Date(dateStr + 'T' + time); // will be in local time
-                endTime = calculateEndTime(time,durValue);
-                endDate = newDate(dateStr+'T' + endTime);
+                endTime = calculateEndTime(time, durValue);
+                endDate = newDate(dateStr + 'T' + endTime);
                 if (!isNaN(date.valueOf())) { // valid?
                   console.log("succ");
                   calendar.addEvent({
@@ -54,9 +54,10 @@
                     allDay: false,
                     extendedProps: {
                       startHour: time,
-                      duration:duration,
-                      price:price
-                      
+                      duration: duration,
+                      price: price,
+                      available: true
+
                     }
                   });
 
@@ -104,6 +105,7 @@
                     extendedProps: {
                       startHour: start,
                       endHour: end
+                      
                     },
                   });
 
@@ -112,7 +114,7 @@
                 }
 
               });
-           
+
 
 
             }
@@ -160,43 +162,49 @@
 
             // LOAD TRAINING EVENT
             else {
-              document.getElementById("trainingID").value = info.event.id;
-              document.getElementById("viewType").value = info.event.title;
-              document.getElementById("viewDate").valueAsDate = info.event.start;
-              document.getElementById("viewStart").value = info.event.extendedProps.startHour;
-              document.getElementById("viewDuration").value = "Duration: " + info.event.extendedProps.duration;
-              document.getElementById("viewPrice").value = "Price: " + info.event.extendedProps.price + " ₪";
-              document.getElementById("editCover").style.display = "block";
-              editBtn = document.getElementById("editBtn");
-              editBtn.addEventListener("click", function () {
-                document.getElementById("editBtn").style.display = "none";
-                document.getElementById("deleteBtn").style.display = "block";
-                document.getElementById("saveBtn").style.display = "block";
-                document.getElementById("viewType").disabled = false;
-                document.getElementById("viewDate").readOnly = false;
-                document.getElementById("viewStart").readOnly = false;
-                saveBtn = document.getElementById("saveBtn");
-                deleteBtn = document.getElementById("deleteBtn");
-                saveBtn.addEventListener("click", function () {
-                  document.getElementById("editAction").value = "save";
-                });
-                deleteBtn.addEventListener("click", function () {
-                  if (confirm("Are you sure you want to delete this training?")) {
-                    document.getElementById("editAction").value = "delete";
+              
+         
+                document.getElementById("trainingID").value = info.event.id;
+                document.getElementById("viewType").value = info.event.title;
+                document.getElementById("viewDate").valueAsDate = info.event.start;
+                document.getElementById("viewStart").value = info.event.extendedProps.startHour;
+                document.getElementById("viewDuration").value = "Duration: " + info.event.extendedProps.duration;
+                document.getElementById("viewPrice").value = "Price: " + info.event.extendedProps.price + " ₪";
+                document.getElementById("editCover").style.display = "block";
+                editBtn = document.getElementById("editBtn");
+                editBtn.addEventListener("click", function () {
+                 
+                  document.getElementById("editBtn").style.display = "none";
+                  document.getElementById("deleteBtn").style.display = "block";
+                  document.getElementById("saveBtn").style.display = "block";
+                  document.getElementById("viewType").disabled = false;
+                  document.getElementById("viewDate").readOnly = false;
+                  document.getElementById("viewStart").readOnly = false;
+                  saveBtn = document.getElementById("saveBtn");
+                  deleteBtn = document.getElementById("deleteBtn");
+                  saveBtn.addEventListener("click", function () {
+                    if(info.event.extendedProps.available == "false"){
+                    alert("You cannot change training registered");
+                    }
+                    else{
+                    document.getElementById("editAction").value = "save";
                     document.getElementById("editForm").submit();
 
+                    }
+                  });
+                
+                  deleteBtn.addEventListener("click", function () {
+                    if (confirm("Are you sure you want to delete this training?")) {
+                      document.getElementById("editAction").value = "delete";
+                      document.getElementById("editForm").submit();
+                    }
+                  });
 
-                  }
-                  else {
-
-
-                  }
+                
                 });
+              }
 
-              });
-            }
-
-          })
+            })
 
         }
       });
@@ -211,6 +219,7 @@
       duration = "<%= t.duration %>"
       price = "<%= t.price %>"
       id = "<%= t._id %>"
+      available = "<%= t.available %>"
       date = new Date(dateStr + 'T' + time); // will be in local time
       endTime = calculateEndTime(time, parseInt(duration));
       console.log(endTime);
@@ -224,7 +233,8 @@
         extendedProps: {
           startHour: time,
           duration: duration,
-          price: price
+          price: price,
+          available: available
         }
       });
       "<% }); %>"
@@ -271,7 +281,7 @@
         let minutes = parseInt(start.slice(3));
         let hourToAdd = 0;
         let minutesToAdd = 0;
-        console.log("duration = " +duration);
+        console.log("duration = " + duration);
 
         if (duration >= 60) {
           hourToAdd = parseInt(duration / 60);
@@ -303,7 +313,7 @@
           minutes = minutes + minutesToAdd - 60;
         }
         minStr = minutes.toString();
-        if(minStr.length  > 2){
+        if (minStr.length > 2) {
           len = minStr.length;
           minStr.slice(0, len);
 
@@ -315,7 +325,7 @@
     });
 
 
-  
+
 
   </script>
 </head>
@@ -411,7 +421,7 @@
 
                       <div class="col-sm">
                         <label for="eventDateRangeLabel" class="sr-only">Duration</label>
-                        <input type="number"  id="durValue" style="display: none;">
+                        <input type="number" id="durValue" style="display: none;">
                         <input id="duration" name="duration" type="text" style="width: 0px;"
                           class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input"
                           placeholder="Duration: " readonly />
@@ -671,8 +681,8 @@
                           class="js-flatpickr form-control flatpickr-custom mb-2 flatpickr-input" readonly />
                       </div>
                     </div>
-               
-                
+
+
                 </div>
                 <div class="modal-footer">
                   <input id="editAction" name="editAction" type="text" style="width: 0px; display: none;">
@@ -697,8 +707,8 @@
 
       <script>
         updateForm();
-   
-        function closeUnAvailableForm(){
+
+        function closeUnAvailableForm() {
           document.getElementById("markUn").style.display = "none";
           document.getElementById("delete").style.display = "none";
           document.getElementById("unavailableCover").style.display = "none";
@@ -759,7 +769,7 @@
           "<% user.trainingTypes.forEach(type => { %>"
           trainingType = "<%= type.name %>"
           if (trainingType == select) {
-            document.getElementById("durValue").value =parseInt("<%= type.duration %>");
+            document.getElementById("durValue").value = parseInt("<%= type.duration %>");
             document.getElementById("duration").value = "Duration: " + "<%= type.duration %>";
             document.getElementById("price").value = "Price: " + "<%= type.price %>" + " ₪";
 
@@ -827,7 +837,7 @@
 
         }
 
-    
+
       </script>
 </body>
 
