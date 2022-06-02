@@ -617,7 +617,7 @@ table {
     border-spacing: 2px;
     border-color: grey;
     border-collapse: collapse;
-    /* width: 100%; */
+    width: 100%;
     margin-bottom: 1rem;
     color: #677788;
 
@@ -812,7 +812,7 @@ td {
 	display: table-row;
     vertical-align: inherit;
     border-color: inherit;
-	border-bottom:  .0625rem solid rgba(231,234,243,.7);
+	border-bottom:  .625rem solid rgba(129, 129, 129, 0.922);
 	border-top: .0625rem solid rgba(231,234,243,.7);
 
 }
@@ -823,11 +823,107 @@ td {
 	background: none;
 	border: none;
 }
-#filterInput{
+/* #filterInput{
 	box-sizing: border-box;
     font-size: 100%;
     margin-top: 5px;
     padding: 0
+} */
+
+
+.btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+.btn {
+    position: relative;
+}
+.btn-white {
+    background-color: #fff;
+    border-color: #e7eaf3;
+}
+.btn-group-sm>.btn, .btn-sm {
+    padding: .4375rem .65625rem;
+    font-size: .8125rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+}
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #677788;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: .0625rem solid transparent;
+    padding: .54688rem .875rem;
+    /* font-size: .875rem; */
+    line-height: 1.6;
+    border-radius: .3125rem;
+    transition: all .2s ease-in-out;
+	border: .0625rem  #8D8D8D;
+
+}
+#all{
+	display: inline-block;
+    font-weight: 100;
+    color: #677788;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: .0625rem solid transparent;
+    padding: .54688rem .875rem;
+    font-size: 10px;
+    line-height: 1.0;
+    border-radius: .2125rem;
+    transition: all .2s ease-in-out;
+	border: .025rem solid rgba(129, 129, 129, 0.547);
+	/* margin-left: 50%; */
+
+}
+#byMonth{
+	display: inline-block;
+    font-weight: 100;
+    color: #677788;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: .0625rem solid transparent;
+    padding: .54688rem .875rem;
+    line-height: 0.3;
+    border-radius: .2125rem;
+    transition: all .2s ease-in-out;
+	border: .025rem solid rgba(129, 129, 129, 0.547);
+	border-radius: .2125rem;
+
+}
+#filterInput{
+	display: inline-block;
+    font-weight:80;
+    color: #677788;
+    text-align: center;
+    vertical-align: middle;
+    background-color: transparent;
+    /* border: .0625rem solid transparent; */
+    padding: .34688rem .875rem;
+    line-height: 1.5;
+    /* transition: all .2s ease-in-out; */
+	border: .025rem solid rgba(129, 129, 129, 0.547);
+	border-radius: .2125rem;
+	font-size: 15px;
+	box-sizing: border-box;
+
 }
 /* MAIN */
 /* CONTENT */

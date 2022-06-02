@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const  ObjectId  = mongoose.Schema;
 const {
   login,
   signup,
@@ -344,32 +343,30 @@ app.post("/filterTrainings", (req, res) => {
   let filter = req.body.filterInput;
   let action = req.body.action;
   let results = [];
-  console.log("action:" + action);
+  console.log("action:"+action);
 
-  if (action == "filter") {
-    console.log("traineeeee:" + userObj);
-    if (userObj instanceof Trainee) {
-      userObj.trainings.forEach((t) => {
-        date = new Date(t.trainingDate);
-        month = String(date.getMonth() + 1).padStart(2, "0");
-        if (month == filter) {
-          results.push(t);
-        }
-      });
-    }
-  } else {
-    //all results
-
-    results = userObj.trainings;
-    console.log("res: " + results);
+  if(action == "filter"){
+  console.log("traineeeee:"+userObj);
+  if(userObj instanceof Trainee){
+    userObj.trainings.forEach(t=> {
+      date = new Date(t.trainingDate)
+      month = String(date.getMonth() + 1).padStart(2, '0')
+      if(month == filter){
+        results.push(t);
+      }
+    });
   }
+  
+}
+else {//all results
 
-  res.render("pages/traineeDashboard", {
-    userEmail: userEmail,
-    user: userObj,
-    trainings: results,
-  });
+  results = userObj.trainings;
+  console.log("res: "+results)
+}
+
+  res.render("pages/traineeDashboard", { userEmail: userEmail, user: userObj,trainings:results });
 });
+
 
 app.post("/searchTrainer", (req, res) => {
   let traineeInput = req.body.traineeInput;
@@ -448,7 +445,7 @@ app.get("/traineeDashboard/:email", async (req, res) => {
   Trainee.find({ email: userEmail }).then((trainees) => {
     //If the user list is empty
     if (trainees.length === 0) {
-      console.log("user Error!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      console.log("user Error");
       res.redirect("/");
     } else {
       const [trainee] = trainees;

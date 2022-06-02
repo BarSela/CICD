@@ -9,7 +9,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
   <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-
+  <script
+      src="https://kit.fontawesome.com/3533a4f1e6.js"
+      crossorigin="anonymous"
+    ></script>
   <title>Shape</title>
   <link rel="icon" href="/assets/shape-tab-icon.png" type="image/png" />
 </head>
@@ -145,19 +148,15 @@
                             <option value="12">12</option>
 
                           </select>
-                          <div class="input-group-prepend">
-                            <div class="input-group-text">
-                              <i class="tio-search"></i>
-                            </div>
-                          </div>
+                   
                        
                         <input id="action" name="action" type="text" style="width: 0px; display: none;">
 
-                        <button class="btn" type="button" onClick=filter() style="font-size: 22px;">
-                          filter
-                        </button>
-                        <button class="btn" id="all" type="button" onClick=allResult() style="font-size: 22px;">
-                          All
+                        <button class="btn" id="byMonth" type="button" onClick=filter() style="font-size: 15px;">
+                           
+                          <i class="fa-solid fa-arrow-down-short-wide"></i> by month</button>
+                        <button class="btn btn-sm btn-white" id="all" type="button" onClick=allResult() style="font-size: 15px;">
+                          Show All
                         </button>
                       </div>
                       </form>
