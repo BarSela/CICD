@@ -220,6 +220,7 @@
 
 
                                   <form id="rowForm" method=POST action="/cancelTrainingRegistration">
+                                    <input type="text" name="trainingID" value="<%= t._id %>" hidden>
                                     <input type="text" name="trainingType" value="<%= t.trainingType %>" hidden>
                                     <input type="text" name="trainingDate" value="<%= t.trainingDate %>" hidden>
                                     <input type="text" name="trainingHour" value="<%= t.startHour %>" hidden>
