@@ -967,11 +967,10 @@ module.exports = {
   },
 
   cancelTrainingRegistration: async (req, res) => {
+    let trainingIDToDelete = req.body.trainingID;
     let trainingDateToDelete = req.body.trainingDate;
     let trainingHourToDelete = req.body.trainingHour;
     let trainingTypeToDelete = req.body.trainingType;
-    console.log(trainingDateToDelete);
-    console.log(trainingHourToDelete);
     let trainings;
     let trainingsT;
     let trainerEmail;
@@ -988,12 +987,8 @@ module.exports = {
           console.log("4");
           trainings = trainee.trainings;
           for (var i = 0; i < trainings.length; i++) {
-            console.log(trainings[i].trainingDate);
-            console.log(trainings[i].startHour);
-            if (
-              trainings[i].trainingDate == trainingDateToDelete &&
-              trainings[i].startHour == trainingHourToDelete
-            ) {
+          
+            if (trainings[i]._id.toString() == trainingIDToDelete ) {
               trainerEmail = trainings[i].trainerEmail;
               console.log("5");
               trainings.splice(i, 1);
@@ -1007,21 +1002,8 @@ module.exports = {
                     console.log("6");
                     trainingsT = trainer.trainings;
                     let notifications = trainer.notifications;
-
                     for (var i = 0; i < trainingsT.length; i++) {
-                      console.log("trainingsT[i].trainingDate");
-                      console.log(trainingsT[i].trainingDate);
-                      console.log("trainingDateToDelete");
-                      console.log(trainingDateToDelete);
-
-                      let newDate = correctDate(trainingDateToDelete);
-                      console.log("newDate");
-                      console.log(newDate);
-
-                      if (
-                        trainingsT[i].trainingDate == newDate &&
-                        trainingsT[i].startHour == trainingHourToDelete
-                      ) {
+                      if (trainingsT[i]._id.toString() == trainingIDToDelete ){
                         trainingsT[i].available = true;
                         trainingsT[i].traineeEmail = "";
                         console.log("found");
