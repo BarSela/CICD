@@ -862,9 +862,11 @@ app.post("/newTraining", async (req, res) => {
     let month = parseInt(dateList[1]);
 
     Trainer.findOne({ email: userEmail }).then((trainer) => {
-      if (!trainer) {
+      if (!trainer) 
+      {
         return false;
-      } else {
+      } else
+      {
         if (trainer.monthStatistics != null) {
           let statistics = trainer.monthStatistics;
           statistics[month - 1].scheduled += 1;
