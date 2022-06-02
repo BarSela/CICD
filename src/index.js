@@ -555,7 +555,7 @@ app.get("/traineeDashboard/:email", async (req, res) => {
                   }
                 }
               );
-              console.log(trainee);
+
             }
           }
         }
@@ -861,8 +861,9 @@ app.post("/newTraining", async (req, res) => {
     let dateList = date.split("-");
     let month = parseInt(dateList[1]);
 
-    Trainer.findOne({ email: userEmail }).then((trainer) => {
-      if (!trainer) 
+    Trainer.findOne({ email: userEmail }).then((trainer) =>
+    {
+      if (!trainer)
       {
         return false;
       } else
