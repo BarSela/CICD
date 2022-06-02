@@ -442,6 +442,70 @@ app.get("/trainerDashboard/:email", async (req, res) => {
 
 app.get("/traineeDashboard/:email", async (req, res) => {
   userEmail = req.params.email;
+  //update 'pass' field for all trainings:
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+  var flag = false;
+  let today = new Date();
+  let Stoday = today.toString();
+  console.log("today:" + today);
+  let newToday = correctDate(Stoday);
+  let todayList = newToday.split("-");
+  let todayD = parseInt(todayList[2]);
+  let todayM = parseInt(todayList[1]);
+  let todayY = parseInt(todayList[0]);
+
+  Trainee.findOne({ email: userEmail }).then((trainee) => {
+    if (!trainee) {
+      return false;
+    } else {
+      if (trainee.trainings) {
+        var trainings = trainee.trainings;
+        let dateD;
+        let dateM;
+        let dateY;
+        for (var i = 0; i < trainings.length; i++) {
+          if (!trainings[i].trainingDate.includes("-")) {
+            var newdate = correctDate(trainings[i].trainingDate);
+            var dateList = newdate.split("-");
+            dateD = parseInt(dateList[2]);
+            dateM = parseInt(dateList[1]);
+            dateY = parseInt(dateList[0]);
+          } else {
+            var dateList = trainings[i].trainingDate.split("-");
+            dateD = parseInt(dateList[2]);
+            dateM = parseInt(dateList[1]);
+            dateY = parseInt(dateList[0]);
+          }
+          if (
+            todayY > dateY ||
+            (todayY == dateY && todayM > dateM) ||
+            (todayY == dateY && todayM == dateM && todayD > dateD)
+          ) {
+            console.log("1" + trainings[i].pass);
+            trainings[i].pass = true;
+            console.log("2" + trainings[i].pass);
+            console.log("!!!!!found passed trainings");
+            flag = true;
+            console.log("flag");
+          }
+        }
+      }
+    }
+    console.log("flag" + flag);
+    if (flag) {
+      console.log("yesssqq");
+      Trainee.updateOne({ email: userEmail }, { trainings: trainings }).then(
+        (trainer) => {
+          if (!trainer) {
+            return false;
+          } else {
+            return true;
+          }
+        }
+      );
+    }
+  });
   Trainee.find({ email: userEmail }).then((trainees) => {
     //If the user list is empty
     if (trainees.length === 0) {
@@ -769,16 +833,12 @@ app.post("/statistics", statistics);
  * @param {number} date The first number.
  * @returns {number} new date.
  */
-function correctDate(date) {
+ function correctDate(date) {
   let dateList = date.split(" ");
-  console.log(dateList);
-  console.log(dateList[3]);
-  console.log(dateList[1]);
-  console.log(dateList[2]);
 
   let newDate = "";
   newDate += dateList[3];
-  console.log(new_date);
+
   newDate += "-";
   let month;
   switch (dateList[1]) {
