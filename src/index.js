@@ -695,112 +695,7 @@ app.post("/createBusinessP", createBusinessP);
 app.post("/editBusinessP", editBusinessP);
 app.post("/editPassword", editPassword);
 app.post("/editPassword", editPassword);
-app.post("/TrainingReg", async (req, res) => {
-  let date = req.body.dateIn;
-  let time = req.body.startIn;
-  let trainingName = req.body.typeIn;
-  let duration = req.body.durationIn;
-  let price = req.body.priceIn;
-  let trainerEmail = req.body.trainerEmail;
-  date = new Date(date);
-  String(date.getDate());
-  console.log(date);
-  console.log(time);
 
-  console.log("isTrainee");
-
-  Trainee.findOne({ email: userEmail }).then((trainee) => {
-    if (!trainee) {
-      return false;
-    } else {
-      let trainingN = trainee.trainings;
-      let training = {
-        trainingType: trainingName,
-        trainingDate: date,
-        startHour: time,
-        pass: false,
-        duration: duration,
-        price: price,
-        trainerEmail: trainerEmail,
-      };
-
-      trainingN.push(training);
-      Trainee.updateOne({ email: userEmail }, { trainings: trainingN }).then(
-        (trainee) => {
-          if (!trainee) {
-            return false;
-          } else {
-            return true;
-          }
-        }
-      );
-    }
-  });
-
-  // let trainee = await Trainee.findOneAndUpdate(
-  //   { email: userEmail },
-  //   {
-  //     $set: {
-  //       trainings: [
-  //         {
-  //           trainingType: trainingName,
-  //           trainingDate: date,
-  //           startHour: time,
-  //           pass: false,
-  //           duration: duration,
-  //           price: price,
-  //           trainerEmail: trainerEmail,
-  //         },
-  //       ],
-  //     },
-  //   }
-  // );
-  console.log(trainerEmail);
-  Trainer.findOne({ email: trainerEmail }).then((trainer) => {
-    if (!trainer) {
-      return false;
-    } else {
-      console.log("trainerEm               ail");
-      if (trainer.trainings != null) {
-        let trainingT = trainer.trainings;
-
-        for (let i = 0; i < trainingT.length; i++) {
-          // console.log('trainingT[i].trainingDate');
-          // console.log(trainingT[i].trainingDate);
-          // console.log('trainingT[i].trainingDate.toString()');
-          // console.log(trainingT[i].trainingDate.toString());
-          // console.log('date');
-          // console.log(date);
-          // console.log('trainingT[i].startHour');
-          // console.log(trainingT[i].startHour);
-          // console.log('time');
-          // console.log(time);
-          if (trainingT[i].startHour == time) {
-            console.log("yes");
-            trainingT[i].available = false;
-            trainingT[i].traineeEmail = userEmail;
-          }
-        }
-        Trainer.updateOne(
-          { email: trainerEmail },
-          { trainings: trainingT }
-        ).then((trainer) => {
-          if (!trainer) {
-            return false;
-          } else {
-            return true;
-          }
-        });
-      }
-    }
-  });
-
-  res.render("pages/traineeDashboard", {
-    userEmail: userEmail,
-    user: userObj,
-    trainings: userObj.trainings,
-  });
-});
 app.post("/newTraining", async (req, res) => {
   let traineeInput = req.body.Type;
   let date = req.body.date;
@@ -1132,31 +1027,36 @@ app.post("/markUnavailable", async (req, res) => {
   }
 });
 app.post("/TrainingReg", async (req, res) => {
-  let date = req.body.dateIn;
-  let time = req.body.startIn;
-  let trainingName = req.body.typeIn;
-  let duration = req.body.durationIn;
-  let price = req.body.priceIn;
+  let date = req.body.date;
+  let time = req.body.start;
+  let trainingName = req.body.type;
+  let duration = req.body.durValue;
+  let price = req.body.priceValue;
   let trainerEmail = req.body.trainerEmail;
-  date = new Date(date);
-  String(date.getDate());
+  let trainingID = req.body.trainingID;
+ 
+  // date = new Date (date);
+  // String(date.getDate())
   console.log(date);
-  console.log(time);
+  console.log(duration);
+  console.log(price);
 
-  console.log("isTrainee");
+
+  // console.log(time.toString());
 
   Trainee.findOne({ email: userEmail }).then((trainee) => {
     if (!trainee) {
-      return false;
+      console.log("cannot find the trainee");
     } else {
       let trainingN = trainee.trainings;
       let training = {
+        _id:trainingID,
         trainingType: trainingName,
         trainingDate: date,
-        startHour: time,
+        startHour: time.toString(),
         pass: false,
-        duration: duration,
-        price: price,
+        duration: parseInt(duration),
+        price: parseInt(price),
         trainerEmail: trainerEmail,
       };
 
@@ -1164,54 +1064,23 @@ app.post("/TrainingReg", async (req, res) => {
       Trainee.updateOne({ email: userEmail }, { trainings: trainingN }).then(
         (trainee) => {
           if (!trainee) {
-            return false;
-          } else {
-            return true;
-          }
+            console.log("cannot find the trainee");
+          } 
         }
       );
     }
   });
 
-  // let trainee = await Trainee.findOneAndUpdate(
-  //   { email: userEmail },
-  //   {
-  //     $set: {
-  //       trainings: [
-  //         {
-  //           trainingType: trainingName,
-  //           trainingDate: date,
-  //           startHour: time,
-  //           pass: false,
-  //           duration: duration,
-  //           price: price,
-  //           trainerEmail: trainerEmail,
-  //         },
-  //       ],
-  //     },
-  //   }
-  // );
-  console.log(trainerEmail);
   Trainer.findOne({ email: trainerEmail }).then((trainer) => {
     if (!trainer) {
       return false;
     } else {
-      console.log("trainerEm               ail");
+  
       if (trainer.trainings != null) {
         let trainingT = trainer.trainings;
-
+        
         for (let i = 0; i < trainingT.length; i++) {
-          // console.log('trainingT[i].trainingDate');
-          // console.log(trainingT[i].trainingDate);
-          // console.log('trainingT[i].trainingDate.toString()');
-          // console.log(trainingT[i].trainingDate.toString());
-          // console.log('date');
-          // console.log(date);
-          // console.log('trainingT[i].startHour');
-          // console.log(trainingT[i].startHour);
-          // console.log('time');
-          // console.log(time);
-          if (trainingT[i].startHour == time) {
+          if(trainingT[i]._id.toString() == trainingID){
             console.log("yes");
             trainingT[i].available = false;
             trainingT[i].traineeEmail = userEmail;
@@ -1222,10 +1091,8 @@ app.post("/TrainingReg", async (req, res) => {
           { trainings: trainingT }
         ).then((trainer) => {
           if (!trainer) {
-            return false;
-          } else {
-            return true;
-          }
+            console.log("cannot find the trainer");
+          } 
         });
       }
     }
@@ -1233,8 +1100,7 @@ app.post("/TrainingReg", async (req, res) => {
 
   res.render("pages/traineeDashboard", {
     userEmail: userEmail,
-    user: userObj,
-    trainings: userObj.trainings,
+    user: userObj,trainings:userObj.trainings
   });
 });
 app.post("/viewTrainer", async (req, res) => {
