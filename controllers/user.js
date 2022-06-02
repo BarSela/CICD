@@ -864,7 +864,15 @@ module.exports = {
 
         let trainingsTrainee = trainee.trainings;
         for (var i = 0; i < trainingsTrainee.length; i++) {
-          let newDate = correctDate(trainingsTrainee[i].trainingDate);
+          let newDate;
+                if(!trainingsTrainee[i].trainingDate.includes("-"))
+                {
+                  newDate = correctDate(trainingsTrainee[i].trainingDate);
+                }
+                else
+                {
+                  newDate =trainingsTrainee[i].trainingDate;
+                }
           if (
             newDate == trainingDate &&
             trainingsTrainee[i].startHour == startTime

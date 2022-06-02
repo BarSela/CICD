@@ -546,7 +546,8 @@ app.get("/traineeDashboard/:email", async (req, res) => {
               console.log(trainings);
               flag = true;
               console.log("flag");
-              Trainee.updateOne({ email: userEmail }, { trainings: trainings }).then(
+              Trainee.updateOne(
+                { email: userEmail }, { trainings: trainings }).then(
                 (trainee) => {
                   if (!trainee) {
                     return false;
@@ -1035,7 +1036,15 @@ app.post("/editTraining", async (req, res) => {
                 console.log(trainingDate);
                 console.log("trainings[i].trainingDate");
                 console.log(trainings[i].trainingDate);
-                let newDate = correctDate(trainings[i].trainingDate);
+                let newDate;
+                if(!trainings[i].trainingDate.includes("-"))
+                {
+                  newDate = correctDate(trainings[i].trainingDate);
+                }
+                else
+                {
+                  newDate =trainings[i].trainingDate;
+                }
                 if (
                   newDate == trainingDate &&
                   trainings[i].startHour == startTime
